@@ -24,18 +24,26 @@ export const useUpdateCompany = () => {
   return useMutation({
     mutationFn: async ({ id, data }: { id: string; data: Partial<Company> }) => {
       console.log('Sending update to Supabase:', { id, data });
-      const { error } = await supabase
+      
+      const { data: updatedData, error } = await supabase
         .from('companies')
         .update(data)
-        .eq('id', id);
+        .eq('id', id)
+        .select()
+        .single();
       
       if (error) throw error;
       
-      // Return the updated data
-      return { id, ...data };
+      return updatedData;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['companies'] });
+    onSuccess: (updatedCompany) => {
+      // Update the cache with the new data
+      queryClient.setQueryData(['companies'], (oldData: Company[] | undefined) => {
+        if (!oldData) return [updatedCompany];
+        return oldData.map(company => 
+          company.id === updatedCompany.id ? updatedCompany : company
+        );
+      });
     }
   });
 };
