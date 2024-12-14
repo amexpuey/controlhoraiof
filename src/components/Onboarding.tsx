@@ -31,7 +31,7 @@ export function Onboarding() {
 
   const handleEmailSubmit = async (data: EmailFormData) => {
     try {
-      const { error } = await supabase.auth.signUp({
+      const { data: authData, error: signUpError } = await supabase.auth.signUp({
         email: data.email,
         password: crypto.randomUUID(),
         options: {
@@ -42,7 +42,17 @@ export function Onboarding() {
         },
       });
 
-      if (error) throw error;
+      if (signUpError) throw signUpError;
+
+      // Send custom email using our Edge Function
+      const { error: emailError } = await supabase.functions.invoke('send-verification-email', {
+        body: {
+          to: [data.email],
+          verificationLink: `${window.location.origin}/verify?token=${authData?.user?.confirmation_token}`,
+        },
+      });
+
+      if (emailError) throw emailError;
 
       toast({
         title: "¡Correo enviado!",
