@@ -12,7 +12,16 @@ export const useCompanies = () => {
         .from('companies')
         .select('*');
       
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching companies:', error);
+        throw error;
+      }
+
+      if (!data) {
+        console.warn('No companies found');
+        return [];
+      }
+
       return data as Company[];
     }
   });
@@ -25,20 +34,38 @@ export const useUpdateCompany = () => {
     mutationFn: async ({ id, data }: { id: string; data: Partial<Company> }) => {
       console.log('Sending update to Supabase:', { id, data });
       
-      const { data: updatedData, error } = await supabase
+      // First verify the company exists
+      const { data: existingCompany, error: fetchError } = await supabase
+        .from('companies')
+        .select()
+        .eq('id', id)
+        .maybeSingle();
+      
+      if (fetchError) {
+        console.error('Error fetching company:', fetchError);
+        throw new Error(`Failed to fetch company: ${fetchError.message}`);
+      }
+      
+      if (!existingCompany) {
+        console.error('Company not found:', id);
+        throw new Error(`Company with id ${id} not found`);
+      }
+
+      // Proceed with update
+      const { data: updatedData, error: updateError } = await supabase
         .from('companies')
         .update(data)
         .eq('id', id)
         .select()
         .maybeSingle();
       
-      if (error) {
-        console.error('Error updating company:', error);
-        throw new Error(`Failed to update company: ${error.message}`);
+      if (updateError) {
+        console.error('Error updating company:', updateError);
+        throw new Error(`Failed to update company: ${updateError.message}`);
       }
       
       if (!updatedData) {
-        throw new Error(`Company with id ${id} not found`);
+        throw new Error(`Failed to update company with id ${id}`);
       }
       
       return updatedData;
@@ -51,6 +78,9 @@ export const useUpdateCompany = () => {
           company.id === updatedCompany.id ? updatedCompany : company
         );
       });
+
+      // Invalidate the query to ensure data is fresh
+      queryClient.invalidateQueries({ queryKey: ['companies'] });
     }
   });
 };
