@@ -29,6 +29,8 @@ const Dashboard = () => {
           .eq("id", session.user.id)
           .single();
 
+        console.log("User profile:", profile); // Debug log
+
         if (!profile?.selected_features?.length) {
           toast({
             title: "No hay características seleccionadas",
@@ -43,9 +45,12 @@ const Dashboard = () => {
           .select("*")
           .contains("features", profile.selected_features);
 
+        console.log("Fetched apps:", apps); // Debug log
+        console.log("Selected features:", profile.selected_features); // Debug log
+
         if (error) throw error;
 
-        setMatchingApps(apps);
+        setMatchingApps(apps || []);
       } catch (error) {
         console.error("Error:", error);
         toast({
@@ -61,17 +66,14 @@ const Dashboard = () => {
     checkAuthAndFetchApps();
   }, [navigate, toast]);
 
-  const handleAppClick = (app: Company) => {
-    // Handle app click - you can implement this later
-    console.log("App clicked:", app);
-  };
-
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
         <div className="container py-12">
           <div className="text-center">
-            Cargando aplicaciones...
+            <div className="animate-pulse">
+              Cargando aplicaciones...
+            </div>
           </div>
         </div>
       </div>
@@ -100,7 +102,9 @@ const Dashboard = () => {
               <AppCard
                 key={app.id}
                 app={app}
-                onClick={() => handleAppClick(app)}
+                onClick={() => {
+                  console.log("App clicked:", app); // Debug log
+                }}
               />
             ))}
           </div>
