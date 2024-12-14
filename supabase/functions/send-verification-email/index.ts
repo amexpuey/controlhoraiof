@@ -25,6 +25,10 @@ serve(async (req) => {
       throw new Error('Missing required fields: to or verificationLink')
     }
 
+    if (!RESEND_API_KEY) {
+      throw new Error('RESEND_API_KEY is not set')
+    }
+
     const emailHtml = `
       <h1>¡Hola!</h1>
       
@@ -57,13 +61,14 @@ serve(async (req) => {
       }),
     })
 
+    const responseText = await res.text()
+    console.log('Resend API response:', responseText)
+
     if (!res.ok) {
-      const error = await res.text()
-      console.error('Resend API error:', error)
-      throw new Error('Failed to send email')
+      throw new Error(`Failed to send email: ${responseText}`)
     }
 
-    const data = await res.json()
+    const data = JSON.parse(responseText)
     console.log('Email sent successfully:', data)
 
     return new Response(JSON.stringify(data), {
