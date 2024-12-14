@@ -22,35 +22,43 @@ const Dashboard = () => {
           return;
         }
 
+        // First, let's fetch all companies to make sure we have data
+        const { data: allApps, error: appsError } = await supabase
+          .from("companies")
+          .select("*");
+
+        if (appsError) throw appsError;
+
+        console.log("All available apps:", allApps); // Debug log
+
         // Get user profile to access selected features
-        const { data: profile } = await supabase
+        const { data: profile, error: profileError } = await supabase
           .from("profiles")
           .select("selected_features")
           .eq("id", session.user.id)
           .single();
 
+        if (profileError) throw profileError;
+
         console.log("User profile:", profile); // Debug log
+        console.log("Selected features:", profile?.selected_features); // Debug log
 
         if (!profile?.selected_features?.length) {
-          toast({
-            title: "No hay características seleccionadas",
-            description: "Por favor, completa el proceso de onboarding.",
-          });
+          // If no features are selected, show all apps
+          setMatchingApps(allApps || []);
           return;
         }
 
-        // Fetch matching apps based on selected features
-        const { data: apps, error } = await supabase
-          .from("companies")
-          .select("*")
-          .contains("features", profile.selected_features);
+        // Filter apps that have at least one matching feature
+        const filteredApps = allApps?.filter(app => 
+          app.features?.some(feature => 
+            profile.selected_features?.includes(feature)
+          )
+        ) || [];
 
-        console.log("Fetched apps:", apps); // Debug log
-        console.log("Selected features:", profile.selected_features); // Debug log
+        console.log("Filtered apps:", filteredApps); // Debug log
 
-        if (error) throw error;
-
-        setMatchingApps(apps || []);
+        setMatchingApps(filteredApps);
       } catch (error) {
         console.error("Error:", error);
         toast({
@@ -103,7 +111,7 @@ const Dashboard = () => {
                 key={app.id}
                 app={app}
                 onClick={() => {
-                  console.log("App clicked:", app); // Debug log
+                  console.log("App clicked:", app);
                 }}
               />
             ))}
