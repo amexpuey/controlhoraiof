@@ -29,7 +29,7 @@ const initialFormData: Omit<Company, 'id' | 'created_at' | 'updated_at'> = {
 export default function AdminAppEdit() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data: apps, isLoading } = useCompanies();
+  const { data: apps, isLoading, refetch } = useCompanies();
   const updateCompany = useUpdateCompany();
   const [formData, setFormData] = useState(initialFormData);
   const [newFeature, setNewFeature] = useState('');
@@ -65,6 +65,11 @@ export default function AdminAppEdit() {
     }
   }, [id, apps]);
 
+  const addTimestampToUrl = (url: string) => {
+    const timestamp = new Date().getTime();
+    return `${url}?t=${timestamp}`;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!id || saving || isUploading) return;
@@ -77,13 +82,13 @@ export default function AdminAppEdit() {
       if (logoFile) {
         console.log('Uploading logo file');
         const logoUrl = await handleImageUpload(logoFile, `logos/${id}`);
-        updatedData.logo_url = logoUrl;
+        updatedData.logo_url = addTimestampToUrl(logoUrl);
       }
 
       if (backgroundFile) {
         console.log('Uploading background file');
         const imgUrl = await handleImageUpload(backgroundFile, `backgrounds/${id}`);
-        updatedData.img_url = imgUrl;
+        updatedData.img_url = addTimestampToUrl(imgUrl);
       }
 
       console.log('Updating company data:', updatedData);
@@ -91,6 +96,9 @@ export default function AdminAppEdit() {
         id, 
         data: updatedData 
       });
+      
+      // Refetch the data to ensure we have the latest version
+      await refetch();
       
       toast.success('Changes saved successfully');
       navigate('/admin');

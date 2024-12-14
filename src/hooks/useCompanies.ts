@@ -23,12 +23,16 @@ export const useUpdateCompany = () => {
   
   return useMutation({
     mutationFn: async ({ id, data }: { id: string; data: Partial<Company> }) => {
+      console.log('Sending update to Supabase:', { id, data });
       const { error } = await supabase
         .from('companies')
         .update(data)
         .eq('id', id);
       
       if (error) throw error;
+      
+      // Return the updated data
+      return { id, ...data };
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['companies'] });
