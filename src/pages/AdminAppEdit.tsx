@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Save, ArrowLeft } from 'lucide-react';
 import { useCompanies, useUpdateCompany } from '../hooks/useCompanies';
-import ImageUpload from './ImageUpload';
+import ImageUpload from '../components/ImageUpload';
 import { toast } from 'react-hot-toast';
 import { uploadImage } from '../lib/supabase';
-import type { Database } from '../types/supabase';
+import type { Database } from '../integrations/supabase/types';
 
 type Company = Database['public']['Tables']['companies']['Row'];
 
