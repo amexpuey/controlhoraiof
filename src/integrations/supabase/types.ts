@@ -69,6 +69,36 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          company_size: string | null
+          created_at: string
+          email: string
+          id: string
+          is_email_verified: boolean | null
+          selected_features: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          company_size?: string | null
+          created_at?: string
+          email: string
+          id: string
+          is_email_verified?: boolean | null
+          selected_features?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          company_size?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          is_email_verified?: boolean | null
+          selected_features?: string[] | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

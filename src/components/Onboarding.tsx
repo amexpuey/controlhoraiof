@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { ArrowRight, Building2, Users, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Building2, Users, CheckCircle2, Mail } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/components/ui/use-toast";
 
 const companySize = [
   { id: "1-10", label: "1-10 empleados" },
@@ -22,12 +26,18 @@ const features = [
   { id: "employee-portal", label: "Portal del empleado" },
 ];
 
+interface EmailFormData {
+  email: string;
+}
+
 export function Onboarding() {
   const [step, setStep] = useState(1);
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
+  const { toast } = useToast();
+  const { register, handleSubmit, formState: { errors } } = useForm<EmailFormData>();
 
-  const progress = ((step - 1) / 2) * 100;
+  const progress = ((step - 1) / 3) * 100;
 
   const handleSizeSelect = (size: string) => {
     setSelectedSize(size);
@@ -42,9 +52,34 @@ export function Onboarding() {
     );
   };
 
-  const handleComplete = () => {
-    // TODO: Handle form submission
-    setStep(3);
+  const handleEmailSubmit = async (data: EmailFormData) => {
+    try {
+      const { error } = await supabase.auth.signUp({
+        email: data.email,
+        password: crypto.randomUUID(), // Generate a random password initially
+        options: {
+          data: {
+            company_size: selectedSize,
+            selected_features: selectedFeatures,
+          },
+        },
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "¡Correo enviado!",
+        description: "Por favor, verifica tu correo electrónico para continuar.",
+      });
+      
+      setStep(4);
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -108,11 +143,11 @@ export function Onboarding() {
 
           <div className="flex justify-center">
             <Button
-              onClick={handleComplete}
+              onClick={() => setStep(3)}
               className="w-full md:w-auto"
               disabled={selectedFeatures.length === 0}
             >
-              Ver soluciones recomendadas
+              Continuar
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
@@ -120,14 +155,50 @@ export function Onboarding() {
       )}
 
       {step === 3 && (
+        <div className="space-y-8">
+          <div className="text-center">
+            <Mail className="w-12 h-12 mx-auto mb-4 text-primary" />
+            <h2 className="text-2xl font-bold mb-2">
+              Ingresa tu correo electrónico
+            </h2>
+            <p className="text-gray-600">
+              Te enviaremos las mejores soluciones para tu empresa
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit(handleEmailSubmit)} className="space-y-4">
+            <Input
+              type="email"
+              placeholder="tu@email.com"
+              {...register("email", { 
+                required: "El correo electrónico es requerido",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Correo electrónico inválido"
+                }
+              })}
+              className={errors.email ? "border-red-500" : ""}
+            />
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email.message}</p>
+            )}
+            <Button type="submit" className="w-full">
+              Ver soluciones recomendadas
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </form>
+        </div>
+      )}
+
+      {step === 4 && (
         <div className="text-center space-y-4">
           <CheckCircle2 className="w-16 h-16 mx-auto text-green-500" />
           <h2 className="text-2xl font-bold">¡Gracias por tu tiempo!</h2>
           <p className="text-gray-600">
-            Basado en tus respuestas, hemos encontrado las mejores soluciones para
-            tu empresa.
+            Hemos enviado un correo electrónico de verificación.
+            Por favor, revisa tu bandeja de entrada y sigue las instrucciones
+            para ver las soluciones recomendadas para tu empresa.
           </p>
-          <Button className="mt-4">Ver recomendaciones</Button>
         </div>
       )}
     </div>
