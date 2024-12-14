@@ -3,7 +3,19 @@ import { supabase } from "@/integrations/supabase/client";
 export const uploadImage = async (file: File, bucket: string, path: string) => {
   console.log('Starting image upload:', { bucket, path });
   
+  if (!file) {
+    throw new Error('No file provided');
+  }
+
+  // Validate file type
+  if (!file.type.startsWith('image/')) {
+    throw new Error('File must be an image');
+  }
+
   try {
+    // Create a copy of the file to prevent the "Body is disturbed or locked" error
+    const fileBlob = new Blob([await file.arrayBuffer()], { type: file.type });
+    
     // First check if file exists at path and remove it
     const { data: existingFile, error: listError } = await supabase.storage
       .from(bucket)
@@ -33,7 +45,7 @@ export const uploadImage = async (file: File, bucket: string, path: string) => {
     // Upload new file
     const { data, error: uploadError } = await supabase.storage
       .from(bucket)
-      .upload(path, file, {
+      .upload(path, fileBlob, {
         upsert: true,
         cacheControl: '3600'
       });
