@@ -48,7 +48,7 @@ export function Onboarding() {
       const { error: emailError } = await supabase.functions.invoke('send-verification-email', {
         body: {
           to: [data.email],
-          verificationLink: `${window.location.origin}/verify?token=${authData?.user?.email_confirm_token}`,
+          verificationLink: `${window.location.origin}/verify`,
         },
       });
 
