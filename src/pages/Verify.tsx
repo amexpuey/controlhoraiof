@@ -10,6 +10,33 @@ const Verify = () => {
   useEffect(() => {
     const handleVerification = async () => {
       try {
+        // First check if we have hash parameters from the magic link
+        if (window.location.hash) {
+          const hashParams = new URLSearchParams(window.location.hash.substring(1));
+          const accessToken = hashParams.get('access_token');
+          const refreshToken = hashParams.get('refresh_token');
+          
+          if (accessToken && refreshToken) {
+            const { data: { session }, error } = await supabase.auth.setSession({
+              access_token: accessToken,
+              refresh_token: refreshToken
+            });
+            
+            if (error) throw error;
+            
+            if (session) {
+              console.log("Session set from hash params:", session);
+              toast({
+                title: "¡Verificación exitosa!",
+                description: "Tu correo ha sido verificado correctamente.",
+              });
+              navigate('/dashboard');
+              return;
+            }
+          }
+        }
+
+        // If no hash params or session setting failed, check current session
         const { data: { session }, error } = await supabase.auth.getSession();
         
         if (error) throw error;

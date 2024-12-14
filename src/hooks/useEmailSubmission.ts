@@ -21,7 +21,7 @@ export const useEmailSubmission = (onSuccess: () => void) => {
             company_size: companySize,
             selected_features: selectedFeatures,
           },
-          emailRedirectTo: `${window.location.origin}/verify`
+          emailRedirectTo: window.location.origin + '/verify'
         }
       });
 
