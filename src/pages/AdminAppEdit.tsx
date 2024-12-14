@@ -92,11 +92,11 @@ export default function AdminAppEdit() {
         data: updatedData 
       });
       
-      toast.success('Cambios guardados correctamente');
+      toast.success('Changes saved successfully');
       navigate('/admin');
     } catch (error: any) {
       console.error('Error updating app:', error);
-      toast.error('Error al guardar los cambios: ' + error.message);
+      toast.error(`Error saving changes: ${error.message}`);
     } finally {
       setSaving(false);
     }

@@ -8,13 +8,23 @@ export const useImageUpload = (bucket: string) => {
   const handleImageUpload = async (file: File, path: string) => {
     try {
       setIsUploading(true);
-      console.log('Uploading image:', { file, path, bucket });
+      console.log('Starting image upload process:', { file, path, bucket });
+      
+      if (!file) {
+        throw new Error('No file provided');
+      }
+
       const url = await uploadImage(file, bucket, path);
-      console.log('Image uploaded successfully:', url);
+      console.log('Image upload completed successfully:', url);
+      toast.success('Image uploaded successfully');
       return url;
     } catch (error: any) {
-      console.error('Error uploading image:', error);
-      toast.error(`Error uploading image: ${error.message}`);
+      console.error('Image upload failed:', error);
+      const errorMessage = error.message || 'Unknown error occurred';
+      const statusCode = error.statusCode || error.status;
+      console.error('Detailed error:', { message: errorMessage, statusCode });
+      
+      toast.error(`Failed to upload image: ${errorMessage}`);
       throw error;
     } finally {
       setIsUploading(false);
