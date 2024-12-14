@@ -39,25 +39,24 @@ export const useUpdateCompany = () => {
         .from('companies')
         .select()
         .eq('id', id)
-        .maybeSingle();
+        .single();
       
       if (fetchError) {
+        if (fetchError.code === 'PGRST116') {
+          console.error('Company not found:', id);
+          throw new Error(`Company with id ${id} not found`);
+        }
         console.error('Error fetching company:', fetchError);
         throw new Error(`Failed to fetch company: ${fetchError.message}`);
       }
-      
-      if (!existingCompany) {
-        console.error('Company not found:', id);
-        throw new Error(`Company with id ${id} not found`);
-      }
 
-      // Proceed with update
+      // Proceed with update since we know the company exists
       const { data: updatedData, error: updateError } = await supabase
         .from('companies')
         .update(data)
         .eq('id', id)
         .select()
-        .maybeSingle();
+        .single();
       
       if (updateError) {
         console.error('Error updating company:', updateError);
