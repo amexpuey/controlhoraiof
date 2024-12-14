@@ -34,19 +34,19 @@ export const useUpdateCompany = () => {
     mutationFn: async ({ id, data }: { id: string; data: Partial<Company> }) => {
       console.log('Sending update to Supabase:', { id, data });
       
-      // First check if the company exists
-      const { error: fetchError } = await supabase
+      // First check if the company exists without using single()
+      const { count, error: countError } = await supabase
         .from('companies')
-        .select()
-        .eq('id', id)
-        .single();
+        .select('*', { count: 'exact', head: true })
+        .eq('id', id);
       
-      if (fetchError) {
-        console.error('Error fetching company:', fetchError);
-        if (fetchError.code === 'PGRST116') {
-          throw new Error(`Company with id ${id} not found`);
-        }
-        throw new Error(`Failed to fetch company: ${fetchError.message}`);
+      if (countError) {
+        console.error('Error checking company existence:', countError);
+        throw new Error(`Failed to check company existence: ${countError.message}`);
+      }
+
+      if (count === 0) {
+        throw new Error(`Company with id ${id} not found`);
       }
 
       // Proceed with update since we know the company exists
