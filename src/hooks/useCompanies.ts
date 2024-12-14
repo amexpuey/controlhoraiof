@@ -30,9 +30,16 @@ export const useUpdateCompany = () => {
         .update(data)
         .eq('id', id)
         .select()
-        .single();
+        .maybeSingle();
       
-      if (error) throw error;
+      if (error) {
+        console.error('Error updating company:', error);
+        throw new Error(`Failed to update company: ${error.message}`);
+      }
+      
+      if (!updatedData) {
+        throw new Error(`Company with id ${id} not found`);
+      }
       
       return updatedData;
     },
