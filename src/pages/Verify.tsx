@@ -9,18 +9,32 @@ const Verify = () => {
 
   useEffect(() => {
     const handleVerification = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (session) {
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) throw error;
+        
+        if (session) {
+          console.log("Session found:", session);
+          toast({
+            title: "¡Verificación exitosa!",
+            description: "Tu correo ha sido verificado correctamente.",
+          });
+          navigate('/dashboard');
+        } else {
+          console.log("No session found");
+          toast({
+            title: "Error de verificación",
+            description: "Por favor, intenta verificar tu correo nuevamente.",
+            variant: "destructive",
+          });
+          navigate('/');
+        }
+      } catch (error: any) {
+        console.error("Verification error:", error);
         toast({
-          title: "¡Verificación exitosa!",
-          description: "Tu correo ha sido verificado correctamente.",
-        });
-        navigate('/dashboard');
-      } else {
-        toast({
-          title: "Error de verificación",
-          description: "Por favor, intenta verificar tu correo nuevamente.",
+          title: "Error",
+          description: error.message,
           variant: "destructive",
         });
         navigate('/');
