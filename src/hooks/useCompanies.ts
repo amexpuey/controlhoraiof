@@ -35,7 +35,7 @@ export const useUpdateCompany = () => {
       console.log('Sending update to Supabase:', { id, data });
       
       // First check if the company exists
-      const { data: existingCompany, error: fetchError } = await supabase
+      const { error: fetchError } = await supabase
         .from('companies')
         .select()
         .eq('id', id)
