@@ -1,55 +1,43 @@
-import { useToast } from "@/components/ui/use-toast";
+import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { EmailFormData } from "@/types/onboarding";
+import { useToast } from "@/components/ui/use-toast";
 
-export const useEmailSubmission = (onSuccess: () => void) => {
+export const useEmailSubmission = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const handleEmailSubmit = async (
-    data: EmailFormData,
-    companySize: string,
-    selectedFeatures: string[]
-  ) => {
+  const handleEmailSubmit = async (email: string) => {
+    setIsLoading(true);
     try {
-      const { data: authData, error: signUpError } = await supabase.auth.signUp({
-        email: data.email,
-        password: crypto.randomUUID(),
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
         options: {
-          data: {
-            company_size: companySize,
-            selected_features: selectedFeatures,
-          },
-        },
+          emailRedirectTo: `${window.location.origin}/verify`
+        }
       });
 
-      if (signUpError) throw signUpError;
-
-      const { error: emailError } = await supabase.functions.invoke(
-        "send-verification-email",
-        {
-          body: {
-            to: [data.email],
-            verificationLink: `${window.location.origin}/verify`,
-          },
-        }
-      );
-
-      if (emailError) throw emailError;
+      if (error) throw error;
 
       toast({
-        title: "¡Correo enviado!",
-        description: "Por favor, verifica tu correo electrónico para continuar.",
+        title: "Email enviado",
+        description: "Por favor, revisa tu bandeja de entrada para verificar tu correo.",
       });
 
-      onSuccess();
+      return true;
     } catch (error: any) {
       toast({
         title: "Error",
         description: error.message,
         variant: "destructive",
       });
+      return false;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { handleEmailSubmit };
+  return {
+    isLoading,
+    handleEmailSubmit,
+  };
 };
