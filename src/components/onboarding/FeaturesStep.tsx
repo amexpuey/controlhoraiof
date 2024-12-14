@@ -3,15 +3,16 @@ import { CheckCircle2, ArrowRight } from "lucide-react";
 import { OnboardingStepProps } from "@/types/onboarding";
 
 const features = [
-  { id: "time-tracking", label: "Control de tiempo" },
-  { id: "shift-management", label: "Gestión de turnos" },
-  { id: "absence-management", label: "Gestión de ausencias" },
-  { id: "geolocation", label: "Geolocalización" },
-  { id: "automations", label: "Automatizaciones" },
-  { id: "presence-control", label: "Control de presencia" },
-  { id: "ai-capabilities", label: "Capacidades de IA" },
-  { id: "remote-work", label: "Trabajo remoto" },
-  { id: "employee-portal", label: "Portal del empleado" },
+  { id: "Control Horario", label: "Control Horario" },
+  { id: "Gestión de Turnos", label: "Gestión de Turnos" },
+  { id: "Gestión de Ausencias", label: "Gestión de Ausencias" },
+  { id: "Gestión de Vacaciones", label: "Gestión de Vacaciones" },
+  { id: "Geolocalización", label: "Geolocalización" },
+  { id: "Automatizaciones", label: "Automatizaciones" },
+  { id: "Control de presencia", label: "Control de presencia" },
+  { id: "Inteligencia Artificial", label: "Inteligencia Artificial" },
+  { id: "Teletrabajo", label: "Teletrabajo" },
+  { id: "Portal del Empleado", label: "Portal del Empleado" }
 ];
 
 interface FeaturesStepProps extends OnboardingStepProps {
@@ -32,7 +33,7 @@ export function FeaturesStep({ selectedFeatures, onFeatureToggle, onNext }: Feat
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {features.map((feature) => (
           <Button
             key={feature.id}
