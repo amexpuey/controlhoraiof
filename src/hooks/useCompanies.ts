@@ -32,12 +32,12 @@ export const useUpdateCompany = () => {
   
   return useMutation({
     mutationFn: async ({ id, data }: { id: string; data: Partial<Company> }) => {
-      console.log('Sending update to Supabase:', { id, data });
+      console.log('Updating company data:', data);
       
-      // First, try to get the company to verify it exists
+      // First, verify the company exists
       const { data: existingCompany, error: fetchError } = await supabase
         .from('companies')
-        .select('id')
+        .select('*')
         .eq('id', id)
         .maybeSingle();
       
@@ -47,8 +47,9 @@ export const useUpdateCompany = () => {
       }
 
       if (!existingCompany) {
-        console.error('Company not found:', id);
-        throw new Error(`Company with id ${id} not found`);
+        const notFoundError = new Error(`Company with id ${id} not found`);
+        console.error('Company not found:', { id, error: notFoundError });
+        throw notFoundError;
       }
 
       // Proceed with update since we know the company exists
@@ -57,7 +58,7 @@ export const useUpdateCompany = () => {
         .update(data)
         .eq('id', id)
         .select()
-        .single();
+        .maybeSingle();
       
       if (updateError) {
         console.error('Error updating company:', updateError);
@@ -65,7 +66,9 @@ export const useUpdateCompany = () => {
       }
       
       if (!updatedData) {
-        throw new Error(`Failed to update company with id ${id}`);
+        const updateFailedError = new Error(`Failed to update company with id ${id}`);
+        console.error('Update failed:', { id, error: updateFailedError });
+        throw updateFailedError;
       }
       
       return updatedData;
