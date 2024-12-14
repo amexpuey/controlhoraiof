@@ -39,16 +39,14 @@ export const useUpdateCompany = () => {
         .from('companies')
         .select()
         .eq('id', id)
-        .maybeSingle();
+        .single();
       
       if (fetchError) {
         console.error('Error fetching company:', fetchError);
+        if (fetchError.code === 'PGRST116') {
+          throw new Error(`Company with id ${id} not found`);
+        }
         throw new Error(`Failed to fetch company: ${fetchError.message}`);
-      }
-
-      if (!existingCompany) {
-        console.error('Company not found:', id);
-        throw new Error(`Company with id ${id} not found`);
       }
 
       // Proceed with update since we know the company exists
@@ -57,7 +55,7 @@ export const useUpdateCompany = () => {
         .update(data)
         .eq('id', id)
         .select()
-        .maybeSingle();
+        .single();
       
       if (updateError) {
         console.error('Error updating company:', updateError);
