@@ -15,22 +15,22 @@ export const useCompany = (id: string) => {
         throw new Error('Company ID is required and must be a string');
       }
 
-      const { data: companies, error } = await supabase
+      const { data: company, error } = await supabase
         .from('companies')
         .select('*')
-        .eq('id', id);
+        .eq('id', id)
+        .single();
       
       if (error) {
         console.error('Error fetching company:', error);
         throw error;
       }
 
-      if (!companies || companies.length === 0) {
+      if (!company) {
         console.warn('No company found with id:', id);
         return null;
       }
 
-      const company = companies[0];
       console.log('Company data fetched:', company);
       return company;
     },
