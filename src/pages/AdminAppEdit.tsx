@@ -38,7 +38,7 @@ export default function AdminAppEdit() {
   const [backgroundFile, setBackgroundFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
   
-  const { handleImageUpload, isUploading } = useImageUpload('controlhorarioelectronico');
+  const { handleImageUpload, isUploading } = useImageUpload();
 
   useEffect(() => {
     if (company) {
@@ -78,13 +78,13 @@ export default function AdminAppEdit() {
 
       if (logoFile) {
         console.log('Uploading logo file');
-        const logoUrl = await handleImageUpload(logoFile, `logos/${id}`);
+        const logoUrl = await handleImageUpload(logoFile, 'logo', id);
         updatedData.logo_url = addTimestampToUrl(logoUrl);
       }
 
       if (backgroundFile) {
         console.log('Uploading background file');
-        const imgUrl = await handleImageUpload(backgroundFile, `backgrounds/${id}`);
+        const imgUrl = await handleImageUpload(backgroundFile, 'background', id);
         updatedData.img_url = addTimestampToUrl(imgUrl);
       }
 

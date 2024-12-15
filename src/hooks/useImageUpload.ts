@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { uploadImage } from '@/lib/supabase';
 import { toast } from 'react-hot-toast';
 
-export const useImageUpload = (bucket: string) => {
+type ImageType = 'logo' | 'background';
+
+export const useImageUpload = () => {
   const [isUploading, setIsUploading] = useState(false);
 
-  const handleImageUpload = async (file: File, path: string) => {
+  const handleImageUpload = async (file: File, type: ImageType, id: string) => {
     try {
       setIsUploading(true);
       console.log('Starting image upload process:', { 
@@ -14,8 +16,8 @@ export const useImageUpload = (bucket: string) => {
           size: file.size, 
           type: file.type 
         }, 
-        path, 
-        bucket: 'controlhorarioelectronicobucket' // Using the correct bucket name
+        folder: type === 'logo' ? 'logos' : 'backgrounds',
+        bucket: 'app_assets'
       });
       
       if (!file) {
@@ -34,11 +36,14 @@ export const useImageUpload = (bucket: string) => {
         throw new Error('File type not supported. Please use JPG, PNG, GIF or WEBP');
       }
 
-      const url = await uploadImage(file, 'controlhorarioelectronicobucket', path);
+      const folder = type === 'logo' ? 'logos' : 'backgrounds';
+      const path = `${folder}/${id}`;
+      
+      const url = await uploadImage(file, 'app_assets', path);
       console.log('Image upload completed successfully:', {
         url,
         path,
-        bucket: 'controlhorarioelectronicobucket'
+        bucket: 'app_assets'
       });
       toast.success('Image uploaded successfully');
       return url;
@@ -46,14 +51,14 @@ export const useImageUpload = (bucket: string) => {
       console.error('Image upload failed:', {
         error,
         file: file?.name,
-        path,
-        bucket: 'controlhorarioelectronicobucket'
+        type,
+        bucket: 'app_assets'
       });
 
       // Handle specific bucket-related errors
       if (error.message?.includes('Bucket not found')) {
         toast.error('Storage configuration error. Please contact support.');
-        console.error('Bucket not properly configured:', 'controlhorarioelectronicobucket');
+        console.error('Bucket not properly configured:', 'app_assets');
       } else {
         const errorMessage = error.message || 'Unknown error occurred';
         toast.error(`Failed to upload image: ${errorMessage}`);
