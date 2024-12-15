@@ -15,7 +15,7 @@ export const useImageUpload = (bucket: string) => {
           type: file.type 
         }, 
         path, 
-        bucket 
+        bucket: 'controlhorarioelectronicobucket' // Using the correct bucket name
       });
       
       if (!file) {
@@ -34,11 +34,11 @@ export const useImageUpload = (bucket: string) => {
         throw new Error('File type not supported. Please use JPG, PNG, GIF or WEBP');
       }
 
-      const url = await uploadImage(file, bucket, path);
+      const url = await uploadImage(file, 'controlhorarioelectronicobucket', path);
       console.log('Image upload completed successfully:', {
         url,
         path,
-        bucket
+        bucket: 'controlhorarioelectronicobucket'
       });
       toast.success('Image uploaded successfully');
       return url;
@@ -47,13 +47,13 @@ export const useImageUpload = (bucket: string) => {
         error,
         file: file?.name,
         path,
-        bucket
+        bucket: 'controlhorarioelectronicobucket'
       });
 
       // Handle specific bucket-related errors
       if (error.message?.includes('Bucket not found')) {
         toast.error('Storage configuration error. Please contact support.');
-        console.error('Bucket not properly configured:', bucket);
+        console.error('Bucket not properly configured:', 'controlhorarioelectronicobucket');
       } else {
         const errorMessage = error.message || 'Unknown error occurred';
         toast.error(`Failed to upload image: ${errorMessage}`);
