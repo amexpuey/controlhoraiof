@@ -15,9 +15,9 @@ export const useCompany = (id: string) => {
         throw new Error('Company ID is required and must be a string');
       }
 
-      const { data: company, error } = await supabase
+      const { data, error } = await supabase
         .from('companies')
-        .select()
+        .select('*')
         .eq('id', id)
         .maybeSingle();
       
@@ -26,13 +26,13 @@ export const useCompany = (id: string) => {
         throw error;
       }
 
-      if (!company) {
+      if (!data) {
         console.warn('No company found with id:', id);
         return null;
       }
 
-      console.log('Company data fetched:', company);
-      return company;
+      console.log('Company data fetched:', data);
+      return data;
     },
     retry: 1,
     retryDelay: 1000
@@ -45,7 +45,7 @@ export const useCompanies = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('companies')
-        .select()
+        .select('*')
         .order('created_at', { ascending: false });
       
       if (error) {
@@ -82,26 +82,19 @@ export const useUpdateCompany = () => {
         .update(data)
         .eq('id', id)
         .select()
-        .maybeSingle();
+        .single();
 
       if (updateError) {
         console.error('Error updating company:', updateError);
         throw updateError;
       }
 
-      if (!updatedCompany) {
-        console.error('No company found or updated:', id);
-        throw new Error(`No company found with id ${id}`);
-      }
-
       console.log('Company updated successfully:', updatedCompany);
       return updatedCompany;
     },
     onSuccess: (updatedCompany) => {
-      if (updatedCompany) {
-        queryClient.setQueryData(['company', updatedCompany.id], updatedCompany);
-        queryClient.invalidateQueries({ queryKey: ['companies'] });
-      }
+      queryClient.setQueryData(['company', updatedCompany.id], updatedCompany);
+      queryClient.invalidateQueries({ queryKey: ['companies'] });
     }
   });
 };
