@@ -11,9 +11,8 @@ export const useCompany = (id: string) => {
       console.log('Fetching company with id:', id);
       const { data, error } = await supabase
         .from('companies')
-        .select()
+        .select('*')
         .eq('id', id)
-        .limit(1)
         .single();
       
       if (error) {
@@ -34,7 +33,7 @@ export const useCompanies = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('companies')
-        .select();
+        .select('*');
       
       if (error) {
         console.error('Error fetching companies:', error);
@@ -59,11 +58,24 @@ export const useUpdateCompany = () => {
       console.log('Starting company update:', { id, data });
       
       try {
+        // First check if the company exists
+        const { data: existingCompany, error: fetchError } = await supabase
+          .from('companies')
+          .select('*')
+          .eq('id', id)
+          .single();
+
+        if (fetchError) {
+          console.error('Error checking company existence:', fetchError);
+          throw new Error(`Company not found: ${fetchError.message}`);
+        }
+
+        // Then perform the update
         const { data: updatedData, error: updateError } = await supabase
           .from('companies')
           .update(data)
           .eq('id', id)
-          .select()
+          .select('*')
           .single();
 
         if (updateError) {
