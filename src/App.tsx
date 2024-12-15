@@ -39,7 +39,9 @@ const App = () => {
 
   // Show loading state while checking authentication
   if (isAuthenticated === null) {
-    return <div>Loading...</div>;
+    return <div className="flex items-center justify-center min-h-screen">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+    </div>;
   }
 
   return (
@@ -72,6 +74,7 @@ const App = () => {
             <Route path="/admin" element={<Admin />} />
             <Route path="/admin/edit/:id" element={<AdminAppEdit />} />
             <Route path="/admin/new" element={<AdminAppEdit />} />
+            {/* Catch all route - redirect to home */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </BrowserRouter>
