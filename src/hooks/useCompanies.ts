@@ -79,8 +79,6 @@ export const useUpdateCompany = () => {
         throw new Error('Company ID is required and must be a valid UUID for update');
       }
 
-      console.log('Updating company data:', data);
-      
       // Log the exact update conditions
       console.log('Update conditions:', {
         table: 'companies',
