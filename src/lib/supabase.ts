@@ -29,43 +29,6 @@ export const uploadImage = async (file: File, bucket: string, path: string) => {
   }
 
   try {
-    // First verify bucket exists and create folders if needed
-    const { data: buckets, error: bucketsError } = await supabase
-      .storage
-      .listBuckets();
-
-    if (bucketsError) {
-      console.error('Error listing buckets:', bucketsError);
-      throw new Error('Failed to verify storage configuration');
-    }
-
-    const bucketExists = buckets.some(b => b.id === bucket);
-    if (!bucketExists) {
-      console.error('Bucket does not exist:', bucket);
-      throw new Error('Bucket not found');
-    }
-
-    // List contents of bucket to verify/create folder structure
-    const folder = path.split('/')[0]; // 'logos' or 'backgrounds'
-    console.log('Verifying folder structure:', folder);
-    
-    const { data: folderContents, error: listError } = await supabase.storage
-      .from(bucket)
-      .list(folder);
-
-    if (listError) {
-      console.error('Error checking folder structure:', {
-        error: listError,
-        folder,
-        bucket
-      });
-    } else {
-      console.log('Folder contents:', {
-        folder,
-        contents: folderContents
-      });
-    }
-
     // Create a copy of the file to prevent the "Body is disturbed or locked" error
     const fileBlob = new Blob([await file.arrayBuffer()], { type: file.type });
     
