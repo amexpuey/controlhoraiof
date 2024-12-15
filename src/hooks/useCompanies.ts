@@ -45,7 +45,7 @@ export const useCompanies = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('companies')
-        .select('*')
+        .select()
         .order('created_at', { ascending: false });
       
       if (error) {
