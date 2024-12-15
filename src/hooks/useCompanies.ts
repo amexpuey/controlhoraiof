@@ -14,12 +14,15 @@ export const useCompany = (id: string) => {
         throw new Error('Company ID is required');
       }
 
+      const timestamp = new Date().getTime();
       const { data, error } = await supabase
         .from('companies')
         .select('*')
         .eq('id', id)
         .limit(1)
-        .maybeSingle();
+        .maybeSingle()
+        .returns<Company>()
+        .throwOnError();
       
       if (error) {
         console.error('Error fetching company:', error);
@@ -32,7 +35,7 @@ export const useCompany = (id: string) => {
       }
 
       console.log('Company data fetched:', data);
-      return data as Company;
+      return data;
     },
     retry: 1,
     retryDelay: 1000
@@ -43,10 +46,13 @@ export const useCompanies = () => {
   return useQuery({
     queryKey: ['companies'],
     queryFn: async () => {
+      const timestamp = new Date().getTime();
       const { data, error } = await supabase
         .from('companies')
         .select('*')
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .returns<Company[]>()
+        .throwOnError();
       
       if (error) {
         console.error('Error fetching companies:', error);
@@ -58,7 +64,7 @@ export const useCompanies = () => {
         return [];
       }
 
-      return data as Company[];
+      return data;
     }
   });
 };
@@ -76,12 +82,15 @@ export const useUpdateCompany = () => {
 
       console.log('Updating company data:', data);
 
+      const timestamp = new Date().getTime();
       const { data: updatedData, error: updateError } = await supabase
         .from('companies')
         .update(data)
         .eq('id', id)
         .select()
-        .maybeSingle();
+        .maybeSingle()
+        .returns<Company>()
+        .throwOnError();
 
       if (updateError) {
         console.error('Error updating company:', updateError);
@@ -93,7 +102,7 @@ export const useUpdateCompany = () => {
       }
 
       console.log('Company updated successfully:', updatedData);
-      return updatedData as Company;
+      return updatedData;
     },
     onSuccess: (updatedCompany) => {
       // Update queries
