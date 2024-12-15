@@ -18,16 +18,15 @@ export const useCompany = (id: string) => {
         .from('companies')
         .select()
         .eq('id', id)
-        .maybeSingle();
+        .single();
       
       if (error) {
+        if (error.code === 'PGRST116') {
+          console.error('No company found with id:', id);
+          throw new Error(`Company not found with id: ${id}`);
+        }
         console.error('Error fetching company:', error);
         throw error;
-      }
-
-      if (!data) {
-        console.error('No company found with id:', id);
-        throw new Error('Company not found');
       }
 
       console.log('Company data fetched:', data);
