@@ -96,13 +96,16 @@ export const uploadImage = async (file: File, bucket: string, path: string) => {
       path
     });
 
-    // Get public URL
+    // Get public URL and append image optimization parameters
     const { data: { publicUrl } } = supabase.storage
       .from(bucket)
       .getPublicUrl(path);
 
-    console.log('Generated public URL:', publicUrl);
-    return publicUrl;
+    // Append image optimization parameters
+    const optimizedUrl = `${publicUrl}?auto=format&fit=crop&q=80`;
+
+    console.log('Generated optimized public URL:', optimizedUrl);
+    return optimizedUrl;
   } catch (error: any) {
     console.error('Error in uploadImage:', {
       error,
