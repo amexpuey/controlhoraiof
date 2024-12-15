@@ -29,32 +29,21 @@ export const uploadImage = async (file: File, bucket: string, path: string) => {
   }
 
   try {
-    // Check bucket exists and we have permission
-    console.log('Checking bucket access for:', bucket);
-    const { data: bucketData, error: bucketError } = await supabase
+    // First verify bucket exists
+    const { data: buckets, error: bucketsError } = await supabase
       .storage
-      .getBucket(bucket);
+      .listBuckets();
 
-    if (bucketError) {
-      const error = bucketError as ExtendedStorageError;
-      console.error('Bucket access error:', {
-        error,
-        bucket,
-        errorMessage: error.message,
-        statusCode: error.statusCode
-      });
-      throw new Error(`Bucket access error: ${error.message}`);
+    if (bucketsError) {
+      console.error('Error listing buckets:', bucketsError);
+      throw new Error('Failed to verify storage configuration');
     }
 
-    if (!bucketData) {
-      console.error('Bucket not found:', bucket);
-      throw new Error('Storage bucket not found. Please ensure the bucket exists and you have proper permissions.');
+    const bucketExists = buckets.some(b => b.id === bucket);
+    if (!bucketExists) {
+      console.error('Bucket does not exist:', bucket);
+      throw new Error('Bucket not found');
     }
-
-    console.log('Bucket access verified:', {
-      bucket: bucketData,
-      permissions: bucketData.public ? 'public' : 'private'
-    });
 
     // Create a copy of the file to prevent the "Body is disturbed or locked" error
     const fileBlob = new Blob([await file.arrayBuffer()], { type: file.type });
@@ -70,14 +59,12 @@ export const uploadImage = async (file: File, bucket: string, path: string) => {
       });
 
     if (listError) {
-      const error = listError as ExtendedStorageError;
       console.error('Error checking existing file:', {
-        error,
+        error: listError,
         path,
-        bucket,
-        statusCode: error.statusCode
+        bucket
       });
-      throw error;
+      throw listError;
     }
 
     if (existingFile && existingFile.length > 0) {
@@ -87,14 +74,12 @@ export const uploadImage = async (file: File, bucket: string, path: string) => {
         .remove([path]);
       
       if (removeError) {
-        const error = removeError as ExtendedStorageError;
         console.error('Error removing existing file:', {
-          error,
+          error: removeError,
           path,
-          bucket,
-          statusCode: error.statusCode
+          bucket
         });
-        throw error;
+        throw removeError;
       }
     }
 
@@ -113,15 +98,12 @@ export const uploadImage = async (file: File, bucket: string, path: string) => {
       });
 
     if (uploadError) {
-      const error = uploadError as ExtendedStorageError;
       console.error('Upload error:', {
-        error,
+        error: uploadError,
         bucket,
-        path,
-        statusCode: error.statusCode,
-        message: error.message
+        path
       });
-      throw error;
+      throw uploadError;
     }
 
     console.log('Upload successful:', {

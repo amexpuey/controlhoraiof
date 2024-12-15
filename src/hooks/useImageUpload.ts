@@ -49,15 +49,16 @@ export const useImageUpload = (bucket: string) => {
         path,
         bucket
       });
-      const errorMessage = error.message || 'Unknown error occurred';
-      const statusCode = error.statusCode || error.status;
-      console.error('Detailed error:', { 
-        message: errorMessage, 
-        statusCode,
-        stack: error.stack 
-      });
-      
-      toast.error(`Failed to upload image: ${errorMessage}`);
+
+      // Handle specific bucket-related errors
+      if (error.message?.includes('Bucket not found')) {
+        toast.error('Storage configuration error. Please contact support.');
+        console.error('Bucket not properly configured:', bucket);
+      } else {
+        const errorMessage = error.message || 'Unknown error occurred';
+        toast.error(`Failed to upload image: ${errorMessage}`);
+      }
+
       throw error;
     } finally {
       setIsUploading(false);
