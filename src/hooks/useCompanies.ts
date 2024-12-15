@@ -21,10 +21,13 @@ export const useCompany = (id: string) => {
         .from('companies')
         .select()
         .eq('id', id)
-        .limit(1)
         .single();
       
       if (error) {
+        if (error.code === 'PGRST116') {
+          console.error('Company not found:', id);
+          throw new Error('Company not found');
+        }
         console.error('Error fetching company:', error);
         throw error;
       }
