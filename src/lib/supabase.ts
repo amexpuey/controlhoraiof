@@ -1,7 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 
 export const uploadImage = async (file: File, bucket: string, path: string) => {
-  console.log('Starting image upload:', { bucket, path });
+  console.log('Starting image upload to Supabase:', { bucket, path });
   
   if (!file) {
     throw new Error('No file provided');
@@ -13,6 +13,18 @@ export const uploadImage = async (file: File, bucket: string, path: string) => {
   }
 
   try {
+    // Check bucket exists and we have permission
+    const { data: bucketData, error: bucketError } = await supabase
+      .storage
+      .getBucket(bucket);
+
+    if (bucketError) {
+      console.error('Bucket access error:', bucketError);
+      throw new Error(`Bucket access error: ${bucketError.message}`);
+    }
+
+    console.log('Bucket access verified:', bucketData);
+
     // Create a copy of the file to prevent the "Body is disturbed or locked" error
     const fileBlob = new Blob([await file.arrayBuffer()], { type: file.type });
     
