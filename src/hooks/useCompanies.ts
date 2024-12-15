@@ -19,10 +19,7 @@ export const useCompany = (id: string) => {
         .from('companies')
         .select('*')
         .eq('id', id)
-        .limit(1)
-        .maybeSingle()
-        .returns<Company>()
-        .throwOnError();
+        .maybeSingle<Company>();
       
       if (error) {
         console.error('Error fetching company:', error);
@@ -50,9 +47,7 @@ export const useCompanies = () => {
       const { data, error } = await supabase
         .from('companies')
         .select('*')
-        .order('created_at', { ascending: false })
-        .returns<Company[]>()
-        .throwOnError();
+        .order('created_at', { ascending: false });
       
       if (error) {
         console.error('Error fetching companies:', error);
@@ -64,7 +59,7 @@ export const useCompanies = () => {
         return [];
       }
 
-      return data;
+      return data as Company[];
     }
   });
 };
@@ -88,9 +83,7 @@ export const useUpdateCompany = () => {
         .update(data)
         .eq('id', id)
         .select()
-        .maybeSingle()
-        .returns<Company>()
-        .throwOnError();
+        .maybeSingle<Company>();
 
       if (updateError) {
         console.error('Error updating company:', updateError);
