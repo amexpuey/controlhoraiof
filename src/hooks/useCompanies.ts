@@ -19,18 +19,14 @@ export const useCompany = (id: string) => {
 
       const { data, error } = await supabase
         .from('companies')
-        .select('*')
+        .select()
         .eq('id', id)
-        .maybeSingle();
+        .limit(1)
+        .single();
       
       if (error) {
         console.error('Error fetching company:', error);
         throw error;
-      }
-
-      if (!data) {
-        console.warn('No company found with id:', id);
-        return null;
       }
 
       console.log('Company data fetched:', data);
@@ -38,7 +34,7 @@ export const useCompany = (id: string) => {
     },
     retry: false,
     refetchOnWindowFocus: true,
-    staleTime: 0 // Always fetch fresh data
+    staleTime: 0
   });
 };
 
@@ -48,7 +44,7 @@ export const useCompanies = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('companies')
-        .select('*')
+        .select()
         .order('created_at', { ascending: false });
       
       if (error) {
@@ -87,7 +83,7 @@ export const useUpdateCompany = () => {
         .update(data)
         .eq('id', id)
         .select()
-        .maybeSingle();
+        .single();
 
       if (updateError) {
         console.error('Error updating company:', updateError);
@@ -102,11 +98,8 @@ export const useUpdateCompany = () => {
       return updatedCompany;
     },
     onSuccess: (updatedCompany) => {
-      // Invalidate and refetch queries after successful update
       queryClient.invalidateQueries({ queryKey: ['company', updatedCompany.id] });
       queryClient.invalidateQueries({ queryKey: ['companies'] });
-      
-      // Update the cache with the new data
       queryClient.setQueryData(['company', updatedCompany.id], updatedCompany);
     },
     onError: (error) => {
