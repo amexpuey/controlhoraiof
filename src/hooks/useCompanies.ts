@@ -10,8 +10,6 @@ const isValidUUID = (uuid: string) => {
 };
 
 export const useCompany = (id: string) => {
-  const queryClient = useQueryClient();
-  
   return useQuery({
     queryKey: ['company', id],
     queryFn: async () => {
@@ -22,26 +20,9 @@ export const useCompany = (id: string) => {
         throw new Error('Company ID is required and must be a valid UUID');
       }
 
-      // First check if company exists
-      const { count, error: countError } = await supabase
-        .from('companies')
-        .select('*', { count: 'exact', head: true })
-        .eq('id', id);
-      
-      if (countError) {
-        console.error('Error checking company existence:', countError);
-        throw countError;
-      }
-
-      if (count === 0) {
-        console.error('Company not found:', id);
-        throw new Error('Company not found');
-      }
-
-      // Now fetch the company data
       const { data, error } = await supabase
         .from('companies')
-        .select('*')
+        .select()
         .eq('id', id)
         .single();
       
@@ -96,23 +77,6 @@ export const useUpdateCompany = () => {
         console.error('Invalid company ID for update:', id);
         throw new Error('Company ID is required and must be a valid UUID for update');
       }
-
-      // First check if company exists
-      const { count, error: countError } = await supabase
-        .from('companies')
-        .select('*', { count: 'exact', head: true })
-        .eq('id', id);
-      
-      if (countError) {
-        console.error('Error checking company existence:', countError);
-        throw countError;
-      }
-
-      if (count === 0) {
-        throw new Error('Company not found or update failed');
-      }
-
-      console.log('Updating company data:', data);
 
       const { data: updatedCompany, error: updateError } = await supabase
         .from('companies')
