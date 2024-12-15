@@ -79,7 +79,8 @@ export const useUpdateCompany = () => {
         throw new Error('Company ID is required and must be a valid UUID for update');
       }
 
-      // Simplified update query that only filters by ID
+      console.log('Updating company data:', data);
+      
       const { data: updatedCompany, error: updateError } = await supabase
         .from('companies')
         .update(data)
