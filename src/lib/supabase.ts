@@ -1,4 +1,10 @@
 import { supabase } from "@/integrations/supabase/client";
+import { StorageError } from '@supabase/storage-js';
+
+interface ExtendedStorageError extends StorageError {
+  code?: string;
+  details?: string;
+}
 
 export const uploadImage = async (file: File, bucket: string, path: string) => {
   console.log('Starting image upload to Supabase:', { 
@@ -28,14 +34,19 @@ export const uploadImage = async (file: File, bucket: string, path: string) => {
       .getBucket(bucket);
 
     if (bucketError) {
+      const error = bucketError as ExtendedStorageError;
       console.error('Bucket access error:', {
-        error: bucketError,
+        error,
         bucket,
-        errorCode: bucketError.code,
-        errorMessage: bucketError.message,
-        errorDetails: bucketError.details
+        errorMessage: error.message,
+        statusCode: error.statusCode
       });
-      throw new Error(`Bucket access error: ${bucketError.message}`);
+      throw new Error(`Bucket access error: ${error.message}`);
+    }
+
+    if (!bucketData) {
+      console.error('Bucket not found:', bucket);
+      throw new Error('Storage bucket not found. Please ensure the bucket exists and you have proper permissions.');
     }
 
     console.log('Bucket access verified:', {
@@ -57,12 +68,14 @@ export const uploadImage = async (file: File, bucket: string, path: string) => {
       });
 
     if (listError) {
+      const error = listError as ExtendedStorageError;
       console.error('Error checking existing file:', {
-        error: listError,
+        error,
         path,
-        bucket
+        bucket,
+        statusCode: error.statusCode
       });
-      throw listError;
+      throw error;
     }
 
     if (existingFile && existingFile.length > 0) {
@@ -72,12 +85,14 @@ export const uploadImage = async (file: File, bucket: string, path: string) => {
         .remove([path]);
       
       if (removeError) {
+        const error = removeError as ExtendedStorageError;
         console.error('Error removing existing file:', {
-          error: removeError,
+          error,
           path,
-          bucket
+          bucket,
+          statusCode: error.statusCode
         });
-        throw removeError;
+        throw error;
       }
     }
 
@@ -96,15 +111,15 @@ export const uploadImage = async (file: File, bucket: string, path: string) => {
       });
 
     if (uploadError) {
+      const error = uploadError as ExtendedStorageError;
       console.error('Upload error:', {
-        error: uploadError,
+        error,
         bucket,
         path,
-        errorCode: uploadError.code,
-        errorMessage: uploadError.message,
-        errorDetails: uploadError.details
+        statusCode: error.statusCode,
+        message: error.message
       });
-      throw uploadError;
+      throw error;
     }
 
     console.log('Upload successful:', {
@@ -120,14 +135,13 @@ export const uploadImage = async (file: File, bucket: string, path: string) => {
 
     console.log('Generated public URL:', publicUrl);
     return publicUrl;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error in uploadImage:', {
       error,
       bucket,
       path,
-      errorCode: error.code,
-      errorMessage: error.message,
-      errorDetails: error.details,
+      message: error.message,
+      statusCode: error.statusCode,
       stack: error.stack
     });
     throw error;
