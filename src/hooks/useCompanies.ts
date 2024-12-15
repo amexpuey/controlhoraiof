@@ -75,9 +75,25 @@ export const useUpdateCompany = () => {
         throw new Error('Company ID is required and must be a string for update');
       }
 
+      // First verify the company exists
+      const { data: existingCompany, error: fetchError } = await supabase
+        .from('companies')
+        .select('*')
+        .eq('id', id);
+
+      if (fetchError) {
+        console.error('Error verifying company existence:', fetchError);
+        throw fetchError;
+      }
+
+      if (!existingCompany || existingCompany.length === 0) {
+        console.error('Company not found before update:', id);
+        throw new Error(`No company found with id ${id}`);
+      }
+
       console.log('Updating company data:', data);
 
-      const { data: companies, error: updateError } = await supabase
+      const { data: updatedCompanies, error: updateError } = await supabase
         .from('companies')
         .update(data)
         .eq('id', id)
@@ -88,11 +104,11 @@ export const useUpdateCompany = () => {
         throw updateError;
       }
 
-      if (!companies || companies.length === 0) {
-        throw new Error(`No company found with id ${id}`);
+      if (!updatedCompanies || updatedCompanies.length === 0) {
+        throw new Error(`Failed to update company with id ${id}`);
       }
 
-      const updatedCompany = companies[0];
+      const updatedCompany = updatedCompanies[0];
       console.log('Company updated successfully:', updatedCompany);
       return updatedCompany;
     },
