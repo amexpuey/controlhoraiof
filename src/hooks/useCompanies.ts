@@ -4,40 +4,28 @@ import type { Database } from "@/integrations/supabase/types";
 
 type Company = Database['public']['Tables']['companies']['Row'];
 
-const isValidUUID = (uuid: string) => {
-  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-  return uuidRegex.test(uuid);
-};
+const isValidUUID = (uuid: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(uuid);
 
 export const useCompany = (id: string) => {
   return useQuery({
     queryKey: ['company', id],
     queryFn: async () => {
-      console.log('Fetching company with id:', id);
-      
       if (!id || !isValidUUID(id)) {
-        console.error('Invalid company ID:', id);
-        throw new Error('Company ID is required and must be a valid UUID');
+        throw new Error('Invalid or missing company ID');
       }
 
       const { data, error } = await supabase
         .from('companies')
         .select('*')
         .eq('id', id)
-        .limit(1)
-        .single();
-      
-      if (error) {
-        console.error('Error fetching company:', error);
-        throw error;
-      }
+        .maybeSingle();
 
-      console.log('Company data fetched:', data);
-      return data;
+      if (error) throw error;
+      return data || null;
     },
     retry: false,
     refetchOnWindowFocus: true,
-    staleTime: 0
+    staleTime: 0,
   });
 };
 
@@ -49,21 +37,12 @@ export const useCompanies = () => {
         .from('companies')
         .select('*')
         .order('created_at', { ascending: false });
-      
-      if (error) {
-        console.error('Error fetching companies:', error);
-        throw error;
-      }
 
-      if (!data || data.length === 0) {
-        console.warn('No companies found');
-        return [];
-      }
-
-      return data as Company[];
+      if (error) throw error;
+      return data || [];
     },
     refetchOnWindowFocus: true,
-    staleTime: 0
+    staleTime: 0,
   });
 };
 
@@ -72,46 +51,27 @@ export const useUpdateCompany = () => {
   
   return useMutation({
     mutationFn: async ({ id, data }: { id: string; data: Partial<Company> }) => {
-      console.log('Starting company update:', { id, data });
-      
       if (!id || !isValidUUID(id)) {
-        console.error('Invalid company ID for update:', id);
-        throw new Error('Company ID is required and must be a valid UUID for update');
+        throw new Error('Invalid company ID for update');
       }
 
-      // Log the exact update conditions
-      console.log('Update conditions:', {
-        table: 'companies',
-        filter: { id },
-        updateData: data
-      });
-      
-      const { data: updatedCompany, error: updateError } = await supabase
+      const { data: updatedCompany, error } = await supabase
         .from('companies')
         .update(data)
         .eq('id', id)
-        .select()
-        .single();
+        .maybeSingle();
 
-      if (updateError) {
-        console.error('Error updating company:', updateError);
-        throw updateError;
-      }
+      if (error) throw error;
+      if (!updatedCompany) throw new Error('Update failed: No rows modified');
 
-      if (!updatedCompany) {
-        throw new Error('Company not found or update failed');
-      }
-
-      console.log('Company updated successfully:', updatedCompany);
       return updatedCompany;
     },
     onSuccess: (updatedCompany) => {
-      queryClient.invalidateQueries({ queryKey: ['company', updatedCompany.id] });
-      queryClient.invalidateQueries({ queryKey: ['companies'] });
-      queryClient.setQueryData(['company', updatedCompany.id], updatedCompany);
+      queryClient.invalidateQueries(['company', updatedCompany.id]);
+      queryClient.invalidateQueries(['companies']);
     },
     onError: (error) => {
-      console.error('Error in update mutation:', error);
-    }
+      console.error('Update mutation error:', error);
+    },
   });
 };
