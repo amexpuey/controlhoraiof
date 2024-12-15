@@ -15,6 +15,18 @@ export const useCompany = (id: string) => {
         throw new Error('Company ID is required and must be a string');
       }
 
+      // First check if the company exists
+      const { count } = await supabase
+        .from('companies')
+        .select('*', { count: 'exact', head: true })
+        .eq('id', id);
+
+      if (count === 0) {
+        console.warn('No company found with id:', id);
+        return null;
+      }
+
+      // If company exists, fetch its data
       const { data: company, error } = await supabase
         .from('companies')
         .select('*')
@@ -24,11 +36,6 @@ export const useCompany = (id: string) => {
       if (error) {
         console.error('Error fetching company:', error);
         throw error;
-      }
-
-      if (!company) {
-        console.warn('No company found with id:', id);
-        return null;
       }
 
       console.log('Company data fetched:', company);
@@ -75,19 +82,13 @@ export const useUpdateCompany = () => {
         throw new Error('Company ID is required and must be a string for update');
       }
 
-      // First verify the company exists
-      const { data: existingCompany, error: fetchError } = await supabase
+      // First check if the company exists
+      const { count } = await supabase
         .from('companies')
-        .select('*')
-        .eq('id', id)
-        .single();
+        .select('*', { count: 'exact', head: true })
+        .eq('id', id);
 
-      if (fetchError) {
-        console.error('Error verifying company existence:', fetchError);
-        throw fetchError;
-      }
-
-      if (!existingCompany) {
+      if (count === 0) {
         console.error('Company not found before update:', id);
         throw new Error(`No company found with id ${id}`);
       }
@@ -104,10 +105,6 @@ export const useUpdateCompany = () => {
       if (updateError) {
         console.error('Error updating company:', updateError);
         throw updateError;
-      }
-
-      if (!updatedCompany) {
-        throw new Error(`Failed to update company with id ${id}`);
       }
 
       console.log('Company updated successfully:', updatedCompany);
