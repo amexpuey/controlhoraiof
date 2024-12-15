@@ -14,12 +14,11 @@ export const useCompany = (id: string) => {
         throw new Error('Company ID is required');
       }
 
-      // Cast the id to UUID explicitly in the query
       const { data, error } = await supabase
         .from('companies')
-        .select('*')
+        .select()
         .eq('id', id)
-        .single();
+        .maybeSingle();
       
       if (error) {
         console.error('Error fetching company:', error);
@@ -45,7 +44,7 @@ export const useCompanies = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('companies')
-        .select('*')
+        .select()
         .order('created_at', { ascending: false });
       
       if (error) {
@@ -75,29 +74,12 @@ export const useUpdateCompany = () => {
       }
 
       try {
-        // First check if the company exists
-        const { data: existingCompany, error: fetchError } = await supabase
-          .from('companies')
-          .select('*')
-          .eq('id', id)
-          .single();
-
-        if (fetchError) {
-          console.error('Error checking company existence:', fetchError);
-          throw new Error(`Company not found: ${fetchError.message}`);
-        }
-
-        if (!existingCompany) {
-          throw new Error(`No company found with id ${id}`);
-        }
-
-        // Then perform the update
         const { data: updatedData, error: updateError } = await supabase
           .from('companies')
           .update(data)
           .eq('id', id)
-          .select('*')
-          .single();
+          .select()
+          .maybeSingle();
 
         if (updateError) {
           console.error('Error updating company:', updateError);
@@ -118,12 +100,7 @@ export const useUpdateCompany = () => {
     onSuccess: (updatedCompany) => {
       // Update queries
       queryClient.setQueryData(['company', updatedCompany.id], updatedCompany);
-      queryClient.setQueryData(['companies'], (oldData: Company[] | undefined) => {
-        if (!oldData) return [updatedCompany];
-        return oldData.map(company => 
-          company.id === updatedCompany.id ? updatedCompany : company
-        );
-      });
+      queryClient.invalidateQueries({ queryKey: ['companies'] });
     }
   });
 };
