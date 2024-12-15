@@ -81,6 +81,13 @@ export const useUpdateCompany = () => {
 
       console.log('Updating company data:', data);
       
+      // Log the exact update conditions
+      console.log('Update conditions:', {
+        table: 'companies',
+        filter: { id },
+        updateData: data
+      });
+      
       const { data: updatedCompany, error: updateError } = await supabase
         .from('companies')
         .update(data)
