@@ -24,7 +24,7 @@ export const useCompany = (id: string) => {
 
       const { data, error } = await supabase
         .from('companies')
-        .select()
+        .select('*')
         .eq('id', id)
         .maybeSingle();
       
@@ -53,7 +53,7 @@ export const useCompanies = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('companies')
-        .select()
+        .select('*')
         .order('created_at', { ascending: false });
       
       if (error) {
