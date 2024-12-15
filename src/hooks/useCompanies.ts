@@ -10,29 +10,29 @@ export const useCompany = (id: string) => {
     queryFn: async () => {
       console.log('Fetching company with id:', id);
       
-      if (!id) {
-        throw new Error('Company ID is required');
+      if (!id || typeof id !== 'string') {
+        console.error('Invalid company ID:', id);
+        throw new Error('Company ID is required and must be a string');
       }
 
-      const timestamp = new Date().getTime();
-      const { data, error } = await supabase
+      const { data: companies, error } = await supabase
         .from('companies')
         .select('*')
         .eq('id', id)
-        .single<Company>();
+        .maybeSingle<Company>();
       
       if (error) {
         console.error('Error fetching company:', error);
         throw error;
       }
 
-      if (!data) {
-        console.error('No company found with id:', id);
-        throw new Error(`Company not found with id: ${id}`);
+      if (!companies) {
+        console.warn('No company found with id:', id);
+        return null;
       }
 
-      console.log('Company data fetched:', data);
-      return data;
+      console.log('Company data fetched:', companies);
+      return companies;
     },
     retry: 1,
     retryDelay: 1000
@@ -54,7 +54,7 @@ export const useCompanies = () => {
         throw error;
       }
 
-      if (!data) {
+      if (!data || data.length === 0) {
         console.warn('No companies found');
         return [];
       }
@@ -71,36 +71,37 @@ export const useUpdateCompany = () => {
     mutationFn: async ({ id, data }: { id: string; data: Partial<Company> }) => {
       console.log('Starting company update:', { id, data });
       
-      if (!id) {
-        throw new Error('Company ID is required for update');
+      if (!id || typeof id !== 'string') {
+        console.error('Invalid company ID for update:', id);
+        throw new Error('Company ID is required and must be a string for update');
       }
 
       console.log('Updating company data:', data);
 
-      const timestamp = new Date().getTime();
-      const { data: updatedData, error: updateError } = await supabase
+      const { data: companies, error: updateError } = await supabase
         .from('companies')
         .update(data)
         .eq('id', id)
         .select()
-        .single<Company>();
+        .maybeSingle<Company>();
 
       if (updateError) {
         console.error('Error updating company:', updateError);
         throw updateError;
       }
 
-      if (!updatedData) {
+      if (!companies) {
         throw new Error(`No company found with id ${id}`);
       }
 
-      console.log('Company updated successfully:', updatedData);
-      return updatedData;
+      console.log('Company updated successfully:', companies);
+      return companies;
     },
     onSuccess: (updatedCompany) => {
-      // Update queries
-      queryClient.setQueryData(['company', updatedCompany.id], updatedCompany);
-      queryClient.invalidateQueries({ queryKey: ['companies'] });
+      if (updatedCompany) {
+        queryClient.setQueryData(['company', updatedCompany.id], updatedCompany);
+        queryClient.invalidateQueries({ queryKey: ['companies'] });
+      }
     }
   });
 };
