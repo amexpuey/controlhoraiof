@@ -24,11 +24,16 @@ export const useCompany = (id: string) => {
         .from('companies')
         .select()
         .eq('id', id)
-        .single();
+        .maybeSingle();
       
       if (error) {
         console.error('Error fetching company:', error);
         throw error;
+      }
+
+      if (!data) {
+        console.error('Company not found:', id);
+        throw new Error('Company not found');
       }
 
       console.log('Company data fetched:', data);
@@ -83,7 +88,7 @@ export const useUpdateCompany = () => {
         .update(data)
         .eq('id', id)
         .select()
-        .single();
+        .maybeSingle();
 
       if (updateError) {
         console.error('Error updating company:', updateError);
