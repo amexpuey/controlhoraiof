@@ -21,15 +21,16 @@ export const useCompany = (id: string) => {
         .from('companies')
         .select('*')
         .eq('id', id)
-        .single();
+        .maybeSingle();
       
       if (error) {
-        if (error.code === 'PGRST116') {
-          console.warn('No company found with id:', id);
-          return null;
-        }
         console.error('Error fetching company:', error);
         throw error;
+      }
+
+      if (!data) {
+        console.warn('No company found with id:', id);
+        return null;
       }
 
       console.log('Company data fetched:', data);
@@ -86,11 +87,15 @@ export const useUpdateCompany = () => {
         .update(data)
         .eq('id', id)
         .select()
-        .single();
+        .maybeSingle();
 
       if (updateError) {
         console.error('Error updating company:', updateError);
         throw updateError;
+      }
+
+      if (!updatedCompany) {
+        throw new Error('Company not found or update failed');
       }
 
       console.log('Company updated successfully:', updatedCompany);
