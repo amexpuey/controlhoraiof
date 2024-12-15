@@ -4,6 +4,33 @@ import type { Database } from "@/integrations/supabase/types";
 
 type Company = Database['public']['Tables']['companies']['Row'];
 
+export const useCompany = (id: string) => {
+  return useQuery({
+    queryKey: ['company', id],
+    queryFn: async () => {
+      console.log('Fetching company with id:', id);
+      const { data, error } = await supabase
+        .from('companies')
+        .select()
+        .eq('id', id)
+        .maybeSingle();
+      
+      if (error) {
+        console.error('Error fetching company:', error);
+        throw error;
+      }
+
+      if (!data) {
+        console.warn('No company found with id:', id);
+        return null;
+      }
+
+      return data as Company;
+    },
+    retry: false
+  });
+};
+
 export const useCompanies = () => {
   return useQuery({
     queryKey: ['companies'],
@@ -34,25 +61,6 @@ export const useUpdateCompany = () => {
     mutationFn: async ({ id, data }: { id: string; data: Partial<Company> }) => {
       console.log('Updating company data:', data);
       
-      // First, verify the company exists using maybeSingle() to handle no results gracefully
-      const { data: existingCompany, error: fetchError } = await supabase
-        .from('companies')
-        .select()
-        .eq('id', id)
-        .maybeSingle();
-      
-      if (fetchError) {
-        console.error('Error checking company existence:', fetchError);
-        throw new Error(`Failed to check company existence: ${fetchError.message}`);
-      }
-
-      if (!existingCompany) {
-        const notFoundError = new Error(`Company with id ${id} not found`);
-        console.error('Company not found:', { id, error: notFoundError });
-        throw notFoundError;
-      }
-
-      // Proceed with update since we know the company exists
       const { data: updatedData, error: updateError } = await supabase
         .from('companies')
         .update(data)
@@ -82,8 +90,12 @@ export const useUpdateCompany = () => {
         );
       });
 
-      // Invalidate the query to ensure data is fresh
+      // Also update the individual company query
+      queryClient.setQueryData(['company', updatedCompany.id], updatedCompany);
+
+      // Invalidate queries to ensure data is fresh
       queryClient.invalidateQueries({ queryKey: ['companies'] });
+      queryClient.invalidateQueries({ queryKey: ['company', updatedCompany.id] });
     }
   });
 };

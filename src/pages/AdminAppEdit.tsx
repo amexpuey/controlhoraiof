@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Save, ArrowLeft } from 'lucide-react';
-import { useCompanies, useUpdateCompany } from '../hooks/useCompanies';
-import { toast } from 'react-hot-toast';
+import { Save, ArrowLeft, AlertCircle } from 'lucide-react';
+import { useCompany, useUpdateCompany } from '../hooks/useCompanies';
+import { toast } from 'sonner';
 import { useImageUpload } from '../hooks/useImageUpload';
 import AppFormFields from '../components/admin/AppFormFields';
 import type { Database } from '../integrations/supabase/types';
@@ -29,7 +29,7 @@ const initialFormData: Omit<Company, 'id' | 'created_at' | 'updated_at'> = {
 export default function AdminAppEdit() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data: apps, isLoading } = useCompanies();
+  const { data: company, isLoading, error } = useCompany(id || '');
   const updateCompany = useUpdateCompany();
   const [formData, setFormData] = useState(initialFormData);
   const [newFeature, setNewFeature] = useState('');
@@ -41,29 +41,26 @@ export default function AdminAppEdit() {
   const { handleImageUpload, isUploading } = useImageUpload('controlhorarioelectronico');
 
   useEffect(() => {
-    if (apps && id) {
-      const app = apps.find(a => a.id === id);
-      if (app) {
-        console.log('Loading app data:', app);
-        setFormData({
-          title: app.title || '',
-          url: app.url || '',
-          description: app.description || '',
-          features: app.features || [],
-          type: app.type || 'premium',
-          verified: Boolean(app.verified),
-          votes: Number(app.votes) || 0,
-          is_top_rated: Boolean(app.is_top_rated),
-          img_url: app.img_url || '',
-          logo_url: app.logo_url || '',
-          pricing_starting_price: Number(app.pricing_starting_price) || 0,
-          pricing_billing_period: app.pricing_billing_period || 'mensual',
-          pricing_currency: app.pricing_currency || 'EUR',
-          highlights: app.highlights || []
-        });
-      }
+    if (company) {
+      console.log('Loading app data:', company);
+      setFormData({
+        title: company.title || '',
+        url: company.url || '',
+        description: company.description || '',
+        features: company.features || [],
+        type: company.type || 'premium',
+        verified: Boolean(company.verified),
+        votes: Number(company.votes) || 0,
+        is_top_rated: Boolean(company.is_top_rated),
+        img_url: company.img_url || '',
+        logo_url: company.logo_url || '',
+        pricing_starting_price: Number(company.pricing_starting_price) || 0,
+        pricing_billing_period: company.pricing_billing_period || 'mensual',
+        pricing_currency: company.pricing_currency || 'EUR',
+        highlights: company.highlights || []
+      });
     }
-  }, [id, apps]);
+  }, [company]);
 
   const addTimestampToUrl = (url: string) => {
     const timestamp = new Date().getTime();
@@ -112,6 +109,38 @@ export default function AdminAppEdit() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (error || !company) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <button
+            onClick={() => navigate('/admin')}
+            className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            Volver al panel
+          </button>
+
+          <div className="bg-white rounded-xl shadow-sm p-6">
+            <div className="flex flex-col items-center justify-center text-center">
+              <AlertCircle className="w-12 h-12 text-red-500 mb-4" />
+              <h1 className="text-2xl font-bold text-gray-900 mb-2">Aplicación no encontrada</h1>
+              <p className="text-gray-600 mb-6">
+                La aplicación que intentas editar no existe o ha sido eliminada.
+              </p>
+              <button
+                onClick={() => navigate('/admin')}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              >
+                Volver al panel
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
