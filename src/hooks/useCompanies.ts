@@ -64,11 +64,11 @@ export const useUpdateCompany = () => {
       if (error) throw error;
       if (!updatedCompany) throw new Error('Update failed: No rows modified');
 
-      return updatedCompany;
+      return updatedCompany as Company;
     },
-    onSuccess: (updatedCompany) => {
-      queryClient.invalidateQueries(['company', updatedCompany.id]);
-      queryClient.invalidateQueries(['companies']);
+    onSuccess: (updatedCompany: Company) => {
+      queryClient.invalidateQueries({ queryKey: ['company', updatedCompany.id] });
+      queryClient.invalidateQueries({ queryKey: ['companies'] });
     },
     onError: (error) => {
       console.error('Update mutation error:', error);
