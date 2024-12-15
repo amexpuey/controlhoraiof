@@ -1,5 +1,7 @@
 import React from 'react';
 import type { Database } from '@/integrations/supabase/types';
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 type Company = Database['public']['Tables']['companies']['Row'];
 
@@ -11,29 +13,31 @@ interface StatusFieldsProps {
 export default function StatusFields({ formData, setFormData }: StatusFieldsProps) {
   return (
     <div className="flex items-center gap-4">
-      <label className="flex items-center gap-2">
-        <input
-          type="checkbox"
+      <div className="flex items-center space-x-2">
+        <Checkbox
           id="app-verified"
-          name="app-verified"
           checked={formData.verified}
-          onChange={(e) => setFormData({ ...formData, verified: e.target.checked })}
-          className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+          onCheckedChange={(checked) => 
+            setFormData((prev) => ({ ...prev, verified: checked as boolean }))
+          }
         />
-        <span className="text-sm text-gray-700">Verificado</span>
-      </label>
+        <Label htmlFor="app-verified" className="text-sm text-gray-700">
+          Verificado
+        </Label>
+      </div>
 
-      <label className="flex items-center gap-2">
-        <input
-          type="checkbox"
+      <div className="flex items-center space-x-2">
+        <Checkbox
           id="app-top-rated"
-          name="app-top-rated"
           checked={formData.is_top_rated}
-          onChange={(e) => setFormData({ ...formData, is_top_rated: e.target.checked })}
-          className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+          onCheckedChange={(checked) => 
+            setFormData((prev) => ({ ...prev, is_top_rated: checked as boolean }))
+          }
         />
-        <span className="text-sm text-gray-700">Top Rated</span>
-      </label>
+        <Label htmlFor="app-top-rated" className="text-sm text-gray-700">
+          Top Rated
+        </Label>
+      </div>
     </div>
   );
 }

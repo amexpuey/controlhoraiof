@@ -1,5 +1,8 @@
 import React from 'react';
 import type { Database } from '@/integrations/supabase/types';
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type Company = Database['public']['Tables']['companies']['Row'];
 
@@ -12,78 +15,70 @@ export default function PricingFields({ formData, setFormData }: PricingFieldsPr
   return (
     <div className="space-y-6">
       <div>
-        <label htmlFor="app-type" className="block text-sm font-medium text-gray-700">
-          Tipo
-        </label>
-        <select
-          id="app-type"
-          name="app-type"
-          value={formData.type}
-          onChange={(e) => setFormData({ ...formData, type: e.target.value as Company['type'] })}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+        <Label htmlFor="app-type">Tipo</Label>
+        <Select 
+          value={formData.type} 
+          onValueChange={(value) => setFormData((prev) => ({ ...prev, type: value as Company['type'] }))}
         >
-          <option value="premium">Premium</option>
-          <option value="freemium">Freemium</option>
-          <option value="gratis">Gratis</option>
-        </select>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Selecciona un tipo" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="premium">Premium</SelectItem>
+            <SelectItem value="freemium">Freemium</SelectItem>
+            <SelectItem value="gratis">Gratis</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div>
-          <label htmlFor="app-price" className="block text-sm font-medium text-gray-700">
-            Precio inicial
-          </label>
-          <input
+          <Label htmlFor="app-price">Precio inicial</Label>
+          <Input
             id="app-price"
             name="app-price"
             type="number"
             step="0.01"
             min="0"
-            value={formData.pricing_starting_price}
-            onChange={(e) => setFormData({ 
-              ...formData, 
+            value={formData.pricing_starting_price || 0}
+            onChange={(e) => setFormData((prev) => ({ 
+              ...prev, 
               pricing_starting_price: parseFloat(e.target.value) || 0 
-            })}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            }))}
+            className="mt-1"
           />
         </div>
 
         <div>
-          <label htmlFor="app-billing-period" className="block text-sm font-medium text-gray-700">
-            Periodo de facturación
-          </label>
-          <select
-            id="app-billing-period"
-            name="app-billing-period"
-            value={formData.pricing_billing_period}
-            onChange={(e) => setFormData({
-              ...formData,
-              pricing_billing_period: e.target.value
-            })}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          <Label htmlFor="app-billing-period">Periodo de facturación</Label>
+          <Select 
+            value={formData.pricing_billing_period} 
+            onValueChange={(value) => setFormData((prev) => ({ ...prev, pricing_billing_period: value }))}
           >
-            <option value="mensual">Mensual</option>
-            <option value="anual">Anual</option>
-          </select>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Selecciona un periodo" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="mensual">Mensual</SelectItem>
+              <SelectItem value="anual">Anual</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         <div>
-          <label htmlFor="app-currency" className="block text-sm font-medium text-gray-700">
-            Moneda
-          </label>
-          <select
-            id="app-currency"
-            name="app-currency"
-            value={formData.pricing_currency}
-            onChange={(e) => setFormData({
-              ...formData,
-              pricing_currency: e.target.value
-            })}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          <Label htmlFor="app-currency">Moneda</Label>
+          <Select 
+            value={formData.pricing_currency} 
+            onValueChange={(value) => setFormData((prev) => ({ ...prev, pricing_currency: value }))}
           >
-            <option value="EUR">EUR</option>
-            <option value="USD">USD</option>
-          </select>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Selecciona una moneda" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="EUR">EUR</SelectItem>
+              <SelectItem value="USD">USD</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
     </div>

@@ -1,5 +1,8 @@
 import React from 'react';
 import type { Database } from '@/integrations/supabase/types';
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 type Company = Database['public']['Tables']['companies']['Row'];
 
@@ -13,47 +16,41 @@ export default function BasicInfoFields({ formData, setFormData }: BasicInfoFiel
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label htmlFor="app-title" className="block text-sm font-medium text-gray-700">
-            Nombre
-          </label>
-          <input
+          <Label htmlFor="app-title">Nombre</Label>
+          <Input
             id="app-title"
             name="app-title"
             type="text"
-            value={formData.title}
-            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            value={formData.title || ''}
+            onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+            className="mt-1"
             required
           />
         </div>
 
         <div>
-          <label htmlFor="app-url" className="block text-sm font-medium text-gray-700">
-            URL
-          </label>
-          <input
+          <Label htmlFor="app-url">URL</Label>
+          <Input
             id="app-url"
             name="app-url"
             type="url"
-            value={formData.url}
-            onChange={(e) => setFormData({ ...formData, url: e.target.value })}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            value={formData.url || ''}
+            onChange={(e) => setFormData((prev) => ({ ...prev, url: e.target.value }))}
+            className="mt-1"
             required
           />
         </div>
       </div>
 
       <div>
-        <label htmlFor="app-description" className="block text-sm font-medium text-gray-700">
-          Descripción
-        </label>
-        <textarea
+        <Label htmlFor="app-description">Descripción</Label>
+        <Textarea
           id="app-description"
           name="app-description"
-          value={formData.description}
-          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+          value={formData.description || ''}
+          onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
           rows={3}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          className="mt-1"
           required
         />
       </div>
