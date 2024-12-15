@@ -9,6 +9,12 @@ export const useCompany = (id: string) => {
     queryKey: ['company', id],
     queryFn: async () => {
       console.log('Fetching company with id:', id);
+      
+      if (!id) {
+        throw new Error('Company ID is required');
+      }
+
+      // Cast the id to UUID explicitly in the query
       const { data, error } = await supabase
         .from('companies')
         .select('*')
@@ -20,10 +26,16 @@ export const useCompany = (id: string) => {
         throw error;
       }
 
+      if (!data) {
+        console.error('No company found with id:', id);
+        throw new Error('Company not found');
+      }
+
       console.log('Company data fetched:', data);
       return data as Company;
     },
-    retry: false
+    retry: 1,
+    retryDelay: 1000
   });
 };
 
@@ -33,7 +45,8 @@ export const useCompanies = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('companies')
-        .select('*');
+        .select('*')
+        .order('created_at', { ascending: false });
       
       if (error) {
         console.error('Error fetching companies:', error);
@@ -57,6 +70,10 @@ export const useUpdateCompany = () => {
     mutationFn: async ({ id, data }: { id: string; data: Partial<Company> }) => {
       console.log('Starting company update:', { id, data });
       
+      if (!id) {
+        throw new Error('Company ID is required for update');
+      }
+
       try {
         // First check if the company exists
         const { data: existingCompany, error: fetchError } = await supabase
@@ -68,6 +85,10 @@ export const useUpdateCompany = () => {
         if (fetchError) {
           console.error('Error checking company existence:', fetchError);
           throw new Error(`Company not found: ${fetchError.message}`);
+        }
+
+        if (!existingCompany) {
+          throw new Error(`No company found with id ${id}`);
         }
 
         // Then perform the update
