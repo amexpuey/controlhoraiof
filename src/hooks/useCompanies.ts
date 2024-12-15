@@ -18,21 +18,21 @@ export const useCompany = (id: string) => {
       const { data: companies, error } = await supabase
         .from('companies')
         .select('*')
-        .eq('id', id)
-        .maybeSingle<Company>();
+        .eq('id', id);
       
       if (error) {
         console.error('Error fetching company:', error);
         throw error;
       }
 
-      if (!companies) {
+      if (!companies || companies.length === 0) {
         console.warn('No company found with id:', id);
         return null;
       }
 
-      console.log('Company data fetched:', companies);
-      return companies;
+      const company = companies[0];
+      console.log('Company data fetched:', company);
+      return company;
     },
     retry: 1,
     retryDelay: 1000
@@ -43,7 +43,6 @@ export const useCompanies = () => {
   return useQuery({
     queryKey: ['companies'],
     queryFn: async () => {
-      const timestamp = new Date().getTime();
       const { data, error } = await supabase
         .from('companies')
         .select('*')
@@ -82,20 +81,20 @@ export const useUpdateCompany = () => {
         .from('companies')
         .update(data)
         .eq('id', id)
-        .select()
-        .maybeSingle<Company>();
+        .select();
 
       if (updateError) {
         console.error('Error updating company:', updateError);
         throw updateError;
       }
 
-      if (!companies) {
+      if (!companies || companies.length === 0) {
         throw new Error(`No company found with id ${id}`);
       }
 
-      console.log('Company updated successfully:', companies);
-      return companies;
+      const updatedCompany = companies[0];
+      console.log('Company updated successfully:', updatedCompany);
+      return updatedCompany;
     },
     onSuccess: (updatedCompany) => {
       if (updatedCompany) {
