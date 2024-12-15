@@ -22,18 +22,14 @@ export const useCompany = (id: string) => {
 
       const { data, error } = await supabase
         .from('companies')
-        .select()
+        .select('*')
         .eq('id', id)
-        .maybeSingle();
+        .limit(1)
+        .single();
       
       if (error) {
         console.error('Error fetching company:', error);
         throw error;
-      }
-
-      if (!data) {
-        console.error('Company not found:', id);
-        throw new Error('Company not found');
       }
 
       console.log('Company data fetched:', data);
@@ -88,7 +84,7 @@ export const useUpdateCompany = () => {
         .update(data)
         .eq('id', id)
         .select()
-        .maybeSingle();
+        .single();
 
       if (updateError) {
         console.error('Error updating company:', updateError);
