@@ -19,23 +19,21 @@ export const useCompany = (id: string) => {
         .from('companies')
         .select('*')
         .eq('id', id)
-        .maybeSingle();
+        .single();
       
       if (error) {
+        if (error.code === 'PGRST116') {
+          console.warn('No company found with id:', id);
+          return null;
+        }
         console.error('Error fetching company:', error);
         throw error;
-      }
-
-      if (!data) {
-        console.warn('No company found with id:', id);
-        return null;
       }
 
       console.log('Company data fetched:', data);
       return data;
     },
-    retry: 1,
-    retryDelay: 1000
+    retry: false
   });
 };
 
