@@ -21,11 +21,7 @@ export const useCompany = (id: string) => {
         throw error;
       }
 
-      if (!data) {
-        console.warn('No company found with id:', id);
-        return null;
-      }
-
+      console.log('Company data fetched:', data);
       return data as Company;
     },
     retry: false
@@ -60,43 +56,41 @@ export const useUpdateCompany = () => {
   
   return useMutation({
     mutationFn: async ({ id, data }: { id: string; data: Partial<Company> }) => {
-      console.log('Updating company data:', data);
+      console.log('Starting company update:', { id, data });
       
-      const { data: updatedData, error: updateError } = await supabase
-        .from('companies')
-        .update(data)
-        .eq('id', id)
-        .select()
-        .single();
-      
-      if (updateError) {
-        console.error('Error updating company:', updateError);
-        throw new Error(`Failed to update company: ${updateError.message}`);
+      try {
+        const { data: updatedData, error: updateError } = await supabase
+          .from('companies')
+          .update(data)
+          .eq('id', id)
+          .select()
+          .single();
+
+        if (updateError) {
+          console.error('Error updating company:', updateError);
+          throw new Error(`Failed to update company: ${updateError.message}`);
+        }
+
+        if (!updatedData) {
+          throw new Error(`No company found with id ${id}`);
+        }
+
+        console.log('Company updated successfully:', updatedData);
+        return updatedData as Company;
+      } catch (error) {
+        console.error('Error in update operation:', error);
+        throw error;
       }
-      
-      if (!updatedData) {
-        const updateFailedError = new Error(`Failed to update company with id ${id}`);
-        console.error('Update failed:', { id, error: updateFailedError });
-        throw updateFailedError;
-      }
-      
-      return updatedData;
     },
     onSuccess: (updatedCompany) => {
-      // Update the cache with the new data
+      // Update queries
+      queryClient.setQueryData(['company', updatedCompany.id], updatedCompany);
       queryClient.setQueryData(['companies'], (oldData: Company[] | undefined) => {
         if (!oldData) return [updatedCompany];
         return oldData.map(company => 
           company.id === updatedCompany.id ? updatedCompany : company
         );
       });
-
-      // Also update the individual company query
-      queryClient.setQueryData(['company', updatedCompany.id], updatedCompany);
-
-      // Invalidate queries to ensure data is fresh
-      queryClient.invalidateQueries({ queryKey: ['companies'] });
-      queryClient.invalidateQueries({ queryKey: ['company', updatedCompany.id] });
     }
   });
 };
