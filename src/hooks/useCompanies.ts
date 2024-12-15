@@ -19,7 +19,7 @@ export const useCompany = (id: string) => {
         .from('companies')
         .select('*')
         .eq('id', id)
-        .maybeSingle<Company>();
+        .single<Company>();
       
       if (error) {
         console.error('Error fetching company:', error);
@@ -83,7 +83,7 @@ export const useUpdateCompany = () => {
         .update(data)
         .eq('id', id)
         .select()
-        .maybeSingle<Company>();
+        .single<Company>();
 
       if (updateError) {
         console.error('Error updating company:', updateError);
