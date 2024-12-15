@@ -5,6 +5,8 @@ import type { Database } from "@/integrations/supabase/types";
 type Company = Database['public']['Tables']['companies']['Row'];
 
 export const useCompany = (id: string) => {
+  const queryClient = useQueryClient();
+  
   return useQuery({
     queryKey: ['company', id],
     queryFn: async () => {
@@ -33,7 +35,9 @@ export const useCompany = (id: string) => {
       console.log('Company data fetched:', data);
       return data;
     },
-    retry: false
+    retry: false,
+    refetchOnWindowFocus: true,
+    staleTime: 0 // Always fetch fresh data
   });
 };
 
@@ -57,7 +61,9 @@ export const useCompanies = () => {
       }
 
       return data as Company[];
-    }
+    },
+    refetchOnWindowFocus: true,
+    staleTime: 0
   });
 };
 
@@ -91,8 +97,15 @@ export const useUpdateCompany = () => {
       return updatedCompany;
     },
     onSuccess: (updatedCompany) => {
-      queryClient.setQueryData(['company', updatedCompany.id], updatedCompany);
+      // Invalidate and refetch queries after successful update
+      queryClient.invalidateQueries({ queryKey: ['company', updatedCompany.id] });
       queryClient.invalidateQueries({ queryKey: ['companies'] });
+      
+      // Update the cache with the new data
+      queryClient.setQueryData(['company', updatedCompany.id], updatedCompany);
+    },
+    onError: (error) => {
+      console.error('Error in update mutation:', error);
     }
   });
 };
