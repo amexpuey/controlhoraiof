@@ -16,22 +16,23 @@ export const useCompany = (id: string) => {
 
       const { data, error } = await supabase
         .from('companies')
-        .select()
+        .select('*')
         .eq('id', id)
-        .limit(1);
+        .limit(1)
+        .maybeSingle();
       
       if (error) {
         console.error('Error fetching company:', error);
         throw error;
       }
 
-      if (!data || data.length === 0) {
+      if (!data) {
         console.error('No company found with id:', id);
         throw new Error(`Company not found with id: ${id}`);
       }
 
-      console.log('Company data fetched:', data[0]);
-      return data[0] as Company;
+      console.log('Company data fetched:', data);
+      return data as Company;
     },
     retry: 1,
     retryDelay: 1000
@@ -44,7 +45,7 @@ export const useCompanies = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('companies')
-        .select()
+        .select('*')
         .order('created_at', { ascending: false });
       
       if (error) {
@@ -73,45 +74,26 @@ export const useUpdateCompany = () => {
         throw new Error('Company ID is required for update');
       }
 
-      try {
-        // First check if the company exists
-        const { data: checkData, error: checkError } = await supabase
-          .from('companies')
-          .select()
-          .eq('id', id)
-          .limit(1);
+      console.log('Updating company data:', data);
 
-        if (checkError) {
-          console.error('Error checking company existence:', checkError);
-          throw new Error(`Failed to verify company: ${checkError.message}`);
-        }
+      const { data: updatedData, error: updateError } = await supabase
+        .from('companies')
+        .update(data)
+        .eq('id', id)
+        .select()
+        .maybeSingle();
 
-        if (!checkData || checkData.length === 0) {
-          throw new Error(`Company not found with id ${id}`);
-        }
-
-        // If we get here, the company exists, proceed with update
-        const { data: updatedData, error: updateError } = await supabase
-          .from('companies')
-          .update(data)
-          .eq('id', id)
-          .select();
-
-        if (updateError) {
-          console.error('Error updating company:', updateError);
-          throw new Error(`Failed to update company: ${updateError.message}`);
-        }
-
-        if (!updatedData || updatedData.length === 0) {
-          throw new Error(`No company found with id ${id}`);
-        }
-
-        console.log('Company updated successfully:', updatedData[0]);
-        return updatedData[0] as Company;
-      } catch (error) {
-        console.error('Error in update operation:', error);
-        throw error;
+      if (updateError) {
+        console.error('Error updating company:', updateError);
+        throw updateError;
       }
+
+      if (!updatedData) {
+        throw new Error(`No company found with id ${id}`);
+      }
+
+      console.log('Company updated successfully:', updatedData);
+      return updatedData as Company;
     },
     onSuccess: (updatedCompany) => {
       // Update queries
