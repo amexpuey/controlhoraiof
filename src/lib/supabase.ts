@@ -4,6 +4,8 @@ import { StorageError } from '@supabase/storage-js';
 interface ExtendedStorageError extends StorageError {
   code?: string;
   details?: string;
+  statusCode?: string | number;
+  message: string;
 }
 
 export const uploadImage = async (file: File, bucket: string, path: string) => {
