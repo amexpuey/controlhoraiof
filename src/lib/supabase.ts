@@ -29,7 +29,7 @@ export const uploadImage = async (file: File, bucket: string, path: string) => {
   }
 
   try {
-    // First verify bucket exists
+    // First verify bucket exists and create folders if needed
     const { data: buckets, error: bucketsError } = await supabase
       .storage
       .listBuckets();
@@ -45,12 +45,33 @@ export const uploadImage = async (file: File, bucket: string, path: string) => {
       throw new Error('Bucket not found');
     }
 
+    // List contents of bucket to verify/create folder structure
+    const folder = path.split('/')[0]; // 'logos' or 'backgrounds'
+    console.log('Verifying folder structure:', folder);
+    
+    const { data: folderContents, error: listError } = await supabase.storage
+      .from(bucket)
+      .list(folder);
+
+    if (listError) {
+      console.error('Error checking folder structure:', {
+        error: listError,
+        folder,
+        bucket
+      });
+    } else {
+      console.log('Folder contents:', {
+        folder,
+        contents: folderContents
+      });
+    }
+
     // Create a copy of the file to prevent the "Body is disturbed or locked" error
     const fileBlob = new Blob([await file.arrayBuffer()], { type: file.type });
     
     // First check if file exists at path and remove it
     console.log('Checking for existing file at path:', path);
-    const { data: existingFile, error: listError } = await supabase.storage
+    const { data: existingFile, error: listFileError } = await supabase.storage
       .from(bucket)
       .list(path.split('/')[0], {
         limit: 1,
@@ -58,13 +79,13 @@ export const uploadImage = async (file: File, bucket: string, path: string) => {
         search: path.split('/')[1]
       });
 
-    if (listError) {
+    if (listFileError) {
       console.error('Error checking existing file:', {
-        error: listError,
+        error: listFileError,
         path,
         bucket
       });
-      throw listError;
+      throw listFileError;
     }
 
     if (existingFile && existingFile.length > 0) {
