@@ -18,19 +18,20 @@ export const useCompany = (id: string) => {
         .from('companies')
         .select()
         .eq('id', id)
-        .single();
+        .limit(1);
       
       if (error) {
-        if (error.code === 'PGRST116') {
-          console.error('No company found with id:', id);
-          throw new Error(`Company not found with id: ${id}`);
-        }
         console.error('Error fetching company:', error);
         throw error;
       }
 
-      console.log('Company data fetched:', data);
-      return data as Company;
+      if (!data || data.length === 0) {
+        console.error('No company found with id:', id);
+        throw new Error(`Company not found with id: ${id}`);
+      }
+
+      console.log('Company data fetched:', data[0]);
+      return data[0] as Company;
     },
     retry: 1,
     retryDelay: 1000
@@ -73,15 +74,19 @@ export const useUpdateCompany = () => {
       }
 
       try {
-        // First verify the company exists
-        const { data: existingCompany, error: fetchError } = await supabase
+        // First check if the company exists
+        const { data: checkData, error: checkError } = await supabase
           .from('companies')
           .select()
           .eq('id', id)
-          .single();
+          .limit(1);
 
-        if (fetchError) {
-          console.error('Error fetching existing company:', fetchError);
+        if (checkError) {
+          console.error('Error checking company existence:', checkError);
+          throw new Error(`Failed to verify company: ${checkError.message}`);
+        }
+
+        if (!checkData || checkData.length === 0) {
           throw new Error(`Company not found with id ${id}`);
         }
 
@@ -90,20 +95,19 @@ export const useUpdateCompany = () => {
           .from('companies')
           .update(data)
           .eq('id', id)
-          .select()
-          .single();
+          .select();
 
         if (updateError) {
           console.error('Error updating company:', updateError);
           throw new Error(`Failed to update company: ${updateError.message}`);
         }
 
-        if (!updatedData) {
+        if (!updatedData || updatedData.length === 0) {
           throw new Error(`No company found with id ${id}`);
         }
 
-        console.log('Company updated successfully:', updatedData);
-        return updatedData as Company;
+        console.log('Company updated successfully:', updatedData[0]);
+        return updatedData[0] as Company;
       } catch (error) {
         console.error('Error in update operation:', error);
         throw error;
