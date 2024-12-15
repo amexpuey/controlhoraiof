@@ -34,10 +34,10 @@ export const useUpdateCompany = () => {
     mutationFn: async ({ id, data }: { id: string; data: Partial<Company> }) => {
       console.log('Updating company data:', data);
       
-      // First, verify the company exists
+      // First, verify the company exists using maybeSingle() to handle no results gracefully
       const { data: existingCompany, error: fetchError } = await supabase
         .from('companies')
-        .select('*')
+        .select()
         .eq('id', id)
         .maybeSingle();
       
@@ -58,7 +58,7 @@ export const useUpdateCompany = () => {
         .update(data)
         .eq('id', id)
         .select()
-        .maybeSingle();
+        .single();
       
       if (updateError) {
         console.error('Error updating company:', updateError);
