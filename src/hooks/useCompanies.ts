@@ -10,7 +10,7 @@ export const useCompanies = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('companies')
-        .select('*');
+        .select();
       
       if (error) {
         console.error('Error fetching companies:', error);
@@ -58,7 +58,7 @@ export const useUpdateCompany = () => {
         .update(data)
         .eq('id', id)
         .select()
-        .single();
+        .maybeSingle();
       
       if (updateError) {
         console.error('Error updating company:', updateError);
