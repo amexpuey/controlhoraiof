@@ -4,6 +4,11 @@ import type { Database } from "@/integrations/supabase/types";
 
 type Company = Database['public']['Tables']['companies']['Row'];
 
+const isValidUUID = (uuid: string) => {
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  return uuidRegex.test(uuid);
+};
+
 export const useCompany = (id: string) => {
   const queryClient = useQueryClient();
   
@@ -12,24 +17,25 @@ export const useCompany = (id: string) => {
     queryFn: async () => {
       console.log('Fetching company with id:', id);
       
-      if (!id || typeof id !== 'string') {
+      if (!id || !isValidUUID(id)) {
         console.error('Invalid company ID:', id);
-        throw new Error('Company ID is required and must be a string');
+        throw new Error('Company ID is required and must be a valid UUID');
       }
 
       const { data, error } = await supabase
         .from('companies')
         .select()
         .eq('id', id)
-        .single();
+        .maybeSingle();
       
       if (error) {
-        if (error.code === 'PGRST116') {
-          console.error('Company not found:', id);
-          throw new Error('Company not found');
-        }
         console.error('Error fetching company:', error);
         throw error;
+      }
+
+      if (!data) {
+        console.error('Company not found:', id);
+        throw new Error('Company not found');
       }
 
       console.log('Company data fetched:', data);
@@ -74,9 +80,9 @@ export const useUpdateCompany = () => {
     mutationFn: async ({ id, data }: { id: string; data: Partial<Company> }) => {
       console.log('Starting company update:', { id, data });
       
-      if (!id || typeof id !== 'string') {
+      if (!id || !isValidUUID(id)) {
         console.error('Invalid company ID for update:', id);
-        throw new Error('Company ID is required and must be a string for update');
+        throw new Error('Company ID is required and must be a valid UUID for update');
       }
 
       console.log('Updating company data:', data);
