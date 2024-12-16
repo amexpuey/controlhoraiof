@@ -23,6 +23,10 @@ export const useCompany = (id: string) => {
         .single();
 
       if (error) {
+        if (error.code === 'PGRST116') {
+          console.error('Company not found with ID:', id);
+          throw new Error(`Company not found with ID: ${id}`);
+        }
         console.error('Error fetching company:', error);
         throw error;
       }
@@ -79,6 +83,10 @@ export const useUpdateCompany = () => {
         .single();
 
       if (fetchError) {
+        if (fetchError.code === 'PGRST116') {
+          console.error('Company not found with ID:', id);
+          throw new Error(`Company not found with ID: ${id}`);
+        }
         console.error('Error checking company existence:', fetchError);
         throw fetchError;
       }
@@ -92,6 +100,10 @@ export const useUpdateCompany = () => {
         .single();
 
       if (updateError) {
+        if (updateError.code === 'PGRST116') {
+          console.error('Update failed: Company not found with ID:', id);
+          throw new Error(`Update failed: Company not found with ID: ${id}`);
+        }
         console.error('Error updating company:', updateError);
         throw updateError;
       }
