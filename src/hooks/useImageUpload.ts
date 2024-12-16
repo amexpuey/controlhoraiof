@@ -11,7 +11,6 @@ export const useImageUpload = () => {
     try {
       console.log('Verifying file access for:', { bucket, path });
       
-      // Try to generate a signed URL first
       const { data: signedData, error: signedError } = await supabase
         .storage
         .from(bucket)
@@ -24,7 +23,6 @@ export const useImageUpload = () => {
 
       console.log('Successfully generated signed URL:', signedData.signedUrl);
 
-      // Try to get the public URL as well
       const { data: { publicUrl } } = supabase.storage
         .from(bucket)
         .getPublicUrl(path);
@@ -69,10 +67,7 @@ export const useImageUpload = () => {
 
       const folder = type === 'logo' ? 'logos' : 'backgrounds';
       const path = `${folder}/${id}`;
-      
-      // Create a copy of the file to prevent the "Body is disturbed or locked" error
-      const fileBlob = new Blob([await file.arrayBuffer()], { type: file.type });
-      
+
       // First check if file exists at path and remove it
       console.log('Checking for existing file at path:', path);
       const { data: existingFile, error: listFileError } = await supabase.storage
@@ -108,7 +103,11 @@ export const useImageUpload = () => {
         }
       }
 
-      // Upload new file
+      // Create a fresh ArrayBuffer from the file
+      const arrayBuffer = await file.arrayBuffer();
+      // Create a new Blob for this specific upload
+      const fileBlob = new Blob([arrayBuffer], { type: file.type });
+
       console.log('Starting file upload to bucket:', {
         bucket: 'app_assets',
         path,
@@ -159,7 +158,6 @@ export const useImageUpload = () => {
         stack: error.stack
       });
       
-      // Handle specific bucket-related errors
       if (error.message?.includes('Bucket not found')) {
         toast.error('Storage configuration error. Please contact support.');
         console.error('Bucket not properly configured:', 'app_assets');
