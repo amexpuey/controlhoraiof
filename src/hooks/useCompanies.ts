@@ -88,7 +88,8 @@ export const useUpdateCompany = () => {
       }
 
       if (!updatedCompany) {
-        throw new Error('Update failed: No rows modified');
+        console.error('No company found with ID:', id);
+        throw new Error('Company not found');
       }
 
       console.log('Successfully updated company:', updatedCompany);
