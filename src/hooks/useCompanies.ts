@@ -18,7 +18,7 @@ export const useCompany = (id: string) => {
       
       const { data, error } = await supabase
         .from('companies')
-        .select()
+        .select('*')
         .eq('id', id)
         .single();
 
@@ -31,6 +31,7 @@ export const useCompany = (id: string) => {
         throw new Error('Company not found');
       }
 
+      console.log('Fetched company data:', data);
       return data;
     },
     retry: false,
@@ -45,10 +46,15 @@ export const useCompanies = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('companies')
-        .select()
+        .select('*')
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching companies:', error);
+        throw error;
+      }
+      
+      console.log('Fetched companies:', data);
       return data || [];
     },
     refetchOnWindowFocus: true,
@@ -65,13 +71,13 @@ export const useUpdateCompany = () => {
         throw new Error('Invalid company ID for update');
       }
 
-      console.log('Updating company data:', data);
+      console.log('Updating company with data:', { id, data });
 
       const { data: updatedCompany, error } = await supabase
         .from('companies')
         .update(data)
         .eq('id', id)
-        .select()
+        .select('*')
         .single();
 
       if (error) {
@@ -83,11 +89,14 @@ export const useUpdateCompany = () => {
         throw new Error('Update failed: No rows modified');
       }
 
-      return updatedCompany as Company;
+      console.log('Successfully updated company:', updatedCompany);
+      return updatedCompany;
     },
-    onSuccess: (updatedCompany: Company) => {
+    onSuccess: (updatedCompany) => {
+      // Invalidate both the individual company query and the companies list
       queryClient.invalidateQueries({ queryKey: ['company', updatedCompany.id] });
       queryClient.invalidateQueries({ queryKey: ['companies'] });
+      console.log('Cache invalidated for updated company');
     },
     onError: (error) => {
       console.error('Update mutation error:', error);
