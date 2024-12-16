@@ -19,20 +19,21 @@ export const useCompany = (id: string) => {
       const { data, error } = await supabase
         .from('companies')
         .select('*')
-        .eq('id', id)
-        .single();
+        .eq('id', id);
 
       if (error) {
-        if (error.code === 'PGRST116') {
-          console.error('Company not found with ID:', id);
-          throw new Error(`Company not found with ID: ${id}`);
-        }
         console.error('Error fetching company:', error);
         throw error;
       }
 
-      console.log('Fetched company data:', data);
-      return data;
+      if (!data || data.length === 0) {
+        console.error('Company not found with ID:', id);
+        throw new Error(`Company not found with ID: ${id}`);
+      }
+
+      const company = data[0];
+      console.log('Fetched company data:', company);
+      return company;
     },
     retry: false,
     refetchOnWindowFocus: true,
@@ -73,22 +74,23 @@ export const useUpdateCompany = () => {
         throw new Error('Invalid company ID for update');
       }
 
+      console.log('Updating company data:', data);
       console.log('Updating company with data:', { id, data });
 
       // First verify the company exists
-      const { data: existingCompany, error: fetchError } = await supabase
+      const { data: existingData, error: fetchError } = await supabase
         .from('companies')
         .select()
-        .eq('id', id)
-        .single();
+        .eq('id', id);
 
       if (fetchError) {
-        if (fetchError.code === 'PGRST116') {
-          console.error('Company not found with ID:', id);
-          throw new Error(`Company not found with ID: ${id}`);
-        }
         console.error('Error checking company existence:', fetchError);
         throw fetchError;
+      }
+
+      if (!existingData || existingData.length === 0) {
+        console.error('Company not found with ID:', id);
+        throw new Error(`Company not found with ID: ${id}`);
       }
 
       // Proceed with update since we know the company exists
@@ -96,20 +98,20 @@ export const useUpdateCompany = () => {
         .from('companies')
         .update(data)
         .eq('id', id)
-        .select()
-        .single();
+        .select();
 
       if (updateError) {
-        if (updateError.code === 'PGRST116') {
-          console.error('Update failed: Company not found with ID:', id);
-          throw new Error(`Update failed: Company not found with ID: ${id}`);
-        }
         console.error('Error updating company:', updateError);
         throw updateError;
       }
 
-      console.log('Successfully updated company:', updatedCompany);
-      return updatedCompany;
+      if (!updatedCompany || updatedCompany.length === 0) {
+        console.error('Update failed: Company not found with ID:', id);
+        throw new Error(`Update failed: Company not found with ID: ${id}`);
+      }
+
+      console.log('Successfully updated company:', updatedCompany[0]);
+      return updatedCompany[0];
     },
     onSuccess: (updatedCompany) => {
       // Invalidate and refetch both queries
