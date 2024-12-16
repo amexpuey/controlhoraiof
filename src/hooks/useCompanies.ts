@@ -37,6 +37,7 @@ export const useCompany = (id: string) => {
     retry: false,
     refetchOnWindowFocus: true,
     staleTime: 0,
+    cacheTime: 0
   });
 };
 
@@ -59,6 +60,7 @@ export const useCompanies = () => {
     },
     refetchOnWindowFocus: true,
     staleTime: 0,
+    cacheTime: 0
   });
 };
 
@@ -93,10 +95,13 @@ export const useUpdateCompany = () => {
       return updatedCompany;
     },
     onSuccess: (updatedCompany) => {
-      // Invalidate both the individual company query and the companies list
+      // Invalidate and refetch both queries
       queryClient.invalidateQueries({ queryKey: ['company', updatedCompany.id] });
       queryClient.invalidateQueries({ queryKey: ['companies'] });
-      console.log('Cache invalidated for updated company');
+      // Force an immediate refetch
+      queryClient.refetchQueries({ queryKey: ['company', updatedCompany.id] });
+      queryClient.refetchQueries({ queryKey: ['companies'] });
+      console.log('Cache invalidated and refetched for updated company');
     },
     onError: (error) => {
       console.error('Update mutation error:', error);
