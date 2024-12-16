@@ -36,8 +36,8 @@ export const useCompany = (id: string) => {
     },
     retry: false,
     refetchOnWindowFocus: true,
-    staleTime: 0,
-    cacheTime: 0
+    gcTime: 0,
+    staleTime: 0
   });
 };
 
@@ -59,8 +59,8 @@ export const useCompanies = () => {
       return data || [];
     },
     refetchOnWindowFocus: true,
-    staleTime: 0,
-    cacheTime: 0
+    gcTime: 0,
+    staleTime: 0
   });
 };
 
