@@ -20,15 +20,11 @@ export const useCompany = (id: string) => {
         .from('companies')
         .select('*')
         .eq('id', id)
-        .maybeSingle();
+        .single();
 
       if (error) {
         console.error('Error fetching company:', error);
         throw error;
-      }
-
-      if (!data) {
-        throw new Error('Company not found');
       }
 
       console.log('Fetched company data:', data);
@@ -80,16 +76,11 @@ export const useUpdateCompany = () => {
         .from('companies')
         .select()
         .eq('id', id)
-        .maybeSingle();
+        .single();
 
       if (fetchError) {
         console.error('Error checking company existence:', fetchError);
         throw fetchError;
-      }
-
-      if (!existingCompany) {
-        console.error('Company not found with ID:', id);
-        throw new Error('Company not found');
       }
 
       // Proceed with update since we know the company exists
@@ -98,16 +89,11 @@ export const useUpdateCompany = () => {
         .update(data)
         .eq('id', id)
         .select()
-        .maybeSingle();
+        .single();
 
       if (updateError) {
         console.error('Error updating company:', updateError);
         throw updateError;
-      }
-
-      if (!updatedCompany) {
-        console.error('Update failed for company ID:', id);
-        throw new Error('Update failed');
       }
 
       console.log('Successfully updated company:', updatedCompany);
