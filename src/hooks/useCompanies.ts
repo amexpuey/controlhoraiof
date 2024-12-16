@@ -14,14 +14,24 @@ export const useCompany = (id: string) => {
         throw new Error('Invalid or missing company ID');
       }
 
+      console.log('Fetching company with ID:', id);
+      
       const { data, error } = await supabase
         .from('companies')
-        .select('*')
+        .select()
         .eq('id', id)
-        .maybeSingle();
+        .single();
 
-      if (error) throw error;
-      return data || null;
+      if (error) {
+        console.error('Error fetching company:', error);
+        throw error;
+      }
+
+      if (!data) {
+        throw new Error('Company not found');
+      }
+
+      return data;
     },
     retry: false,
     refetchOnWindowFocus: true,
@@ -35,7 +45,7 @@ export const useCompanies = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('companies')
-        .select('*')
+        .select()
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -55,14 +65,23 @@ export const useUpdateCompany = () => {
         throw new Error('Invalid company ID for update');
       }
 
+      console.log('Updating company data:', data);
+
       const { data: updatedCompany, error } = await supabase
         .from('companies')
         .update(data)
         .eq('id', id)
-        .maybeSingle();
+        .select()
+        .single();
 
-      if (error) throw error;
-      if (!updatedCompany) throw new Error('Update failed: No rows modified');
+      if (error) {
+        console.error('Error updating company:', error);
+        throw error;
+      }
+
+      if (!updatedCompany) {
+        throw new Error('Update failed: No rows modified');
+      }
 
       return updatedCompany as Company;
     },
