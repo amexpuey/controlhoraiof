@@ -20,6 +20,7 @@ export const useCompany = (id: string) => {
         .from('companies')
         .select('*')
         .eq('id', id)
+        .order('id')
         .limit(1)
         .maybeSingle();
 
@@ -78,7 +79,7 @@ export const useUpdateCompany = () => {
         .from('companies')
         .update(data)
         .eq('id', id)
-        .select('*')
+        .order('id')
         .limit(1)
         .maybeSingle();
 
