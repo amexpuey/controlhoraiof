@@ -75,21 +75,39 @@ export const useUpdateCompany = () => {
 
       console.log('Updating company with data:', { id, data });
 
-      const { data: updatedCompany, error } = await supabase
+      // First verify the company exists
+      const { data: existingCompany, error: fetchError } = await supabase
+        .from('companies')
+        .select()
+        .eq('id', id)
+        .maybeSingle();
+
+      if (fetchError) {
+        console.error('Error checking company existence:', fetchError);
+        throw fetchError;
+      }
+
+      if (!existingCompany) {
+        console.error('Company not found with ID:', id);
+        throw new Error('Company not found');
+      }
+
+      // Proceed with update since we know the company exists
+      const { data: updatedCompany, error: updateError } = await supabase
         .from('companies')
         .update(data)
         .eq('id', id)
         .select()
         .maybeSingle();
 
-      if (error) {
-        console.error('Error updating company:', error);
-        throw error;
+      if (updateError) {
+        console.error('Error updating company:', updateError);
+        throw updateError;
       }
 
       if (!updatedCompany) {
-        console.error('No company found with ID:', id);
-        throw new Error('Company not found');
+        console.error('Update failed for company ID:', id);
+        throw new Error('Update failed');
       }
 
       console.log('Successfully updated company:', updatedCompany);
