@@ -56,8 +56,15 @@ export const useCompanies = () => {
         throw error;
       }
       
-      console.log('Fetched companies:', data);
-      return data || [];
+      // Sort the data to always show INWOUT first
+      const sortedData = (data || []).sort((a, b) => {
+        if (a.title === 'INWOUT') return -1;
+        if (b.title === 'INWOUT') return 1;
+        return 0;
+      });
+      
+      console.log('Fetched companies:', sortedData);
+      return sortedData || [];
     },
     refetchOnWindowFocus: true,
     gcTime: 0,
