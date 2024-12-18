@@ -22,7 +22,15 @@ serve(async (req) => {
     }
 
     const csvText = await file.text();
-    const parsed = parse(csvText, { skipFirstRow: true });
+    console.log("CSV content:", csvText); // Debug log
+
+    // Parse CSV with specific options
+    const parsed = parse(csvText, {
+      skipFirstRow: true, // Skip header row
+      separator: ",",    // Explicitly set comma as separator
+      trimLeadingSpace: true,
+      lazyQuotes: true  // Handle quotes more flexibly
+    });
     
     // Filter out empty rows and validate data
     const rows = parsed.filter(row => row.some(cell => cell !== ""));
@@ -61,12 +69,6 @@ serve(async (req) => {
 
     if (processedRows.length === 0) {
       throw new Error("No valid rows found in CSV");
-    }
-
-    // Validate that all rows have an ID
-    const invalidRows = processedRows.filter(row => !row.id);
-    if (invalidRows.length > 0) {
-      throw new Error(`Found ${invalidRows.length} rows without IDs`);
     }
 
     const { error } = await supabase
