@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Upload } from "lucide-react";
 import { toast } from "sonner";
 
 export default function CsvUpload() {
   const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -32,10 +33,14 @@ export default function CsvUpload() {
     } finally {
       setIsUploading(false);
       // Reset the file input
-      if (event.target) {
-        event.target.value = '';
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
       }
     }
+  };
+
+  const handleButtonClick = () => {
+    fileInputRef.current?.click();
   };
 
   return (
@@ -44,18 +49,17 @@ export default function CsvUpload() {
       <p className="text-sm text-gray-600 text-center">
         Upload a CSV file to add or update companies. The CSV should include all required fields.
       </p>
-      <label htmlFor="csv-upload">
-        <Button 
-          variant="outline" 
-          disabled={isUploading}
-          className="cursor-pointer"
-        >
-          <Upload className="w-4 h-4 mr-2" />
-          {isUploading ? "Uploading..." : "Select CSV File"}
-        </Button>
-      </label>
+      <Button 
+        variant="outline" 
+        disabled={isUploading}
+        className="cursor-pointer"
+        onClick={handleButtonClick}
+      >
+        <Upload className="w-4 h-4 mr-2" />
+        {isUploading ? "Uploading..." : "Select CSV File"}
+      </Button>
       <input
-        id="csv-upload"
+        ref={fileInputRef}
         type="file"
         accept=".csv"
         onChange={handleFileUpload}
