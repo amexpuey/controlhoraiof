@@ -27,7 +27,9 @@ const features = [
   { id: "Selección del Personal", label: "Selección del Personal" },
   { id: "Apps Nativas", label: "Apps Nativas" },
   { id: "Nóminas", label: "Nóminas" },
-  { id: "Opciones Personalizables", label: "Opciones Personalizables" }
+  { id: "Opciones Personalizables", label: "Opciones Personalizables" },
+  { id: "Soporte incluido", label: "Soporte incluido" },
+  { id: "Implementación sin fricciones", label: "Implementación sin fricciones" }
 ];
 
 interface FeaturesStepProps extends OnboardingStepProps {
