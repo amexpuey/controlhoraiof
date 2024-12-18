@@ -13,7 +13,6 @@ interface EmailRequest {
 }
 
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders })
   }
@@ -30,21 +29,37 @@ serve(async (req) => {
     }
 
     const emailHtml = `
-      <h1>¡Hola!</h1>
+      <h2>¡Hola! 👋</h2>
       
-      <p>Gracias por unirte a Control Horario Electrónico, la plataforma ideal para encontrar soluciones de control horario completamente adaptadas a la normativa de España. 🙌</p>
+      <p>¡Gracias por confiar en Control Horario Electrónico! Estamos encantados de ayudarte a encontrar la solución perfecta para gestionar el control horario en tu empresa.</p>
       
-      <p>Para comenzar, solo necesitas verificar tu correo electrónico y acceder a la página donde podrás explorar las mejores aplicaciones para la gestión de tu tiempo, todas cumpliendo con las leyes y normativas laborales del país.</p>
+      <p>Hemos analizado tus necesidades y preparado una selección personalizada de las mejores aplicaciones que se ajustan a tus requisitos específicos.</p>
       
-      <p>Haz clic en el siguiente enlace para confirmar tu cuenta:</p>
+      <p>Para ver tu selección personalizada, simplemente haz clic en el siguiente botón:</p>
       
-      <p><a href="${verificationLink}" style="display: inline-block; background-color: #0070f3; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px;">Verifica tu correo y accede a las aplicaciones</a></p>
+      <p style="text-align: center; margin: 30px 0;">
+        <a href="${verificationLink}" 
+           style="background-color: #0070f3; 
+                  color: white; 
+                  padding: 12px 24px; 
+                  text-decoration: none; 
+                  border-radius: 6px;
+                  font-weight: bold;
+                  display: inline-block;">
+          Ver mis aplicaciones recomendadas ➜
+        </a>
+      </p>
       
-      <p>Una vez que confirmes tu correo, serás redirigido directamente a nuestra página, donde podrás explorar las aplicaciones de control horario más recomendadas, basadas en las características que más te interesen y en el cumplimiento de la normativa compliance en España.</p>
+      <p>Si tienes alguna pregunta o necesitas ayuda adicional, no dudes en contactarnos. Estamos aquí para ayudarte a encontrar la mejor solución para tu empresa. 🤝</p>
       
-      <p>Si no te registraste en Control Horario Electrónico, puedes ignorar este correo. Si tienes alguna duda, no dudes en ponerte en contacto con nosotros.</p>
+      <p style="margin-top: 30px; color: #666;">
+        Un cordial saludo,<br>
+        <strong>ControlHorarioElectronico.com</strong>
+      </p>
       
-      <p>¡Esperamos ayudarte a encontrar la solución perfecta para tu empresa!</p>
+      <p style="font-size: 12px; color: #666; margin-top: 20px;">
+        Si no solicitaste este email, puedes ignorarlo de forma segura.
+      </p>
     `
 
     const res = await fetch('https://api.resend.com/emails', {
@@ -56,7 +71,7 @@ serve(async (req) => {
       body: JSON.stringify({
         from: 'Control Horario Electrónico <onboarding@resend.dev>',
         to,
-        subject: '¡Bienvenido a Control Horario Electrónico! 🎉 Verifica tu correo',
+        subject: '✨ Tus aplicaciones de control horario recomendadas te esperan',
         html: emailHtml,
       }),
     })

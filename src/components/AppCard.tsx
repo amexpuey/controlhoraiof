@@ -80,7 +80,7 @@ export default function AppCard({ app, onClick, matchingFeaturesCount = 0, total
         <p className="mt-4 text-gray-600 line-clamp-2">{app.description}</p>
 
         {totalSelectedFeatures > 0 && (
-          <div className="mt-4 bg-primary-50 text-primary-700 px-3 py-2 rounded-lg text-sm">
+          <div className="mt-4 bg-primary-50 text-primary-700 px-3 py-2 rounded-lg text-sm font-medium">
             {matchingFeaturesCount} de {totalSelectedFeatures} características seleccionadas
           </div>
         )}
