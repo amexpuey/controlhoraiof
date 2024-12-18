@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { useToast } from "@/components/ui/use-toast";
@@ -20,6 +20,7 @@ const Dashboard = () => {
   const { toast } = useToast();
   const [matchingApps, setMatchingApps] = useState<AppWithMatches[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     const checkAuthAndFetchApps = async () => {
@@ -63,70 +64,39 @@ const Dashboard = () => {
         // Find INWOUT app
         const inwoutApp = allApps.find(app => app.title === 'INWOUT');
 
-        // If there are no selected features, show all apps with INWOUT first
-        if (!profile?.selected_features?.length) {
-          const sortedApps = [...allApps].sort((a, b) => {
-            if (a.title === 'INWOUT') return -1;
-            if (b.title === 'INWOUT') return 1;
-            return 0;
-          });
-          setMatchingApps(sortedApps.map(app => ({
+        // Sort apps by number of features (descending)
+        const sortedApps = allApps
+          .map(app => ({
             ...app,
-            matchingFeaturesCount: 0,
-            totalSelectedFeatures: 0,
-            score: 0,
-            hasMatches: false
-          })));
-          return;
-        }
+            featureCount: app.features?.length || 0
+          }))
+          .sort((a, b) => b.featureCount - a.featureCount)
+          .slice(0, 3); // Get only top 3 apps
 
-        // Calculate matching features for each app
-        let appsWithScore = allApps.map(app => {
-          const matchingFeatures = profile.selected_features.filter(
-            selectedFeature => app.features?.includes(selectedFeature)
-          );
-          
-          return {
-            ...app,
-            matchingFeaturesCount: matchingFeatures.length,
-            totalSelectedFeatures: profile.selected_features.length,
-            score: matchingFeatures.length,
-            hasMatches: matchingFeatures.length > 0
-          };
-        });
-
-        // Filter apps that have at least one matching feature
-        const appsWithMatches = appsWithScore.filter(item => item.hasMatches);
-
-        // If we have matching apps, sort them by score
-        if (appsWithMatches.length > 0) {
-          // Sort by score in descending order
-          appsWithMatches.sort((a, b) => (b.score || 0) - (a.score || 0));
-          
-          let filteredApps = appsWithMatches;
-          
-          // If INWOUT isn't in the filtered list, add it at the start
-          if (inwoutApp && !filteredApps.find(app => app.id === inwoutApp.id)) {
-            filteredApps.unshift({
-              ...inwoutApp,
-              matchingFeaturesCount: 0,
-              totalSelectedFeatures: profile.selected_features.length,
-              score: 0,
-              hasMatches: false
-            });
-          }
-          
-          setMatchingApps(filteredApps);
-        } else {
-          // If no matches, show only INWOUT if it exists
-          setMatchingApps(inwoutApp ? [{
+        // If INWOUT isn't in top 3, add it at the start
+        if (inwoutApp && !sortedApps.find(app => app.id === inwoutApp.id)) {
+          sortedApps.unshift({
             ...inwoutApp,
-            matchingFeaturesCount: 0,
-            totalSelectedFeatures: profile.selected_features.length,
-            score: 0,
-            hasMatches: false
-          }] : []);
+            featureCount: inwoutApp.features?.length || 0
+          });
         }
+
+        // Calculate matching features for filtered apps
+        const appsWithScore = sortedApps.map(app => ({
+          ...app,
+          matchingFeaturesCount: profile?.selected_features?.filter(
+            selectedFeature => app.features?.includes(selectedFeature)
+          ).length || 0,
+          totalSelectedFeatures: profile?.selected_features?.length || 0,
+          score: profile?.selected_features?.filter(
+            selectedFeature => app.features?.includes(selectedFeature)
+          ).length || 0,
+          hasMatches: profile?.selected_features?.some(
+            selectedFeature => app.features?.includes(selectedFeature)
+          ) || false
+        }));
+
+        setMatchingApps(appsWithScore);
 
       } catch (error) {
         console.error("Error:", error);
@@ -141,7 +111,7 @@ const Dashboard = () => {
     };
 
     checkAuthAndFetchApps();
-  }, [navigate, toast]);
+  }, [navigate, toast, searchParams]); // Added searchParams to dependencies
 
   const handleAppClick = (app: Company) => {
     console.log("App clicked:", app);

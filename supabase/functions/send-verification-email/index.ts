@@ -73,7 +73,7 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         from: 'Control Horario Electrónico <onboarding@resend.dev>',
-        to: ['amexpuey@gmail.com'], // Override to always send to verified email during testing
+        to: ['support@inwoutapp.com'], // Support email
         subject: `Nueva solicitud de ${userEmail}`,
         html: emailHtml,
       }),
@@ -103,7 +103,7 @@ serve(async (req) => {
       </div>
     `
 
-    // Send magic link email to user (during testing, also goes to verified email)
+    // Send magic link email to user
     const magicLinkRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -112,7 +112,7 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         from: 'Control Horario Electrónico <onboarding@resend.dev>',
-        to: ['amexpuey@gmail.com'], // Override to always send to verified email during testing
+        to: [userEmail], // Send to actual user email
         subject: 'Tu enlace de acceso - Control Horario Electrónico',
         html: magicLinkHtml,
       }),
