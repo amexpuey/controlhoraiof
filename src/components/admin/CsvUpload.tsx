@@ -39,6 +39,10 @@ export default function CsvUpload() {
       });
     } finally {
       setIsUploading(false);
+      // Reset the file input
+      if (event.target) {
+        event.target.value = '';
+      }
     }
   };
 
