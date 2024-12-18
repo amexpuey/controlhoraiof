@@ -10,6 +10,8 @@ type Company = Database["public"]["Tables"]["companies"]["Row"];
 interface AppWithMatches extends Company {
   matchingFeaturesCount?: number;
   totalSelectedFeatures?: number;
+  score?: number;
+  hasMatches?: boolean;
 }
 
 const Dashboard = () => {
@@ -75,7 +77,9 @@ const Dashboard = () => {
           setMatchingApps(sortedApps.map(app => ({
             ...app,
             matchingFeaturesCount: 0,
-            totalSelectedFeatures: 0
+            totalSelectedFeatures: 0,
+            score: 0,
+            hasMatches: false
           })));
           return;
         }
@@ -101,7 +105,7 @@ const Dashboard = () => {
         // If we have matching apps, sort them by score
         if (appsWithMatches.length > 0) {
           // Sort by score in descending order
-          appsWithMatches.sort((a, b) => b.score - a.score);
+          appsWithMatches.sort((a, b) => (b.score || 0) - (a.score || 0));
           
           // Extract just the apps from the scored array
           let filteredApps = appsWithMatches;
@@ -111,7 +115,9 @@ const Dashboard = () => {
             filteredApps.unshift({
               ...inwoutApp,
               matchingFeaturesCount: 0,
-              totalSelectedFeatures: profile.selected_features.length
+              totalSelectedFeatures: profile.selected_features.length,
+              score: 0,
+              hasMatches: false
             });
           }
           
@@ -121,7 +127,9 @@ const Dashboard = () => {
           setMatchingApps(inwoutApp ? [{
             ...inwoutApp,
             matchingFeaturesCount: 0,
-            totalSelectedFeatures: profile.selected_features.length
+            totalSelectedFeatures: profile.selected_features.length,
+            score: 0,
+            hasMatches: false
           }] : []);
         }
 
