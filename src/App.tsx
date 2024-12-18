@@ -6,6 +6,8 @@ import { supabase } from "@/integrations/supabase/client";
 import Index from "./pages/Index";
 import Admin from "./pages/Admin";
 import UserView from "./pages/UserView";
+import Dashboard from "./pages/Dashboard";
+import Verify from "./pages/Verify";
 import { Toaster } from "sonner";
 
 const queryClient = new QueryClient();
@@ -51,6 +53,8 @@ const App = () => {
             <Route path="/" element={<Index />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/admin/user-view/:id" element={<UserView />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/verify" element={<Verify />} />
             {/* Catch all route - redirect to home */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

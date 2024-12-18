@@ -10,7 +10,7 @@ const Index = () => {
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        navigate('/dashboard');
+        navigate('/dashboard', { replace: true });
       }
     };
 

@@ -30,24 +30,18 @@ const Verify = () => {
                 title: "¡Verificación exitosa!",
                 description: "Tu correo ha sido verificado correctamente.",
               });
-              navigate('/dashboard');
+              navigate('/dashboard', { replace: true });
               return;
             }
           }
         }
 
         // If no hash params or session setting failed, check current session
-        const { data: { session }, error } = await supabase.auth.getSession();
-        
-        if (error) throw error;
+        const { data: { session } } = await supabase.auth.getSession();
         
         if (session) {
           console.log("Session found:", session);
-          toast({
-            title: "¡Verificación exitosa!",
-            description: "Tu correo ha sido verificado correctamente.",
-          });
-          navigate('/dashboard');
+          navigate('/dashboard', { replace: true });
         } else {
           console.log("No session found");
           toast({
@@ -55,7 +49,7 @@ const Verify = () => {
             description: "Por favor, intenta verificar tu correo nuevamente.",
             variant: "destructive",
           });
-          navigate('/');
+          navigate('/', { replace: true });
         }
       } catch (error: any) {
         console.error("Verification error:", error);
@@ -64,7 +58,7 @@ const Verify = () => {
           description: error.message,
           variant: "destructive",
         });
-        navigate('/');
+        navigate('/', { replace: true });
       }
     };
 
