@@ -2,6 +2,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useCompany } from "@/hooks/useCompanies";
 import { ArrowLeft, Globe, Users, Clock, Shield } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 export default function UserView() {
   const { id } = useParams();
@@ -22,10 +29,10 @@ export default function UserView() {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">App not found</h1>
           <button
-            onClick={() => navigate("/admin")}
+            onClick={() => navigate("/dashboard")}
             className="text-blue-600 hover:text-blue-800"
           >
-            Return to Admin Panel
+            Return to Dashboard
           </button>
         </div>
       </div>
@@ -63,13 +70,19 @@ export default function UserView() {
             </div>
           </div>
         </div>
-        <button
-          onClick={() => navigate("/admin")}
-          className="absolute top-4 left-4 text-white flex items-center gap-2 hover:bg-black/20 px-4 py-2 rounded-lg transition-colors"
-        >
-          <ArrowLeft className="w-5 h-5" />
-          Back to Admin
-        </button>
+        <Breadcrumb className="absolute top-4 left-4">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink 
+                onClick={() => navigate("/dashboard")}
+                className="text-white flex items-center gap-2 hover:bg-black/20 px-4 py-2 rounded-lg transition-colors cursor-pointer"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                Back to Dashboard
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
       </div>
 
       {/* Content section */}
