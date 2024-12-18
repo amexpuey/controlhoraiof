@@ -60,36 +60,52 @@ const Dashboard = () => {
         // Find INWOUT app
         const inwoutApp = allApps.find(app => app.title === 'INWOUT');
 
+        // If there are no selected features, show all apps with INWOUT first
+        if (!profile?.selected_features?.length) {
+          const sortedApps = [...allApps].sort((a, b) => {
+            if (a.title === 'INWOUT') return -1;
+            if (b.title === 'INWOUT') return 1;
+            return 0;
+          });
+          setMatchingApps(sortedApps);
+          return;
+        }
+
         // Calculate matching features for each app
         let appsWithScore = allApps.map(app => {
-          const matchingFeatures = profile?.selected_features?.filter(
+          const matchingFeatures = profile.selected_features.filter(
             selectedFeature => app.features?.includes(selectedFeature)
-          ) || [];
+          );
           
           return {
             app,
-            score: matchingFeatures.length
+            score: matchingFeatures.length,
+            hasMatches: matchingFeatures.length > 0
           };
         });
 
-        // Sort by score (number of matching features) in descending order
-        appsWithScore.sort((a, b) => b.score - a.score);
+        // Filter apps that have at least one matching feature
+        const appsWithMatches = appsWithScore.filter(item => item.hasMatches);
 
-        // Get apps with the highest scores
-        let filteredApps = appsWithScore
-          .filter(item => item.score > 0) // Only include apps with at least one matching feature
-          .map(item => item.app);
-
-        // If no apps match or there are no selected features, ensure INWOUT is included
-        if ((filteredApps.length === 0 || !profile?.selected_features?.length) && inwoutApp) {
-          filteredApps = [inwoutApp];
-        } else if (filteredApps.length === 0 && !inwoutApp) {
-          // If no matches and no INWOUT, show all apps
-          filteredApps = allApps;
+        // If we have matching apps, sort them by score
+        if (appsWithMatches.length > 0) {
+          // Sort by score in descending order
+          appsWithMatches.sort((a, b) => b.score - a.score);
+          
+          // Extract just the apps from the scored array
+          let filteredApps = appsWithMatches.map(item => item.app);
+          
+          // If INWOUT isn't in the filtered list, add it at the start
+          if (inwoutApp && !filteredApps.find(app => app.id === inwoutApp.id)) {
+            filteredApps.unshift(inwoutApp);
+          }
+          
+          setMatchingApps(filteredApps);
+        } else {
+          // If no matches, show only INWOUT if it exists
+          setMatchingApps(inwoutApp ? [inwoutApp] : []);
         }
 
-        console.log("Filtered apps:", filteredApps);
-        setMatchingApps(filteredApps);
       } catch (error) {
         console.error("Error:", error);
         toast({
@@ -104,6 +120,11 @@ const Dashboard = () => {
 
     checkAuthAndFetchApps();
   }, [navigate, toast]);
+
+  const handleAppClick = (app: Company) => {
+    console.log("App clicked:", app);
+    window.open(app.url, '_blank');
+  };
 
   if (loading) {
     return (
@@ -141,9 +162,7 @@ const Dashboard = () => {
               <AppCard
                 key={app.id}
                 app={app}
-                onClick={() => {
-                  console.log("App clicked:", app);
-                }}
+                onClick={() => handleAppClick(app)}
               />
             ))}
           </div>
