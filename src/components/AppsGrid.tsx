@@ -1,5 +1,6 @@
-import { Company } from "@/integrations/supabase/types";
-import AppCard from "./AppCard";
+import type { Database } from "@/integrations/supabase/types";
+
+type Company = Database["public"]["Tables"]["companies"]["Row"];
 
 interface AppWithMatches extends Company {
   matchingFeaturesCount?: number;
