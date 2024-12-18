@@ -27,6 +27,19 @@ export const useEmailSubmission = (onSuccess: () => void) => {
 
       if (error) throw error;
 
+      // Call the edge function with all the user details
+      const { error: functionError } = await supabase.functions.invoke('send-verification-email', {
+        body: {
+          to: [data.email],
+          verificationLink: window.location.origin + '/verify',
+          companySize: companySize,
+          selectedFeatures: selectedFeatures,
+          userEmail: data.email
+        }
+      });
+
+      if (functionError) throw functionError;
+
       toast({
         title: "Email enviado",
         description: "Por favor, revisa tu bandeja de entrada para verificar tu correo.",

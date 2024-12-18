@@ -10,6 +10,9 @@ const corsHeaders = {
 interface EmailRequest {
   to: string[];
   verificationLink: string;
+  companySize: string;
+  selectedFeatures: string[];
+  userEmail: string;
 }
 
 serve(async (req) => {
@@ -18,7 +21,7 @@ serve(async (req) => {
   }
 
   try {
-    const { to, verificationLink }: EmailRequest = await req.json()
+    const { to, verificationLink, companySize, selectedFeatures, userEmail }: EmailRequest = await req.json()
 
     if (!to || !verificationLink) {
       throw new Error('Missing required fields: to or verificationLink')
@@ -28,10 +31,22 @@ serve(async (req) => {
       throw new Error('RESEND_API_KEY is not set')
     }
 
+    // Format features list for email
+    const featuresList = selectedFeatures
+      .map(feature => `• ${feature}`)
+      .join('<br>');
+
     const emailHtml = `
       <h2>¡Hola! 👋</h2>
       
-      <p>¡Gracias por confiar en Control Horario Electrónico! Estamos encantados de ayudarte a encontrar la solución perfecta para gestionar el control horario en tu empresa.</p>
+      <p>¡Gracias por confiar en Control Horario Electrónico! Hemos recibido tu solicitud con los siguientes detalles:</p>
+      
+      <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+        <p><strong>Email:</strong> ${userEmail}</p>
+        <p><strong>Tamaño de empresa:</strong> ${companySize} empleados</p>
+        <p><strong>Características seleccionadas:</strong></p>
+        ${featuresList}
+      </div>
       
       <p>Hemos analizado tus necesidades y preparado una selección personalizada de las mejores aplicaciones que se ajustan a tus requisitos específicos.</p>
       
@@ -90,14 +105,11 @@ serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error in send-verification-email function:', error)
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 500,
-      }
-    )
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    })
   }
 })
