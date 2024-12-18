@@ -20,12 +20,16 @@ export const useCompany = (id: string) => {
         .from('companies')
         .select()
         .eq('id', id)
-        .limit(1)
-        .single();
+        .maybeSingle();
 
       if (error) {
         console.error('Error fetching company:', error);
         throw error;
+      }
+
+      if (!data) {
+        console.error('Company not found with ID:', id);
+        throw new Error(`Company not found with ID: ${id}`);
       }
 
       console.log('Fetched company data:', data);
@@ -78,11 +82,15 @@ export const useUpdateCompany = () => {
         .from('companies')
         .select('id')
         .eq('id', id)
-        .limit(1)
-        .single();
+        .maybeSingle();
 
       if (fetchError) {
         console.error('Error checking company existence:', fetchError);
+        throw fetchError;
+      }
+
+      if (!existingData) {
+        console.error('Company not found with ID:', id);
         throw new Error(`Company not found with ID: ${id}`);
       }
 
@@ -92,11 +100,16 @@ export const useUpdateCompany = () => {
         .update(data)
         .eq('id', id)
         .select()
-        .single();
+        .maybeSingle();
 
       if (updateError) {
         console.error('Error updating company:', updateError);
         throw updateError;
+      }
+
+      if (!updatedCompany) {
+        console.error('Update failed: Company not found with ID:', id);
+        throw new Error(`Update failed: Company not found with ID: ${id}`);
       }
 
       console.log('Successfully updated company:', updatedCompany);
