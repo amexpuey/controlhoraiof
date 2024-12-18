@@ -162,10 +162,18 @@ const Dashboard = () => {
     );
   }
 
+  // Get the first app's counts to pass to the header (they all have the same totalSelectedFeatures)
+  const firstApp = matchingApps[0];
+  const matchingFeaturesCount = firstApp?.matchingFeaturesCount || 0;
+  const totalSelectedFeatures = firstApp?.totalSelectedFeatures || 0;
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
       <div className="container py-12">
-        <DashboardHeader />
+        <DashboardHeader 
+          matchingFeaturesCount={matchingFeaturesCount}
+          totalSelectedFeatures={totalSelectedFeatures}
+        />
         <AppsGrid apps={matchingApps} onAppClick={handleAppClick} />
       </div>
     </div>
