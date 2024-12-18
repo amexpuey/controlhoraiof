@@ -5,6 +5,9 @@ import type { Database } from "@/integrations/supabase/types";
 import { useToast } from "@/components/ui/use-toast";
 import AppsGrid from "@/components/AppsGrid";
 import DashboardHeader from "@/components/DashboardHeader";
+import { useReferralStatus } from "@/hooks/useReferralStatus";
+import { ReferralModal } from "@/components/ReferralModal";
+import { Button } from "@/components/ui/button";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
@@ -20,7 +23,11 @@ const Dashboard = () => {
   const { toast } = useToast();
   const [matchingApps, setMatchingApps] = useState<AppWithMatches[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showReferralModal, setShowReferralModal] = useState(false);
   const [searchParams] = useSearchParams();
+
+  const { data: session } = await supabase.auth.getSession();
+  const { data: referralStatus } = useReferralStatus(session?.user?.id);
 
   useEffect(() => {
     const checkAuthAndFetchApps = async () => {
@@ -36,7 +43,7 @@ const Dashboard = () => {
         // Get user profile to access selected features and company size
         const { data: profile, error: profileError } = await supabase
           .from("profiles")
-          .select("selected_features, company_size")
+          .select("selected_features, company_size, has_full_access")
           .eq("id", session.user.id)
           .maybeSingle();
 
@@ -64,25 +71,21 @@ const Dashboard = () => {
         // Find INWOUT app
         const inwoutApp = allApps.find(app => app.title === 'INWOUT');
 
-        // Sort apps by number of features (descending)
-        const sortedApps = allApps
-          .map(app => ({
-            ...app,
-            featureCount: app.features?.length || 0
-          }))
-          .sort((a, b) => b.featureCount - a.featureCount)
-          .slice(0, 3); // Get only top 3 apps
+        // If user has full access, show all apps, otherwise limit to top 3
+        const appsToShow = profile?.has_full_access 
+          ? allApps
+          : allApps
+              .filter(app => app.title !== 'INWOUT')
+              .sort((a, b) => (b.features?.length || 0) - (a.features?.length || 0))
+              .slice(0, 3);
 
-        // If INWOUT isn't in top 3, add it at the start
-        if (inwoutApp && !sortedApps.find(app => app.id === inwoutApp.id)) {
-          sortedApps.unshift({
-            ...inwoutApp,
-            featureCount: inwoutApp.features?.length || 0
-          });
+        // If INWOUT isn't included and exists, add it at the start
+        if (inwoutApp && !appsToShow.find(app => app.id === inwoutApp.id)) {
+          appsToShow.unshift(inwoutApp);
         }
 
-        // Calculate matching features for filtered apps
-        const appsWithScore = sortedApps.map(app => ({
+        // Calculate matching features
+        const appsWithScore = appsToShow.map(app => ({
           ...app,
           matchingFeaturesCount: profile?.selected_features?.filter(
             selectedFeature => app.features?.includes(selectedFeature)
@@ -111,7 +114,7 @@ const Dashboard = () => {
     };
 
     checkAuthAndFetchApps();
-  }, [navigate, toast, searchParams]); // Added searchParams to dependencies
+  }, [navigate, toast, searchParams]);
 
   const handleAppClick = (app: Company) => {
     console.log("App clicked:", app);
@@ -132,7 +135,6 @@ const Dashboard = () => {
     );
   }
 
-  // Get the first app's counts to pass to the header (they all have the same totalSelectedFeatures)
   const firstApp = matchingApps[0];
   const matchingFeaturesCount = firstApp?.matchingFeaturesCount || 0;
   const totalSelectedFeatures = firstApp?.totalSelectedFeatures || 0;
@@ -145,6 +147,25 @@ const Dashboard = () => {
           totalSelectedFeatures={totalSelectedFeatures}
         />
         <AppsGrid apps={matchingApps} onAppClick={handleAppClick} />
+        
+        {!referralStatus?.has_full_access && (
+          <div className="mt-8 text-center">
+            <Button 
+              onClick={() => setShowReferralModal(true)}
+              variant="outline"
+              className="mx-auto"
+            >
+              Desbloquear todas las aplicaciones
+            </Button>
+          </div>
+        )}
+
+        <ReferralModal 
+          isOpen={showReferralModal}
+          onClose={() => setShowReferralModal(false)}
+          referralCode={referralStatus?.referral_code}
+          referralCount={referralStatus?.referral_count}
+        />
       </div>
     </div>
   );

@@ -74,8 +74,12 @@ export type Database = {
           company_size: string | null
           created_at: string
           email: string
+          has_full_access: boolean | null
           id: string
           is_email_verified: boolean | null
+          referral_code: string | null
+          referral_count: number | null
+          referred_by: string | null
           selected_features: string[] | null
           updated_at: string
         }
@@ -83,8 +87,12 @@ export type Database = {
           company_size?: string | null
           created_at?: string
           email: string
+          has_full_access?: boolean | null
           id: string
           is_email_verified?: boolean | null
+          referral_code?: string | null
+          referral_count?: number | null
+          referred_by?: string | null
           selected_features?: string[] | null
           updated_at?: string
         }
@@ -92,12 +100,24 @@ export type Database = {
           company_size?: string | null
           created_at?: string
           email?: string
+          has_full_access?: boolean | null
           id?: string
           is_email_verified?: boolean | null
+          referral_code?: string | null
+          referral_count?: number | null
+          referred_by?: string | null
           selected_features?: string[] | null
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "fk_referred_by"
+            columns: ["referred_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["referral_code"]
+          },
+        ]
       }
     }
     Views: {

@@ -5,11 +5,14 @@ import { EmailStep } from "./onboarding/EmailStep";
 import { SuccessStep } from "./onboarding/SuccessStep";
 import { ProgressBar } from "./onboarding/ProgressBar";
 import { useEmailSubmission } from "@/hooks/useEmailSubmission";
+import { useSearchParams } from "react-router-dom";
 
 export function Onboarding() {
   const [step, setStep] = useState(1);
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
+  const [searchParams] = useSearchParams();
+  const referralCode = searchParams.get('ref');
   
   const { handleEmailSubmit } = useEmailSubmission(() => setStep(4));
 
@@ -27,7 +30,7 @@ export function Onboarding() {
   };
 
   const onEmailSubmit = async (data: { email: string }) => {
-    await handleEmailSubmit(data, selectedSize, selectedFeatures);
+    await handleEmailSubmit(data, selectedSize, selectedFeatures, referralCode);
   };
 
   return (
