@@ -7,10 +7,15 @@ import { useToast } from "@/components/ui/use-toast";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
+interface AppWithMatches extends Company {
+  matchingFeaturesCount?: number;
+  totalSelectedFeatures?: number;
+}
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [matchingApps, setMatchingApps] = useState<Company[]>([]);
+  const [matchingApps, setMatchingApps] = useState<AppWithMatches[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -67,7 +72,11 @@ const Dashboard = () => {
             if (b.title === 'INWOUT') return 1;
             return 0;
           });
-          setMatchingApps(sortedApps);
+          setMatchingApps(sortedApps.map(app => ({
+            ...app,
+            matchingFeaturesCount: 0,
+            totalSelectedFeatures: 0
+          })));
           return;
         }
 
@@ -78,7 +87,9 @@ const Dashboard = () => {
           );
           
           return {
-            app,
+            ...app,
+            matchingFeaturesCount: matchingFeatures.length,
+            totalSelectedFeatures: profile.selected_features.length,
             score: matchingFeatures.length,
             hasMatches: matchingFeatures.length > 0
           };
@@ -93,17 +104,25 @@ const Dashboard = () => {
           appsWithMatches.sort((a, b) => b.score - a.score);
           
           // Extract just the apps from the scored array
-          let filteredApps = appsWithMatches.map(item => item.app);
+          let filteredApps = appsWithMatches;
           
           // If INWOUT isn't in the filtered list, add it at the start
           if (inwoutApp && !filteredApps.find(app => app.id === inwoutApp.id)) {
-            filteredApps.unshift(inwoutApp);
+            filteredApps.unshift({
+              ...inwoutApp,
+              matchingFeaturesCount: 0,
+              totalSelectedFeatures: profile.selected_features.length
+            });
           }
           
           setMatchingApps(filteredApps);
         } else {
           // If no matches, show only INWOUT if it exists
-          setMatchingApps(inwoutApp ? [inwoutApp] : []);
+          setMatchingApps(inwoutApp ? [{
+            ...inwoutApp,
+            matchingFeaturesCount: 0,
+            totalSelectedFeatures: profile.selected_features.length
+          }] : []);
         }
 
       } catch (error) {
@@ -163,6 +182,8 @@ const Dashboard = () => {
                 key={app.id}
                 app={app}
                 onClick={() => handleAppClick(app)}
+                matchingFeaturesCount={app.matchingFeaturesCount}
+                totalSelectedFeatures={app.totalSelectedFeatures}
               />
             ))}
           </div>

@@ -8,9 +8,11 @@ type Company = Database["public"]["Tables"]["companies"]["Row"];
 interface AppCardProps {
   app: Company;
   onClick: () => void;
+  matchingFeaturesCount?: number;
+  totalSelectedFeatures?: number;
 }
 
-export default function AppCard({ app, onClick }: AppCardProps) {
+export default function AppCard({ app, onClick, matchingFeaturesCount = 0, totalSelectedFeatures = 0 }: AppCardProps) {
   if (!app) return null;
 
   const handleExternalLinkClick = (e: React.MouseEvent) => {
@@ -76,6 +78,12 @@ export default function AppCard({ app, onClick }: AppCardProps) {
         </div>
 
         <p className="mt-4 text-gray-600 line-clamp-2">{app.description}</p>
+
+        {totalSelectedFeatures > 0 && (
+          <div className="mt-4 bg-primary-50 text-primary-700 px-3 py-2 rounded-lg text-sm">
+            {matchingFeaturesCount} de {totalSelectedFeatures} características seleccionadas
+          </div>
+        )}
 
         <div className="mt-4 flex flex-wrap gap-2">
           {app.features?.slice(0, 3).map((feature, index) => (
