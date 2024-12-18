@@ -21,7 +21,8 @@ export default function CsvUpload() {
       const response = await fetch("https://pvqbknpvkohxoftoloda.functions.supabase.co/process-csv", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${session?.access_token}`,
+          "Authorization": `Bearer ${session?.access_token || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB2cWJrbnB2a29oeG9mdG9sb2RhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIzOTEzNDksImV4cCI6MjA0Nzk2NzM0OX0.3e-3DW4m5KqXmeozYCbRma5eefX4Ou4QGrIk-djVQKA'}`,
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB2cWJrbnB2a29oeG9mdG9sb2RhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIzOTEzNDksImV4cCI6MjA0Nzk2NzM0OX0.3e-3DW4m5KqXmeozYCbRma5eefX4Ou4QGrIk-djVQKA'
         },
         body: formData,
       });
