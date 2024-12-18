@@ -22,43 +22,45 @@ const Dashboard = () => {
           return;
         }
 
-        // First, let's fetch all companies to make sure we have data
-        const { data: allApps, error: appsError } = await supabase
-          .from("companies")
-          .select("*");
-
-        if (appsError) throw appsError;
-
-        console.log("All available apps:", allApps); // Debug log
-
-        // Get user profile to access selected features
+        // Get user profile to access selected features and company size
         const { data: profile, error: profileError } = await supabase
           .from("profiles")
-          .select("selected_features")
+          .select("selected_features, company_size")
           .eq("id", session.user.id)
           .single();
 
         if (profileError) throw profileError;
 
-        console.log("User profile:", profile); // Debug log
-        console.log("Selected features:", profile?.selected_features); // Debug log
+        console.log("User profile:", profile);
 
-        if (!profile?.selected_features?.length) {
-          // If no features are selected, show all apps
-          setMatchingApps(allApps || []);
-          return;
+        // Build the query based on user preferences
+        let query = supabase
+          .from("companies")
+          .select("*");
+
+        if (profile?.selected_features?.length) {
+          // Filter companies that have at least one matching feature
+          query = query.contains('features', profile.selected_features);
         }
 
-        // Filter apps that have at least one matching feature
-        const filteredApps = allApps?.filter(app => 
-          app.features?.some(feature => 
-            profile.selected_features?.includes(feature)
-          )
-        ) || [];
+        // Add company size filtering logic if needed
+        if (profile?.company_size) {
+          // You might want to add specific logic based on company size
+          // This is just an example:
+          if (profile.company_size === "1-10") {
+            query = query.eq('type', 'freemium');
+          }
+        }
 
-        console.log("Filtered apps:", filteredApps); // Debug log
+        // Limit to 10 most relevant results
+        query = query.limit(10);
 
-        setMatchingApps(filteredApps);
+        const { data: apps, error: appsError } = await query;
+
+        if (appsError) throw appsError;
+
+        console.log("Filtered apps:", apps);
+        setMatchingApps(apps || []);
       } catch (error) {
         console.error("Error:", error);
         toast({
