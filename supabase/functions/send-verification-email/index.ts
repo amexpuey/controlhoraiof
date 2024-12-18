@@ -64,8 +64,8 @@ serve(async (req) => {
       </p>
     `
 
-    // During testing, we can only send to the verified email
-    const res = await fetch('https://api.resend.com/emails', {
+    // Send notification email to support
+    const notificationRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -79,25 +79,61 @@ serve(async (req) => {
       }),
     });
 
-    const responseText = await res.text()
-    console.log('Resend API response:', responseText)
+    // Format the magic link email in Spanish
+    const magicLinkHtml = `
+      <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto;">
+        <h2>Enlace Mágico de Acceso</h2>
+        <p>Haz clic en el siguiente botón para acceder a tu selección personalizada:</p>
+        <p style="text-align: center; margin: 30px 0;">
+          <a href="${verificationLink}" 
+             style="background-color: #0070f3; 
+                    color: white; 
+                    padding: 12px 24px; 
+                    text-decoration: none; 
+                    border-radius: 6px;
+                    font-weight: bold;
+                    display: inline-block;">
+            Acceder ➜
+          </a>
+        </p>
+        <p style="color: #666; font-size: 12px; margin-top: 30px;">
+          Si no solicitaste este email, puedes ignorarlo de forma segura.
+        </p>
+      </div>
+    `
 
-    if (!res.ok) {
-      throw new Error(`Failed to send email: ${responseText}`)
+    // Send magic link email to user (during testing, also goes to verified email)
+    const magicLinkRes = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: 'Control Horario Electrónico <onboarding@resend.dev>',
+        to: ['amexpuey@gmail.com'], // Override to always send to verified email during testing
+        subject: 'Tu enlace de acceso - Control Horario Electrónico',
+        html: magicLinkHtml,
+      }),
+    });
+
+    if (!notificationRes.ok || !magicLinkRes.ok) {
+      const error = await notificationRes.text();
+      throw new Error(`Failed to send email: ${error}`);
     }
 
-    const data = JSON.parse(responseText)
-    console.log('Email sent successfully:', data)
+    const data = await notificationRes.json();
+    console.log('Emails sent successfully:', data);
 
     return new Response(JSON.stringify(data), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
-    })
+    });
   } catch (error: any) {
-    console.error('Error in send-verification-email function:', error)
+    console.error('Error in send-verification-email function:', error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    })
+    });
   }
 })
