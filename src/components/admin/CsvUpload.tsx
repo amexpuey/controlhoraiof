@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Upload } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function CsvUpload() {
   const [isUploading, setIsUploading] = useState(false);
@@ -16,8 +17,12 @@ export default function CsvUpload() {
     formData.append("file", file);
 
     try {
+      const { data: { session } } = await supabase.auth.getSession();
       const response = await fetch("https://pvqbknpvkohxoftoloda.functions.supabase.co/process-csv", {
         method: "POST",
+        headers: {
+          "Authorization": `Bearer ${session?.access_token}`,
+        },
         body: formData,
       });
 
