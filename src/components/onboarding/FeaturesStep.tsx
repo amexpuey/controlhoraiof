@@ -12,7 +12,22 @@ const features = [
   { id: "Control de presencia", label: "Control de presencia" },
   { id: "Inteligencia Artificial", label: "Inteligencia Artificial" },
   { id: "Teletrabajo", label: "Teletrabajo" },
-  { id: "Portal del Empleado", label: "Portal del Empleado" }
+  { id: "Portal del Empleado", label: "Portal del Empleado" },
+  { id: "Incidencias de fichaje", label: "Incidencias de fichaje" },
+  { id: "Bolsa de Horas", label: "Bolsa de Horas" },
+  { id: "Informes de Horas Automatizados", label: "Informes de Horas Automatizados" },
+  { id: "Alertas Recordatorio", label: "Alertas Recordatorio" },
+  { id: "Integración Biométrica/RFID/Facial", label: "Integración Biométrica/RFID/Facial" },
+  { id: "Notificaciones inteligentes", label: "Notificaciones inteligentes" },
+  { id: "Gestión de Horas Extra", label: "Gestión de Horas Extra" },
+  { id: "Gestión Documental", label: "Gestión Documental" },
+  { id: "Gestión de Proyectos", label: "Gestión de Proyectos" },
+  { id: "Gestión del Talento", label: "Gestión del Talento" },
+  { id: "Evaluación y Desempeño", label: "Evaluación y Desempeño" },
+  { id: "Selección del Personal", label: "Selección del Personal" },
+  { id: "Apps Nativas", label: "Apps Nativas" },
+  { id: "Nóminas", label: "Nóminas" },
+  { id: "Opciones Personalizables", label: "Opciones Personalizables" }
 ];
 
 interface FeaturesStepProps extends OnboardingStepProps {
@@ -33,12 +48,12 @@ export function FeaturesStep({ selectedFeatures, onFeatureToggle, onNext }: Feat
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {features.map((feature) => (
           <Button
             key={feature.id}
             variant={selectedFeatures.includes(feature.id) ? "default" : "outline"}
-            className="h-16"
+            className="h-16 text-sm"
             onClick={() => onFeatureToggle(feature.id)}
           >
             {feature.label}
