@@ -72,8 +72,8 @@ serve(async (req) => {
         'Authorization': `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: 'Control Horario Electrónico <onboarding@resend.dev>',
-        to: ['support@inwoutapp.com'], // Support email
+        from: 'Control Horario Electrónico <onboarding@controlhorarioelectronico.com>',
+        to: ['support@inwoutapp.com'],
         subject: `Nueva solicitud de ${userEmail}`,
         html: emailHtml,
       }),
@@ -111,8 +111,8 @@ serve(async (req) => {
         'Authorization': `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: 'Control Horario Electrónico <onboarding@resend.dev>',
-        to: [userEmail], // Send to actual user email
+        from: 'Control Horario Electrónico <onboarding@controlhorarioelectronico.com>',
+        to: [userEmail],
         subject: 'Tu enlace de acceso - Control Horario Electrónico',
         html: magicLinkHtml,
       }),
@@ -134,7 +134,7 @@ serve(async (req) => {
     console.error('Error in send-verification-email function:', error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': "application/json" },
     });
   }
 })
