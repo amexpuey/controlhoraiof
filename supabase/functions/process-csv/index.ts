@@ -25,51 +25,78 @@ serve(async (req) => {
     console.log("CSV content:", csvText); // Debug log
 
     // Parse CSV with specific options
-    const parsed = parse(csvText, {
-      skipFirstRow: true, // Skip header row
-      separator: ",",    // Explicitly set comma as separator
-      trimLeadingSpace: true,
-      lazyQuotes: true  // Handle quotes more flexibly
+    const rows = parse(csvText, {
+      skipFirstRow: true,
+      separator: ",",
+      columns: [
+        "id", "title", "url", "description", "features", "type", 
+        "verified", "votes", "is_top_rated", "img_url", "logo_url",
+        "pricing_starting_price", "pricing_billing_period", 
+        "pricing_currency", "highlights"
+      ],
+      trim: true,
     });
     
-    // Filter out empty rows and validate data
-    const rows = parsed.filter(row => row.some(cell => cell !== ""));
+    console.log("Parsed rows:", rows);
 
-    console.log("Processing CSV rows:", rows.length);
+    // Filter out empty rows
+    const validRows = rows.filter(row => 
+      Object.values(row).some(value => value !== null && value !== undefined && value !== "")
+    );
+
+    if (validRows.length === 0) {
+      throw new Error("No valid rows found in CSV");
+    }
+
+    console.log("Processing CSV rows:", validRows.length);
 
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
     );
 
-    const processedRows = rows.map(row => {
-      const id = row[0]?.trim() || crypto.randomUUID();
-      console.log("Processing row with ID:", id);
+    const processedRows = validRows.map(row => {
+      // Convert string "true"/"false" to boolean
+      const verified = row.verified?.toLowerCase() === "true";
+      const is_top_rated = row.is_top_rated?.toLowerCase() === "true";
       
+      // Convert features and highlights from string to array
+      const features = row.features
+        ? row.features.split(",").map(f => f.trim()).filter(Boolean)
+        : [];
+      
+      const highlights = row.highlights
+        ? row.highlights.split(",").map(h => h.trim()).filter(Boolean)
+        : [];
+
+      // Convert votes to number
+      const votes = parseInt(row.votes) || 0;
+      
+      // Convert price to number and handle different decimal separators
+      const pricing_starting_price = parseFloat(
+        row.pricing_starting_price?.toString().replace(",", ".")
+      ) || 0;
+
       return {
-        id,
-        title: row[1]?.trim() || 'Untitled',
-        url: row[2]?.trim() || 'https://example.com',
-        description: row[3]?.trim() || 'No description provided',
-        features: row[4] ? row[4].split(",").map(f => f.trim()).filter(Boolean) : [],
-        type: row[5]?.trim() || "freemium",
-        verified: row[6]?.toLowerCase() === "true",
-        votes: parseInt(row[7]) || 0,
-        is_top_rated: row[8]?.toLowerCase() === "true",
-        img_url: row[9]?.trim() || 'https://via.placeholder.com/150',
-        logo_url: row[10]?.trim() || 'https://via.placeholder.com/200',
-        pricing_starting_price: parseFloat(row[11]) || 0,
-        pricing_billing_period: row[12]?.trim() || "mensual",
-        pricing_currency: row[13]?.trim() || "EUR",
-        highlights: row[14] ? row[14].split(",").map(h => h.trim()).filter(Boolean) : []
+        id: row.id?.trim() || crypto.randomUUID(),
+        title: row.title?.trim() || "Untitled",
+        url: row.url?.trim() || "https://example.com",
+        description: row.description?.trim() || "No description provided",
+        features,
+        type: row.type?.trim() || "freemium",
+        verified,
+        votes,
+        is_top_rated,
+        img_url: row.img_url?.trim() || "https://via.placeholder.com/150",
+        logo_url: row.logo_url?.trim() || "https://via.placeholder.com/200",
+        pricing_starting_price,
+        pricing_billing_period: row.pricing_billing_period?.trim() || "mensual",
+        pricing_currency: row.pricing_currency?.trim() || "EUR",
+        highlights
       };
     });
 
-    console.log("Processed rows:", processedRows.length);
-
-    if (processedRows.length === 0) {
-      throw new Error("No valid rows found in CSV");
-    }
+    console.log("Processed rows:", processedRows);
 
     const { error } = await supabase
       .from("companies")
