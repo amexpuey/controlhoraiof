@@ -28,7 +28,7 @@ export const useEmailSubmission = (onSuccess: () => void) => {
       if (functionError) throw functionError;
 
       // Create auth session without sending another email
-      const { error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signInWithOtp({
         email: data.email,
         options: {
           data: {
