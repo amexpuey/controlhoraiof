@@ -31,8 +31,6 @@ export default function AppsGrid({ apps, onAppClick }: AppsGridProps) {
           key={app.id}
           app={app}
           onClick={() => onAppClick(app)}
-          matchingFeaturesCount={app.matchingFeaturesCount}
-          totalSelectedFeatures={app.totalSelectedFeatures}
         />
       ))}
     </div>
