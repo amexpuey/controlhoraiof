@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Upload } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 
 export default function CsvUpload() {
   const [isUploading, setIsUploading] = useState(false);
-  const { toast } = useToast();
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -16,7 +15,7 @@ export default function CsvUpload() {
     formData.append("file", file);
 
     try {
-      const response = await fetch("/api/process-csv", {
+      const response = await fetch("https://pvqbknpvkohxoftoloda.functions.supabase.co/process-csv", {
         method: "POST",
         body: formData,
       });
@@ -26,17 +25,10 @@ export default function CsvUpload() {
         throw new Error(error.message || "Error processing CSV");
       }
 
-      toast({
-        title: "Success",
-        description: "CSV file processed successfully",
-      });
+      toast.success("CSV file processed successfully");
     } catch (error: any) {
       console.error("Error uploading CSV:", error);
-      toast({
-        title: "Error",
-        description: error.message || "Error uploading CSV",
-        variant: "destructive",
-      });
+      toast.error(error.message || "Error uploading CSV");
     } finally {
       setIsUploading(false);
       // Reset the file input

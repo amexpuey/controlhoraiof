@@ -26,7 +26,7 @@ export default function Admin() {
           <AppCard
             key={company.id}
             app={company}
-            onClick={() => navigate(`/admin/${company.id}`)}
+            onClick={() => navigate(`/admin/edit/${company.id}`)}
           />
         ))}
       </div>
