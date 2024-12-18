@@ -123,7 +123,7 @@ const Dashboard = () => {
 
   const handleAppClick = (app: Company) => {
     console.log("App clicked:", app);
-    window.open(app.url, '_blank');
+    navigate(`/admin/user-view/${app.id}`);
   };
 
   if (loading) {

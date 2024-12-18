@@ -13,6 +13,11 @@ interface AppCardProps {
 export default function AppCard({ app, onClick }: AppCardProps) {
   if (!app) return null;
 
+  const handleExternalLinkClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    window.open(app.url, '_blank');
+  };
+
   return (
     <Card 
       className="overflow-hidden transition-all hover:shadow-lg cursor-pointer"
@@ -62,15 +67,12 @@ export default function AppCard({ app, onClick }: AppCardProps) {
             </div>
           </div>
           
-          <a
-            href={app.url}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={handleExternalLinkClick}
             className="text-blue-600 hover:text-blue-800"
-            onClick={(e) => e.stopPropagation()}
           >
             <ExternalLink className="w-5 h-5" />
-          </a>
+          </button>
         </div>
 
         <p className="mt-4 text-gray-600 line-clamp-2">{app.description}</p>
