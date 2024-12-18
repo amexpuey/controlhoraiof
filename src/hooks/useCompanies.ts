@@ -20,8 +20,7 @@ export const useCompany = (id: string) => {
         .from('companies')
         .select('*')
         .eq('id', id)
-        .limit(1)
-        .single();
+        .maybeSingle();
 
       if (error) {
         console.error('Error fetching company:', error);
@@ -83,8 +82,7 @@ export const useUpdateCompany = () => {
         .from('companies')
         .select('*')
         .eq('id', id)
-        .limit(1)
-        .single();
+        .maybeSingle();
 
       if (fetchError) {
         console.error('Error checking company existence:', fetchError);
@@ -102,7 +100,7 @@ export const useUpdateCompany = () => {
         .update(data)
         .eq('id', id)
         .select()
-        .single();
+        .maybeSingle();
 
       if (updateError) {
         console.error('Error updating company:', updateError);
