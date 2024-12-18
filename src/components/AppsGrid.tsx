@@ -1,4 +1,5 @@
 import type { Database } from "@/integrations/supabase/types";
+import AppCard from "./AppCard";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
