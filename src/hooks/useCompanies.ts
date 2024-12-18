@@ -18,7 +18,7 @@ export const useCompany = (id: string) => {
       
       const { data, error } = await supabase
         .from('companies')
-        .select()
+        .select('*')
         .eq('id', id)
         .maybeSingle();
 
@@ -80,7 +80,7 @@ export const useUpdateCompany = () => {
       // First verify the company exists
       const { data: existingData, error: fetchError } = await supabase
         .from('companies')
-        .select('id')
+        .select('*')
         .eq('id', id)
         .maybeSingle();
 
