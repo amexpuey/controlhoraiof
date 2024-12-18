@@ -38,7 +38,7 @@ const Dashboard = () => {
 
         console.log("User profile:", profile);
 
-        // Fetch all companies first
+        // Fetch all companies
         const { data: allApps, error: appsError } = await supabase
           .from("companies")
           .select("*")
@@ -52,19 +52,44 @@ const Dashboard = () => {
         console.log("All apps:", allApps);
         console.log("Selected features:", profile?.selected_features);
 
-        // Filter companies based on selected features
-        let filteredApps = allApps;
-        if (profile?.selected_features?.length > 0) {
-          filteredApps = allApps.filter(app => {
-            // Check if any of the user's selected features are in the app's features
-            return profile.selected_features.some(selectedFeature =>
-              app.features.includes(selectedFeature)
-            );
-          });
+        if (!allApps || allApps.length === 0) {
+          setMatchingApps([]);
+          return;
+        }
+
+        // Find INWOUT app
+        const inwoutApp = allApps.find(app => app.title === 'INWOUT');
+
+        // Calculate matching features for each app
+        let appsWithScore = allApps.map(app => {
+          const matchingFeatures = profile?.selected_features?.filter(
+            selectedFeature => app.features?.includes(selectedFeature)
+          ) || [];
+          
+          return {
+            app,
+            score: matchingFeatures.length
+          };
+        });
+
+        // Sort by score (number of matching features) in descending order
+        appsWithScore.sort((a, b) => b.score - a.score);
+
+        // Get apps with the highest scores
+        let filteredApps = appsWithScore
+          .filter(item => item.score > 0) // Only include apps with at least one matching feature
+          .map(item => item.app);
+
+        // If no apps match or there are no selected features, ensure INWOUT is included
+        if ((filteredApps.length === 0 || !profile?.selected_features?.length) && inwoutApp) {
+          filteredApps = [inwoutApp];
+        } else if (filteredApps.length === 0 && !inwoutApp) {
+          // If no matches and no INWOUT, show all apps
+          filteredApps = allApps;
         }
 
         console.log("Filtered apps:", filteredApps);
-        setMatchingApps(filteredApps || []);
+        setMatchingApps(filteredApps);
       } catch (error) {
         console.error("Error:", error);
         toast({
