@@ -79,11 +79,12 @@ serve(async (req) => {
       }),
     });
 
-    // Format the magic link email in Spanish
+    // Format the magic link email in Spanish with the new text
     const magicLinkHtml = `
       <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto;">
-        <h2>Enlace Mágico de Acceso</h2>
-        <p>Haz clic en el siguiente botón para acceder a tu selección personalizada:</p>
+        <h2>¡Hola! 👋</h2>
+        <p>¡Gracias por confiar en Control Horario Electrónico!</p>
+        <p>Para ver tu selección personalizada, simplemente haz clic en el siguiente botón:</p>
         <p style="text-align: center; margin: 30px 0;">
           <a href="${verificationLink}" 
              style="background-color: #0070f3; 
