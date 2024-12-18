@@ -52,8 +52,7 @@ export default function CsvUpload() {
 
   const downloadSampleCsv = () => {
     const sampleData = `id,title,url,description,features,type,verified,votes,is_top_rated,img_url,logo_url,pricing_starting_price,pricing_billing_period,pricing_currency,highlights
-123e4567-e89b-12d3-a456-426614174000,Mi App,https://miapp.com,Una aplicación increíble,"Feature 1, Feature 2, Feature 3",premium,true,42,true,https://example.com/img.jpg,https://example.com/logo.jpg,29.99,mensual,EUR,"Highlight 1, Highlight 2, Highlight 3"
-,Otra App,https://otraapp.com,Una app genial,"Chat en vivo, Soporte 24/7",freemium,false,10,false,https://example.com/img2.jpg,https://example.com/logo2.jpg,0,mensual,EUR,"Gratis para siempre, Fácil de usar"`;
+059d01d1-b477-465b-842d-f52ccda4a766,Bixpe,https://www.bixpe.com/,"Control horario y geolocalización de empleados con plan gratuito disponible","Control Horario, Reportes, Gestión de Ausencias, Apps Móviles, Geolocalización",freemium,true,245,false,https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80,https://images.unsplash.com/photo-1572044162444-ad60f128bdea?auto=format&fit=crop&q=80&w=200&h=200,0.00,mensual,EUR,"Plan gratuito disponible, Fácil de implementar, Cumplimiento normativo, Soporte técnico incluido"`;
 
     const blob = new Blob([sampleData], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
