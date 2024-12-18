@@ -25,9 +25,18 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [showReferralModal, setShowReferralModal] = useState(false);
   const [searchParams] = useSearchParams();
+  const [userId, setUserId] = useState<string | undefined>();
 
-  const { data: session } = await supabase.auth.getSession();
-  const { data: referralStatus } = useReferralStatus(session?.user?.id);
+  const { data: referralStatus } = useReferralStatus(userId);
+
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user?.id) {
+        setUserId(session.user.id);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const checkAuthAndFetchApps = async () => {
