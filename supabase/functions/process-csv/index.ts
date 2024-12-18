@@ -30,17 +30,17 @@ serve(async (req) => {
     );
 
     const processedRows = rows.map(row => ({
-      id: row[0] || undefined,
-      title: row[1],
-      url: row[2],
-      description: row[3],
+      id: row[0] || crypto.randomUUID(), // Generate UUID if not provided
+      title: row[1] || 'Untitled',
+      url: row[2] || 'https://example.com',
+      description: row[3] || 'No description provided',
       features: row[4] ? row[4].split(",").map(f => f.trim()) : [],
       type: row[5] || "freemium",
       verified: row[6] === "true",
       votes: parseInt(row[7]) || 0,
       is_top_rated: row[8] === "true",
-      img_url: row[9],
-      logo_url: row[10],
+      img_url: row[9] || 'https://via.placeholder.com/150',
+      logo_url: row[10] || 'https://via.placeholder.com/200',
       pricing_starting_price: parseFloat(row[11]) || 0,
       pricing_billing_period: row[12] || "mensual",
       pricing_currency: row[13] || "EUR",
@@ -54,7 +54,10 @@ serve(async (req) => {
         ignoreDuplicates: false
       });
 
-    if (error) throw error;
+    if (error) {
+      console.error("Database error:", error);
+      throw new Error(`Database error: ${error.message}`);
+    }
 
     return new Response(
       JSON.stringify({ message: "CSV processed successfully" }),

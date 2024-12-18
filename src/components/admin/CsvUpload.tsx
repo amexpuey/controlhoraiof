@@ -29,7 +29,7 @@ export default function CsvUpload() {
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.message || "Error processing CSV");
+        throw new Error(error.message || error.error || "Error processing CSV");
       }
 
       toast.success("CSV file processed successfully");
