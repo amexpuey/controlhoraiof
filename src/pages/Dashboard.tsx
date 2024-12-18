@@ -22,45 +22,49 @@ const Dashboard = () => {
           return;
         }
 
+        console.log("Fetching user profile and apps...");
+
         // Get user profile to access selected features and company size
         const { data: profile, error: profileError } = await supabase
           .from("profiles")
           .select("selected_features, company_size")
           .eq("id", session.user.id)
-          .single();
+          .maybeSingle();
 
-        if (profileError) throw profileError;
+        if (profileError) {
+          console.error("Profile fetch error:", profileError);
+          throw profileError;
+        }
 
         console.log("User profile:", profile);
 
-        // Build the query based on user preferences
-        let query = supabase
+        // Fetch all companies first
+        const { data: allApps, error: appsError } = await supabase
           .from("companies")
-          .select("*");
+          .select("*")
+          .order('created_at', { ascending: false });
 
-        if (profile?.selected_features?.length) {
-          // Filter companies that have at least one matching feature
-          query = query.contains('features', profile.selected_features);
+        if (appsError) {
+          console.error("Apps fetch error:", appsError);
+          throw appsError;
         }
 
-        // Add company size filtering logic if needed
-        if (profile?.company_size) {
-          // You might want to add specific logic based on company size
-          // This is just an example:
-          if (profile.company_size === "1-10") {
-            query = query.eq('type', 'freemium');
-          }
+        console.log("All apps:", allApps);
+        console.log("Selected features:", profile?.selected_features);
+
+        // Filter companies based on selected features
+        let filteredApps = allApps;
+        if (profile?.selected_features?.length > 0) {
+          filteredApps = allApps.filter(app => {
+            // Check if any of the user's selected features are in the app's features
+            return profile.selected_features.some(selectedFeature =>
+              app.features.includes(selectedFeature)
+            );
+          });
         }
 
-        // Limit to 10 most relevant results
-        query = query.limit(10);
-
-        const { data: apps, error: appsError } = await query;
-
-        if (appsError) throw appsError;
-
-        console.log("Filtered apps:", apps);
-        setMatchingApps(apps || []);
+        console.log("Filtered apps:", filteredApps);
+        setMatchingApps(filteredApps || []);
       } catch (error) {
         console.error("Error:", error);
         toast({
