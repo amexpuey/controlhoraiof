@@ -18,22 +18,18 @@ export const useCompany = (id: string) => {
       
       const { data, error } = await supabase
         .from('companies')
-        .select('*')
-        .eq('id', id);
+        .select()
+        .eq('id', id)
+        .limit(1)
+        .single();
 
       if (error) {
         console.error('Error fetching company:', error);
         throw error;
       }
 
-      if (!data || data.length === 0) {
-        console.error('Company not found with ID:', id);
-        throw new Error(`Company not found with ID: ${id}`);
-      }
-
-      const company = data[0];
-      console.log('Fetched company data:', company);
-      return company;
+      console.log('Fetched company data:', data);
+      return data;
     },
     retry: false,
     refetchOnWindowFocus: true,
@@ -80,16 +76,13 @@ export const useUpdateCompany = () => {
       // First verify the company exists
       const { data: existingData, error: fetchError } = await supabase
         .from('companies')
-        .select()
-        .eq('id', id);
+        .select('id')
+        .eq('id', id)
+        .limit(1)
+        .single();
 
       if (fetchError) {
         console.error('Error checking company existence:', fetchError);
-        throw fetchError;
-      }
-
-      if (!existingData || existingData.length === 0) {
-        console.error('Company not found with ID:', id);
         throw new Error(`Company not found with ID: ${id}`);
       }
 
@@ -98,20 +91,16 @@ export const useUpdateCompany = () => {
         .from('companies')
         .update(data)
         .eq('id', id)
-        .select();
+        .select()
+        .single();
 
       if (updateError) {
         console.error('Error updating company:', updateError);
         throw updateError;
       }
 
-      if (!updatedCompany || updatedCompany.length === 0) {
-        console.error('Update failed: Company not found with ID:', id);
-        throw new Error(`Update failed: Company not found with ID: ${id}`);
-      }
-
-      console.log('Successfully updated company:', updatedCompany[0]);
-      return updatedCompany[0];
+      console.log('Successfully updated company:', updatedCompany);
+      return updatedCompany;
     },
     onSuccess: (updatedCompany) => {
       // Invalidate and refetch both queries
