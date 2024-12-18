@@ -94,7 +94,7 @@ export default function UserView() {
               </div>
             </Card>
 
-            {company.highlights && company.highlights.length > 0 && (
+            {Array.isArray(company.highlights) && company.highlights.length > 0 && (
               <Card className="p-6">
                 <h2 className="text-2xl font-bold mb-4">Highlights</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -117,7 +117,7 @@ export default function UserView() {
                 <div className="text-3xl font-bold text-blue-600">
                   {company.pricing_starting_price === 0 
                     ? "Free"
-                    : `${company.pricing_starting_price}€/${company.pricing_billing_period}`}
+                    : `${company.pricing_starting_price}${company.pricing_currency}/${company.pricing_billing_period}`}
                 </div>
                 <a
                   href={company.url}
