@@ -72,7 +72,7 @@ serve(async (req) => {
         'Authorization': `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: 'Control Horario Electrónico <amexpuey@gmail.com>',
+        from: 'Control Horario Electrónico <onboarding@resend.dev>',
         to: ['amexpuey@gmail.com'], // Override to always send to verified email during testing
         subject: `Nueva solicitud de ${userEmail}`,
         html: emailHtml,
