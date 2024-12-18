@@ -64,6 +64,7 @@ serve(async (req) => {
       </p>
     `
 
+    // During testing, we can only send to the verified email
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -71,8 +72,8 @@ serve(async (req) => {
         'Authorization': `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: 'Control Horario Electrónico <onboarding@resend.dev>',
-        to,
+        from: 'Control Horario Electrónico <amexpuey@gmail.com>',
+        to: ['amexpuey@gmail.com'], // Override to always send to verified email during testing
         subject: `Nueva solicitud de ${userEmail}`,
         html: emailHtml,
       }),
