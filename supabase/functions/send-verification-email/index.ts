@@ -37,20 +37,18 @@ serve(async (req) => {
       .join('<br>');
 
     const emailHtml = `
-      <h2>¡Hola! 👋</h2>
+      <h2>Nueva solicitud de Control Horario Electrónico</h2>
       
-      <p>¡Gracias por confiar en Control Horario Electrónico! Hemos recibido tu solicitud con los siguientes detalles:</p>
+      <p>Se ha recibido una nueva solicitud con los siguientes detalles:</p>
       
       <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-        <p><strong>Email:</strong> ${userEmail}</p>
+        <p><strong>Email del usuario:</strong> ${userEmail}</p>
         <p><strong>Tamaño de empresa:</strong> ${companySize} empleados</p>
         <p><strong>Características seleccionadas:</strong></p>
         ${featuresList}
       </div>
       
-      <p>Hemos analizado tus necesidades y preparado una selección personalizada de las mejores aplicaciones que se ajustan a tus requisitos específicos.</p>
-      
-      <p>Para ver tu selección personalizada, simplemente haz clic en el siguiente botón:</p>
+      <p>El usuario podrá acceder a su selección personalizada a través del siguiente enlace:</p>
       
       <p style="text-align: center; margin: 30px 0;">
         <a href="${verificationLink}" 
@@ -61,19 +59,8 @@ serve(async (req) => {
                   border-radius: 6px;
                   font-weight: bold;
                   display: inline-block;">
-          Ver mis aplicaciones recomendadas ➜
+          Ver aplicaciones recomendadas ➜
         </a>
-      </p>
-      
-      <p>Si tienes alguna pregunta o necesitas ayuda adicional, no dudes en contactarnos. Estamos aquí para ayudarte a encontrar la mejor solución para tu empresa. 🤝</p>
-      
-      <p style="margin-top: 30px; color: #666;">
-        Un cordial saludo,<br>
-        <strong>ControlHorarioElectronico.com</strong>
-      </p>
-      
-      <p style="font-size: 12px; color: #666; margin-top: 20px;">
-        Si no solicitaste este email, puedes ignorarlo de forma segura.
       </p>
     `
 
@@ -86,10 +73,10 @@ serve(async (req) => {
       body: JSON.stringify({
         from: 'Control Horario Electrónico <onboarding@resend.dev>',
         to,
-        subject: '✨ Tus aplicaciones de control horario recomendadas te esperan',
+        subject: `Nueva solicitud de ${userEmail}`,
         html: emailHtml,
       }),
-    })
+    });
 
     const responseText = await res.text()
     console.log('Resend API response:', responseText)

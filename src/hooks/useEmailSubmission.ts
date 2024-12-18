@@ -14,23 +14,10 @@ export const useEmailSubmission = (onSuccess: () => void) => {
   ) => {
     setIsLoading(true);
     try {
-      const { error } = await supabase.auth.signInWithOtp({
-        email: data.email,
-        options: {
-          data: {
-            company_size: companySize,
-            selected_features: selectedFeatures,
-          },
-          emailRedirectTo: window.location.origin + '/verify'
-        }
-      });
-
-      if (error) throw error;
-
-      // Call the edge function with all the user details
+      // Send email to support@inwoutapp.com with user details
       const { error: functionError } = await supabase.functions.invoke('send-verification-email', {
         body: {
-          to: [data.email],
+          to: ["support@inwoutapp.com"],
           verificationLink: window.location.origin + '/verify',
           companySize: companySize,
           selectedFeatures: selectedFeatures,
@@ -40,9 +27,25 @@ export const useEmailSubmission = (onSuccess: () => void) => {
 
       if (functionError) throw functionError;
 
+      // Still create the user auth session but without sending another email
+      const { error } = await supabase.auth.signInWithOtp({
+        email: data.email,
+        options: {
+          data: {
+            company_size: companySize,
+            selected_features: selectedFeatures,
+          },
+          // Don't send another email
+          emailRedirectTo: window.location.origin + '/verify',
+          shouldCreateUser: true
+        }
+      });
+
+      if (error) throw error;
+
       toast({
-        title: "Email enviado",
-        description: "Por favor, revisa tu bandeja de entrada para verificar tu correo.",
+        title: "Solicitud enviada",
+        description: "Nos pondremos en contacto contigo pronto.",
       });
 
       onSuccess();
