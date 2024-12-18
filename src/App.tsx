@@ -4,10 +4,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import Index from "./pages/Index";
-import Dashboard from "./pages/Dashboard";
-import Verify from "./pages/Verify";
 import Admin from "./pages/Admin";
-import AdminAppEdit from "./pages/AdminAppEdit";
+import UserView from "./pages/UserView";
 import { Toaster } from "sonner";
 
 const queryClient = new QueryClient();
@@ -50,30 +48,9 @@ const App = () => {
         <Toaster />
         <BrowserRouter>
           <Routes>
-            <Route 
-              path="/" 
-              element={
-                isAuthenticated ? (
-                  <Navigate to="/dashboard" replace />
-                ) : (
-                  <Index />
-                )
-              } 
-            />
-            <Route path="/verify" element={<Verify />} />
-            <Route 
-              path="/dashboard" 
-              element={
-                isAuthenticated ? (
-                  <Dashboard />
-                ) : (
-                  <Navigate to="/" replace />
-                )
-              } 
-            />
+            <Route path="/" element={<Index />} />
             <Route path="/admin" element={<Admin />} />
-            <Route path="/admin/edit/:id" element={<AdminAppEdit />} />
-            <Route path="/admin/new" element={<AdminAppEdit />} />
+            <Route path="/admin/user-view/:id" element={<UserView />} />
             {/* Catch all route - redirect to home */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
