@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import AppCard from "@/components/AppCard";
 import type { Database } from "@/integrations/supabase/types";
 import { useToast } from "@/components/ui/use-toast";
+import AppsGrid from "@/components/AppsGrid";
+import DashboardHeader from "@/components/DashboardHeader";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
@@ -43,8 +44,6 @@ const Dashboard = () => {
           throw profileError;
         }
 
-        console.log("User profile:", profile);
-
         // Fetch all companies
         const { data: allApps, error: appsError } = await supabase
           .from("companies")
@@ -55,9 +54,6 @@ const Dashboard = () => {
           console.error("Apps fetch error:", appsError);
           throw appsError;
         }
-
-        console.log("All apps:", allApps);
-        console.log("Selected features:", profile?.selected_features);
 
         if (!allApps || allApps.length === 0) {
           setMatchingApps([]);
@@ -107,7 +103,6 @@ const Dashboard = () => {
           // Sort by score in descending order
           appsWithMatches.sort((a, b) => (b.score || 0) - (a.score || 0));
           
-          // Extract just the apps from the scored array
           let filteredApps = appsWithMatches;
           
           // If INWOUT isn't in the filtered list, add it at the start
@@ -170,32 +165,8 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
       <div className="container py-12">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-primary-900 mb-4">
-            Aplicaciones Recomendadas
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Basado en tus necesidades, estas son las mejores soluciones para tu empresa
-          </p>
-        </div>
-
-        {matchingApps.length === 0 ? (
-          <div className="text-center text-gray-600">
-            No se encontraron aplicaciones que coincidan con tus criterios.
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {matchingApps.map((app) => (
-              <AppCard
-                key={app.id}
-                app={app}
-                onClick={() => handleAppClick(app)}
-                matchingFeaturesCount={app.matchingFeaturesCount}
-                totalSelectedFeatures={app.totalSelectedFeatures}
-              />
-            ))}
-          </div>
-        )}
+        <DashboardHeader />
+        <AppsGrid apps={matchingApps} onAppClick={handleAppClick} />
       </div>
     </div>
   );
