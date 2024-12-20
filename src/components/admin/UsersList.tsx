@@ -18,7 +18,7 @@ import { format } from "date-fns";
 export default function UsersList() {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { data: users, isLoading } = useQuery({
+  const { data: users, isLoading, error } = useQuery({
     queryKey: ["profiles"],
     queryFn: async () => {
       console.log("Fetching profiles...");
@@ -33,13 +33,16 @@ export default function UsersList() {
       }
       
       console.log("Fetched profiles:", data);
-      return data;
+      if (!data || data.length === 0) {
+        console.log("No profiles found in the database");
+      }
+      return data || [];
     },
   });
 
   const filteredUsers = users?.filter(
     (user) =>
-      user.email.toLowerCase().includes(searchTerm.toLowerCase())
+      user.email?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const downloadCsv = () => {
@@ -72,6 +75,15 @@ export default function UsersList() {
 
   if (isLoading) {
     return <div>Loading...</div>;
+  }
+
+  if (error) {
+    console.error("Error in UsersList:", error);
+    return <div>Error loading users: {error.message}</div>;
+  }
+
+  if (!users || users.length === 0) {
+    return <div>No users found.</div>;
   }
 
   return (
