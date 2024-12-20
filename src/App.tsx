@@ -12,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/verify" element={<Verify />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/admin" element={<Dashboard />} />
         <Route path="/admin/user-view/:id" element={<UserView />} />
         <Route path="/admin/compare/:appIds" element={<ComparisonPage />} />
