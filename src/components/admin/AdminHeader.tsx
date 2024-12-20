@@ -8,16 +8,6 @@ export default function AdminHeader() {
       <div className="container mx-auto px-8">
         <nav className="flex space-x-6">
           <Link
-            to="/admin/blog"
-            className={`py-4 px-2 border-b-2 ${
-              location.pathname.startsWith('/admin/blog')
-                ? 'border-primary text-primary font-medium'
-                : 'border-transparent hover:text-primary'
-            }`}
-          >
-            Blog Articles
-          </Link>
-          <Link
             to="/admin/companies"
             className={`py-4 px-2 border-b-2 ${
               location.pathname.startsWith('/admin/companies')
@@ -26,6 +16,16 @@ export default function AdminHeader() {
             }`}
           >
             Apps Management
+          </Link>
+          <Link
+            to="/admin/users"
+            className={`py-4 px-2 border-b-2 ${
+              location.pathname.startsWith('/admin/users')
+                ? 'border-primary text-primary font-medium'
+                : 'border-transparent hover:text-primary'
+            }`}
+          >
+            Users
           </Link>
         </nav>
       </div>
