@@ -2,6 +2,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { corsHeaders } from '../_shared/cors.ts'
 
 Deno.serve(async (req) => {
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
@@ -31,17 +32,40 @@ Deno.serve(async (req) => {
     }
 
     // Get all users from auth.users
-    const { data: users, error } = await supabaseAdmin.auth.admin.listUsers()
-    if (error) throw error
+    const { data: { users }, error } = await supabaseAdmin.auth.admin.listUsers()
+    if (error) {
+      console.error('Error fetching users:', error)
+      throw error
+    }
+
+    console.log(`Found ${users.length} users`)
 
     return new Response(
-      JSON.stringify({ users: users.users }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      JSON.stringify({ 
+        users: users.map(user => ({
+          id: user.id,
+          email: user.email,
+          email_confirmed_at: user.email_confirmed_at,
+          created_at: user.created_at
+        }))
+      }),
+      { 
+        headers: { 
+          ...corsHeaders, 
+          'Content-Type': 'application/json' 
+        } 
+      }
     )
   } catch (error) {
+    console.error('Error in admin-list-users:', error)
     return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      JSON.stringify({ 
+        error: error instanceof Error ? error.message : 'An unexpected error occurred' 
+      }),
+      { 
+        status: 400, 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      }
     )
   }
 })

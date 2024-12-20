@@ -37,6 +37,7 @@ export default function UsersList() {
           throw new Error("No access token");
         }
 
+        console.log("Starting user migration...");
         const response = await fetch(
           `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-list-users`,
           {
@@ -48,6 +49,7 @@ export default function UsersList() {
 
         if (!response.ok) {
           const errorData = await response.json();
+          console.error("Error response from admin-list-users:", errorData);
           throw new Error(errorData.error || 'Failed to fetch users');
         }
 
@@ -55,33 +57,41 @@ export default function UsersList() {
         console.log("Response from admin-list-users:", responseData);
 
         if (!responseData.users || !Array.isArray(responseData.users)) {
+          console.error("Invalid response format:", responseData);
           throw new Error('Invalid response format from admin-list-users');
         }
 
         const authUsers = responseData.users;
         console.log("Auth users found:", authUsers.length);
 
-        const promises = authUsers.map(async (user) => {
-          const { data: existingProfile } = await supabase
-            .from("profiles")
-            .select("id")
-            .eq("id", user.id)
-            .single();
-
-          if (!existingProfile) {
-            return supabase
+        // Process users in batches to avoid overwhelming the database
+        const batchSize = 10;
+        for (let i = 0; i < authUsers.length; i += batchSize) {
+          const batch = authUsers.slice(i, i + batchSize);
+          const promises = batch.map(async (user) => {
+            const { data: existingProfile } = await supabase
               .from("profiles")
-              .insert({
-                id: user.id,
-                email: user.email,
-                is_email_verified: user.email_confirmed_at !== null,
-                onboarding_status: "in_progress"
-              });
-          }
-          return null;
-        });
+              .select("id")
+              .eq("id", user.id)
+              .maybeSingle();
 
-        await Promise.all(promises);
+            if (!existingProfile) {
+              return supabase
+                .from("profiles")
+                .insert({
+                  id: user.id,
+                  email: user.email,
+                  is_email_verified: user.email_confirmed_at !== null,
+                  onboarding_status: "in_progress"
+                });
+            }
+            return null;
+          });
+
+          await Promise.all(promises);
+          console.log(`Processed batch ${i / batchSize + 1}`);
+        }
+
         return authUsers.length;
       } catch (error) {
         console.error("Detailed migration error:", error);
