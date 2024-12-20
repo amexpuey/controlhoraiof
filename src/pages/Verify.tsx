@@ -11,24 +11,22 @@ const Verify = () => {
         const { data: { session } } = await supabase.auth.getSession();
         
         if (!session) {
-          navigate('/user-login');
+          navigate('/');
           return;
         }
 
         const { user } = session;
 
         // Check if user is admin
-        const isAdmin = user?.email === "amexpuey@gmail.com";
-
-        // Regular users go to dashboard, admin goes to companies
-        if (!isAdmin) {
-          navigate('/dashboard');
-        } else {
+        if (user?.email === "amexpuey@gmail.com") {
           navigate('/admin/companies');
+        } else {
+          // Regular users go to dashboard
+          navigate('/dashboard');
         }
       } catch (error) {
         console.error('Verification error:', error);
-        navigate('/user-login');
+        navigate('/');
       }
     };
 
