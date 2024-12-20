@@ -7,13 +7,19 @@ const Verify = () => {
 
   useEffect(() => {
     const handleVerification = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const { data: { session } } = await supabase.auth.getSession();
       
-      if (user?.email === "amexpuey@gmail.com") {
-        // For admin user, redirect to admin dashboard
+      if (!session) {
+        navigate('/user-login');
+        return;
+      }
+
+      const { user } = session;
+      const isUserLogin = session?.user?.user_metadata?.isUserLogin;
+
+      if (user?.email === "amexpuey@gmail.com" && !isUserLogin) {
         navigate('/admin/companies');
       } else {
-        // For regular users, redirect to user dashboard
         navigate('/dashboard');
       }
     };

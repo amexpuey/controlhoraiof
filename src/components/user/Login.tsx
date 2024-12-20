@@ -45,7 +45,10 @@ export function Login() {
       const { error } = await supabase.auth.signInWithOtp({
         email: email.trim(),
         options: {
-          emailRedirectTo: `${window.location.origin}/verify`
+          emailRedirectTo: `${window.location.origin}/verify`,
+          data: {
+            isUserLogin: true
+          }
         }
       });
 
