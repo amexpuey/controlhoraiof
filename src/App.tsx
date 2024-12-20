@@ -3,10 +3,8 @@ import Index from "@/pages/Index";
 import Login from "@/pages/Login";
 import Verify from "@/pages/Verify";
 import PasswordReset from "@/pages/PasswordReset";
-import AdminBlog from "@/pages/admin/Blog";
-import AdminBlogPost from "@/pages/admin/BlogPost";
 import AdminCompanies from "@/pages/admin/Companies";
-import Blog from "@/pages/Blog";
+import Users from "@/pages/admin/Users";
 import { Toaster } from "@/components/ui/toaster";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 
@@ -14,10 +12,6 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Index />,
-  },
-  {
-    path: "/blog",
-    element: <Blog />,
   },
   {
     path: "/login",
@@ -32,26 +26,18 @@ const router = createBrowserRouter([
     element: <PasswordReset />,
   },
   {
-    path: "/admin/blog",
-    element: (
-      <ProtectedRoute>
-        <AdminBlog />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/admin/blog/:id",
-    element: (
-      <ProtectedRoute>
-        <AdminBlogPost />
-      </ProtectedRoute>
-    ),
-  },
-  {
     path: "/admin/companies",
     element: (
       <ProtectedRoute>
         <AdminCompanies />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/users",
+    element: (
+      <ProtectedRoute>
+        <Users />
       </ProtectedRoute>
     ),
   },
