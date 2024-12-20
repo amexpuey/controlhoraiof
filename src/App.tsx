@@ -6,6 +6,7 @@ import PasswordReset from "@/pages/PasswordReset";
 import AdminCompanies from "@/pages/admin/Companies";
 import Users from "@/pages/admin/Users";
 import Dashboard from "@/pages/Dashboard";
+import ComparisonPage from "@/pages/ComparisonPage";
 import { Toaster } from "@/components/ui/toaster";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 
@@ -47,6 +48,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <Users />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/compare/:ids",
+    element: (
+      <ProtectedRoute>
+        <ComparisonPage />
       </ProtectedRoute>
     ),
   },
