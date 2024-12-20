@@ -6,6 +6,7 @@ import PasswordReset from "@/pages/PasswordReset";
 import AdminBlog from "@/pages/admin/Blog";
 import AdminBlogPost from "@/pages/admin/BlogPost";
 import AdminCompanies from "@/pages/admin/Companies";
+import Blog from "@/pages/Blog";
 import { Toaster } from "@/components/ui/toaster";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Index />,
+  },
+  {
+    path: "/blog",
+    element: <Blog />,
   },
   {
     path: "/login",
