@@ -1,6 +1,7 @@
 import { ExternalLink, Award, CheckCircle } from "lucide-react";
 import VoteButton from "./VoteButton";
 import { Card } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import type { Database } from "@/integrations/supabase/types";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
@@ -8,9 +9,12 @@ type Company = Database["public"]["Tables"]["companies"]["Row"];
 interface AppCardProps {
   app: Company;
   onClick: () => void;
+  showCompare?: boolean;
+  isSelected?: boolean;
+  onCompareToggle?: () => void;
 }
 
-export default function AppCard({ app, onClick }: AppCardProps) {
+export default function AppCard({ app, onClick, showCompare, isSelected, onCompareToggle }: AppCardProps) {
   if (!app) return null;
 
   const handleExternalLinkClick = (e: React.MouseEvent) => {
@@ -18,9 +22,14 @@ export default function AppCard({ app, onClick }: AppCardProps) {
     window.open(app.url, '_blank');
   };
 
+  const handleCompareClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onCompareToggle?.();
+  };
+
   return (
     <Card 
-      className="overflow-hidden transition-all hover:shadow-lg cursor-pointer"
+      className="overflow-hidden transition-all hover:shadow-lg cursor-pointer relative"
       onClick={onClick}
     >
       <div className="relative h-48 overflow-hidden">
@@ -101,6 +110,24 @@ export default function AppCard({ app, onClick }: AppCardProps) {
               : `Desde ${app.pricing_starting_price}€/${app.pricing_billing_period}`}
           </div>
         </div>
+
+        {showCompare && (
+          <div 
+            className="absolute bottom-4 right-4 flex items-center gap-2 bg-white rounded-lg shadow p-2"
+            onClick={handleCompareClick}
+          >
+            <Checkbox
+              checked={isSelected}
+              id={`compare-${app.id}`}
+            />
+            <label
+              htmlFor={`compare-${app.id}`}
+              className="text-sm font-medium text-gray-700 cursor-pointer"
+            >
+              Comparar
+            </label>
+          </div>
+        )}
       </div>
     </Card>
   );

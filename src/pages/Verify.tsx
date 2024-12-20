@@ -10,7 +10,6 @@ const Verify = () => {
   useEffect(() => {
     const handleVerification = async () => {
       try {
-        // First check if we have hash parameters from the magic link
         if (window.location.hash) {
           const hashParams = new URLSearchParams(window.location.hash.substring(1));
           const accessToken = hashParams.get('access_token');
@@ -25,7 +24,19 @@ const Verify = () => {
             if (error) throw error;
             
             if (session) {
-              console.log("Session set from hash params:", session);
+              const userEmail = session.user.email;
+              
+              // Check if it's the admin email
+              if (userEmail === 'amexpuey@gmail.com') {
+                toast({
+                  title: "Verificación exitosa",
+                  description: "Por favor, ingresa tu contraseña para continuar.",
+                });
+                navigate('/login', { replace: true });
+                return;
+              }
+              
+              // For regular users
               toast({
                 title: "¡Verificación exitosa!",
                 description: "Tu correo ha sido verificado correctamente.",
@@ -36,14 +47,17 @@ const Verify = () => {
           }
         }
 
-        // If no hash params or session setting failed, check current session
+        // Check current session
         const { data: { session } } = await supabase.auth.getSession();
         
         if (session) {
-          console.log("Session found:", session);
-          navigate('/dashboard', { replace: true });
+          const userEmail = session.user.email;
+          if (userEmail === 'amexpuey@gmail.com') {
+            navigate('/login', { replace: true });
+          } else {
+            navigate('/dashboard', { replace: true });
+          }
         } else {
-          console.log("No session found");
           toast({
             title: "Error de verificación",
             description: "Por favor, intenta verificar tu correo nuevamente.",
