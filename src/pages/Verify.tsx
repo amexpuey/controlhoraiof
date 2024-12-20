@@ -7,23 +7,28 @@ const Verify = () => {
 
   useEffect(() => {
     const handleVerification = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session) {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (!session) {
+          navigate('/user-login');
+          return;
+        }
+
+        const { user } = session;
+
+        // Check if user is admin
+        const isAdmin = user?.email === "amexpuey@gmail.com";
+
+        // Regular users go to dashboard, admin goes to companies
+        if (!isAdmin) {
+          navigate('/dashboard');
+        } else {
+          navigate('/admin/companies');
+        }
+      } catch (error) {
+        console.error('Verification error:', error);
         navigate('/user-login');
-        return;
-      }
-
-      const { user } = session;
-
-      // Check if user is admin
-      const isAdmin = user?.email === "amexpuey@gmail.com";
-
-      // Regular users go to dashboard, admin goes to companies
-      if (!isAdmin) {
-        navigate('/dashboard');
-      } else {
-        navigate('/admin/companies');
       }
     };
 
