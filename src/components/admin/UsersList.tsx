@@ -110,6 +110,35 @@ export default function UsersList() {
     },
   });
 
+  const downloadCsv = () => {
+    if (!users) return;
+
+    const csvContent = [
+      ["Email", "Company Size", "Selected Features", "Onboarding Status", "Created At", "Referral Code", "Referred By"],
+      ...users.map((user) => [
+        user.email,
+        user.company_size || "Not specified",
+        user.selected_features?.join(", ") || "None",
+        user.onboarding_status,
+        format(new Date(user.created_at), "yyyy-MM-dd HH:mm:ss"),
+        user.referral_code || "No referral code",
+        user.referred_by || "Not referred"
+      ]),
+    ]
+      .map((row) => row.join(","))
+      .join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `users-${format(new Date(), "yyyy-MM-dd")}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
