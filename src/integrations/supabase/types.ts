@@ -9,6 +9,48 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      articles: {
+        Row: {
+          category: string
+          content: string
+          created_at: string | null
+          featured_image_url: string | null
+          id: string
+          image_alt: string | null
+          meta_description: string
+          status: string
+          tags: string[] | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          category: string
+          content: string
+          created_at?: string | null
+          featured_image_url?: string | null
+          id?: string
+          image_alt?: string | null
+          meta_description: string
+          status?: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string
+          content?: string
+          created_at?: string | null
+          featured_image_url?: string | null
+          id?: string
+          image_alt?: string | null
+          meta_description?: string
+          status?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       companies: {
         Row: {
           created_at: string | null
@@ -116,6 +158,42 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["referral_code"]
+          },
+        ]
+      }
+      related_articles: {
+        Row: {
+          article_id: string | null
+          created_at: string | null
+          id: string
+          related_article_id: string | null
+        }
+        Insert: {
+          article_id?: string | null
+          created_at?: string | null
+          id?: string
+          related_article_id?: string | null
+        }
+        Update: {
+          article_id?: string | null
+          created_at?: string | null
+          id?: string
+          related_article_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "related_articles_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "related_articles_related_article_id_fkey"
+            columns: ["related_article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
           },
         ]
       }
