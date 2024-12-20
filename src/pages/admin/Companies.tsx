@@ -1,10 +1,70 @@
+import AdminHeader from "@/components/admin/AdminHeader";
+import { useCompanies } from "@/hooks/useCompanies";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+
 const AdminCompanies = () => {
+  const navigate = useNavigate();
+  const { data: companies, isLoading } = useCompanies();
+
   return (
-    <div className="container mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-8">Companies Management</h1>
-      <div>
-        {/* Companies management will be implemented later */}
-        <p>Companies management coming soon...</p>
+    <div>
+      <AdminHeader />
+      <div className="container mx-auto p-8">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold">Apps Management</h1>
+          <Button onClick={() => navigate('/admin/companies/new')}>
+            Add New App
+          </Button>
+        </div>
+
+        {isLoading ? (
+          <p>Loading apps...</p>
+        ) : (
+          <div className="border rounded-lg">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {companies?.map((company) => (
+                  <TableRow key={company.id}>
+                    <TableCell className="font-medium">{company.title}</TableCell>
+                    <TableCell>{company.type}</TableCell>
+                    <TableCell>
+                      <Badge variant={company.verified ? "default" : "secondary"}>
+                        {company.verified ? "Verified" : "Pending"}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => navigate(`/admin/companies/${company.id}`)}
+                      >
+                        Edit
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        )}
       </div>
     </div>
   );
