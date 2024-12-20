@@ -41,14 +41,29 @@ export default function UsersList() {
 
   const migrateUsers = useMutation({
     mutationFn: async () => {
-      // First, get all auth users
-      const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
-      if (authError) throw authError;
+      const { data: session } = await supabase.auth.getSession();
+      if (!session.session?.access_token) throw new Error("No access token");
 
-      console.log("Auth users found:", authUsers.users.length);
+      // Call our Edge Function to get auth users
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-list-users`,
+        {
+          headers: {
+            Authorization: `Bearer ${session.session.access_token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to fetch users');
+      }
+
+      const { users: authUsers } = await response.json();
+      console.log("Auth users found:", authUsers.length);
 
       // For each auth user, ensure they have a profile
-      const promises = authUsers.users.map(async (user) => {
+      const promises = authUsers.map(async (user) => {
         const { data: existingProfile } = await supabase
           .from("profiles")
           .select("id")
@@ -69,7 +84,7 @@ export default function UsersList() {
       });
 
       await Promise.all(promises);
-      return authUsers.users.length;
+      return authUsers.length;
     },
     onSuccess: (count) => {
       toast.success(`Successfully migrated ${count} users`);
