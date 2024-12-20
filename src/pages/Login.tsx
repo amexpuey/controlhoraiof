@@ -83,7 +83,6 @@ const Login = () => {
       if (error) {
         let errorMessage = "Invalid credentials";
         
-        // Parse the error message if it's a JSON string
         try {
           const errorBody = JSON.parse(error.message);
           errorMessage = errorBody.message || errorMessage;
@@ -100,6 +99,17 @@ const Login = () => {
       }
 
       if (data?.user) {
+        // Verify if the user has the correct email
+        if (data.user.email !== "amexpuey@gmail.com") {
+          await supabase.auth.signOut();
+          toast({
+            title: "Error",
+            description: "Unauthorized access",
+            variant: "destructive",
+          });
+          return;
+        }
+
         toast({
           title: "Success",
           description: "Logged in successfully",
@@ -110,7 +120,6 @@ const Login = () => {
       console.error('Login error:', error);
       let errorMessage = "An unexpected error occurred";
       
-      // Try to parse the error body if it exists
       try {
         if (error.body) {
           const errorBody = JSON.parse(error.body);
