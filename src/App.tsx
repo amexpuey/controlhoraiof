@@ -1,31 +1,63 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Toaster } from "@/components/ui/toaster";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Index from "@/pages/Index";
-import Verify from "@/pages/Verify";
-import Dashboard from "@/pages/Dashboard";
-import UserView from "@/pages/UserView";
-import ComparisonPage from "@/pages/ComparisonPage";
-import AdminBlog from "@/pages/admin/AdminBlog";
-import ArticleEditor from "@/pages/admin/ArticleEditor";
 import Login from "@/pages/Login";
+import Verify from "@/pages/Verify";
+import PasswordReset from "@/pages/PasswordReset";
+import AdminBlog from "@/pages/admin/Blog";
+import AdminBlogPost from "@/pages/admin/BlogPost";
+import AdminCompanies from "@/pages/admin/Companies";
+import { Toaster } from "@/components/ui/toaster";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Index />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/verify",
+    element: <Verify />,
+  },
+  {
+    path: "/password-reset",
+    element: <PasswordReset />,
+  },
+  {
+    path: "/admin/blog",
+    element: (
+      <ProtectedRoute>
+        <AdminBlog />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/blog/:id",
+    element: (
+      <ProtectedRoute>
+        <AdminBlogPost />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/companies",
+    element: (
+      <ProtectedRoute>
+        <AdminCompanies />
+      </ProtectedRoute>
+    ),
+  },
+]);
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/verify" element={<Verify />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/admin" element={<Dashboard />} />
-        <Route path="/admin/user-view/:id" element={<UserView />} />
-        <Route path="/admin/compare/:appIds" element={<ComparisonPage />} />
-        <Route path="/admin/blog" element={<AdminBlog />} />
-        <Route path="/admin/blog/new" element={<ArticleEditor />} />
-        <Route path="/admin/blog/edit/:id" element={<ArticleEditor />} />
-      </Routes>
+    <>
+      <RouterProvider router={router} />
       <Toaster />
-    </Router>
+    </>
   );
 }
 
