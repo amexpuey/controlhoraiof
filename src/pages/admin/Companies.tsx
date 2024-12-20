@@ -1,6 +1,7 @@
 import AdminHeader from "@/components/admin/AdminHeader";
 import { useCompanies } from "@/hooks/useCompanies";
 import CsvUpload from "@/components/admin/CsvUpload";
+import { useNavigate } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -10,9 +11,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Eye } from "lucide-react";
 
 const AdminCompanies = () => {
   const { data: companies, isLoading } = useCompanies();
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -36,6 +40,7 @@ const AdminCompanies = () => {
                   <TableHead>Name</TableHead>
                   <TableHead>Type</TableHead>
                   <TableHead>Status</TableHead>
+                  <TableHead>Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -47,6 +52,16 @@ const AdminCompanies = () => {
                       <Badge variant={company.verified ? "default" : "secondary"}>
                         {company.verified ? "Verified" : "Pending"}
                       </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => navigate(`/app/${company.id}`)}
+                      >
+                        <Eye className="h-4 w-4 mr-2" />
+                        View
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}
