@@ -96,7 +96,7 @@ export default function AdminAppEdit() {
       
       console.log('Update successful:', result);
       toast.success('Changes saved successfully');
-      navigate('/admin');
+      navigate('/admin/companies');
     } catch (error: any) {
       console.error('Error updating app:', error);
       toast.error(`Error saving changes: ${error.message}`);
@@ -118,7 +118,7 @@ export default function AdminAppEdit() {
       <div className="min-h-screen bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <button
-            onClick={() => navigate('/admin')}
+            onClick={() => navigate('/admin/companies')}
             className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900"
           >
             <ArrowLeft className="w-5 h-5" />
@@ -133,7 +133,7 @@ export default function AdminAppEdit() {
                 La aplicación que intentas editar no existe o ha sido eliminada.
               </p>
               <button
-                onClick={() => navigate('/admin')}
+                onClick={() => navigate('/admin/companies')}
                 className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
               >
                 Volver al panel
@@ -149,7 +149,7 @@ export default function AdminAppEdit() {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <button
-          onClick={() => navigate('/admin')}
+          onClick={() => navigate('/admin/companies')}
           className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900"
         >
           <ArrowLeft className="w-5 h-5" />
