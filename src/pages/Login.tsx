@@ -81,9 +81,19 @@ const Login = () => {
       });
 
       if (error) {
+        let errorMessage = "Invalid credentials";
+        
+        // Parse the error message if it's a JSON string
+        try {
+          const errorBody = JSON.parse(error.message);
+          errorMessage = errorBody.message || errorMessage;
+        } catch {
+          errorMessage = error.message || errorMessage;
+        }
+        
         toast({
           title: "Login Failed",
-          description: error.message || "Please check your credentials and try again",
+          description: errorMessage,
           variant: "destructive",
         });
         return;
@@ -98,9 +108,21 @@ const Login = () => {
       }
     } catch (error: any) {
       console.error('Login error:', error);
+      let errorMessage = "An unexpected error occurred";
+      
+      // Try to parse the error body if it exists
+      try {
+        if (error.body) {
+          const errorBody = JSON.parse(error.body);
+          errorMessage = errorBody.message || errorMessage;
+        }
+      } catch {
+        errorMessage = error.message || errorMessage;
+      }
+      
       toast({
         title: "Error",
-        description: error.message || "An unexpected error occurred",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
