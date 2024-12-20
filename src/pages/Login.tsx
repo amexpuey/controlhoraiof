@@ -36,19 +36,29 @@ const Login = () => {
 
     setIsLoading(true);
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (error) throw error;
+      if (error) {
+        toast({
+          title: "Login Failed",
+          description: "Please check your credentials and try again",
+          variant: "destructive",
+        });
+        throw error;
+      }
 
-      toast({
-        title: "Success",
-        description: "Logged in successfully",
-      });
-      navigate('/admin/blog');
+      if (data?.user) {
+        toast({
+          title: "Success",
+          description: "Logged in successfully",
+        });
+        navigate('/admin/blog');
+      }
     } catch (error: any) {
+      console.error('Login error:', error);
       toast({
         title: "Error",
         description: error.message,
