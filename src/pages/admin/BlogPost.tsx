@@ -17,7 +17,7 @@ const AdminBlogPost = () => {
         {isLoading ? (
           <p>Loading article...</p>
         ) : (
-          <ArticleEditor article={article} />
+          <ArticleEditor />
         )}
       </div>
     </div>
