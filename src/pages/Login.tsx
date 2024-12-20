@@ -12,9 +12,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isResetMode, setIsResetMode] = useState(false);
 
-  const handlePasswordReset = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
       toast({
@@ -28,116 +27,83 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-        redirectTo: `${window.location.origin}/verify`,
-      });
-
-      if (error) throw error;
-
-      toast({
-        title: "Success",
-        description: "Password reset instructions have been sent to your email",
-      });
-      setIsResetMode(false);
-    } catch (error: any) {
-      console.error('Password reset error:', error);
-      toast({
-        title: "Error",
-        description: error.message || "Failed to send reset instructions",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || !password) {
-      toast({
-        title: "Error",
-        description: "Please enter your email and password",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // Only allow admin email
-    if (email.trim() !== "amexpuey@gmail.com") {
-      toast({
-        title: "Error",
-        description: "Invalid credentials",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setIsLoading(true);
-
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: email.trim(),
-        password: password.trim(),
-      });
-
-      if (error) {
-        let errorMessage = "Invalid credentials";
-        
-        try {
-          const errorBody = JSON.parse(error.message);
-          errorMessage = errorBody.message || errorMessage;
-        } catch {
-          errorMessage = error.message || errorMessage;
-        }
-        
-        toast({
-          title: "Login Failed",
-          description: errorMessage,
-          variant: "destructive",
-        });
-        return;
-      }
-
-      if (data?.user) {
-        // Verify if the user has the correct email
-        if (data.user.email !== "amexpuey@gmail.com") {
-          await supabase.auth.signOut();
+      // Check if it's admin login
+      if (window.location.pathname === "/login") {
+        if (!password || email !== "amexpuey@gmail.com") {
           toast({
             title: "Error",
-            description: "Unauthorized access",
+            description: "Invalid credentials",
             variant: "destructive",
           });
           return;
         }
 
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: email.trim(),
+          password: password.trim(),
+        });
+
+        if (error) throw error;
+
+        if (data?.user) {
+          if (data.user.email !== "amexpuey@gmail.com") {
+            await supabase.auth.signOut();
+            toast({
+              title: "Error",
+              description: "Unauthorized access",
+              variant: "destructive",
+            });
+            return;
+          }
+
+          toast({
+            title: "Success",
+            description: "Logged in successfully",
+          });
+          navigate('/admin/companies');
+        }
+      } else {
+        // User login flow
+        const { data: profileData } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('email', email.trim())
+          .single();
+
+        if (!profileData) {
+          toast({
+            title: "Error",
+            description: "Email not found. Please complete the onboarding first.",
+            variant: "destructive",
+          });
+          navigate('/');
+          return;
+        }
+
+        const { error } = await supabase.auth.signInWithOtp({
+          email: email.trim(),
+        });
+
+        if (error) throw error;
+
         toast({
           title: "Success",
-          description: "Logged in successfully",
+          description: "Magic link sent to your email",
         });
-        navigate('/admin/companies'); // Changed from '/admin/blog' to '/admin/companies'
       }
     } catch (error: any) {
       console.error('Login error:', error);
-      let errorMessage = "An unexpected error occurred";
-      
-      try {
-        if (error.body) {
-          const errorBody = JSON.parse(error.body);
-          errorMessage = errorBody.message || errorMessage;
-        }
-      } catch {
-        errorMessage = error.message || errorMessage;
-      }
-      
       toast({
         title: "Error",
-        description: errorMessage,
+        description: error.message || "An error occurred",
         variant: "destructive",
       });
     } finally {
       setIsLoading(false);
     }
   };
+
+  const isAdminLogin = window.location.pathname === "/login";
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-primary-50 to-white">
@@ -145,57 +111,46 @@ const Login = () => {
         <div className="text-center">
           <Lock className="w-12 h-12 mx-auto text-primary-600" />
           <h2 className="mt-4 text-2xl font-bold text-gray-900">
-            {isResetMode ? "Reset Password" : "Admin Login"}
+            {isAdminLogin ? "Admin Login" : "Welcome Back"}
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            {isResetMode 
-              ? "Enter your email to receive reset instructions" 
-              : "Sign in to manage blog articles and companies"}
+            {isAdminLogin 
+              ? "Sign in to manage applications" 
+              : "Enter your email to receive a magic link"}
           </p>
         </div>
-        <form onSubmit={isResetMode ? handlePasswordReset : handleLogin} className="mt-8 space-y-6">
+        
+        <form onSubmit={handleLogin} className="mt-8 space-y-6">
           <div className="space-y-4">
-            <div>
+            <Input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full"
+            />
+            {isAdminLogin && (
               <Input
-                type="email"
-                placeholder="Admin Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 className="w-full"
               />
-            </div>
-            {!isResetMode && (
-              <div>
-                <Input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  className="w-full"
-                />
-              </div>
             )}
           </div>
+          
           <Button
             type="submit"
             className="w-full"
             disabled={isLoading}
           >
             {isLoading 
-              ? (isResetMode ? "Sending..." : "Signing in...") 
-              : (isResetMode ? "Send Reset Instructions" : "Sign in")}
+              ? "Processing..." 
+              : (isAdminLogin ? "Sign in" : "Send Magic Link")}
           </Button>
-          <div className="text-center mt-4">
-            <button
-              type="button"
-              onClick={() => setIsResetMode(!isResetMode)}
-              className="text-sm text-primary hover:underline"
-            >
-              {isResetMode ? "Back to Login" : "Forgot Password?"}
-            </button>
-          </div>
         </form>
       </div>
     </div>

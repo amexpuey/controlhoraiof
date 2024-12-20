@@ -1,6 +1,7 @@
 import { useDashboardData } from "@/hooks/useDashboardData";
 import DashboardHeader from "@/components/DashboardHeader";
 import DashboardApps from "@/components/dashboard/DashboardApps";
+import { LogoutButton } from "@/components/LogoutButton";
 
 export default function Dashboard() {
   const {
@@ -32,10 +33,13 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
       <div className="container py-12">
-        <DashboardHeader 
-          matchingFeaturesCount={matchingFeaturesCount}
-          totalSelectedFeatures={totalSelectedFeatures}
-        />
+        <div className="flex justify-between items-center mb-8">
+          <DashboardHeader 
+            matchingFeaturesCount={matchingFeaturesCount}
+            totalSelectedFeatures={totalSelectedFeatures}
+          />
+          <LogoutButton />
+        </div>
         
         <DashboardApps
           matchingApps={matchingApps}

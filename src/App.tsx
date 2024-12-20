@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Index from "@/pages/Index";
 import Login from "@/pages/Login";
+import UserLogin from "@/pages/UserLogin";
 import Verify from "@/pages/Verify";
 import PasswordReset from "@/pages/PasswordReset";
 import AdminCompanies from "@/pages/admin/Companies";
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/user-login",
+    element: <UserLogin />,
   },
   {
     path: "/verify",
