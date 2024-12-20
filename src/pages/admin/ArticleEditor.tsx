@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useArticle } from "@/hooks/useArticles";
@@ -21,6 +21,31 @@ export default function ArticleEditor() {
   const [imageUrl, setImageUrl] = useState<string>(
     existingArticle?.featured_image_url || ""
   );
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Check authentication status on component mount
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  const checkAuth = async () => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast({
+          title: "Authentication required",
+          description: "Please log in to manage articles",
+          variant: "destructive",
+        });
+        navigate("/login");
+        return;
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Auth error:", error);
+      navigate("/login");
+    }
+  };
 
   const form = useForm<Article>({
     defaultValues: {
@@ -37,6 +62,17 @@ export default function ArticleEditor() {
 
   const onSubmit = async (data: Article) => {
     try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast({
+          title: "Authentication required",
+          description: "Please log in to save articles",
+          variant: "destructive",
+        });
+        navigate("/login");
+        return;
+      }
+
       const { error } = id
         ? await supabase
             .from("articles")
@@ -85,6 +121,10 @@ export default function ArticleEditor() {
       });
     }
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="container mx-auto py-10">
