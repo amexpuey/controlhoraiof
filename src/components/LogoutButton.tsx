@@ -21,6 +21,8 @@ export function LogoutButton() {
       // Check if admin and redirect accordingly
       const { data: { session } } = await supabase.auth.getSession();
       const isAdmin = session?.user?.email === "amexpuey@gmail.com";
+      
+      // Redirect admin to admin login, users to user login
       navigate(isAdmin ? '/login' : '/user-login');
     } catch (error: any) {
       console.error('Logout error:', error);

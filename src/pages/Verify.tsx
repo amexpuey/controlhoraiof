@@ -16,8 +16,9 @@ const Verify = () => {
 
       const { user } = session;
       const isUserLogin = session?.user?.user_metadata?.isUserLogin;
+      const isAdmin = user?.email === "amexpuey@gmail.com";
 
-      if (user?.email === "amexpuey@gmail.com" && !isUserLogin) {
+      if (isAdmin && !isUserLogin) {
         navigate('/admin/companies');
       } else {
         navigate('/dashboard');

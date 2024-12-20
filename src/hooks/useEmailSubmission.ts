@@ -12,6 +12,12 @@ export const useEmailSubmission = (onSuccess: () => void) => {
       // First try to sign in if user exists
       const { data: signInData, error: signInError } = await supabase.auth.signInWithOtp({
         email: data.email,
+        options: {
+          emailRedirectTo: `${window.location.origin}/verify`,
+          data: {
+            isUserLogin: true
+          }
+        }
       });
 
       // If sign in fails with user not found, proceed with sign up
@@ -19,6 +25,12 @@ export const useEmailSubmission = (onSuccess: () => void) => {
         const { error: signUpError } = await supabase.auth.signUp({
           email: data.email,
           password: crypto.randomUUID(),
+          options: {
+            emailRedirectTo: `${window.location.origin}/verify`,
+            data: {
+              isUserLogin: true
+            }
+          }
         });
 
         if (signUpError) throw signUpError;
