@@ -15,16 +15,16 @@ const Verify = () => {
       }
 
       const { user } = session;
+
+      // Check if user is admin
       const isAdmin = user?.email === "amexpuey@gmail.com";
 
-      // Regular users always go to dashboard
-      if (!isAdmin) {
+      // Regular users go to dashboard, admin goes to companies
+      if (isAdmin) {
+        navigate('/admin/companies');
+      } else {
         navigate('/dashboard');
-        return;
       }
-
-      // Admin specific flow
-      navigate('/admin/companies');
     };
 
     handleVerification();
