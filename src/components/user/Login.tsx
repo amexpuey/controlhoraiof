@@ -17,7 +17,7 @@ export function Login() {
     if (!email) {
       toast({
         title: "Error",
-        description: "Please enter your email",
+        description: "Por favor, introduce tu email",
         variant: "destructive",
       });
       return;
@@ -35,7 +35,7 @@ export function Login() {
       if (!profileData) {
         toast({
           title: "Error",
-          description: "Email not found. Please complete the onboarding first.",
+          description: "Email no encontrado. Por favor, completa el proceso de registro primero.",
           variant: "destructive",
         });
         navigate('/');
@@ -44,19 +44,22 @@ export function Login() {
 
       const { error } = await supabase.auth.signInWithOtp({
         email: email.trim(),
+        options: {
+          emailRedirectTo: `${window.location.origin}/verify`
+        }
       });
 
       if (error) throw error;
 
       toast({
-        title: "Success",
-        description: "Magic link sent to your email",
+        title: "¡Email enviado!",
+        description: "Te hemos enviado un enlace mágico a tu correo electrónico.",
       });
     } catch (error: any) {
       console.error('Login error:', error);
       toast({
         title: "Error",
-        description: error.message || "An error occurred",
+        description: error.message || "Ha ocurrido un error",
         variant: "destructive",
       });
     } finally {
@@ -70,10 +73,10 @@ export function Login() {
         <div className="text-center">
           <Mail className="w-12 h-12 mx-auto text-primary-600" />
           <h2 className="mt-4 text-2xl font-bold text-gray-900">
-            Welcome Back
+            Bienvenido de nuevo
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Enter your email to receive a magic link
+            Introduce tu email para recibir un enlace mágico
           </p>
         </div>
         
@@ -89,10 +92,10 @@ export function Login() {
           
           <Button
             type="submit"
-            className="w-full"
+            className="w-full bg-primary-600 hover:bg-primary-700"
             disabled={isLoading}
           >
-            {isLoading ? "Sending..." : "Send Magic Link"}
+            {isLoading ? "Enviando..." : "Enviar enlace mágico"}
           </Button>
         </form>
       </div>
