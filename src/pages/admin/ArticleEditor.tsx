@@ -16,49 +16,39 @@ import ArticleStatusField from "@/components/admin/blog/ArticleStatusField";
 export default function ArticleEditor() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data: existingArticle } = useArticle(id || "");
+  const { data: existingArticle, isLoading } = useArticle(id || "");
   const { handleImageUpload, isUploading } = useImageUpload();
-  const [imageUrl, setImageUrl] = useState<string>(
-    existingArticle?.featured_image_url || ""
-  );
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Check authentication status on component mount
-  useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const checkAuth = async () => {
-    try {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        toast({
-          title: "Authentication required",
-          description: "Please log in to manage articles",
-          variant: "destructive",
-        });
-        navigate("/login");
-        return;
-      }
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Auth error:", error);
-      navigate("/login");
-    }
-  };
+  const [imageUrl, setImageUrl] = useState<string>("");
 
   const form = useForm<Article>({
     defaultValues: {
-      title: existingArticle?.title || "",
-      meta_description: existingArticle?.meta_description || "",
-      content: existingArticle?.content || "",
-      category: existingArticle?.category || "",
-      tags: existingArticle?.tags || [],
-      featured_image_url: existingArticle?.featured_image_url || null,
-      image_alt: existingArticle?.image_alt || null,
-      status: existingArticle?.status || "draft",
+      title: "",
+      meta_description: "",
+      content: "",
+      category: "",
+      tags: [],
+      featured_image_url: null,
+      image_alt: null,
+      status: "draft",
     },
   });
+
+  // Update form when existing article data is loaded
+  useEffect(() => {
+    if (existingArticle) {
+      form.reset({
+        title: existingArticle.title || "",
+        meta_description: existingArticle.meta_description || "",
+        content: existingArticle.content || "",
+        category: existingArticle.category || "",
+        tags: existingArticle.tags || [],
+        featured_image_url: existingArticle.featured_image_url,
+        image_alt: existingArticle.image_alt,
+        status: existingArticle.status || "draft",
+      });
+      setImageUrl(existingArticle.featured_image_url || "");
+    }
+  }, [existingArticle, form]);
 
   const onSubmit = async (data: Article) => {
     try {
@@ -73,7 +63,7 @@ export default function ArticleEditor() {
         return;
       }
 
-      const { error } = id
+      const { error } = id && id !== "new"
         ? await supabase
             .from("articles")
             .update({
@@ -93,7 +83,7 @@ export default function ArticleEditor() {
 
       toast({
         title: "Success",
-        description: `Article ${id ? "updated" : "created"} successfully`,
+        description: `Article ${id && id !== "new" ? "updated" : "created"} successfully`,
       });
       navigate("/admin/blog");
     } catch (error: any) {
@@ -129,7 +119,7 @@ export default function ArticleEditor() {
   return (
     <div className="container mx-auto py-10">
       <h1 className="text-3xl font-bold mb-8">
-        {id ? "Edit Article" : "Create New Article"}
+        {id && id !== "new" ? "Edit Article" : "Create New Article"}
       </h1>
 
       <Form {...form}>
@@ -145,7 +135,7 @@ export default function ArticleEditor() {
 
           <div className="flex gap-4">
             <Button type="submit" disabled={isUploading}>
-              {id ? "Update" : "Create"} Article
+              {id && id !== "new" ? "Update" : "Create"} Article
             </Button>
             <Button
               type="button"

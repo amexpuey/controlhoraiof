@@ -24,8 +24,18 @@ export const useArticle = (id: string) => {
   return useQuery({
     queryKey: ["article", id],
     queryFn: async () => {
-      if (!id || id === ":id") {
-        throw new Error("Valid article ID is required");
+      // Return empty article for new posts
+      if (id === "new") {
+        return {
+          title: "",
+          meta_description: "",
+          content: "",
+          category: "",
+          tags: [],
+          featured_image_url: null,
+          image_alt: null,
+          status: "draft",
+        } as Article;
       }
       
       const { data, error } = await supabase
@@ -44,6 +54,6 @@ export const useArticle = (id: string) => {
 
       return data as Article;
     },
-    enabled: Boolean(id) && id !== ":id",
+    enabled: Boolean(id),
   });
 };
