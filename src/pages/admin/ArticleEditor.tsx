@@ -5,18 +5,13 @@ import { useArticle } from "@/hooks/useArticles";
 import { useImageUpload } from "@/hooks/useImageUpload";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import ImageUpload from "@/components/ImageUpload";
+import { Form } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
 import type { Article } from "@/types/blog";
+import ArticleMetaFields from "@/components/admin/blog/ArticleMetaFields";
+import ArticleContentFields from "@/components/admin/blog/ArticleContentFields";
+import ArticleImageFields from "@/components/admin/blog/ArticleImageFields";
+import ArticleStatusField from "@/components/admin/blog/ArticleStatusField";
 
 export default function ArticleEditor() {
   const { id } = useParams();
@@ -99,130 +94,14 @@ export default function ArticleEditor() {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Title</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+          <ArticleMetaFields form={form} />
+          <ArticleContentFields form={form} />
+          <ArticleImageFields
+            form={form}
+            imageUrl={imageUrl}
+            handleImageSelect={handleImageSelect}
           />
-
-          <FormField
-            control={form.control}
-            name="meta_description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Meta Description (150-160 characters)</FormLabel>
-                <FormControl>
-                  <Input {...field} maxLength={160} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="content"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Content</FormLabel>
-                <FormControl>
-                  <textarea
-                    {...field}
-                    className="w-full min-h-[200px] rounded-md border border-input bg-background px-3 py-2"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="category"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Category</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="tags"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Tags (comma-separated)</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value?.join(", ") || ""}
-                    onChange={(e) =>
-                      field.onChange(
-                        e.target.value
-                          .split(",")
-                          .map((tag) => tag.trim())
-                          .filter(Boolean)
-                      )
-                    }
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <ImageUpload
-            currentImage={imageUrl || "/placeholder.svg"}
-            onImageSelect={handleImageSelect}
-            label="Featured Image"
-            inputId="featured-image"
-          />
-
-          <FormField
-            control={form.control}
-            name="image_alt"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Image Alt Text</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="status"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Status</FormLabel>
-                <FormControl>
-                  <select
-                    {...field}
-                    className="w-full rounded-md border border-input bg-background px-3 py-2"
-                  >
-                    <option value="draft">Draft</option>
-                    <option value="published">Published</option>
-                  </select>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <ArticleStatusField form={form} />
 
           <div className="flex gap-4">
             <Button type="submit" disabled={isUploading}>
