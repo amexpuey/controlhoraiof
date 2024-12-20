@@ -24,7 +24,9 @@ export const useArticle = (id: string) => {
   return useQuery({
     queryKey: ["article", id],
     queryFn: async () => {
-      if (!id) throw new Error("Article ID is required");
+      if (!id || id === ":id") {
+        throw new Error("Valid article ID is required");
+      }
       
       const { data, error } = await supabase
         .from("articles")
@@ -42,6 +44,6 @@ export const useArticle = (id: string) => {
 
       return data as Article;
     },
-    enabled: Boolean(id),
+    enabled: Boolean(id) && id !== ":id",
   });
 };
