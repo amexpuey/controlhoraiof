@@ -9,11 +9,13 @@ export const useEmailSubmission = (onSuccess: () => void) => {
     referralCode?: string | null
   ) => {
     try {
+      const redirectUrl = new URL('/verify', window.location.origin).toString();
+      
       // First try to sign in if user exists
       const { data: signInData, error: signInError } = await supabase.auth.signInWithOtp({
         email: data.email,
         options: {
-          emailRedirectTo: `${window.location.origin}/verify`,
+          emailRedirectTo: redirectUrl,
           data: {
             selectedSize,
             selectedFeatures
@@ -27,7 +29,7 @@ export const useEmailSubmission = (onSuccess: () => void) => {
           email: data.email,
           password: crypto.randomUUID(),
           options: {
-            emailRedirectTo: `${window.location.origin}/verify`,
+            emailRedirectTo: redirectUrl,
             data: {
               selectedSize,
               selectedFeatures
