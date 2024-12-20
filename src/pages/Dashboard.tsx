@@ -9,7 +9,8 @@ export default function Dashboard() {
     allApps,
     selectedApps,
     loading,
-    handleCompareToggle
+    handleCompareToggle,
+    userProfile
   } = useDashboardData();
 
   if (loading) {
@@ -19,6 +20,20 @@ export default function Dashboard() {
           <div className="text-center">
             <div className="animate-pulse">
               Cargando aplicaciones...
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!userProfile) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
+        <div className="container py-12">
+          <div className="text-center">
+            <div className="text-red-500">
+              Error al cargar el perfil. Por favor, inténtalo de nuevo.
             </div>
           </div>
         </div>

@@ -21,9 +21,10 @@ export function useDashboardData() {
   const [allApps, setAllApps] = useState<AppWithMatches[]>([]);
   const [selectedApps, setSelectedApps] = useState<AppWithMatches[]>([]);
   const [loading, setLoading] = useState(true);
+  const [userProfile, setUserProfile] = useState<any>(null);
 
   useEffect(() => {
-    const checkAuthAndFetchApps = async () => {
+    const checkAuthAndFetchData = async () => {
       try {
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) {
@@ -33,17 +34,22 @@ export function useDashboardData() {
 
         console.log("Fetching user profile and apps...");
 
+        // First fetch user profile
         const { data: profile, error: profileError } = await supabase
           .from("profiles")
-          .select("selected_features, company_size")
+          .select("*")
           .eq("id", session.user.id)
-          .maybeSingle();
+          .single();
 
         if (profileError) {
           console.error("Profile fetch error:", profileError);
           throw profileError;
         }
 
+        setUserProfile(profile);
+        console.log("User profile:", profile);
+
+        // Then fetch apps
         const { data: allApps, error: appsError } = await supabase
           .from("companies")
           .select("*")
@@ -75,6 +81,8 @@ export function useDashboardData() {
           isSelected: false
         }));
 
+        console.log("Apps with scores:", appsWithScore);
+
         const sortedApps = [...appsWithScore].sort((a, b) => {
           if (a.title === 'INWOUT') return -1;
           if (b.title === 'INWOUT') return 1;
@@ -97,7 +105,7 @@ export function useDashboardData() {
       }
     };
 
-    checkAuthAndFetchApps();
+    checkAuthAndFetchData();
   }, [navigate, toast]);
 
   const handleCompareToggle = (appId: string) => {
@@ -129,6 +137,7 @@ export function useDashboardData() {
     allApps,
     selectedApps,
     loading,
-    handleCompareToggle
+    handleCompareToggle,
+    userProfile
   };
 }
