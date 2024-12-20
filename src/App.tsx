@@ -7,6 +7,7 @@ import UserView from "@/pages/UserView";
 import ComparisonPage from "@/pages/ComparisonPage";
 import AdminBlog from "@/pages/admin/AdminBlog";
 import ArticleEditor from "@/pages/admin/ArticleEditor";
+import Login from "@/pages/Login";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/verify" element={<Verify />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/admin" element={<Dashboard />} />
         <Route path="/admin/user-view/:id" element={<UserView />} />
