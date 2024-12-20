@@ -24,18 +24,24 @@ export const useArticle = (id: string) => {
   return useQuery({
     queryKey: ["article", id],
     queryFn: async () => {
+      if (!id) throw new Error("Article ID is required");
+      
       const { data, error } = await supabase
         .from("articles")
         .select("*")
         .eq("id", id)
-        .single();
+        .maybeSingle();
 
       if (error) {
         throw error;
       }
 
+      if (!data) {
+        throw new Error("Article not found");
+      }
+
       return data as Article;
     },
-    enabled: !!id,
+    enabled: Boolean(id),
   });
 };
