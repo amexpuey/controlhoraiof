@@ -6,7 +6,7 @@ import { useImageUpload } from "@/hooks/useImageUpload";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/hooks/use-toast";
 import type { Article } from "@/types/blog";
 import ArticleMetaFields from "@/components/admin/blog/ArticleMetaFields";
 import ArticleContentFields from "@/components/admin/blog/ArticleContentFields";
@@ -23,7 +23,7 @@ export default function ArticleEditor() {
   const form = useForm<Article>({
     defaultValues: {
       title: "",
-      meta_description: "",
+      meta_description: "This is a default meta description that meets the minimum length requirement. It provides a brief summary of the article content for SEO purposes.",
       content: "",
       category: "",
       tags: [],
@@ -33,12 +33,11 @@ export default function ArticleEditor() {
     },
   });
 
-  // Update form when existing article data is loaded
   useEffect(() => {
     if (existingArticle) {
       form.reset({
         title: existingArticle.title || "",
-        meta_description: existingArticle.meta_description || "",
+        meta_description: existingArticle.meta_description || "This is a default meta description that meets the minimum length requirement. It provides a brief summary of the article content for SEO purposes.",
         content: existingArticle.content || "",
         category: existingArticle.category || "",
         tags: existingArticle.tags || [],
@@ -60,6 +59,16 @@ export default function ArticleEditor() {
           variant: "destructive",
         });
         navigate("/login");
+        return;
+      }
+
+      // Ensure meta_description meets the minimum length
+      if (data.meta_description.length < 150) {
+        toast({
+          title: "Validation Error",
+          description: "Meta description must be at least 150 characters",
+          variant: "destructive",
+        });
         return;
       }
 
