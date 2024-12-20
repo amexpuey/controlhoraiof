@@ -20,10 +20,10 @@ const Verify = () => {
       const isAdmin = user?.email === "amexpuey@gmail.com";
 
       // Regular users go to dashboard, admin goes to companies
-      if (isAdmin) {
-        navigate('/admin/companies');
-      } else {
+      if (!isAdmin) {
         navigate('/dashboard');
+      } else {
+        navigate('/admin/companies');
       }
     };
 
