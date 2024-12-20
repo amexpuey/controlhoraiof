@@ -114,7 +114,7 @@ const Login = () => {
           title: "Success",
           description: "Logged in successfully",
         });
-        navigate('/admin/blog');
+        navigate('/admin/companies'); // Changed from '/admin/blog' to '/admin/companies'
       }
     } catch (error: any) {
       console.error('Login error:', error);
