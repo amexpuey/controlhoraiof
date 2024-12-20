@@ -33,12 +33,15 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
       <div className="container py-12">
-        <div className="flex justify-between items-center mb-8">
+        {/* Header with Logout Button */}
+        <div className="relative mb-8">
+          <div className="absolute right-0 top-0 z-10">
+            <LogoutButton />
+          </div>
           <DashboardHeader 
             matchingFeaturesCount={matchingFeaturesCount}
             totalSelectedFeatures={totalSelectedFeatures}
           />
-          <LogoutButton />
         </div>
         
         <DashboardApps
