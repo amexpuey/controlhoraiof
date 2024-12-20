@@ -12,6 +12,44 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isResetMode, setIsResetMode] = useState(false);
+
+  const handlePasswordReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) {
+      toast({
+        title: "Error",
+        description: "Please enter your email",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+        redirectTo: window.location.origin + '/login',
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Password reset instructions have been sent to your email",
+      });
+      setIsResetMode(false);
+    } catch (error: any) {
+      console.error('Password reset error:', error);
+      toast({
+        title: "Error",
+        description: error.message || "Failed to send reset instructions",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +63,7 @@ const Login = () => {
     }
 
     // Only allow admin email
-    if (email !== "amexpuey@gmail.com") {
+    if (email.trim() !== "amexpuey@gmail.com") {
       toast({
         title: "Error",
         description: "Invalid credentials",
@@ -45,7 +83,7 @@ const Login = () => {
       if (error) {
         toast({
           title: "Login Failed",
-          description: "Please check your credentials and try again",
+          description: error.message || "Please check your credentials and try again",
           variant: "destructive",
         });
         return;
@@ -62,7 +100,7 @@ const Login = () => {
       console.error('Login error:', error);
       toast({
         title: "Error",
-        description: "An unexpected error occurred",
+        description: error.message || "An unexpected error occurred",
         variant: "destructive",
       });
     } finally {
@@ -75,12 +113,16 @@ const Login = () => {
       <div className="w-full max-w-md space-y-8 p-8 bg-white rounded-xl shadow-lg">
         <div className="text-center">
           <Lock className="w-12 h-12 mx-auto text-primary-600" />
-          <h2 className="mt-4 text-2xl font-bold text-gray-900">Admin Login</h2>
+          <h2 className="mt-4 text-2xl font-bold text-gray-900">
+            {isResetMode ? "Reset Password" : "Admin Login"}
+          </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Sign in to manage blog articles and companies
+            {isResetMode 
+              ? "Enter your email to receive reset instructions" 
+              : "Sign in to manage blog articles and companies"}
           </p>
         </div>
-        <form onSubmit={handleLogin} className="mt-8 space-y-6">
+        <form onSubmit={isResetMode ? handlePasswordReset : handleLogin} className="mt-8 space-y-6">
           <div className="space-y-4">
             <div>
               <Input
@@ -92,24 +134,37 @@ const Login = () => {
                 className="w-full"
               />
             </div>
-            <div>
-              <Input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="w-full"
-              />
-            </div>
+            {!isResetMode && (
+              <div>
+                <Input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="w-full"
+                />
+              </div>
+            )}
           </div>
           <Button
             type="submit"
             className="w-full"
             disabled={isLoading}
           >
-            {isLoading ? "Signing in..." : "Sign in"}
+            {isLoading 
+              ? (isResetMode ? "Sending..." : "Signing in...") 
+              : (isResetMode ? "Send Reset Instructions" : "Sign in")}
           </Button>
+          <div className="text-center mt-4">
+            <button
+              type="button"
+              onClick={() => setIsResetMode(!isResetMode)}
+              className="text-sm text-primary hover:underline"
+            >
+              {isResetMode ? "Back to Login" : "Forgot Password?"}
+            </button>
+          </div>
         </form>
       </div>
     </div>
