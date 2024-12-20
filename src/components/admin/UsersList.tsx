@@ -19,14 +19,20 @@ export default function UsersList() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const { data: users, isLoading } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["profiles"],
     queryFn: async () => {
+      console.log("Fetching profiles...");
       const { data, error } = await supabase
         .from("profiles")
         .select("*")
         .order("created_at", { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Error fetching profiles:", error);
+        throw error;
+      }
+      
+      console.log("Fetched profiles:", data);
       return data;
     },
   });
@@ -40,12 +46,14 @@ export default function UsersList() {
     if (!users) return;
 
     const csvContent = [
-      ["Email", "Company Size", "Onboarding Status", "Created At"],
+      ["Email", "Company Size", "Onboarding Status", "Created At", "Referral Code", "Referred By"],
       ...users.map((user) => [
         user.email,
         user.company_size || "Not specified",
         user.onboarding_status,
         format(new Date(user.created_at), "yyyy-MM-dd HH:mm:ss"),
+        user.referral_code || "No referral code",
+        user.referred_by || "Not referred"
       ]),
     ]
       .map((row) => row.join(","))
@@ -92,6 +100,7 @@ export default function UsersList() {
               <TableHead>Company Size</TableHead>
               <TableHead>Onboarding Status</TableHead>
               <TableHead>Created At</TableHead>
+              <TableHead>Referral Status</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -108,6 +117,15 @@ export default function UsersList() {
                 </TableCell>
                 <TableCell>
                   {format(new Date(user.created_at), "MMM d, yyyy")}
+                </TableCell>
+                <TableCell>
+                  {user.has_full_access ? (
+                    <Badge variant="default">Full Access</Badge>
+                  ) : user.referred_by ? (
+                    <Badge variant="secondary">Referred User</Badge>
+                  ) : (
+                    <Badge variant="outline">No Referral</Badge>
+                  )}
                 </TableCell>
               </TableRow>
             ))}
