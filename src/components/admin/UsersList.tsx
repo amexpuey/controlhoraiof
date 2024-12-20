@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,11 +12,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Download, Search } from "lucide-react";
+import { Download, Search, UserPlus } from "lucide-react";
 import { format } from "date-fns";
+import { toast } from "sonner";
 
 export default function UsersList() {
   const [searchTerm, setSearchTerm] = useState("");
+  const queryClient = useQueryClient();
 
   const { data: users, isLoading, error } = useQuery({
     queryKey: ["profiles"],
@@ -33,10 +35,49 @@ export default function UsersList() {
       }
       
       console.log("Fetched profiles:", data);
-      if (!data || data.length === 0) {
-        console.log("No profiles found in the database");
-      }
       return data || [];
+    },
+  });
+
+  const migrateUsers = useMutation({
+    mutationFn: async () => {
+      // First, get all auth users
+      const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
+      if (authError) throw authError;
+
+      console.log("Auth users found:", authUsers.users.length);
+
+      // For each auth user, ensure they have a profile
+      const promises = authUsers.users.map(async (user) => {
+        const { data: existingProfile } = await supabase
+          .from("profiles")
+          .select("id")
+          .eq("id", user.id)
+          .single();
+
+        if (!existingProfile) {
+          return supabase
+            .from("profiles")
+            .insert({
+              id: user.id,
+              email: user.email,
+              is_email_verified: user.email_confirmed_at !== null,
+              onboarding_status: "in_progress"
+            });
+        }
+        return null;
+      });
+
+      await Promise.all(promises);
+      return authUsers.users.length;
+    },
+    onSuccess: (count) => {
+      toast.success(`Successfully migrated ${count} users`);
+      queryClient.invalidateQueries({ queryKey: ["profiles"] });
+    },
+    onError: (error) => {
+      console.error("Migration error:", error);
+      toast.error("Failed to migrate users. Please check console for details.");
     },
   });
 
@@ -82,10 +123,6 @@ export default function UsersList() {
     return <div>Error loading users: {error.message}</div>;
   }
 
-  if (!users || users.length === 0) {
-    return <div>No users found.</div>;
-  }
-
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -98,10 +135,19 @@ export default function UsersList() {
             className="pl-10"
           />
         </div>
-        <Button onClick={downloadCsv}>
-          <Download className="mr-2 h-4 w-4" />
-          Download CSV
-        </Button>
+        <div className="flex gap-2">
+          <Button 
+            onClick={() => migrateUsers.mutate()}
+            disabled={migrateUsers.isPending}
+          >
+            <UserPlus className="mr-2 h-4 w-4" />
+            Migrate Users
+          </Button>
+          <Button onClick={downloadCsv}>
+            <Download className="mr-2 h-4 w-4" />
+            Download CSV
+          </Button>
+        </div>
       </div>
 
       <div className="border rounded-lg">
