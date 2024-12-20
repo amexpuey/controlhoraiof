@@ -29,7 +29,7 @@ const Login = () => {
 
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-        redirectTo: window.location.origin + '/login',
+        redirectTo: `${window.location.origin}/verify`,
       });
 
       if (error) throw error;
