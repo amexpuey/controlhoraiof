@@ -35,10 +35,11 @@ const Login = () => {
     }
 
     setIsLoading(true);
+
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+        email: email.trim(),
+        password: password.trim(),
       });
 
       if (error) {
@@ -47,7 +48,7 @@ const Login = () => {
           description: "Please check your credentials and try again",
           variant: "destructive",
         });
-        throw error;
+        return;
       }
 
       if (data?.user) {
@@ -61,7 +62,7 @@ const Login = () => {
       console.error('Login error:', error);
       toast({
         title: "Error",
-        description: error.message,
+        description: "An unexpected error occurred",
         variant: "destructive",
       });
     } finally {
