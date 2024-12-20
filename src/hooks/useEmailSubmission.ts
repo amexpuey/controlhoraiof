@@ -15,7 +15,6 @@ export const useEmailSubmission = (onSuccess: () => void) => {
         options: {
           emailRedirectTo: `${window.location.origin}/verify`,
           data: {
-            isUserLogin: true,
             selectedSize,
             selectedFeatures
           }
@@ -30,7 +29,6 @@ export const useEmailSubmission = (onSuccess: () => void) => {
           options: {
             emailRedirectTo: `${window.location.origin}/verify`,
             data: {
-              isUserLogin: true,
               selectedSize,
               selectedFeatures
             }
