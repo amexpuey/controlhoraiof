@@ -31,56 +31,70 @@ export default function UsersList() {
 
   const migrateUsers = useMutation({
     mutationFn: async () => {
-      const { data: session } = await supabase.auth.getSession();
-      if (!session.session?.access_token) throw new Error("No access token");
-
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-list-users`,
-        {
-          headers: {
-            Authorization: `Bearer ${session.session.access_token}`,
-          },
+      try {
+        const { data: session } = await supabase.auth.getSession();
+        if (!session.session?.access_token) {
+          throw new Error("No access token");
         }
-      );
 
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to fetch users');
-      }
+        const response = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-list-users`,
+          {
+            headers: {
+              Authorization: `Bearer ${session.session.access_token}`,
+            },
+          }
+        );
 
-      const { users: authUsers } = await response.json();
-      console.log("Auth users found:", authUsers.length);
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to fetch users');
+        }
 
-      const promises = authUsers.map(async (user) => {
-        const { data: existingProfile } = await supabase
-          .from("profiles")
-          .select("id")
-          .eq("id", user.id)
-          .single();
+        const responseData = await response.json();
+        console.log("Response from admin-list-users:", responseData);
 
-        if (!existingProfile) {
-          return supabase
+        if (!responseData.users || !Array.isArray(responseData.users)) {
+          throw new Error('Invalid response format from admin-list-users');
+        }
+
+        const authUsers = responseData.users;
+        console.log("Auth users found:", authUsers.length);
+
+        const promises = authUsers.map(async (user) => {
+          const { data: existingProfile } = await supabase
             .from("profiles")
-            .insert({
-              id: user.id,
-              email: user.email,
-              is_email_verified: user.email_confirmed_at !== null,
-              onboarding_status: "in_progress"
-            });
-        }
-        return null;
-      });
+            .select("id")
+            .eq("id", user.id)
+            .single();
 
-      await Promise.all(promises);
-      return authUsers.length;
+          if (!existingProfile) {
+            return supabase
+              .from("profiles")
+              .insert({
+                id: user.id,
+                email: user.email,
+                is_email_verified: user.email_confirmed_at !== null,
+                onboarding_status: "in_progress"
+              });
+          }
+          return null;
+        });
+
+        await Promise.all(promises);
+        return authUsers.length;
+      } catch (error) {
+        console.error("Detailed migration error:", error);
+        throw error;
+      }
     },
     onSuccess: (count) => {
       toast.success(`Successfully migrated ${count} users`);
       queryClient.invalidateQueries({ queryKey: ["profiles"] });
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       console.error("Migration error:", error);
-      toast.error("Failed to migrate users. Please check console for details.");
+      toast.error(`Failed to migrate users: ${error.message}`);
     },
   });
 
