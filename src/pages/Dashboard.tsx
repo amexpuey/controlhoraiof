@@ -5,8 +5,6 @@ import type { Database } from "@/integrations/supabase/types";
 import { useToast } from "@/components/ui/use-toast";
 import AppsGrid from "@/components/AppsGrid";
 import DashboardHeader from "@/components/DashboardHeader";
-import { useReferralStatus } from "@/hooks/useReferralStatus";
-import { ReferralModal } from "@/components/ReferralModal";
 import { Button } from "@/components/ui/button";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
@@ -16,27 +14,18 @@ interface AppWithMatches extends Company {
   totalSelectedFeatures?: number;
   score?: number;
   hasMatches?: boolean;
+  isSelected?: boolean;
 }
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [matchingApps, setMatchingApps] = useState<AppWithMatches[]>([]);
+  const [allApps, setAllApps] = useState<AppWithMatches[]>([]);
+  const [showAllApps, setShowAllApps] = useState(false);
+  const [selectedApps, setSelectedApps] = useState<AppWithMatches[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showReferralModal, setShowReferralModal] = useState(false);
   const [searchParams] = useSearchParams();
-  const [userId, setUserId] = useState<string | undefined>();
-
-  const { data: referralStatus } = useReferralStatus(userId);
-
-  useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user?.id) {
-        setUserId(session.user.id);
-      }
-    });
-  }, []);
 
   useEffect(() => {
     const checkAuthAndFetchApps = async () => {
@@ -52,7 +41,7 @@ const Dashboard = () => {
         // Get user profile to access selected features and company size
         const { data: profile, error: profileError } = await supabase
           .from("profiles")
-          .select("selected_features, company_size, has_full_access")
+          .select("selected_features, company_size")
           .eq("id", session.user.id)
           .maybeSingle();
 
@@ -74,27 +63,15 @@ const Dashboard = () => {
 
         if (!allApps || allApps.length === 0) {
           setMatchingApps([]);
+          setAllApps([]);
           return;
         }
 
         // Find INWOUT app
         const inwoutApp = allApps.find(app => app.title === 'INWOUT');
 
-        // If user has full access, show all apps, otherwise limit to top 3
-        const appsToShow = profile?.has_full_access 
-          ? allApps
-          : allApps
-              .filter(app => app.title !== 'INWOUT')
-              .sort((a, b) => (b.features?.length || 0) - (a.features?.length || 0))
-              .slice(0, 3);
-
-        // If INWOUT isn't included and exists, add it at the start
-        if (inwoutApp && !appsToShow.find(app => app.id === inwoutApp.id)) {
-          appsToShow.unshift(inwoutApp);
-        }
-
-        // Calculate matching features
-        const appsWithScore = appsToShow.map(app => ({
+        // Calculate matching features for all apps
+        const appsWithScore = allApps.map(app => ({
           ...app,
           matchingFeaturesCount: profile?.selected_features?.filter(
             selectedFeature => app.features?.includes(selectedFeature)
@@ -105,10 +82,21 @@ const Dashboard = () => {
           ).length || 0,
           hasMatches: profile?.selected_features?.some(
             selectedFeature => app.features?.includes(selectedFeature)
-          ) || false
+          ) || false,
+          isSelected: false
         }));
 
-        setMatchingApps(appsWithScore);
+        // Sort apps by matching features
+        const sortedApps = [...appsWithScore].sort((a, b) => {
+          if (a.title === 'INWOUT') return -1;
+          if (b.title === 'INWOUT') return 1;
+          return (b.matchingFeaturesCount || 0) - (a.matchingFeaturesCount || 0);
+        });
+
+        // Set matching apps (top 4 including INWOUT)
+        const topApps = sortedApps.slice(0, 4);
+        setMatchingApps(topApps);
+        setAllApps(sortedApps);
 
       } catch (error) {
         console.error("Error:", error);
@@ -128,6 +116,46 @@ const Dashboard = () => {
   const handleAppClick = (app: Company) => {
     console.log("App clicked:", app);
     navigate(`/admin/user-view/${app.id}`);
+  };
+
+  const handleCompareToggle = (appId: string) => {
+    setAllApps(prevApps => {
+      const updatedApps = prevApps.map(app => {
+        if (app.id === appId) {
+          return { ...app, isSelected: !app.isSelected };
+        }
+        return app;
+      });
+      
+      // Update selected apps
+      const newSelectedApps = updatedApps.filter(app => app.isSelected);
+      if (newSelectedApps.length > 3) {
+        toast({
+          title: "Límite alcanzado",
+          description: "Solo puedes comparar hasta 3 aplicaciones.",
+          variant: "destructive",
+        });
+        return prevApps;
+      }
+      
+      setSelectedApps(newSelectedApps);
+      return updatedApps;
+    });
+  };
+
+  const handleCompareClick = () => {
+    if (selectedApps.length < 2) {
+      toast({
+        title: "Selección insuficiente",
+        description: "Selecciona al menos 2 aplicaciones para comparar.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Navigate to comparison page with selected app IDs
+    const appIds = selectedApps.map(app => app.id).join(',');
+    navigate(`/admin/compare/${appIds}`);
   };
 
   if (loading) {
@@ -155,26 +183,37 @@ const Dashboard = () => {
           matchingFeaturesCount={matchingFeaturesCount}
           totalSelectedFeatures={totalSelectedFeatures}
         />
-        <AppsGrid apps={matchingApps} onAppClick={handleAppClick} />
         
-        {!referralStatus?.has_full_access && (
+        <AppsGrid 
+          apps={showAllApps ? allApps : matchingApps} 
+          onAppClick={handleAppClick}
+          onCompareToggle={handleCompareToggle}
+          showCompare={true}
+        />
+        
+        {!showAllApps && (
           <div className="mt-8 text-center">
             <Button 
-              onClick={() => setShowReferralModal(true)}
+              onClick={() => setShowAllApps(true)}
               variant="outline"
               className="mx-auto"
             >
-              Desbloquear todas las aplicaciones
+              Ver todas las aplicaciones
             </Button>
           </div>
         )}
 
-        <ReferralModal 
-          isOpen={showReferralModal}
-          onClose={() => setShowReferralModal(false)}
-          referralCode={referralStatus?.referral_code}
-          referralCount={referralStatus?.referral_count}
-        />
+        {selectedApps.length > 0 && (
+          <div className="mt-8 text-center">
+            <Button 
+              onClick={handleCompareClick}
+              variant="default"
+              className="mx-auto"
+            >
+              Comparar {selectedApps.length} aplicaciones seleccionadas
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
