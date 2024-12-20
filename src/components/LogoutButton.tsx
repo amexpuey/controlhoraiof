@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 export function LogoutButton() {
   const navigate = useNavigate();
@@ -10,25 +10,24 @@ export function LogoutButton() {
 
   const handleLogout = async () => {
     try {
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
-
-      toast({
-        title: "Success",
-        description: "Logged out successfully",
-      });
-      
-      // Check if admin and redirect accordingly
+      // Check if admin before logout
       const { data: { session } } = await supabase.auth.getSession();
       const isAdmin = session?.user?.email === "amexpuey@gmail.com";
       
-      // Redirect admin to admin login, users to user login
+      await supabase.auth.signOut();
+      
+      // Regular users always go to user login, admin to admin login
       navigate(isAdmin ? '/login' : '/user-login');
+      
+      toast({
+        title: "Sesión cerrada",
+        description: "Has cerrado sesión correctamente.",
+      });
     } catch (error: any) {
       console.error('Logout error:', error);
       toast({
         title: "Error",
-        description: error.message || "An error occurred",
+        description: "No se pudo cerrar la sesión.",
         variant: "destructive",
       });
     }
@@ -42,7 +41,7 @@ export function LogoutButton() {
       className="gap-2"
     >
       <LogOut className="h-4 w-4" />
-      Logout
+      Cerrar sesión
     </Button>
   );
 }

@@ -15,9 +15,16 @@ const Verify = () => {
       }
 
       const { user } = session;
-      const isUserLogin = session?.user?.user_metadata?.isUserLogin;
       const isAdmin = user?.email === "amexpuey@gmail.com";
 
+      // Always redirect regular users to dashboard
+      if (!isAdmin) {
+        navigate('/dashboard');
+        return;
+      }
+
+      // Handle admin specific flow
+      const isUserLogin = session?.user?.user_metadata?.isUserLogin;
       if (isAdmin && !isUserLogin) {
         navigate('/admin/companies');
       } else {
