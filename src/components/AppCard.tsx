@@ -102,32 +102,35 @@ export default function AppCard({ app, onClick, showCompare, isSelected, onCompa
           )}
         </div>
 
-        <div className="mt-6 flex items-center justify-between">
-          <VoteButton companyId={app.id} votes={app.votes} />
-          <div className="text-gray-700">
-            {app.pricing_starting_price === 0 
-              ? "Gratis"
-              : `Desde ${app.pricing_starting_price}€/${app.pricing_billing_period}`}
+        <div className="mt-6 flex items-center justify-between border-t pt-4">
+          <div className="flex items-center gap-4">
+            <VoteButton companyId={app.id} votes={app.votes} />
+            <div className="text-gray-700 font-medium">
+              {app.pricing_starting_price === 0 
+                ? "Gratis"
+                : `Desde ${app.pricing_starting_price}€/${app.pricing_billing_period}`}
+            </div>
           </div>
-        </div>
 
-        {showCompare && (
-          <div 
-            className="absolute bottom-4 right-4 flex items-center gap-2 bg-white rounded-lg shadow p-2"
-            onClick={handleCompareClick}
-          >
-            <Checkbox
-              checked={isSelected}
-              id={`compare-${app.id}`}
-            />
-            <label
-              htmlFor={`compare-${app.id}`}
-              className="text-sm font-medium text-gray-700 cursor-pointer"
+          {showCompare && (
+            <div 
+              className="flex items-center gap-2"
+              onClick={handleCompareClick}
             >
-              Comparar
-            </label>
-          </div>
-        )}
+              <Checkbox
+                checked={isSelected}
+                id={`compare-${app.id}`}
+                className="border-blue-500"
+              />
+              <label
+                htmlFor={`compare-${app.id}`}
+                className="text-sm font-medium text-blue-700 cursor-pointer"
+              >
+                Comparar
+              </label>
+            </div>
+          )}
+        </div>
       </div>
     </Card>
   );
