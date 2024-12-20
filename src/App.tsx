@@ -5,6 +5,7 @@ import Verify from "@/pages/Verify";
 import PasswordReset from "@/pages/PasswordReset";
 import AdminCompanies from "@/pages/admin/Companies";
 import Users from "@/pages/admin/Users";
+import Dashboard from "@/pages/Dashboard";
 import { Toaster } from "@/components/ui/toaster";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 
@@ -24,6 +25,14 @@ const router = createBrowserRouter([
   {
     path: "/password-reset",
     element: <PasswordReset />,
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/companies",

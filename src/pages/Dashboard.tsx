@@ -2,7 +2,7 @@ import { useDashboardData } from "@/hooks/useDashboardData";
 import DashboardHeader from "@/components/DashboardHeader";
 import DashboardApps from "@/components/dashboard/DashboardApps";
 
-const Dashboard = () => {
+export default function Dashboard() {
   const {
     matchingApps,
     allApps,
@@ -46,6 +46,4 @@ const Dashboard = () => {
       </div>
     </div>
   );
-};
-
-export default Dashboard;
+}
