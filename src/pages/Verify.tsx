@@ -1,27 +1,61 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Verify() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [verifying, setVerifying] = useState(true);
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     const handleVerification = async () => {
       try {
+        // First check if we have a session
         const { data: { session }, error: sessionError } = await supabase.auth.getSession();
         
-        if (sessionError) throw sessionError;
-
-        if (!session) {
-          console.log("No session found, redirecting to login");
-          navigate("/user-login");
-          return;
+        if (sessionError) {
+          console.error("Session error:", sessionError);
+          throw sessionError;
         }
 
-        const user = session.user;
+        // If we don't have a session but have token params, try to set up the session
+        if (!session) {
+          const refreshToken = searchParams.get('refresh_token');
+          const accessToken = searchParams.get('access_token');
+
+          if (refreshToken && accessToken) {
+            const { data: { session: newSession }, error: setSessionError } = await supabase.auth.setSession({
+              refresh_token: refreshToken,
+              access_token: accessToken,
+            });
+
+            if (setSessionError) {
+              console.error("Set session error:", setSessionError);
+              throw setSessionError;
+            }
+
+            if (!newSession) {
+              console.log("No session could be established");
+              navigate("/user-login");
+              return;
+            }
+          } else {
+            console.log("No session or tokens found, redirecting to login");
+            navigate("/user-login");
+            return;
+          }
+        }
+
+        // Now we should have a valid session, get the user
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
+        
+        if (userError || !user) {
+          console.error("User error:", userError);
+          throw userError || new Error("No user found");
+        }
+
         console.log("User session:", user);
 
         // Check if user exists in profiles
@@ -61,7 +95,7 @@ export default function Verify() {
     };
 
     handleVerification();
-  }, [navigate, toast]);
+  }, [navigate, toast, searchParams]);
 
   if (verifying) {
     return (
