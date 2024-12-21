@@ -10,10 +10,15 @@ export function LogoutButton() {
 
   const handleLogout = async () => {
     try {
+      const { data: { session } } = await supabase.auth.getSession();
       await supabase.auth.signOut();
       
-      // Always redirect to user login after logout
-      navigate('/user-login');
+      // Check if user was admin and redirect accordingly
+      if (session?.user?.email === "amexpuey@gmail.com") {
+        navigate('/login');
+      } else {
+        navigate('/user-login');
+      }
       
       toast({
         title: "Sesión cerrada",

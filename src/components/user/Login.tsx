@@ -26,6 +26,7 @@ export function Login() {
     setIsLoading(true);
 
     try {
+      // First check if the email exists in profiles
       const { data: profileData } = await supabase
         .from('profiles')
         .select('*')

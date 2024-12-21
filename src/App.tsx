@@ -8,6 +8,7 @@ import AdminCompanies from "@/pages/admin/Companies";
 import Users from "@/pages/admin/Users";
 import Dashboard from "@/pages/Dashboard";
 import ComparisonPage from "@/pages/ComparisonPage";
+import UserView from "@/pages/UserView";
 import { Toaster } from "@/components/ui/toaster";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 
@@ -61,6 +62,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <ComparisonPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/user-view/:id",
+    element: (
+      <ProtectedRoute>
+        <UserView />
       </ProtectedRoute>
     ),
   },

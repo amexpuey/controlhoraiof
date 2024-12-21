@@ -16,13 +16,21 @@ const Verify = () => {
         }
 
         const { user } = session;
+        console.log("User session:", user);
 
         // Check if user is admin
         if (user?.email === "amexpuey@gmail.com") {
           navigate('/admin/companies');
-        } else {
-          // Regular users go to dashboard
+          return;
+        }
+
+        // Check if this was a user login (not onboarding)
+        const metadata = user?.user_metadata;
+        if (metadata?.isUserLogin) {
           navigate('/dashboard');
+        } else {
+          // This was an onboarding verification
+          navigate('/');
         }
       } catch (error) {
         console.error('Verification error:', error);
