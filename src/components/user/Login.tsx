@@ -43,7 +43,6 @@ export function Login() {
         return;
       }
 
-      // Fix: Get the current origin for redirect
       const redirectUrl = `${window.location.origin}/verify`;
       console.log('Redirect URL:', redirectUrl);
 

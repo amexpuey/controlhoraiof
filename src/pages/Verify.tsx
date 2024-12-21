@@ -39,7 +39,7 @@ const Verify = () => {
           .eq('email', user.email)
           .single();
 
-        if (profileError || !profileData) {
+        if (profileError) {
           console.error("Profile error:", profileError);
           toast({
             title: "Error",
