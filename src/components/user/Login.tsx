@@ -11,9 +11,24 @@ export function Login() {
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [lastAttempt, setLastAttempt] = useState(0);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Check if enough time has passed since last attempt (3 seconds minimum)
+    const now = Date.now();
+    const timeSinceLastAttempt = now - lastAttempt;
+    if (timeSinceLastAttempt < 3000) {
+      const waitTime = Math.ceil((3000 - timeSinceLastAttempt) / 1000);
+      toast({
+        title: "Por favor, espere",
+        description: `Intente de nuevo en ${waitTime} segundos`,
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (!email) {
       toast({
         title: "Error",
@@ -24,6 +39,7 @@ export function Login() {
     }
 
     setIsLoading(true);
+    setLastAttempt(now);
 
     try {
       // First check if the email exists in profiles using maybeSingle()
