@@ -66,15 +66,15 @@ export function Login() {
 
       // If no existing profile was found, create one
       if (!profileData) {
-        const { data: { user }, error: sessionError } = await supabase.auth.getUser();
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
         
         if (sessionError) throw sessionError;
         
-        if (user) {
+        if (session?.user) {
           const { error: insertError } = await supabase
             .from('profiles')
             .insert({
-              id: user.id,
+              id: session.user.id,
               email: email.trim(),
               onboarding_status: 'completed'
             });
