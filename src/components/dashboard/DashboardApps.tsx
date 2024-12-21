@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import AppCard from "@/components/AppCard"; // Changed from { AppCard }
+import AppCard from "@/components/AppCard";
 import { useToast } from "@/hooks/use-toast";
 
 interface DashboardAppsProps {
@@ -72,10 +72,7 @@ export function DashboardApps({ userFeatures }: DashboardAppsProps) {
         <AppCard
           key={app.id}
           app={app}
-          onClick={() => {}} // Added empty onClick handler since it's required
-          matchingFeatures={app.features?.filter((f: string) => 
-            userFeatures.includes(f)
-          )}
+          onClick={() => {}}
         />
       ))}
     </div>

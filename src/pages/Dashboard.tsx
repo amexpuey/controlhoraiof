@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { DashboardHeader } from "@/components/DashboardHeader";
+import DashboardHeader from "@/components/DashboardHeader";
 import { DashboardApps } from "@/components/dashboard/DashboardApps";
 import { useToast } from "@/hooks/use-toast";
 
