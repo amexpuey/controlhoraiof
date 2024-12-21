@@ -68,8 +68,8 @@ export function Login() {
       }
 
       toast({
-        title: "¡Email enviado!",
-        description: "Te hemos enviado un enlace para acceder a tu cuenta.",
+        title: "Accediendo...",
+        description: "Por favor, espere un momento.",
       });
     } catch (error: any) {
       console.error('Login error:', error);
@@ -111,7 +111,7 @@ export function Login() {
             className="w-full bg-primary-600 hover:bg-primary-700"
             disabled={isLoading}
           >
-            {isLoading ? "Enviando..." : "Entrar en Control Horario"}
+            {isLoading ? "Accediendo..." : "Entrar en Control Horario"}
           </Button>
         </form>
       </div>
