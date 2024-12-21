@@ -33,34 +33,39 @@ export function Login() {
         .eq('email', email.trim())
         .single();
 
-      // If profile doesn't exist, create one
-      if (!profileData && !profileError) {
-        const { error: insertError } = await supabase
-          .from('profiles')
-          .insert([
-            { 
-              email: email.trim(),
-              onboarding_status: 'completed'
-            }
-          ]);
-
-        if (insertError) throw insertError;
-      }
-
+      // If profile doesn't exist, we'll create it after the user signs up
       const redirectUrl = `${window.location.origin}/verify`;
       console.log('Redirect URL:', redirectUrl);
 
-      const { error } = await supabase.auth.signInWithOtp({
+      // Sign in with OTP
+      const { data: authData, error: authError } = await supabase.auth.signInWithOtp({
         email: email.trim(),
         options: {
           emailRedirectTo: redirectUrl,
           data: {
-            isUserLogin: true
+            email: email.trim()
           }
         }
       });
 
-      if (error) throw error;
+      if (authError) throw authError;
+
+      // If no existing profile was found, create one using the auth user's ID
+      if (!profileData && !profileError) {
+        const { data: { user }, error: sessionError } = await supabase.auth.getUser();
+        
+        if (user) {
+          const { error: insertError } = await supabase
+            .from('profiles')
+            .insert({
+              id: user.id,
+              email: email.trim(),
+              onboarding_status: 'completed'
+            });
+
+          if (insertError) throw insertError;
+        }
+      }
 
       toast({
         title: "¡Email enviado!",
