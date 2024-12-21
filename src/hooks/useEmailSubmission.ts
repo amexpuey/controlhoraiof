@@ -9,7 +9,11 @@ export const useEmailSubmission = (onSuccess: () => void) => {
     referralCode?: string | null
   ) => {
     try {
-      const redirectUrl = new URL('/verify', window.location.origin).toString();
+      // Fix: Remove any trailing slashes and ensure proper URL construction
+      const baseUrl = window.location.origin.replace(/\/$/, '');
+      const redirectUrl = `${baseUrl}/verify`;
+      
+      console.log('Redirect URL:', redirectUrl); // Debug log
       
       // First try to sign in if user exists
       const { data: signInData, error: signInError } = await supabase.auth.signInWithOtp({
