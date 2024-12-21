@@ -33,12 +33,11 @@ export function Login() {
         .eq('email', email.trim())
         .single();
 
-      // If profile doesn't exist, we'll create it after the user signs up
       const redirectUrl = `${window.location.origin}/verify`;
       console.log('Redirect URL:', redirectUrl);
 
       // Sign in with OTP
-      const { data: authData, error: authError } = await supabase.auth.signInWithOtp({
+      const { error: authError } = await supabase.auth.signInWithOtp({
         email: email.trim(),
         options: {
           emailRedirectTo: redirectUrl,
@@ -50,7 +49,7 @@ export function Login() {
 
       if (authError) throw authError;
 
-      // If no existing profile was found, create one using the auth user's ID
+      // If no existing profile was found, create one
       if (!profileData && !profileError) {
         const { data: { user }, error: sessionError } = await supabase.auth.getUser();
         
