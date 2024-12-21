@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Verify = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
     const handleVerification = async () => {
@@ -11,7 +13,13 @@ const Verify = () => {
         const { data: { session } } = await supabase.auth.getSession();
         
         if (!session) {
-          navigate('/');
+          console.error("No session found");
+          toast({
+            title: "Error de verificación",
+            description: "No se pudo verificar tu sesión",
+            variant: "destructive",
+          });
+          navigate('/user-login');
           return;
         }
 
@@ -24,17 +32,35 @@ const Verify = () => {
           return;
         }
 
-        // Check if this was a user login (not onboarding)
-        const metadata = user?.user_metadata;
-        if (metadata?.isUserLogin) {
-          navigate('/dashboard');
-        } else {
-          // This was an onboarding verification
-          navigate('/');
+        // For regular users, check if they exist in profiles
+        const { data: profileData, error: profileError } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('email', user.email)
+          .single();
+
+        if (profileError || !profileData) {
+          console.error("Profile error:", profileError);
+          toast({
+            title: "Error",
+            description: "Usuario no encontrado",
+            variant: "destructive",
+          });
+          navigate('/user-login');
+          return;
         }
+
+        // If we get here, the user exists and is verified
+        navigate('/dashboard');
+        
       } catch (error) {
         console.error('Verification error:', error);
-        navigate('/');
+        toast({
+          title: "Error",
+          description: "Error al verificar tu cuenta",
+          variant: "destructive",
+        });
+        navigate('/user-login');
       }
     };
 
