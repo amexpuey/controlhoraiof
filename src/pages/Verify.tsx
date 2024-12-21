@@ -24,12 +24,6 @@ export default function Verify() {
         const user = session.user;
         console.log("User session:", user);
 
-        if (user.email === "amexpuey@gmail.com") {
-          console.log("Admin user detected, redirecting to admin");
-          navigate("/admin/companies");
-          return;
-        }
-
         // Check if user exists in profiles
         const { data: profileData, error: profileError } = await supabase
           .from("profiles")
@@ -49,6 +43,8 @@ export default function Verify() {
         }
 
         console.log("Profile data:", profileData);
+        
+        // Always redirect to dashboard after successful verification
         navigate("/dashboard");
 
       } catch (error) {

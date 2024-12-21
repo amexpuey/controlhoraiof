@@ -1,71 +1,80 @@
-import { useDashboardData } from "@/hooks/useDashboardData";
-import DashboardHeader from "@/components/DashboardHeader";
-import DashboardApps from "@/components/dashboard/DashboardApps";
-import { LogoutButton } from "@/components/LogoutButton";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { DashboardHeader } from "@/components/DashboardHeader";
+import { DashboardApps } from "@/components/dashboard/DashboardApps";
+import { useToast } from "@/hooks/use-toast";
 
-export default function Dashboard() {
-  const {
-    matchingApps,
-    allApps,
-    selectedApps,
-    loading,
-    handleCompareToggle,
-    userProfile
-  } = useDashboardData();
+const Dashboard = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const [userFeatures, setUserFeatures] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  if (loading) {
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (!session) {
+          navigate('/user-login');
+          return;
+        }
+
+        // Get user profile and selected features
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('selected_features')
+          .eq('id', session.user.id)
+          .single();
+
+        if (profileError) {
+          console.error('Error fetching profile:', profileError);
+          toast({
+            title: "Error",
+            description: "No se pudo cargar tu perfil",
+            variant: "destructive",
+          });
+          return;
+        }
+
+        setUserFeatures(profile.selected_features || []);
+      } catch (error) {
+        console.error('Session check error:', error);
+        navigate('/user-login');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkSession();
+
+    // Subscribe to auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT') {
+        navigate('/user-login');
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate]);
+
+  if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
-        <div className="container py-12">
-          <div className="text-center">
-            <div className="animate-pulse">
-              Cargando aplicaciones...
-            </div>
-          </div>
-        </div>
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-lg">Cargando...</p>
       </div>
     );
   }
-
-  if (!userProfile) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
-        <div className="container py-12">
-          <div className="text-center">
-            <div className="text-red-500">
-              Error al cargar el perfil. Por favor, inténtalo de nuevo.
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  const firstApp = matchingApps[0];
-  const matchingFeaturesCount = firstApp?.matchingFeaturesCount || 0;
-  const totalSelectedFeatures = firstApp?.totalSelectedFeatures || 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
-      <div className="container py-12">
-        {/* Header with Logout Button */}
-        <div className="relative mb-8">
-          <div className="absolute right-0 top-0 z-10">
-            <LogoutButton />
-          </div>
-          <DashboardHeader 
-            matchingFeaturesCount={matchingFeaturesCount}
-            totalSelectedFeatures={totalSelectedFeatures}
-          />
-        </div>
-        
-        <DashboardApps
-          matchingApps={matchingApps}
-          allApps={allApps}
-          selectedApps={selectedApps}
-          onCompareToggle={handleCompareToggle}
-        />
-      </div>
+      <DashboardHeader />
+      <main className="container py-8">
+        <DashboardApps userFeatures={userFeatures} />
+      </main>
     </div>
   );
-}
+};
+
+export default Dashboard;

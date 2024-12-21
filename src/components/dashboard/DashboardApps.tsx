@@ -1,88 +1,82 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useToast } from "@/components/ui/use-toast";
-import AppsGrid from "@/components/AppsGrid";
-import { Button } from "@/components/ui/button";
-import type { Database } from "@/integrations/supabase/types";
-
-type Company = Database["public"]["Tables"]["companies"]["Row"];
-
-interface AppWithMatches extends Company {
-  matchingFeaturesCount?: number;
-  totalSelectedFeatures?: number;
-  score?: number;
-  hasMatches?: boolean;
-  isSelected?: boolean;
-}
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { AppCard } from "@/components/AppCard";
+import { useToast } from "@/hooks/use-toast";
 
 interface DashboardAppsProps {
-  matchingApps: AppWithMatches[];
-  allApps: AppWithMatches[];
-  selectedApps: AppWithMatches[];
-  onCompareToggle: (appId: string) => void;
+  userFeatures: string[];
 }
 
-export default function DashboardApps({ 
-  matchingApps, 
-  allApps, 
-  selectedApps,
-  onCompareToggle 
-}: DashboardAppsProps) {
-  const navigate = useNavigate();
+export function DashboardApps({ userFeatures }: DashboardAppsProps) {
+  const [apps, setApps] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
-  const [showAllApps, setShowAllApps] = useState(false);
 
-  const handleAppClick = (app: Company) => {
-    console.log("App clicked:", app);
-    navigate(`/admin/user-view/${app.id}`);
-  };
+  useEffect(() => {
+    const loadApps = async () => {
+      try {
+        let query = supabase
+          .from('companies')
+          .select('*');
+        
+        // If user has selected features, filter companies that match any of them
+        if (userFeatures.length > 0) {
+          query = query.contains('features', userFeatures);
+        }
 
-  const handleCompareClick = () => {
-    if (selectedApps.length < 2) {
-      toast({
-        title: "Selección insuficiente",
-        description: "Selecciona al menos 2 aplicaciones para comparar.",
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    const appIds = selectedApps.map(app => app.id).join(',');
-    navigate(`/admin/compare/${appIds}`);
-  };
+        const { data, error } = await query;
+
+        if (error) throw error;
+
+        // Sort apps by match count (number of matching features)
+        const sortedApps = data.sort((a, b) => {
+          const aMatches = a.features?.filter((f: string) => userFeatures.includes(f)).length || 0;
+          const bMatches = b.features?.filter((f: string) => userFeatures.includes(f)).length || 0;
+          return bMatches - aMatches;
+        });
+
+        setApps(sortedApps);
+      } catch (error) {
+        console.error('Error loading apps:', error);
+        toast({
+          title: "Error",
+          description: "No se pudieron cargar las aplicaciones",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadApps();
+  }, [userFeatures]);
+
+  if (isLoading) {
+    return <div>Cargando aplicaciones...</div>;
+  }
+
+  if (apps.length === 0) {
+    return (
+      <div className="text-center py-12">
+        <h2 className="text-2xl font-bold mb-4">No hay aplicaciones disponibles</h2>
+        <p className="text-gray-600">
+          No se encontraron aplicaciones que coincidan con tus criterios
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <>
-      <AppsGrid 
-        apps={showAllApps ? allApps : matchingApps} 
-        onAppClick={handleAppClick}
-        onCompareToggle={onCompareToggle}
-        showCompare={true}
-      />
-      
-      {!showAllApps && (
-        <div className="mt-8 text-center">
-          <Button 
-            onClick={() => setShowAllApps(true)}
-            variant="outline"
-            className="mx-auto"
-          >
-            Ver todas las aplicaciones
-          </Button>
-        </div>
-      )}
-
-      {selectedApps.length > 0 && (
-        <div className="mt-8 text-center">
-          <Button 
-            onClick={handleCompareClick}
-            variant="default"
-            className="mx-auto"
-          >
-            Comparar {selectedApps.length} aplicaciones seleccionadas
-          </Button>
-        </div>
-      )}
-    </>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {apps.map((app) => (
+        <AppCard
+          key={app.id}
+          app={app}
+          matchingFeatures={app.features?.filter((f: string) => 
+            userFeatures.includes(f)
+          )}
+        />
+      ))}
+    </div>
   );
 }
