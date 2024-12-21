@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import AppCard from "@/components/AppCard";
 import { useToast } from "@/hooks/use-toast";
@@ -11,6 +12,7 @@ export function DashboardApps({ userFeatures }: DashboardAppsProps) {
   const [apps, setApps] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadApps = async () => {
@@ -51,6 +53,11 @@ export function DashboardApps({ userFeatures }: DashboardAppsProps) {
     loadApps();
   }, [userFeatures]);
 
+  const handleAppClick = (app: any) => {
+    // Navigate to a detailed view of the app
+    window.open(app.url, '_blank');
+  };
+
   if (isLoading) {
     return <div>Cargando aplicaciones...</div>;
   }
@@ -72,7 +79,7 @@ export function DashboardApps({ userFeatures }: DashboardAppsProps) {
         <AppCard
           key={app.id}
           app={app}
-          onClick={() => {}}
+          onClick={() => handleAppClick(app)}
         />
       ))}
     </div>
