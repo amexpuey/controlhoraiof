@@ -26,12 +26,16 @@ export function Login() {
     setIsLoading(true);
 
     try {
-      // First check if the email exists in profiles
+      // First check if the email exists in profiles using maybeSingle()
       const { data: profileData, error: profileError } = await supabase
         .from('profiles')
         .select('*')
         .eq('email', email.trim())
-        .single();
+        .maybeSingle();
+
+      if (profileError) {
+        throw profileError;
+      }
 
       const redirectUrl = `${window.location.origin}/verify`;
       console.log('Redirect URL:', redirectUrl);
@@ -47,11 +51,24 @@ export function Login() {
         }
       });
 
-      if (authError) throw authError;
+      if (authError) {
+        // Handle rate limit error specifically
+        if (authError.message.includes('rate_limit')) {
+          toast({
+            title: "Error",
+            description: "Por favor, espere unos segundos antes de intentarlo de nuevo",
+            variant: "destructive",
+          });
+          return;
+        }
+        throw authError;
+      }
 
       // If no existing profile was found, create one
-      if (!profileData && !profileError) {
+      if (!profileData) {
         const { data: { user }, error: sessionError } = await supabase.auth.getUser();
+        
+        if (sessionError) throw sessionError;
         
         if (user) {
           const { error: insertError } = await supabase
