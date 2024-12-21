@@ -1,77 +1,65 @@
-import AdminHeader from "@/components/admin/AdminHeader";
-import { useCompanies } from "@/hooks/useCompanies";
-import CsvUpload from "@/components/admin/CsvUpload";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Eye } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import AdminHeader from "@/components/admin/AdminHeader";
+import AppsGrid from "@/components/AppsGrid";
+import { LogoutButton } from "@/components/LogoutButton";
 
-const AdminCompanies = () => {
-  const { data: companies, isLoading } = useCompanies();
+export default function AdminCompanies() {
   const navigate = useNavigate();
+  const [selectedApps, setSelectedApps] = useState<string[]>([]);
+
+  const { data: companies = [], isLoading } = useQuery({
+    queryKey: ["companies"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("companies")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const handleAppClick = (app: any) => {
+    navigate(`/admin/user-view/${app.id}`);
+  };
+
+  const handleCompareToggle = (appId: string) => {
+    setSelectedApps((prev) =>
+      prev.includes(appId)
+        ? prev.filter((id) => id !== appId)
+        : [...prev, appId]
+    );
+  };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white p-8">
+        <div className="animate-pulse">Loading...</div>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <AdminHeader />
-      <div className="container mx-auto p-8">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Apps Management</h1>
-        </div>
-
-        <div className="mb-8">
-          <CsvUpload />
-        </div>
-
-        {isLoading ? (
-          <p>Loading apps...</p>
-        ) : (
-          <div className="border rounded-lg">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Type</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {companies?.map((company) => (
-                  <TableRow key={company.id}>
-                    <TableCell className="font-medium">{company.title}</TableCell>
-                    <TableCell>{company.type}</TableCell>
-                    <TableCell>
-                      <Badge variant={company.verified ? "default" : "secondary"}>
-                        {company.verified ? "Verified" : "Pending"}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => navigate(`/app/${company.id}`)}
-                      >
-                        <Eye className="h-4 w-4 mr-2" />
-                        View
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+    <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
+      <div className="container py-12">
+        <div className="relative mb-8">
+          <div className="absolute right-0 top-0">
+            <LogoutButton />
           </div>
-        )}
+          <AdminHeader />
+        </div>
+        
+        <AppsGrid
+          apps={companies}
+          onAppClick={handleAppClick}
+          onCompareToggle={handleCompareToggle}
+          showCompare={true}
+        />
       </div>
     </div>
   );
-};
-
-export default AdminCompanies;
+}
