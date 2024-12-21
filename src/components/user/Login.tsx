@@ -27,20 +27,24 @@ export function Login() {
 
     try {
       // First check if the email exists in profiles
-      const { data: profileData } = await supabase
+      const { data: profileData, error: profileError } = await supabase
         .from('profiles')
         .select('*')
         .eq('email', email.trim())
         .single();
 
-      if (!profileData) {
-        toast({
-          title: "Error",
-          description: "Email no encontrado. Por favor, completa el proceso de registro primero.",
-          variant: "destructive",
-        });
-        navigate('/');
-        return;
+      // If profile doesn't exist, create one
+      if (!profileData && !profileError) {
+        const { error: insertError } = await supabase
+          .from('profiles')
+          .insert([
+            { 
+              email: email.trim(),
+              onboarding_status: 'completed'
+            }
+          ]);
+
+        if (insertError) throw insertError;
       }
 
       const redirectUrl = `${window.location.origin}/verify`;
@@ -60,7 +64,7 @@ export function Login() {
 
       toast({
         title: "¡Email enviado!",
-        description: "Te hemos enviado un enlace mágico a tu correo electrónico.",
+        description: "Te hemos enviado un enlace para acceder a tu cuenta.",
       });
     } catch (error: any) {
       console.error('Login error:', error);
@@ -83,7 +87,7 @@ export function Login() {
             Bienvenido de nuevo
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Introduce tu email para recibir un enlace mágico
+            Accede a tu cuenta de Control Horario
           </p>
         </div>
         
@@ -102,7 +106,7 @@ export function Login() {
             className="w-full bg-primary-600 hover:bg-primary-700"
             disabled={isLoading}
           >
-            {isLoading ? "Enviando..." : "Enviar enlace mágico"}
+            {isLoading ? "Enviando..." : "Entrar en Control Horario"}
           </Button>
         </form>
       </div>
