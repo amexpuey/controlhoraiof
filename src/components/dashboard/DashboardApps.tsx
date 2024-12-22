@@ -7,6 +7,7 @@ import { FilterSection } from "./FilterSection";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import ComparisonTable from "@/components/comparison/ComparisonTable";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
@@ -116,6 +117,20 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
     navigate(`/mejores-apps-control-horario/${app.slug}`);
   };
 
+  const renderAppGrid = (apps: Company[], start: number, end: number) => {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {apps.slice(start, end).map((app) => (
+          <AppCard
+            key={app.id}
+            app={app}
+            onClick={() => handleAppClick(app)}
+          />
+        ))}
+      </div>
+    );
+  };
+
   if (isLoading) {
     return <div>Cargando aplicaciones...</div>;
   }
@@ -154,15 +169,26 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
         onTopRatedToggle={() => setShowTopRated(prev => !prev)}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredApps.map((app) => (
-          <AppCard
-            key={app.id}
-            app={app}
-            onClick={() => handleAppClick(app)}
-          />
-        ))}
+      {/* First two rows of apps */}
+      {renderAppGrid(filteredApps, 0, 6)}
+
+      {/* Comparison Table Section */}
+      <div className="py-12 bg-gray-50 rounded-lg">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-center mb-8">
+            Comparación Detallada de Soluciones
+          </h2>
+          <ComparisonTable apps={filteredApps.slice(0, 6)} />
+        </div>
       </div>
+
+      {/* Remaining apps */}
+      {filteredApps.length > 6 && (
+        <div className="mt-8">
+          <h3 className="text-xl font-semibold mb-6">Más Soluciones</h3>
+          {renderAppGrid(filteredApps, 6, filteredApps.length)}
+        </div>
+      )}
     </div>
   );
 }

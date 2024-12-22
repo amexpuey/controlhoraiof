@@ -25,7 +25,12 @@ const initialFormData: Omit<Company, 'id' | 'created_at' | 'updated_at'> = {
   pricing_currency: 'EUR',
   highlights: [],
   pricing_description: null,
-  slug: '' // Added the slug field
+  slug: '',
+  rating: 4.5,
+  free_trial: 'yes',
+  free_plan: 'yes',
+  use_case: 'Good for basic time tracking',
+  platforms: ['Web', 'iOS', 'Android']
 };
 
 export default function AdminAppEdit() {
@@ -61,7 +66,12 @@ export default function AdminAppEdit() {
         pricing_currency: company.pricing_currency || 'EUR',
         highlights: company.highlights || [],
         pricing_description: company.pricing_description,
-        slug: company.slug || '' // Added the slug field
+        slug: company.slug || '',
+        rating: company.rating || 4.5,
+        free_trial: company.free_trial || 'yes',
+        free_plan: company.free_plan || 'yes',
+        use_case: company.use_case || 'Good for basic time tracking',
+        platforms: company.platforms || ['Web', 'iOS', 'Android']
       });
     }
   }, [company]);
