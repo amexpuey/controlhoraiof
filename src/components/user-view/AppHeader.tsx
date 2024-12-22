@@ -20,13 +20,18 @@ interface AppHeaderProps {
 export function AppHeader({ company }: AppHeaderProps) {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [onboardingCompleted, setOnboardingCompleted] = useState(false);
+  const [onboardingCompleted, setOnboardingCompleted] = useState<boolean | null>(null);
 
   useEffect(() => {
     const checkOnboardingStatus = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (session?.user) {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (!session?.user) {
+          setOnboardingCompleted(false);
+          return;
+        }
+
         const { data: profile, error } = await supabase
           .from('profiles')
           .select('onboarding_status, selected_features')
@@ -35,10 +40,14 @@ export function AppHeader({ company }: AppHeaderProps) {
 
         if (error) {
           console.error('Error fetching profile:', error);
+          setOnboardingCompleted(false);
           return;
         }
 
         setOnboardingCompleted(profile?.onboarding_status === 'completed');
+      } catch (error) {
+        console.error('Error checking onboarding status:', error);
+        setOnboardingCompleted(false);
       }
     };
 
@@ -46,11 +55,15 @@ export function AppHeader({ company }: AppHeaderProps) {
   }, []);
 
   const handleBackClick = () => {
+    if (onboardingCompleted === null) {
+      return; // Wait for the check to complete
+    }
+
     if (onboardingCompleted) {
       navigate("/dashboard");
     } else {
       toast({
-        title: "Sesión no encontrada",
+        title: "Proceso incompleto",
         description: "Por favor, complete el proceso de selección de características primero.",
         variant: "destructive",
       });
