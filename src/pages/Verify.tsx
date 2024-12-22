@@ -12,7 +12,24 @@ export default function Verify() {
   useEffect(() => {
     const handleVerification = async () => {
       try {
-        // First check if we have a session
+        // Get the token from URL parameters
+        const token = searchParams.get('token');
+        const type = searchParams.get('type');
+
+        if (token && type === 'magiclink') {
+          // First try to verify the magic link
+          const { error: verifyError } = await supabase.auth.verifyOtp({
+            token_hash: token,
+            type: 'magiclink',
+          });
+
+          if (verifyError) {
+            console.error("Verification error:", verifyError);
+            throw verifyError;
+          }
+        }
+
+        // After verification, get the current session
         const { data: { session }, error: sessionError } = await supabase.auth.getSession();
         
         if (sessionError) {
@@ -20,72 +37,35 @@ export default function Verify() {
           throw sessionError;
         }
 
-        // If we don't have a session but have token params, try to set up the session
-        if (!session) {
-          const refreshToken = searchParams.get('refresh_token');
-          const accessToken = searchParams.get('access_token');
+        // If we have a valid session, proceed
+        if (session?.user) {
+          // Check if user exists in profiles
+          const { data: profileData, error: profileError } = await supabase
+            .from("profiles")
+            .select("*")
+            .eq("email", session.user.email)
+            .single();
 
-          if (refreshToken && accessToken) {
-            const { data: { session: newSession }, error: setSessionError } = await supabase.auth.setSession({
-              refresh_token: refreshToken,
-              access_token: accessToken,
-            });
-
-            if (setSessionError) {
-              console.error("Set session error:", setSessionError);
-              throw setSessionError;
-            }
-
-            if (!newSession) {
-              console.log("No session could be established");
-              navigate("/user-login");
-              return;
-            }
-          } else {
-            console.log("No session or tokens found, redirecting to login");
-            navigate("/user-login");
-            return;
+          if (profileError) {
+            console.error("Profile error:", profileError);
+            throw profileError;
           }
-        }
 
-        // Now we should have a valid session, get the user
-        const { data: { user }, error: userError } = await supabase.auth.getUser();
-        
-        if (userError || !user) {
-          console.error("User error:", userError);
-          throw userError || new Error("No user found");
-        }
-
-        console.log("User session:", user);
-
-        // Check if user exists in profiles
-        const { data: profileData, error: profileError } = await supabase
-          .from("profiles")
-          .select("*")
-          .eq("email", user.email)
-          .single();
-
-        if (profileError) {
-          console.error("Profile error:", profileError);
-          toast({
-            title: "Error",
-            description: "Error al verificar el perfil",
-            variant: "destructive",
-          });
-          navigate("/user-login");
+          console.log("Profile data:", profileData);
+          
+          // Always redirect to dashboard after successful verification
+          navigate("/dashboard");
           return;
         }
 
-        console.log("Profile data:", profileData);
-        
-        // Always redirect to dashboard after successful verification
-        navigate("/dashboard");
+        // If no session, redirect to login
+        navigate("/user-login");
 
       } catch (error) {
         console.error("Verification error:", error);
         toast({
           title: "Error",
-          description: "Error en la verificación",
+          description: "Error en la verificación. Por favor, intente de nuevo.",
           variant: "destructive",
         });
         navigate("/user-login");
