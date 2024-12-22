@@ -20,14 +20,17 @@ interface AppHeaderProps {
 export function AppHeader({ company }: AppHeaderProps) {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(true);
   const [onboardingCompleted, setOnboardingCompleted] = useState<boolean | null>(null);
 
   useEffect(() => {
     const checkOnboardingStatus = async () => {
       try {
+        setIsLoading(true);
         const { data: { session } } = await supabase.auth.getSession();
         
         if (!session?.user) {
+          console.log('No session found');
           setOnboardingCompleted(false);
           return;
         }
@@ -44,10 +47,14 @@ export function AppHeader({ company }: AppHeaderProps) {
           return;
         }
 
-        setOnboardingCompleted(profile?.onboarding_status === 'completed');
+        const isCompleted = profile?.onboarding_status === 'completed';
+        console.log('Onboarding status:', isCompleted);
+        setOnboardingCompleted(isCompleted);
       } catch (error) {
         console.error('Error checking onboarding status:', error);
         setOnboardingCompleted(false);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -55,13 +62,15 @@ export function AppHeader({ company }: AppHeaderProps) {
   }, []);
 
   const handleBackClick = () => {
-    if (onboardingCompleted === null) {
-      return; // Wait for the check to complete
+    if (isLoading) {
+      return; // Don't do anything while loading
     }
 
     if (onboardingCompleted) {
+      console.log('Navigating to dashboard');
       navigate("/dashboard");
     } else {
+      console.log('Redirecting to onboarding');
       toast({
         title: "Proceso incompleto",
         description: "Por favor, complete el proceso de selección de características primero.",
@@ -105,7 +114,7 @@ export function AppHeader({ company }: AppHeaderProps) {
           <BreadcrumbItem>
             <BreadcrumbLink 
               onClick={handleBackClick}
-              className="text-white flex items-center gap-2 hover:bg-black/20 px-4 py-2 rounded-lg transition-colors cursor-pointer"
+              className={`text-white flex items-center gap-2 hover:bg-black/20 px-4 py-2 rounded-lg transition-colors ${isLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
             >
               <ArrowLeft className="w-5 h-5" />
               Volver al Dashboard
