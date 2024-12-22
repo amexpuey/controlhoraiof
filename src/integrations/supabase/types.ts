@@ -14,20 +14,25 @@ export type Database = {
           created_at: string | null
           description: string
           features: string[] | null
+          free_plan: string | null
+          free_trial: string | null
           highlights: string[] | null
           id: string
           img_url: string
           is_top_rated: boolean
           logo_url: string
+          platforms: string[] | null
           pricing_billing_period: string
           pricing_currency: string
           pricing_description: string | null
           pricing_starting_price: number
+          rating: number | null
           slug: string
           title: string
           type: string
           updated_at: string | null
           url: string
+          use_case: string | null
           verified: boolean
           votes: number | null
         }
@@ -35,20 +40,25 @@ export type Database = {
           created_at?: string | null
           description?: string
           features?: string[] | null
+          free_plan?: string | null
+          free_trial?: string | null
           highlights?: string[] | null
           id?: string
           img_url?: string
           is_top_rated?: boolean
           logo_url?: string
+          platforms?: string[] | null
           pricing_billing_period?: string
           pricing_currency?: string
           pricing_description?: string | null
           pricing_starting_price?: number
+          rating?: number | null
           slug: string
           title?: string
           type?: string
           updated_at?: string | null
           url?: string
+          use_case?: string | null
           verified?: boolean
           votes?: number | null
         }
@@ -56,20 +66,25 @@ export type Database = {
           created_at?: string | null
           description?: string
           features?: string[] | null
+          free_plan?: string | null
+          free_trial?: string | null
           highlights?: string[] | null
           id?: string
           img_url?: string
           is_top_rated?: boolean
           logo_url?: string
+          platforms?: string[] | null
           pricing_billing_period?: string
           pricing_currency?: string
           pricing_description?: string | null
           pricing_starting_price?: number
+          rating?: number | null
           slug?: string
           title?: string
           type?: string
           updated_at?: string | null
           url?: string
+          use_case?: string | null
           verified?: boolean
           votes?: number | null
         }
