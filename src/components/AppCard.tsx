@@ -3,23 +3,26 @@ import VoteButton from "./VoteButton";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { Database } from "@/integrations/supabase/types";
+import { useNavigate } from "react-router-dom";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
 interface AppCardProps {
   app: Company;
-  onClick: () => void;
+  onClick?: () => void;
   showCompare?: boolean;
   isSelected?: boolean;
   onCompareToggle?: () => void;
 }
 
-export default function AppCard({ app, onClick, showCompare, isSelected, onCompareToggle }: AppCardProps) {
+export default function AppCard({ app, showCompare, isSelected, onCompareToggle }: AppCardProps) {
+  const navigate = useNavigate();
+  
   if (!app) return null;
 
-  const handleExternalLinkClick = (e: React.MouseEvent) => {
+  const handleCardClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    window.open(app.url, '_blank');
+    navigate(`/app/${app.id}`);
   };
 
   const handleCompareClick = (e: React.MouseEvent) => {
@@ -30,7 +33,7 @@ export default function AppCard({ app, onClick, showCompare, isSelected, onCompa
   return (
     <Card 
       className="overflow-hidden transition-all hover:shadow-lg cursor-pointer relative"
-      onClick={onClick}
+      onClick={handleCardClick}
     >
       <div className="relative h-48 overflow-hidden">
         <img
@@ -76,12 +79,15 @@ export default function AppCard({ app, onClick, showCompare, isSelected, onCompa
             </div>
           </div>
           
-          <button
-            onClick={handleExternalLinkClick}
+          <a
+            href={app.url}
+            onClick={(e) => e.stopPropagation()}
             className="text-blue-600 hover:text-blue-800"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <ExternalLink className="w-5 h-5" />
-          </button>
+          </a>
         </div>
 
         <p className="mt-4 text-gray-600 line-clamp-2">{app.description}</p>
