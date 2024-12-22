@@ -4,6 +4,8 @@ import AppCard from "@/components/AppCard";
 import { useToast } from "@/hooks/use-toast";
 import type { Database } from "@/integrations/supabase/types";
 import { FilterSection } from "./FilterSection";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
@@ -16,6 +18,7 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
   const [apps, setApps] = useState<Company[]>([]);
   const [filteredApps, setFilteredApps] = useState<Company[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
 
   // Filter states
@@ -38,8 +41,16 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
           return;
         }
 
-        console.log('Loaded companies:', data); // Added this console.log
-        setApps(data);
+        console.log('Loaded companies:', data);
+        
+        // Sort to always show INWOUT first
+        const sortedData = data.sort((a, b) => {
+          if (a.title === 'INWOUT') return -1;
+          if (b.title === 'INWOUT') return 1;
+          return 0;
+        });
+        
+        setApps(sortedData);
       } catch (error) {
         console.error('Error loading apps:', error);
         toast({
@@ -55,9 +66,21 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
     loadApps();
   }, [toast]);
 
-  // Filter apps whenever filter criteria change
+  // Filter apps whenever filter criteria or search query changes
   useEffect(() => {
     let filtered = [...apps];
+
+    // Apply search filter across multiple fields
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(app => 
+        app.title?.toLowerCase().includes(query) ||
+        app.description?.toLowerCase().includes(query) ||
+        app.features?.some(feature => feature.toLowerCase().includes(query)) ||
+        app.type?.toLowerCase().includes(query) ||
+        app.highlights?.some(highlight => highlight.toLowerCase().includes(query))
+      );
+    }
 
     // Filter by features
     if (selectedFeatures.length > 0) {
@@ -76,6 +99,13 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
       filtered = filtered.filter(app => app.is_top_rated);
     }
 
+    // Ensure INWOUT always appears first in filtered results
+    filtered.sort((a, b) => {
+      if (a.title === 'INWOUT') return -1;
+      if (b.title === 'INWOUT') return 1;
+      return 0;
+    });
+
     // Ensure at least 3 apps are shown
     if (filtered.length < 3) {
       const remainingApps = apps
@@ -85,7 +115,7 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
     }
 
     setFilteredApps(filtered);
-  }, [apps, selectedFeatures, selectedTypes, showTopRated]);
+  }, [apps, selectedFeatures, selectedTypes, showTopRated, searchQuery]);
 
   if (isLoading) {
     return <div>Cargando aplicaciones...</div>;
@@ -93,6 +123,18 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
 
   return (
     <div className="space-y-8">
+      {/* Search Bar */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+        <Input
+          type="text"
+          placeholder="Buscar por nombre, características, descripción..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-10 w-full"
+        />
+      </div>
+
       <FilterSection
         selectedFeatures={selectedFeatures}
         onFeatureToggle={(feature) => {
