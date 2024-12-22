@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import AppCard from "@/components/AppCard";
 import { useToast } from "@/hooks/use-toast";
@@ -12,32 +11,18 @@ export function DashboardApps({ userFeatures }: DashboardAppsProps) {
   const [apps, setApps] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const loadApps = async () => {
       try {
-        let query = supabase
+        const { data, error } = await supabase
           .from('companies')
-          .select('*');
-        
-        // If user has selected features, filter companies that match any of them
-        if (userFeatures.length > 0) {
-          query = query.contains('features', userFeatures);
-        }
-
-        const { data, error } = await query;
+          .select('*')
+          .order('created_at', { ascending: false });
 
         if (error) throw error;
 
-        // Sort apps by match count (number of matching features)
-        const sortedApps = data.sort((a, b) => {
-          const aMatches = a.features?.filter((f: string) => userFeatures.includes(f)).length || 0;
-          const bMatches = b.features?.filter((f: string) => userFeatures.includes(f)).length || 0;
-          return bMatches - aMatches;
-        });
-
-        setApps(sortedApps);
+        setApps(data || []);
       } catch (error) {
         console.error('Error loading apps:', error);
         toast({
@@ -51,7 +36,7 @@ export function DashboardApps({ userFeatures }: DashboardAppsProps) {
     };
 
     loadApps();
-  }, [userFeatures]);
+  }, [toast]);
 
   const handleAppClick = (app: any) => {
     try {
@@ -77,7 +62,7 @@ export function DashboardApps({ userFeatures }: DashboardAppsProps) {
       <div className="text-center py-12">
         <h2 className="text-2xl font-bold mb-4">No hay aplicaciones disponibles</h2>
         <p className="text-gray-600">
-          No se encontraron aplicaciones que coincidan con tus criterios
+          No se encontraron aplicaciones
         </p>
       </div>
     );

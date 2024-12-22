@@ -1,12 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Index from "@/pages/Index";
-import Login from "@/pages/Login";
-import UserLogin from "@/pages/UserLogin";
-import Verify from "@/pages/Verify";
-import PasswordReset from "@/pages/PasswordReset";
+import Dashboard from "@/pages/Dashboard";
 import AdminCompanies from "@/pages/admin/Companies";
 import Users from "@/pages/admin/Users";
-import Dashboard from "@/pages/Dashboard";
 import ComparisonPage from "@/pages/ComparisonPage";
 import UserView from "@/pages/UserView";
 import { Toaster } from "@/components/ui/toaster";
@@ -16,22 +12,6 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Index />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/user-login",
-    element: <UserLogin />,
-  },
-  {
-    path: "/verify",
-    element: <Verify />,
-  },
-  {
-    path: "/password-reset",
-    element: <PasswordReset />,
   },
   {
     path: "/dashboard",
