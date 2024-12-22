@@ -26,11 +26,13 @@ import {
   Headphones,
   Rocket,
   Award,
-  CheckCircle 
+  ChevronDown,
+  ChevronUp
 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useState } from "react";
 
 interface FilterSectionProps {
   selectedFeatures: string[];
@@ -71,7 +73,7 @@ const features = [
   { id: "Implementación sin fricciones", icon: Rocket }
 ];
 
-const types = ["free", "freemium", "premium"];
+const types = ["free-premium", "premium"];
 
 export function FilterSection({
   selectedFeatures,
@@ -81,6 +83,8 @@ export function FilterSection({
   showTopRated,
   onTopRatedToggle,
 }: FilterSectionProps) {
+  const [showFeatures, setShowFeatures] = useState(false);
+
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm mb-8">
       <h2 className="text-xl font-semibold mb-4">Filtros</h2>
@@ -88,23 +92,37 @@ export function FilterSection({
       <div className="space-y-6">
         {/* Features Filter */}
         <div>
-          <h3 className="text-sm font-medium mb-3">Características</h3>
-          <ScrollArea className="h-[400px] pr-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-              {features.map(({ id, icon: Icon }) => (
-                <Button
-                  key={id}
-                  variant={selectedFeatures.includes(id) ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => onFeatureToggle(id)}
-                  className="h-auto py-2 px-3 justify-start"
-                >
-                  <Icon className="w-4 h-4 mr-2 shrink-0" />
-                  <span className="text-sm text-left">{id}</span>
-                </Button>
-              ))}
-            </div>
-          </ScrollArea>
+          <Button
+            variant="ghost"
+            className="w-full flex justify-between items-center mb-3"
+            onClick={() => setShowFeatures(!showFeatures)}
+          >
+            <span className="text-sm font-medium">Características ({selectedFeatures.length} seleccionadas)</span>
+            {showFeatures ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
+          </Button>
+          
+          {showFeatures && (
+            <ScrollArea className="h-[400px] pr-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                {features.map(({ id, icon: Icon }) => (
+                  <Button
+                    key={id}
+                    variant={selectedFeatures.includes(id) ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => onFeatureToggle(id)}
+                    className="h-auto py-2 px-3 justify-start"
+                  >
+                    <Icon className="w-4 h-4 mr-2 shrink-0" />
+                    <span className="text-sm text-left">{id}</span>
+                  </Button>
+                ))}
+              </div>
+            </ScrollArea>
+          )}
         </div>
 
         {/* Type Filter */}
@@ -117,9 +135,9 @@ export function FilterSection({
                 variant={selectedTypes.includes(type) ? "default" : "outline"}
                 size="sm"
                 onClick={() => onTypeToggle(type)}
-                className="h-8 capitalize"
+                className="h-8"
               >
-                {type}
+                {type === "free-premium" ? "Free-Premium" : "Premium"}
               </Button>
             ))}
           </div>
