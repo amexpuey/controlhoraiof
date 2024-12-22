@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -7,6 +8,8 @@ import {
 } from "@/components/ui/breadcrumb";
 import { ArrowLeft } from "lucide-react";
 import type { Database } from "@/integrations/supabase/types";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
@@ -16,6 +19,44 @@ interface AppHeaderProps {
 
 export function AppHeader({ company }: AppHeaderProps) {
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const [onboardingCompleted, setOnboardingCompleted] = useState(false);
+
+  useEffect(() => {
+    const checkOnboardingStatus = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (session?.user) {
+        const { data: profile, error } = await supabase
+          .from('profiles')
+          .select('onboarding_status, selected_features')
+          .eq('id', session.user.id)
+          .single();
+
+        if (error) {
+          console.error('Error fetching profile:', error);
+          return;
+        }
+
+        setOnboardingCompleted(profile?.onboarding_status === 'completed');
+      }
+    };
+
+    checkOnboardingStatus();
+  }, []);
+
+  const handleBackClick = () => {
+    if (onboardingCompleted) {
+      navigate("/dashboard");
+    } else {
+      toast({
+        title: "Sesión no encontrada",
+        description: "Por favor, complete el proceso de selección de características primero.",
+        variant: "destructive",
+      });
+      navigate("/");
+    }
+  };
 
   return (
     <div 
@@ -50,7 +91,7 @@ export function AppHeader({ company }: AppHeaderProps) {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink 
-              onClick={() => navigate("/dashboard")}
+              onClick={handleBackClick}
               className="text-white flex items-center gap-2 hover:bg-black/20 px-4 py-2 rounded-lg transition-colors cursor-pointer"
             >
               <ArrowLeft className="w-5 h-5" />
