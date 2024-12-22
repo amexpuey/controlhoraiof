@@ -21,6 +21,7 @@ export type Database = {
           logo_url: string
           pricing_billing_period: string
           pricing_currency: string
+          pricing_description: string | null
           pricing_starting_price: number
           title: string
           type: string
@@ -40,6 +41,7 @@ export type Database = {
           logo_url?: string
           pricing_billing_period?: string
           pricing_currency?: string
+          pricing_description?: string | null
           pricing_starting_price?: number
           title?: string
           type?: string
@@ -59,6 +61,7 @@ export type Database = {
           logo_url?: string
           pricing_billing_period?: string
           pricing_currency?: string
+          pricing_description?: string | null
           pricing_starting_price?: number
           title?: string
           type?: string
