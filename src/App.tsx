@@ -49,6 +49,10 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
+  {
+    path: "*",
+    element: <Index />, // Catch-all route redirects to Index
+  }
 ]);
 
 function App() {
