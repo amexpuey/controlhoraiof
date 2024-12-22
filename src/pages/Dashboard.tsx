@@ -43,37 +43,34 @@ const Dashboard = () => {
   }, []);
 
   const handleFeatureSelect = async (features: string[]) => {
-    const { data: { session } } = await supabase.auth.getSession();
-    
-    if (session?.user) {
-      // Update profile with selected features and mark onboarding as completed
-      const { error } = await supabase
-        .from('profiles')
-        .update({
-          selected_features: features,
-          company_size: companySize,
-          onboarding_status: 'completed'
-        })
-        .eq('id', session.user.id);
-
-      if (error) {
-        console.error('Error updating profile:', error);
-        toast({
-          title: "Error",
-          description: "No se pudieron guardar tus preferencias",
-          variant: "destructive",
-        });
-        return;
-      }
-    }
-
     setSelectedFeatures(features);
     setShowApps(true);
+    // Store in localStorage to persist the selection
+    localStorage.setItem('selectedFeatures', JSON.stringify(features));
+    localStorage.setItem('companySize', companySize);
+    localStorage.setItem('showApps', 'true');
   };
 
   const handleSizeSelect = (size: string) => {
     setCompanySize(size);
   };
+
+  // Load state from localStorage on back navigation
+  useEffect(() => {
+    const savedFeatures = localStorage.getItem('selectedFeatures');
+    const savedSize = localStorage.getItem('companySize');
+    const savedShowApps = localStorage.getItem('showApps');
+
+    if (savedFeatures) {
+      setSelectedFeatures(JSON.parse(savedFeatures));
+    }
+    if (savedSize) {
+      setCompanySize(savedSize);
+    }
+    if (savedShowApps === 'true') {
+      setShowApps(true);
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">

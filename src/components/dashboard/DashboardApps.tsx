@@ -68,11 +68,9 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
     loadApps();
   }, [toast]);
 
-  // Filter apps whenever filter criteria or search query changes
   useEffect(() => {
     let filtered = [...apps];
 
-    // Apply search filter across multiple fields
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(app => 
@@ -84,31 +82,26 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
       );
     }
 
-    // Filter by features
     if (selectedFeatures.length > 0) {
       filtered = filtered.filter(app => 
         selectedFeatures.some(feature => app.features?.includes(feature))
       );
     }
 
-    // Filter by type
     if (selectedTypes.length > 0) {
       filtered = filtered.filter(app => selectedTypes.includes(app.type));
     }
 
-    // Filter by top rated
     if (showTopRated) {
       filtered = filtered.filter(app => app.is_top_rated);
     }
 
-    // Ensure INWOUT always appears first in filtered results
     filtered.sort((a, b) => {
       if (a.title === 'INWOUT') return -1;
       if (b.title === 'INWOUT') return 1;
       return 0;
     });
 
-    // Ensure at least 3 apps are shown
     if (filtered.length < 3) {
       const remainingApps = apps
         .filter(app => !filtered.includes(app))
@@ -120,7 +113,7 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
   }, [apps, selectedFeatures, selectedTypes, showTopRated, searchQuery]);
 
   const handleAppClick = (app: Company) => {
-    navigate(`/admin/user-view/${app.id}`);
+    navigate(`/mejores-apps-control-horario/${app.slug}`);
   };
 
   if (isLoading) {
@@ -129,7 +122,6 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
 
   return (
     <div className="space-y-8">
-      {/* Search Bar */}
       <div className="relative">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
         <Input
