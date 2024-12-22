@@ -54,8 +54,18 @@ export function DashboardApps({ userFeatures }: DashboardAppsProps) {
   }, [userFeatures]);
 
   const handleAppClick = (app: any) => {
-    // Navigate to a detailed view of the app
-    window.open(app.url, '_blank');
+    try {
+      // Ensure the URL is properly formatted
+      const url = new URL(app.url);
+      window.open(url.toString(), '_blank');
+    } catch (error) {
+      console.error('Invalid URL:', app.url);
+      toast({
+        title: "Error",
+        description: "No se pudo abrir la aplicación. URL inválida.",
+        variant: "destructive",
+      });
+    }
   };
 
   if (isLoading) {
