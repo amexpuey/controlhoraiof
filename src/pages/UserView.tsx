@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useCompany } from "@/hooks/useCompanies";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { AppHeader } from "@/components/user-view/AppHeader";
 import { AboutSection } from "@/components/user-view/AboutSection";
 import { FeaturesSection } from "@/components/user-view/FeaturesSection";
@@ -7,9 +8,42 @@ import { HighlightsSection } from "@/components/user-view/HighlightsSection";
 import { Sidebar } from "@/components/user-view/Sidebar";
 
 export default function UserView() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
-  const { data: company, isLoading, error } = useCompany(id || "");
+
+  const { data: company, isLoading, error } = useQuery({
+    queryKey: ['company', slug],
+    queryFn: async () => {
+      if (!slug) {
+        throw new Error('No slug provided');
+      }
+
+      console.log('Fetching company with slug:', slug);
+      
+      const { data, error } = await supabase
+        .from('companies')
+        .select('*')
+        .eq('slug', slug)
+        .maybeSingle();
+
+      if (error) {
+        console.error('Error fetching company:', error);
+        throw error;
+      }
+
+      if (!data) {
+        console.error('Company not found with slug:', slug);
+        throw new Error(`Company not found with slug: ${slug}`);
+      }
+
+      console.log('Fetched company data:', data);
+      return data;
+    },
+    retry: false,
+    refetchOnWindowFocus: true,
+    gcTime: 0,
+    staleTime: 0
+  });
 
   if (isLoading) {
     return (

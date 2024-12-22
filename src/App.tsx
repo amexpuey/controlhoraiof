@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     element: <Dashboard />,
   },
   {
-    path: "/admin/companies",
+    path: "/panel/apps",
     element: (
       <ProtectedRoute>
         <AdminCompanies />
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/admin/users",
+    path: "/panel/users",
     element: (
       <ProtectedRoute>
         <Users />
@@ -34,7 +34,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/admin/compare/:ids",
+    path: "/panel/compare/:ids",
     element: (
       <ProtectedRoute>
         <ComparisonPage />
@@ -42,12 +42,12 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/admin/user-view/:id",
+    path: "/mejores-apps-control-horario/:slug",
     element: <UserView />,
   },
   {
     path: "*",
-    element: <Dashboard />, // Changed from Index to Dashboard for catch-all
+    element: <Dashboard />,
   }
 ]);
 

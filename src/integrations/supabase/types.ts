@@ -23,6 +23,7 @@ export type Database = {
           pricing_currency: string
           pricing_description: string | null
           pricing_starting_price: number
+          slug: string
           title: string
           type: string
           updated_at: string | null
@@ -43,6 +44,7 @@ export type Database = {
           pricing_currency?: string
           pricing_description?: string | null
           pricing_starting_price?: number
+          slug: string
           title?: string
           type?: string
           updated_at?: string | null
@@ -63,6 +65,7 @@ export type Database = {
           pricing_currency?: string
           pricing_description?: string | null
           pricing_starting_price?: number
+          slug?: string
           title?: string
           type?: string
           updated_at?: string | null

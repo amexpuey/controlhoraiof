@@ -23,7 +23,7 @@ export default function AppCard({ app, showCompare, isSelected, onCompareToggle 
   const handleCardClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    navigate(`/admin/user-view/${app.id}`);
+    navigate(`/mejores-apps-control-horario/${app.slug}`);
   };
 
   const handleCompareClick = (e: React.MouseEvent) => {
