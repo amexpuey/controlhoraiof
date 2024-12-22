@@ -6,6 +6,7 @@ import type { Database } from "@/integrations/supabase/types";
 import { FilterSection } from "./FilterSection";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
@@ -20,6 +21,7 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   // Filter states
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>(userFeatures);
@@ -117,6 +119,10 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
     setFilteredApps(filtered);
   }, [apps, selectedFeatures, selectedTypes, showTopRated, searchQuery]);
 
+  const handleAppClick = (app: Company) => {
+    navigate(`/admin/user-view/${app.id}`);
+  };
+
   if (isLoading) {
     return <div>Cargando aplicaciones...</div>;
   }
@@ -161,6 +167,7 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
           <AppCard
             key={app.id}
             app={app}
+            onClick={() => handleAppClick(app)}
           />
         ))}
       </div>
