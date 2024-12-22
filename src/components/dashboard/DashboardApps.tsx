@@ -2,13 +2,17 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import AppCard from "@/components/AppCard";
 import { useToast } from "@/hooks/use-toast";
+import type { Database } from "@/integrations/supabase/types";
+
+type Company = Database["public"]["Tables"]["companies"]["Row"];
 
 interface DashboardAppsProps {
   userFeatures: string[];
+  companySize?: string;
 }
 
-export function DashboardApps({ userFeatures }: DashboardAppsProps) {
-  const [apps, setApps] = useState<any[]>([]);
+export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps) {
+  const [apps, setApps] = useState<Company[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
@@ -22,7 +26,25 @@ export function DashboardApps({ userFeatures }: DashboardAppsProps) {
 
         if (error) throw error;
 
-        setApps(data || []);
+        if (!data || data.length === 0) {
+          setApps([]);
+          return;
+        }
+
+        // Filter and score apps based on matching features
+        const appsWithScore = data.map(app => ({
+          ...app,
+          score: app.features?.filter(
+            feature => userFeatures.includes(feature)
+          ).length || 0
+        }));
+
+        // Sort by score and ensure at least 3 apps are shown
+        const sortedApps = appsWithScore
+          .sort((a, b) => (b.score || 0) - (a.score || 0))
+          .slice(0, Math.max(3, appsWithScore.filter(app => app.score > 0).length));
+
+        setApps(sortedApps);
       } catch (error) {
         console.error('Error loading apps:', error);
         toast({
@@ -36,11 +58,10 @@ export function DashboardApps({ userFeatures }: DashboardAppsProps) {
     };
 
     loadApps();
-  }, [toast]);
+  }, [userFeatures, toast]);
 
-  const handleAppClick = (app: any) => {
+  const handleAppClick = (app: Company) => {
     try {
-      // Ensure the URL is properly formatted
       const url = new URL(app.url);
       window.open(url.toString(), '_blank');
     } catch (error) {
@@ -62,7 +83,7 @@ export function DashboardApps({ userFeatures }: DashboardAppsProps) {
       <div className="text-center py-12">
         <h2 className="text-2xl font-bold mb-4">No hay aplicaciones disponibles</h2>
         <p className="text-gray-600">
-          No se encontraron aplicaciones
+          No se encontraron aplicaciones que coincidan con tus criterios
         </p>
       </div>
     );
