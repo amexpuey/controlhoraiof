@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Globe, Users } from "lucide-react";
 import type { Database } from "@/integrations/supabase/types";
+import ReactMarkdown from 'react-markdown';
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
@@ -15,8 +16,8 @@ export function Sidebar({ company }: SidebarProps) {
         <h3 className="text-xl font-semibold mb-4">Precios</h3>
         <div className="space-y-4">
           {company.pricing_description ? (
-            <div className="text-gray-700 whitespace-pre-line">
-              {company.pricing_description}
+            <div className="text-gray-700">
+              <ReactMarkdown>{company.pricing_description}</ReactMarkdown>
             </div>
           ) : (
             <div className="text-3xl font-bold text-blue-600">
