@@ -43,15 +43,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin/user-view/:id",
-    element: (
-      <ProtectedRoute>
-        <UserView />
-      </ProtectedRoute>
-    ),
+    element: <UserView />,
   },
   {
     path: "*",
-    element: <Index />, // Catch-all route redirects to Index
+    element: <Dashboard />, // Changed from Index to Dashboard for catch-all
   }
 ]);
 

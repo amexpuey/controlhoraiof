@@ -1,14 +1,72 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Onboarding } from "@/components/Onboarding";
 import { DashboardApps } from "@/components/dashboard/DashboardApps";
 import { Building2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Dashboard = () => {
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [showApps, setShowApps] = useState(false);
   const [companySize, setCompanySize] = useState("");
+  const { toast } = useToast();
 
-  const handleFeatureSelect = (features: string[]) => {
+  // Check onboarding status on component mount
+  useEffect(() => {
+    const checkOnboardingStatus = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (session?.user) {
+        const { data: profile, error } = await supabase
+          .from('profiles')
+          .select('onboarding_status, selected_features, company_size')
+          .eq('id', session.user.id)
+          .single();
+
+        if (error) {
+          console.error('Error fetching profile:', error);
+          return;
+        }
+
+        if (profile) {
+          console.log('Profile data:', profile);
+          if (profile.onboarding_status === 'completed') {
+            setSelectedFeatures(profile.selected_features || []);
+            setCompanySize(profile.company_size || "");
+            setShowApps(true);
+          }
+        }
+      }
+    };
+
+    checkOnboardingStatus();
+  }, []);
+
+  const handleFeatureSelect = async (features: string[]) => {
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (session?.user) {
+      // Update profile with selected features and mark onboarding as completed
+      const { error } = await supabase
+        .from('profiles')
+        .update({
+          selected_features: features,
+          company_size: companySize,
+          onboarding_status: 'completed'
+        })
+        .eq('id', session.user.id);
+
+      if (error) {
+        console.error('Error updating profile:', error);
+        toast({
+          title: "Error",
+          description: "No se pudieron guardar tus preferencias",
+          variant: "destructive",
+        });
+        return;
+      }
+    }
+
     setSelectedFeatures(features);
     setShowApps(true);
   };
