@@ -1,7 +1,36 @@
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Award } from "lucide-react";
+import { 
+  Clock, 
+  Calendar, 
+  MapPin, 
+  Settings2, 
+  UserCircle2,
+  Brain,
+  Home,
+  User,
+  AlertCircle,
+  Clock4,
+  BarChart3,
+  Bell,
+  Fingerprint,
+  MessageSquare,
+  Clock3,
+  FileText,
+  FolderKanban,
+  Users,
+  UserCheck,
+  UserPlus,
+  Smartphone,
+  DollarSign,
+  Settings,
+  Headphones,
+  Rocket,
+  Award,
+  CheckCircle 
+} from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface FilterSectionProps {
   selectedFeatures: string[];
@@ -13,11 +42,33 @@ interface FilterSectionProps {
 }
 
 const features = [
-  "Control Horario",
-  "Gestión de Turnos",
-  "Gestión de Ausencias",
-  "Geolocalización",
-  "Portal del Empleado",
+  { id: "Control Horario", icon: Clock },
+  { id: "Gestión de Turnos", icon: Calendar },
+  { id: "Gestión de Ausencias", icon: Calendar },
+  { id: "Gestión de Vacaciones", icon: Calendar },
+  { id: "Geolocalización", icon: MapPin },
+  { id: "Automatizaciones", icon: Settings2 },
+  { id: "Control de presencia", icon: UserCircle2 },
+  { id: "Inteligencia Artificial", icon: Brain },
+  { id: "Teletrabajo", icon: Home },
+  { id: "Portal del Empleado", icon: User },
+  { id: "Incidencias de fichaje", icon: AlertCircle },
+  { id: "Bolsa de Horas", icon: Clock4 },
+  { id: "Informes de Horas Automatizados", icon: BarChart3 },
+  { id: "Alertas Recordatorio", icon: Bell },
+  { id: "Integración Biométrica/RFID/Facial", icon: Fingerprint },
+  { id: "Notificaciones inteligentes", icon: MessageSquare },
+  { id: "Gestión de Horas Extra", icon: Clock3 },
+  { id: "Gestión Documental", icon: FileText },
+  { id: "Gestión de Proyectos", icon: FolderKanban },
+  { id: "Gestión del Talento", icon: Users },
+  { id: "Evaluación y Desempeño", icon: UserCheck },
+  { id: "Selección del Personal", icon: UserPlus },
+  { id: "Apps Nativas", icon: Smartphone },
+  { id: "Nóminas", icon: DollarSign },
+  { id: "Opciones Personalizables", icon: Settings },
+  { id: "Soporte incluido", icon: Headphones },
+  { id: "Implementación sin fricciones", icon: Rocket }
 ];
 
 const types = ["free", "freemium", "premium"];
@@ -38,22 +89,22 @@ export function FilterSection({
         {/* Features Filter */}
         <div>
           <h3 className="text-sm font-medium mb-3">Características</h3>
-          <div className="flex flex-wrap gap-3">
-            {features.map((feature) => (
-              <Button
-                key={feature}
-                variant={selectedFeatures.includes(feature) ? "default" : "outline"}
-                size="sm"
-                onClick={() => onFeatureToggle(feature)}
-                className="h-8"
-              >
-                <CheckCircle className={`w-4 h-4 mr-2 ${
-                  selectedFeatures.includes(feature) ? "opacity-100" : "opacity-0"
-                }`} />
-                {feature}
-              </Button>
-            ))}
-          </div>
+          <ScrollArea className="h-[400px] pr-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {features.map(({ id, icon: Icon }) => (
+                <Button
+                  key={id}
+                  variant={selectedFeatures.includes(id) ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => onFeatureToggle(id)}
+                  className="h-auto py-2 px-3 justify-start"
+                >
+                  <Icon className="w-4 h-4 mr-2 shrink-0" />
+                  <span className="text-sm text-left">{id}</span>
+                </Button>
+              ))}
+            </div>
+          </ScrollArea>
         </div>
 
         {/* Type Filter */}
