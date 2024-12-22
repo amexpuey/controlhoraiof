@@ -10,19 +10,19 @@ interface AboutSectionProps {
 
 export function AboutSection({ company }: AboutSectionProps) {
   return (
-    <div className="bg-white rounded-lg shadow-lg p-8">
-      <h2 className="text-3xl font-bold mb-4">Acerca de {company.title}</h2>
-      <p className="text-gray-600 text-lg mb-8">{company.description}</p>
+    <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
+      <h2 className="text-2xl font-semibold mb-4 text-left">Acerca de {company.title}</h2>
+      <p className="text-gray-600 text-base mb-6 text-left">{company.description}</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <div className="bg-gray-50 rounded-lg p-6">
-          <h3 className="text-lg font-semibold mb-4">Valoraciones</h3>
-          <div className="flex flex-col items-center gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-gray-50 rounded-lg p-4">
+          <h3 className="text-sm font-medium mb-3 text-left">Valoraciones</h3>
+          <div className="flex flex-col items-start gap-2">
             <div className="flex">
               {[1, 2, 3, 4, 5].map((star) => (
                 <Star
                   key={star}
-                  className={`w-6 h-6 ${
+                  className={`w-4 h-4 ${
                     star <= Math.floor(company.rating || 4.5)
                       ? "text-yellow-400 fill-yellow-400"
                       : "text-gray-300"
@@ -31,43 +31,49 @@ export function AboutSection({ company }: AboutSectionProps) {
               ))}
             </div>
             <div className="flex items-center gap-2">
-              <ThumbsUp className="w-5 h-5 text-blue-600" />
-              <span className="text-xl font-bold">{company.votes || 0}</span>
+              <ThumbsUp className="w-4 h-4 text-blue-600" />
+              <span className="text-sm font-medium">{company.votes || 0} votos</span>
             </div>
           </div>
         </div>
 
-        <div className="bg-gray-50 rounded-lg p-6">
-          <h3 className="text-lg font-semibold mb-4">Periodo de Prueba</h3>
-          <div className="flex justify-center">
+        <div className="bg-gray-50 rounded-lg p-4">
+          <h3 className="text-sm font-medium mb-3 text-left">Periodo de Prueba</h3>
+          <div className="flex items-center">
             {company.title === 'INWOUT' || company.free_trial === 'yes' ? (
-              <Check className="w-12 h-12 text-green-500" />
+              <Check className="w-5 h-5 text-green-500" />
             ) : (
-              <X className="w-12 h-12 text-red-500" />
+              <X className="w-5 h-5 text-red-500" />
             )}
+            <span className="ml-2 text-sm">
+              {company.title === 'INWOUT' || company.free_trial === 'yes' ? 'Disponible' : 'No disponible'}
+            </span>
           </div>
         </div>
 
-        <div className="bg-gray-50 rounded-lg p-6">
-          <h3 className="text-lg font-semibold mb-4">Plan Gratuito</h3>
-          <div className="flex justify-center">
+        <div className="bg-gray-50 rounded-lg p-4">
+          <h3 className="text-sm font-medium mb-3 text-left">Plan Gratuito</h3>
+          <div className="flex items-center">
             {company.title === 'INWOUT' || company.free_plan === 'yes' ? (
-              <Check className="w-12 h-12 text-green-500" />
+              <Check className="w-5 h-5 text-green-500" />
             ) : (
-              <X className="w-12 h-12 text-red-500" />
+              <X className="w-5 h-5 text-red-500" />
             )}
+            <span className="ml-2 text-sm">
+              {company.title === 'INWOUT' || company.free_plan === 'yes' ? 'Disponible' : 'No disponible'}
+            </span>
           </div>
         </div>
 
-        <div className="bg-gray-50 rounded-lg p-6">
-          <h3 className="text-lg font-semibold mb-4">Disponible en</h3>
-          <div className="flex flex-wrap gap-3 justify-center">
+        <div className="bg-gray-50 rounded-lg p-4">
+          <h3 className="text-sm font-medium mb-3 text-left">Disponible en</h3>
+          <div className="flex flex-wrap gap-2">
             {(company.platforms || ['Web', 'iOS', 'Android']).map((platform) => (
               <span
                 key={platform}
-                className="text-blue-600 flex items-center gap-1 text-base"
+                className="text-blue-600 flex items-center gap-1 text-sm"
               >
-                <Monitor className="w-5 h-5" />
+                <Monitor className="w-4 h-4" />
                 {platform}
               </span>
             ))}

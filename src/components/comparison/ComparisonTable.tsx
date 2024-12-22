@@ -15,7 +15,7 @@ const StarRating = ({ rating }: { rating: number }) => {
         {[1, 2, 3, 4, 5].map((star) => (
           <Star
             key={star}
-            className={`w-5 h-5 ${
+            className={`w-4 h-4 ${
               star <= Math.floor(rating)
                 ? "text-yellow-400 fill-yellow-400"
                 : star <= rating
@@ -25,14 +25,14 @@ const StarRating = ({ rating }: { rating: number }) => {
           />
         ))}
       </div>
-      <span className="text-2xl font-bold text-gray-900">{rating}</span>
+      <span className="text-lg font-medium text-gray-900">{rating}</span>
     </div>
   );
 };
 
 const PlatformList = ({ platforms }: { platforms: string[] }) => {
   return (
-    <div className="flex flex-wrap gap-2 justify-center">
+    <div className="flex flex-wrap gap-2 justify-start">
       {platforms.map((platform) => (
         <span
           key={platform}
@@ -48,69 +48,78 @@ const PlatformList = ({ platforms }: { platforms: string[] }) => {
 
 export default function ComparisonTable({ apps }: ComparisonTableProps) {
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-x-auto">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-x-auto">
       <table className="w-full">
         <thead className="bg-gray-50">
           <tr>
-            <th className="py-4 px-6 text-left text-gray-600 font-medium">Características</th>
+            <th className="py-3 px-4 text-left text-sm font-medium text-gray-600">Características</th>
             {apps.map((app) => (
-              <th key={app.id} className="py-4 px-6">
-                <div className="flex flex-col items-center gap-2">
+              <th key={app.id} className="py-3 px-4">
+                <div className="flex flex-col items-start gap-2">
                   <img
                     src={app.logo_url}
                     alt={`${app.title} logo`}
-                    className="w-32 h-12 object-contain"
+                    className="w-24 h-8 object-contain"
                   />
-                  <span className="text-base font-medium text-gray-900">{app.title}</span>
+                  <span className="text-sm font-medium text-gray-900">{app.title}</span>
                 </div>
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200">
+        <tbody className="divide-y divide-gray-100">
           <tr>
-            <td className="py-4 px-6 font-medium text-gray-900">Valoraciones</td>
+            <td className="py-3 px-4 text-sm font-medium text-gray-900 text-left">Valoraciones</td>
             {apps.map((app) => (
-              <td key={app.id} className="py-4 px-6">
-                <div className="flex flex-col items-center gap-2">
+              <td key={app.id} className="py-3 px-4">
+                <div className="flex flex-col items-start gap-2">
                   <StarRating rating={app.rating || 4.5} />
-                  <VoteButton companyId={app.id} votes={app.votes} />
+                  <div className="flex items-center gap-1">
+                    <span className="text-sm text-gray-600">{app.votes || 0} votos</span>
+                    <VoteButton companyId={app.id} votes={app.votes} />
+                  </div>
                 </div>
               </td>
             ))}
           </tr>
           <tr>
-            <td className="py-4 px-6 font-medium text-gray-900">Periodo de Prueba</td>
+            <td className="py-3 px-4 text-sm font-medium text-gray-900 text-left">Periodo de Prueba</td>
             {apps.map((app) => (
-              <td key={app.id} className="py-4 px-6">
-                <div className="flex justify-center">
+              <td key={app.id} className="py-3 px-4">
+                <div className="flex items-center">
                   {app.title === 'INWOUT' || app.free_trial === 'yes' ? (
-                    <Check className="w-8 h-8 text-green-500" />
+                    <Check className="w-5 h-5 text-green-500" />
                   ) : (
-                    <X className="w-8 h-8 text-red-500" />
+                    <X className="w-5 h-5 text-red-500" />
                   )}
+                  <span className="ml-2 text-sm">
+                    {app.title === 'INWOUT' || app.free_trial === 'yes' ? 'Disponible' : 'No disponible'}
+                  </span>
                 </div>
               </td>
             ))}
           </tr>
           <tr>
-            <td className="py-4 px-6 font-medium text-gray-900">Plan Gratuito</td>
+            <td className="py-3 px-4 text-sm font-medium text-gray-900 text-left">Plan Gratuito</td>
             {apps.map((app) => (
-              <td key={app.id} className="py-4 px-6">
-                <div className="flex justify-center">
+              <td key={app.id} className="py-3 px-4">
+                <div className="flex items-center">
                   {app.title === 'INWOUT' || app.free_plan === 'yes' ? (
-                    <Check className="w-8 h-8 text-green-500" />
+                    <Check className="w-5 h-5 text-green-500" />
                   ) : (
-                    <X className="w-8 h-8 text-red-500" />
+                    <X className="w-5 h-5 text-red-500" />
                   )}
+                  <span className="ml-2 text-sm">
+                    {app.title === 'INWOUT' || app.free_plan === 'yes' ? 'Disponible' : 'No disponible'}
+                  </span>
                 </div>
               </td>
             ))}
           </tr>
           <tr>
-            <td className="py-4 px-6 font-medium text-gray-900">Disponible en</td>
+            <td className="py-3 px-4 text-sm font-medium text-gray-900 text-left">Disponible en</td>
             {apps.map((app) => (
-              <td key={app.id} className="py-4 px-6">
+              <td key={app.id} className="py-3 px-4">
                 <PlatformList platforms={app.platforms || ['Web', 'iOS', 'Android']} />
               </td>
             ))}
