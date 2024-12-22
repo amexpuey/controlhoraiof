@@ -23,7 +23,8 @@ const initialFormData: Omit<Company, 'id' | 'created_at' | 'updated_at'> = {
   pricing_starting_price: 0,
   pricing_billing_period: 'mensual',
   pricing_currency: 'EUR',
-  highlights: []
+  highlights: [],
+  pricing_description: null // Added this field
 };
 
 export default function AdminAppEdit() {
@@ -57,7 +58,8 @@ export default function AdminAppEdit() {
         pricing_starting_price: Number(company.pricing_starting_price) || 0,
         pricing_billing_period: company.pricing_billing_period || 'mensual',
         pricing_currency: company.pricing_currency || 'EUR',
-        highlights: company.highlights || []
+        highlights: company.highlights || [],
+        pricing_description: company.pricing_description // Added this field
       });
     }
   }, [company]);
