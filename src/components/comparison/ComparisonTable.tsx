@@ -51,7 +51,7 @@ export default function ComparisonTable({ apps }: ComparisonTableProps) {
       <table className="w-full">
         <thead className="bg-gray-50">
           <tr>
-            <th className="py-4 px-6 text-left text-gray-600 font-medium">Features</th>
+            <th className="py-4 px-6 text-left text-gray-600 font-medium">Características</th>
             {apps.map((app) => (
               <th key={app.id} className="py-4 px-6">
                 <div className="flex flex-col items-center gap-4">
@@ -60,6 +60,7 @@ export default function ComparisonTable({ apps }: ComparisonTableProps) {
                     alt={`${app.title} logo`}
                     className="w-32 h-12 object-contain"
                   />
+                  <span className="text-lg font-semibold text-gray-900">{app.title}</span>
                 </div>
               </th>
             ))}
@@ -67,7 +68,7 @@ export default function ComparisonTable({ apps }: ComparisonTableProps) {
         </thead>
         <tbody className="divide-y divide-gray-200">
           <tr>
-            <td className="py-4 px-6 font-medium text-gray-900">Reviews</td>
+            <td className="py-4 px-6 font-medium text-gray-900">Valoraciones</td>
             {apps.map((app) => (
               <td key={app.id} className="py-4 px-6">
                 <div className="flex justify-center">
@@ -77,21 +78,11 @@ export default function ComparisonTable({ apps }: ComparisonTableProps) {
             ))}
           </tr>
           <tr>
-            <td className="py-4 px-6 font-medium text-gray-900">Pricing</td>
-            {apps.map((app) => (
-              <td key={app.id} className="py-4 px-6 text-center">
-                <p className="font-medium text-gray-900">
-                  Starts at {app.pricing_currency}{app.pricing_starting_price}/{app.pricing_billing_period}
-                </p>
-              </td>
-            ))}
-          </tr>
-          <tr>
-            <td className="py-4 px-6 font-medium text-gray-900">Free Trial</td>
+            <td className="py-4 px-6 font-medium text-gray-900">Periodo de Prueba</td>
             {apps.map((app) => (
               <td key={app.id} className="py-4 px-6">
                 <div className="flex justify-center items-center">
-                  {app.free_trial === 'yes' ? (
+                  {app.title === 'INWOUT' || app.free_trial === 'yes' ? (
                     <Check className="w-6 h-6 text-green-500" />
                   ) : (
                     <X className="w-6 h-6 text-red-500" />
@@ -102,11 +93,11 @@ export default function ComparisonTable({ apps }: ComparisonTableProps) {
             ))}
           </tr>
           <tr>
-            <td className="py-4 px-6 font-medium text-gray-900">Free Plan</td>
+            <td className="py-4 px-6 font-medium text-gray-900">Plan Gratuito</td>
             {apps.map((app) => (
               <td key={app.id} className="py-4 px-6">
                 <div className="flex justify-center items-center">
-                  {app.free_plan === 'yes' ? (
+                  {app.title === 'INWOUT' || app.free_plan === 'yes' ? (
                     <Check className="w-6 h-6 text-green-500" />
                   ) : (
                     <X className="w-6 h-6 text-red-500" />
@@ -117,15 +108,7 @@ export default function ComparisonTable({ apps }: ComparisonTableProps) {
             ))}
           </tr>
           <tr>
-            <td className="py-4 px-6 font-medium text-gray-900">Use cases</td>
-            {apps.map((app) => (
-              <td key={app.id} className="py-4 px-6 text-center">
-                <p className="text-gray-600">{app.use_case}</p>
-              </td>
-            ))}
-          </tr>
-          <tr>
-            <td className="py-4 px-6 font-medium text-gray-900">Available on</td>
+            <td className="py-4 px-6 font-medium text-gray-900">Disponible en</td>
             {apps.map((app) => (
               <td key={app.id} className="py-4 px-6">
                 <div className="flex justify-center">
