@@ -38,6 +38,7 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
           return;
         }
 
+        console.log('Loaded companies:', data); // Added this console.log
         setApps(data);
       } catch (error) {
         console.error('Error loading apps:', error);
