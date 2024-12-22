@@ -21,6 +21,7 @@ export default function AppCard({ app, showCompare, isSelected, onCompareToggle 
   if (!app) return null;
 
   const handleCardClick = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
     navigate(`/admin/user-view/${app.id}`);
   };
