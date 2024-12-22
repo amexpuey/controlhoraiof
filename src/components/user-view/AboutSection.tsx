@@ -10,7 +10,7 @@ interface AboutSectionProps {
 export function AboutSection({ company }: AboutSectionProps) {
   return (
     <Card className="p-6">
-      <h2 className="text-2xl font-bold mb-4">About</h2>
+      <h2 className="text-2xl font-bold mb-4">Acerca de</h2>
       <p className="text-gray-600 leading-relaxed">{company.description}</p>
     </Card>
   );

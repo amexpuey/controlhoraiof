@@ -35,7 +35,7 @@ export function AppHeader({ company }: AppHeaderProps) {
               <div className="flex items-center gap-2">
                 {company.verified && (
                   <span className="bg-blue-500/80 backdrop-blur px-3 py-1 rounded-full text-sm font-medium">
-                    Verified
+                    Verificado
                   </span>
                 )}
                 <span className="bg-purple-500/80 backdrop-blur px-3 py-1 rounded-full text-sm font-medium capitalize">
@@ -54,7 +54,7 @@ export function AppHeader({ company }: AppHeaderProps) {
               className="text-white flex items-center gap-2 hover:bg-black/20 px-4 py-2 rounded-lg transition-colors cursor-pointer"
             >
               <ArrowLeft className="w-5 h-5" />
-              Back to Dashboard
+              Volver al Dashboard
             </BreadcrumbLink>
           </BreadcrumbItem>
         </BreadcrumbList>

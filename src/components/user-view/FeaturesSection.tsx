@@ -11,7 +11,7 @@ interface FeaturesSectionProps {
 export function FeaturesSection({ company }: FeaturesSectionProps) {
   return (
     <Card className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Key Features</h2>
+      <h2 className="text-2xl font-bold mb-4">Características Principales</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {company.features?.map((feature, index) => (
           <div key={index} className="flex items-start gap-3">
