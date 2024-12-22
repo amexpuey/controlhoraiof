@@ -22,7 +22,7 @@ export default function AppCard({ app, showCompare, isSelected, onCompareToggle 
 
   const handleCardClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    navigate(`/app/${app.id}`);
+    navigate(`/admin/user-view/${app.id}`);
   };
 
   const handleCompareClick = (e: React.MouseEvent) => {
@@ -70,11 +70,11 @@ export default function AppCard({ app, showCompare, isSelected, onCompareToggle 
               <span className={`text-sm font-medium px-2 py-1 rounded-full ${
                 app.type === "premium" 
                   ? "bg-purple-100 text-purple-700"
-                  : app.type === "freemium"
+                  : app.type === "free-premium"
                   ? "bg-blue-100 text-blue-700"
                   : "bg-green-100 text-green-700"
               }`}>
-                {app.type.charAt(0).toUpperCase() + app.type.slice(1)}
+                {app.type === "free-premium" ? "Free-Premium" : "Premium"}
               </span>
             </div>
           </div>
