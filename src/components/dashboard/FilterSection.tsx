@@ -31,8 +31,7 @@ import {
   Check,
   X,
   Globe,
-  Apple,
-  Android
+  Apple
 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -85,7 +84,7 @@ const features = [
 const platforms = [
   { id: "Web", icon: Globe },
   { id: "iOS", icon: Apple },
-  { id: "Android", icon: Android }
+  { id: "Android", icon: Smartphone }
 ];
 
 const availability = [

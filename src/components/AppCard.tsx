@@ -1,4 +1,4 @@
-import { ExternalLink, Award, CheckCircle, Check, X, Globe, Apple, Android } from "lucide-react";
+import { ExternalLink, Award, CheckCircle, Check, X, Globe, Apple, Smartphone } from "lucide-react";
 import VoteButton from "./VoteButton";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -38,7 +38,7 @@ export default function AppCard({ app, showCompare, isSelected, onCompareToggle 
       case 'ios':
         return <Apple className="w-4 h-4" />;
       case 'android':
-        return <Android className="w-4 h-4" />;
+        return <Smartphone className="w-4 h-4" />;
       default:
         return null;
     }
