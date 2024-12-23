@@ -27,7 +27,12 @@ import {
   Rocket,
   Award,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Check,
+  X,
+  Globe,
+  Apple,
+  Android
 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -41,6 +46,10 @@ interface FilterSectionProps {
   onTypeToggle: (type: string) => void;
   showTopRated: boolean;
   onTopRatedToggle: () => void;
+  selectedPlatforms?: string[];
+  onPlatformToggle?: (platform: string) => void;
+  selectedAvailability?: string[];
+  onAvailabilityToggle?: (option: string) => void;
 }
 
 const features = [
@@ -73,7 +82,16 @@ const features = [
   { id: "Implementación sin fricciones", icon: Rocket }
 ];
 
-const types = ["free-premium", "premium"];
+const platforms = [
+  { id: "Web", icon: Globe },
+  { id: "iOS", icon: Apple },
+  { id: "Android", icon: Android }
+];
+
+const availability = [
+  { id: "free_trial", label: "Periodo de prueba", icon: Check },
+  { id: "free_plan", label: "Plan gratuito", icon: Check }
+];
 
 export function FilterSection({
   selectedFeatures,
@@ -82,6 +100,10 @@ export function FilterSection({
   onTypeToggle,
   showTopRated,
   onTopRatedToggle,
+  selectedPlatforms = [],
+  onPlatformToggle = () => {},
+  selectedAvailability = [],
+  onAvailabilityToggle = () => {},
 }: FilterSectionProps) {
   const [showFeatures, setShowFeatures] = useState(false);
 
@@ -97,7 +119,9 @@ export function FilterSection({
             className="w-full flex justify-between items-center mb-3"
             onClick={() => setShowFeatures(!showFeatures)}
           >
-            <span className="text-sm font-medium">Características ({selectedFeatures.length} seleccionadas)</span>
+            <span className="text-sm font-medium">
+              Características ({selectedFeatures.length} seleccionadas)
+            </span>
             {showFeatures ? (
               <ChevronUp className="h-4 w-4" />
             ) : (
@@ -125,19 +149,39 @@ export function FilterSection({
           )}
         </div>
 
-        {/* Type Filter */}
+        {/* Platforms Filter */}
         <div>
-          <h3 className="text-sm font-medium mb-3">Tipo</h3>
+          <h3 className="text-sm font-medium mb-3">Disponible en</h3>
           <div className="flex flex-wrap gap-3">
-            {types.map((type) => (
+            {platforms.map(({ id, icon: Icon }) => (
               <Button
-                key={type}
-                variant={selectedTypes.includes(type) ? "default" : "outline"}
+                key={id}
+                variant={selectedPlatforms.includes(id) ? "default" : "outline"}
                 size="sm"
-                onClick={() => onTypeToggle(type)}
+                onClick={() => onPlatformToggle(id)}
                 className="h-8"
               >
-                {type === "free-premium" ? "Free-Premium" : "Premium"}
+                <Icon className="w-4 h-4 mr-2" />
+                {id}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        {/* Availability Filter */}
+        <div>
+          <h3 className="text-sm font-medium mb-3">Disponibilidad</h3>
+          <div className="flex flex-wrap gap-3">
+            {availability.map(({ id, label, icon: Icon }) => (
+              <Button
+                key={id}
+                variant={selectedAvailability.includes(id) ? "default" : "outline"}
+                size="sm"
+                onClick={() => onAvailabilityToggle(id)}
+                className="h-8"
+              >
+                <Icon className="w-4 h-4 mr-2" />
+                {label}
               </Button>
             ))}
           </div>

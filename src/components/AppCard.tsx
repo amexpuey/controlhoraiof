@@ -1,4 +1,4 @@
-import { ExternalLink, Award, CheckCircle } from "lucide-react";
+import { ExternalLink, Award, CheckCircle, Check, X, Globe, Apple, Android } from "lucide-react";
 import VoteButton from "./VoteButton";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -29,6 +29,19 @@ export default function AppCard({ app, showCompare, isSelected, onCompareToggle 
   const handleCompareClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     onCompareToggle?.();
+  };
+
+  const getPlatformIcon = (platform: string) => {
+    switch (platform.toLowerCase()) {
+      case 'web':
+        return <Globe className="w-4 h-4" />;
+      case 'ios':
+        return <Apple className="w-4 h-4" />;
+      case 'android':
+        return <Android className="w-4 h-4" />;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -68,15 +81,13 @@ export default function AppCard({ app, showCompare, isSelected, onCompareToggle 
             />
             <div>
               <h3 className="text-xl font-bold text-gray-900">{app.title}</h3>
-              <span className={`text-sm font-medium px-2 py-1 rounded-full ${
-                app.type === "premium" 
-                  ? "bg-purple-100 text-purple-700"
-                  : app.type === "free-premium"
-                  ? "bg-blue-100 text-blue-700"
-                  : "bg-green-100 text-green-700"
-              }`}>
-                {app.type === "free-premium" ? "Free-Premium" : "Premium"}
-              </span>
+              <div className="flex flex-wrap gap-2 mt-1">
+                {app.platforms?.map((platform) => (
+                  <span key={platform} className="text-gray-600">
+                    {getPlatformIcon(platform)}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
           
@@ -89,6 +100,21 @@ export default function AppCard({ app, showCompare, isSelected, onCompareToggle 
           >
             <ExternalLink className="w-5 h-5" />
           </a>
+        </div>
+
+        <div className="mt-4 flex flex-wrap gap-2">
+          {app.free_trial === 'yes' && (
+            <span className="flex items-center gap-1 text-sm text-green-600 bg-green-50 px-2 py-1 rounded-full">
+              <Check className="w-4 h-4" />
+              Periodo de prueba
+            </span>
+          )}
+          {app.free_plan === 'yes' && (
+            <span className="flex items-center gap-1 text-sm text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
+              <Check className="w-4 h-4" />
+              Plan gratuito
+            </span>
+          )}
         </div>
 
         <p className="mt-4 text-gray-600 line-clamp-2">{app.description}</p>
@@ -112,10 +138,15 @@ export default function AppCard({ app, showCompare, isSelected, onCompareToggle 
         <div className="mt-6 flex items-center justify-between border-t pt-4">
           <div className="flex items-center gap-4">
             <VoteButton companyId={app.id} votes={app.votes} />
-            <div className="text-gray-700 font-medium">
-              {app.pricing_starting_price === 0 
-                ? "Gratis"
-                : `Desde ${app.pricing_starting_price}€/${app.pricing_billing_period}`}
+            <div className="text-gray-700">
+              <div className="font-medium">
+                {app.pricing_starting_price === 0 
+                  ? "Gratis"
+                  : `Desde ${app.pricing_starting_price}€/${app.pricing_billing_period}`}
+              </div>
+              {app.use_case && (
+                <div className="text-sm text-gray-500">{app.use_case}</div>
+              )}
             </div>
           </div>
 

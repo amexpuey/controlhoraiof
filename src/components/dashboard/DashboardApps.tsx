@@ -28,6 +28,8 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>(userFeatures);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [showTopRated, setShowTopRated] = useState(false);
+  const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
+  const [selectedAvailability, setSelectedAvailability] = useState<string[]>([]);
 
   useEffect(() => {
     const loadApps = async () => {
@@ -46,7 +48,6 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
 
         console.log('Loaded companies:', data);
         
-        // Sort to always show INWOUT first
         const sortedData = data.sort((a, b) => {
           if (a.title === 'INWOUT') return -1;
           if (b.title === 'INWOUT') return 1;
@@ -89,8 +90,20 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
       );
     }
 
-    if (selectedTypes.length > 0) {
-      filtered = filtered.filter(app => selectedTypes.includes(app.type));
+    if (selectedPlatforms.length > 0) {
+      filtered = filtered.filter(app =>
+        selectedPlatforms.some(platform => app.platforms?.includes(platform))
+      );
+    }
+
+    if (selectedAvailability.length > 0) {
+      filtered = filtered.filter(app =>
+        selectedAvailability.every(option => {
+          if (option === 'free_trial') return app.free_trial === 'yes';
+          if (option === 'free_plan') return app.free_plan === 'yes';
+          return true;
+        })
+      );
     }
 
     if (showTopRated) {
@@ -103,32 +116,11 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
       return 0;
     });
 
-    if (filtered.length < 3) {
-      const remainingApps = apps
-        .filter(app => !filtered.includes(app))
-        .slice(0, 3 - filtered.length);
-      filtered = [...filtered, ...remainingApps];
-    }
-
     setFilteredApps(filtered);
-  }, [apps, selectedFeatures, selectedTypes, showTopRated, searchQuery]);
+  }, [apps, selectedFeatures, selectedTypes, showTopRated, searchQuery, selectedPlatforms, selectedAvailability]);
 
   const handleAppClick = (app: Company) => {
     navigate(`/mejores-apps-control-horario/${app.slug}`);
-  };
-
-  const renderAppGrid = (apps: Company[], start: number, end: number) => {
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {apps.slice(start, end).map((app) => (
-          <AppCard
-            key={app.id}
-            app={app}
-            onClick={() => handleAppClick(app)}
-          />
-        ))}
-      </div>
-    );
   };
 
   if (isLoading) {
@@ -167,10 +159,33 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
         }}
         showTopRated={showTopRated}
         onTopRatedToggle={() => setShowTopRated(prev => !prev)}
+        selectedPlatforms={selectedPlatforms}
+        onPlatformToggle={(platform) => {
+          setSelectedPlatforms(prev =>
+            prev.includes(platform)
+              ? prev.filter(p => p !== platform)
+              : [...prev, platform]
+          );
+        }}
+        selectedAvailability={selectedAvailability}
+        onAvailabilityToggle={(option) => {
+          setSelectedAvailability(prev =>
+            prev.includes(option)
+              ? prev.filter(o => o !== option)
+              : [...prev, option]
+          );
+        }}
       />
 
-      {/* First two rows of apps */}
-      {renderAppGrid(filteredApps, 0, 6)}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredApps.map((app) => (
+          <AppCard
+            key={app.id}
+            app={app}
+            onClick={() => handleAppClick(app)}
+          />
+        ))}
+      </div>
 
       {/* Comparison Table Section */}
       <div className="py-12 bg-gray-50 rounded-lg">
@@ -181,14 +196,6 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
           <ComparisonTable apps={filteredApps.slice(0, 6)} />
         </div>
       </div>
-
-      {/* Remaining apps */}
-      {filteredApps.length > 6 && (
-        <div className="mt-8">
-          <h3 className="text-xl font-semibold mb-6">Más Soluciones</h3>
-          {renderAppGrid(filteredApps, 6, filteredApps.length)}
-        </div>
-      )}
     </div>
   );
 }
