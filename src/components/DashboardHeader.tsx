@@ -10,14 +10,38 @@ interface DashboardHeaderProps {
 export default function DashboardHeader({ matchingFeaturesCount = 0, totalSelectedFeatures = 0 }: DashboardHeaderProps) {
   return (
     <div className="space-y-8">
-      {/* Header */}
+      {/* Top Header with Blog Link */}
       <div className="h-10 bg-white border-b flex items-center justify-between px-4">
         <h1 className="text-lg font-semibold text-primary-900">
           Control Horario Electrónico
         </h1>
+        <a 
+          href="https://controlhorarioelectronico.webflow.io" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-sm text-primary-600 hover:text-primary-800 transition-colors duration-200 flex items-center gap-1"
+        >
+          Visitar Blog
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-4 h-4"
+          >
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+            <polyline points="15 3 21 3 21 9" />
+            <line x1="10" y1="14" x2="21" y2="3" />
+          </svg>
+        </a>
       </div>
 
-      {/* Header Section */}
+      {/* Hero Section */}
       <div className="bg-primary-50 p-8 rounded-lg shadow-sm">
         <div className="container max-w-4xl mx-auto">
           {/* Logo and Title Row */}
