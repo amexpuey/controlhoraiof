@@ -1,5 +1,4 @@
 import { Clock } from "lucide-react";
-import { Button } from "./ui/button";
 import { Search } from "lucide-react";
 import { Input } from "./ui/input";
 
@@ -23,25 +22,9 @@ export default function DashboardHeader({
           href="https://controlhorarioelectronico.webflow.io" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="text-sm text-primary-600 hover:text-primary-900 transition-colors duration-200 flex items-center gap-1"
+          className="text-sm text-primary-600 hover:text-primary-900 transition-colors duration-200"
         >
           Visitar Blog
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="w-4 h-4"
-          >
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-            <polyline points="15 3 21 3 21 9" />
-            <line x1="10" y1="14" x2="21" y2="3" />
-          </svg>
         </a>
       </div>
 
@@ -54,23 +37,22 @@ export default function DashboardHeader({
             className="w-full h-full object-cover opacity-20"
           />
         </div>
-        <div className="relative container max-w-4xl mx-auto px-4 py-16">
-          <div className="flex flex-col items-center justify-center space-y-6">
-            <div className="flex items-center gap-4">
+        <div className="relative container max-w-4xl mx-auto px-4 py-20">
+          <div className="flex flex-col items-center justify-center space-y-8">
+            <div className="flex flex-col items-center gap-4">
               <div className="bg-primary-600 p-4 rounded-xl shadow-lg">
                 <Clock className="w-8 h-8 text-white" />
               </div>
               <h1 className="text-3xl md:text-4xl font-bold text-white text-center">
                 Directorio para el Control Horario
               </h1>
+              <p className="text-xl text-blue-100 text-center max-w-2xl">
+                Encuentra la mejor solución de control horario para tu empresa
+              </p>
             </div>
-            
-            <p className="text-xl text-blue-100 text-center max-w-2xl">
-              Encuentra la mejor solución de control horario para tu empresa
-            </p>
 
             {/* Search Bar */}
-            <div className="w-full max-w-2xl mt-8">
+            <div className="w-full max-w-2xl">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                 <Input
