@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import type { Database } from "@/integrations/supabase/types";
-import { FilterSection } from "./FilterSection";
+import { useState, useEffect } from "react";
+import { Database } from "@/integrations/supabase/types";
+import { Button } from "@/components/ui/button";
+import FilterSection from "./FilterSection";
 import { useNavigate } from "react-router-dom";
 import ComparisonTable from "@/components/comparison/ComparisonTable";
 import AppsGrid from "@/components/AppsGrid";
-import DashboardHeader from "@/components/DashboardHeader";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
@@ -19,63 +17,54 @@ interface AppWithMatches extends Company {
 }
 
 interface DashboardAppsProps {
-  userFeatures: string[];
-  companySize?: string;
+  apps: AppWithMatches[];
+  selectedFeatures: string[];
+  onFeatureToggle: (feature: string) => void;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  loading?: boolean;
 }
 
-export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps) {
-  const [apps, setApps] = useState<Company[]>([]);
-  const [filteredApps, setFilteredApps] = useState<AppWithMatches[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
-  const { toast } = useToast();
+export default function DashboardApps({
+  apps,
+  selectedFeatures,
+  onFeatureToggle,
+  searchQuery,
+  setSearchQuery,
+  loading = false
+}: DashboardAppsProps) {
   const navigate = useNavigate();
+  const [selectedApps, setSelectedApps] = useState<AppWithMatches[]>([]);
+  const [showComparison, setShowComparison] = useState(false);
+  const [filteredApps, setFilteredApps] = useState<AppWithMatches[]>([]);
 
-  // Filter states
-  const [selectedFeatures, setSelectedFeatures] = useState<string[]>(userFeatures);
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  const [showTopRated, setShowTopRated] = useState(false);
-  const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
-  const [selectedAvailability, setSelectedAvailability] = useState<string[]>([]);
+  const handleCompareToggle = (appId: string) => {
+    setSelectedApps(prevApps => {
+      const app = apps.find(a => a.id === appId);
+      if (!app) return prevApps;
 
-  useEffect(() => {
-    const loadApps = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('companies')
-          .select('*')
-          .order('created_at', { ascending: false });
-
-        if (error) throw error;
-
-        if (!data || data.length === 0) {
-          setApps([]);
-          return;
+      const isCurrentlySelected = prevApps.some(a => a.id === appId);
+      if (isCurrentlySelected) {
+        return prevApps.filter(a => a.id !== appId);
+      } else {
+        if (prevApps.length >= 3) {
+          return prevApps;
         }
-
-        console.log('Loaded companies:', data);
-        
-        const sortedData = data.sort((a, b) => {
-          if (a.title === 'INWOUT') return -1;
-          if (b.title === 'INWOUT') return 1;
-          return 0;
-        });
-        
-        setApps(sortedData);
-      } catch (error) {
-        console.error('Error loading apps:', error);
-        toast({
-          title: "Error",
-          description: "No se pudieron cargar las aplicaciones",
-          variant: "destructive",
-        });
-      } finally {
-        setIsLoading(false);
+        return [...prevApps, app];
       }
-    };
+    });
+  };
 
-    loadApps();
-  }, [toast]);
+  const handleCompareClick = () => {
+    if (selectedApps.length < 2) {
+      return;
+    }
+    setShowComparison(true);
+  };
+
+  const handleCloseComparison = () => {
+    setShowComparison(false);
+  };
 
   useEffect(() => {
     let filtered = [...apps];
@@ -110,102 +99,57 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
       );
     }
 
-    if (selectedPlatforms.length > 0) {
-      filtered = filtered.filter(app =>
-        selectedPlatforms.some(platform => app.platforms?.includes(platform))
-      );
-    }
-
-    if (selectedAvailability.length > 0) {
-      filtered = filtered.filter(app =>
-        selectedAvailability.every(option => {
-          if (option === 'free_trial') return app.free_trial === 'yes';
-          if (option === 'free_plan') return app.free_plan === 'yes';
-          return true;
-        })
-      );
-    }
-
-    if (showTopRated) {
-      filtered = filtered.filter(app => app.is_top_rated);
-    }
-
-    // Sort by matching features count and ensure INWOUT is first
+    // Sort by matching features count
     filtered.sort((a, b) => {
+      // Always show INWOUT first
       if (a.title === 'INWOUT') return -1;
       if (b.title === 'INWOUT') return 1;
-      return (b.matchingFeaturesCount || 0) - (a.matchingFeaturesCount || 0);
+
+      // Then sort by matching features count
+      const countA = a.matchingFeaturesCount || 0;
+      const countB = b.matchingFeaturesCount || 0;
+      return countB - countA;
     });
 
     setFilteredApps(filtered);
-  }, [apps, selectedFeatures, selectedTypes, showTopRated, searchQuery, selectedPlatforms, selectedAvailability]);
+  }, [apps, selectedFeatures, searchQuery]);
 
-  const handleAppClick = (app: Company) => {
-    navigate(`/mejores-apps-control-horario/${app.slug}`);
-  };
-
-  if (isLoading) {
-    return <div>Cargando aplicaciones...</div>;
+  if (showComparison) {
+    return (
+      <ComparisonTable
+        apps={selectedApps}
+        onClose={handleCloseComparison}
+      />
+    );
   }
 
   return (
     <div className="space-y-8">
-      <DashboardHeader 
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-      />
-      
       <FilterSection
         selectedFeatures={selectedFeatures}
         onFeatureToggle={(feature) => {
-          setSelectedFeatures(prev =>
-            prev.includes(feature)
-              ? prev.filter(f => f !== feature)
-              : [...prev, feature]
-          );
-        }}
-        selectedTypes={selectedTypes}
-        onTypeToggle={(type) => {
-          setSelectedTypes(prev =>
-            prev.includes(type)
-              ? prev.filter(t => t !== type)
-              : [...prev, type]
-          );
-        }}
-        showTopRated={showTopRated}
-        onTopRatedToggle={() => setShowTopRated(prev => !prev)}
-        selectedPlatforms={selectedPlatforms}
-        onPlatformToggle={(platform) => {
-          setSelectedPlatforms(prev =>
-            prev.includes(platform)
-              ? prev.filter(p => p !== platform)
-              : [...prev, platform]
-          );
-        }}
-        selectedAvailability={selectedAvailability}
-        onAvailabilityToggle={(option) => {
-          setSelectedAvailability(prev =>
-            prev.includes(option)
-              ? prev.filter(o => o !== option)
-              : [...prev, option]
-          );
+          onFeatureToggle(feature);
         }}
       />
+
+      {selectedApps.length > 0 && (
+        <div className="flex justify-end">
+          <Button
+            onClick={handleCompareClick}
+            disabled={selectedApps.length < 2}
+            className="bg-primary-600 hover:bg-primary-700"
+          >
+            Comparar ({selectedApps.length}/3)
+          </Button>
+        </div>
+      )}
 
       <AppsGrid
         apps={filteredApps}
-        onAppClick={handleAppClick}
-        highlightedFeatures={selectedFeatures}
+        selectedApps={selectedApps}
+        onCompareToggle={handleCompareToggle}
+        loading={loading}
       />
-
-      <div className="py-12 bg-gray-50 rounded-lg">
-        <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold text-center mb-8">
-            Comparación Detallada de Soluciones
-          </h2>
-          <ComparisonTable apps={filteredApps} />
-        </div>
-      </div>
     </div>
   );
 }
