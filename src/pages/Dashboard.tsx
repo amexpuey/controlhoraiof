@@ -4,6 +4,7 @@ import DashboardApps from "@/components/dashboard/DashboardApps";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import DashboardHeader from "@/components/DashboardHeader";
+import { Footer } from "@/components/Footer";
 
 const Dashboard = () => {
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
@@ -98,6 +99,8 @@ const Dashboard = () => {
           />
         )}
       </main>
+      
+      <Footer />
     </div>
   );
 };
