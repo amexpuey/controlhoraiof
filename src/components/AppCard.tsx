@@ -58,7 +58,6 @@ export default function AppCard({
       <div className="p-6">
         <AppCardTitle
           title={app.title}
-          logoUrl={app.logo_url}
           platforms={app.platforms}
           url={app.url}
         />

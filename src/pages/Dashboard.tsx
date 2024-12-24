@@ -46,7 +46,6 @@ const Dashboard = () => {
   const handleFeatureSelect = async (features: string[]) => {
     setSelectedFeatures(features);
     setShowApps(true);
-    // Store in localStorage to persist the selection
     localStorage.setItem('selectedFeatures', JSON.stringify(features));
     localStorage.setItem('companySize', companySize);
     localStorage.setItem('showApps', 'true');
@@ -56,7 +55,6 @@ const Dashboard = () => {
     setCompanySize(size);
   };
 
-  // Load state from localStorage on back navigation
   useEffect(() => {
     const savedFeatures = localStorage.getItem('selectedFeatures');
     const savedSize = localStorage.getItem('companySize');
@@ -76,13 +74,10 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
       <DashboardHeader 
-        matchingFeaturesCount={selectedFeatures.length} 
-        totalSelectedFeatures={selectedFeatures.length}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
       />
 
-      {/* Main Content */}
       <main className="container mx-auto px-4">
         {!showApps ? (
           <Onboarding

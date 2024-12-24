@@ -32,24 +32,32 @@ export function AppCardFeatures({ features, highlightedFeatures }: AppCardFeatur
   };
 
   const getDisplayFeatures = () => {
-    const highlightedCount = features.filter(f => highlightedFeatures.includes(f)).length;
-    const remainingSlots = 5 - highlightedCount;
+    // First, get all highlighted features that exist in the app's features
+    const highlightedMatches = features.filter(f => highlightedFeatures.includes(f));
     
-    const highlighted = features.filter(f => highlightedFeatures.includes(f));
+    // Then, get non-highlighted features
     const nonHighlighted = features.filter(f => !highlightedFeatures.includes(f));
     
+    // Calculate how many non-highlighted features we can show
+    const remainingSlots = Math.max(0, 5 - highlightedMatches.length);
+    
+    // Combine highlighted features with remaining non-highlighted features
     return [
-      ...highlighted,
+      ...highlightedMatches,
       ...nonHighlighted.slice(0, remainingSlots)
     ];
   };
 
+  const displayFeatures = getDisplayFeatures();
+  const totalFeatures = features.length;
+  const hiddenFeaturesCount = Math.max(0, totalFeatures - 5);
+
   return (
     <div className="mt-4 flex flex-wrap gap-2">
-      {getDisplayFeatures().map((feature, index) => renderFeature(feature, index))}
-      {features.length > 5 && (
+      {displayFeatures.map((feature, index) => renderFeature(feature, index))}
+      {hiddenFeaturesCount > 0 && (
         <span className="text-gray-500 text-sm">
-          +{features.length - 5} más
+          +{hiddenFeaturesCount} más
         </span>
       )}
     </div>
