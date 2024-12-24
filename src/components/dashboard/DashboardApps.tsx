@@ -3,8 +3,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import type { Database } from "@/integrations/supabase/types";
 import { FilterSection } from "./FilterSection";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import ComparisonTable from "@/components/comparison/ComparisonTable";
 import AppsGrid from "@/components/AppsGrid";
@@ -129,17 +127,6 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
 
   return (
     <div className="space-y-8">
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-        <Input
-          type="text"
-          placeholder="Buscar por nombre, características, descripción..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-10 w-full"
-        />
-      </div>
-
       <FilterSection
         selectedFeatures={selectedFeatures}
         onFeatureToggle={(feature) => {

@@ -1,19 +1,14 @@
 import { Clock } from "lucide-react";
-import FeatureMatchCount from "./FeatureMatchCount";
 import { Button } from "./ui/button";
 import { Search } from "lucide-react";
 import { Input } from "./ui/input";
 
 interface DashboardHeaderProps {
-  matchingFeaturesCount?: number;
-  totalSelectedFeatures?: number;
   searchQuery?: string;
   onSearchChange?: (value: string) => void;
 }
 
 export default function DashboardHeader({ 
-  matchingFeaturesCount = 0, 
-  totalSelectedFeatures = 0,
   searchQuery = "",
   onSearchChange
 }: DashboardHeaderProps) {
@@ -89,14 +84,6 @@ export default function DashboardHeader({
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Feature Match Count */}
-      <div className="container max-w-4xl mx-auto text-center py-8">
-        <FeatureMatchCount 
-          matchingFeaturesCount={matchingFeaturesCount}
-          totalSelectedFeatures={totalSelectedFeatures}
-        />
       </div>
     </div>
   );

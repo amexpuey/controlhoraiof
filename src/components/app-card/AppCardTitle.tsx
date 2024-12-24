@@ -1,55 +1,31 @@
-import { ExternalLink, Globe, Apple, Smartphone } from "lucide-react";
-
 interface AppCardTitleProps {
   title: string;
-  logoUrl: string;
   platforms?: string[];
-  url: string;
+  url?: string;
 }
 
-export function AppCardTitle({ title, logoUrl, platforms, url }: AppCardTitleProps) {
-  const getPlatformIcon = (platform: string) => {
-    switch (platform.toLowerCase()) {
-      case 'web':
-        return <Globe className="w-4 h-4" />;
-      case 'ios':
-        return <Apple className="w-4 h-4" />;
-      case 'android':
-        return <Smartphone className="w-4 h-4" />;
-      default:
-        return null;
-    }
-  };
-
+export function AppCardTitle({ 
+  title,
+  platforms,
+  url
+}: AppCardTitleProps) {
   return (
-    <div className="flex items-start justify-between">
-      <div className="flex items-center gap-3">
-        <img
-          src={logoUrl}
-          alt={`${title} logo`}
-          className="w-12 h-12 rounded-full object-cover"
-        />
-        <div>
-          <h3 className="text-xl font-bold text-gray-900">{title}</h3>
-          <div className="flex flex-wrap gap-2 mt-1">
-            {platforms?.map((platform) => (
-              <span key={platform} className="text-gray-600">
-                {getPlatformIcon(platform)}
-              </span>
-            ))}
-          </div>
+    <div className="flex flex-col gap-2">
+      <h3 className="text-lg font-semibold text-gray-900">
+        {title}
+      </h3>
+      {platforms && platforms.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {platforms.map((platform, index) => (
+            <span
+              key={index}
+              className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full"
+            >
+              {platform}
+            </span>
+          ))}
         </div>
-      </div>
-      
-      <a
-        href={url}
-        onClick={(e) => e.stopPropagation()}
-        className="text-blue-600 hover:text-blue-800"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <ExternalLink className="w-5 h-5" />
-      </a>
+      )}
     </div>
   );
 }
