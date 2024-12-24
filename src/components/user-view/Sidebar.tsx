@@ -22,7 +22,7 @@ export function Sidebar({ company }: SidebarProps) {
     const period = company.pricing_billing_period === 'mensual' ? '/mes' : `/${company.pricing_billing_period}`;
     const billingNote = company.pricing_billed_annually ? " (facturado anualmente)" : "";
     
-    return `${price}€${perUser}${period}${billingNote}`;
+    return `desde ${price}€${perUser}${period}${billingNote}`;
   };
 
   return (

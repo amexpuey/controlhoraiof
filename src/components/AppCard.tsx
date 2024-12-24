@@ -36,8 +36,9 @@ export default function AppCard({
     const perUser = app.pricing_per_user ? "/usuario" : "";
     const period = app.pricing_billing_period === 'mensual' ? '/mes' : `/${app.pricing_billing_period}`;
     const billingNote = app.pricing_billed_annually ? " (facturado anualmente)" : "";
+    const prefix = app.pricing_starting_price === 0 ? "" : "desde ";
     
-    return `${price}${perUser}${period}${billingNote}`;
+    return `${prefix}${price}${perUser}${period}${billingNote}`;
   };
 
   return (
