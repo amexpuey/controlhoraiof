@@ -30,13 +30,13 @@ export function AppCardHeader({ imgUrl, logoUrl, title, verified, isTopRated }: 
           </span>
         )}
       </div>
-      <div className="absolute -bottom-8 left-6 flex flex-col items-center">
+      <div className="absolute -bottom-12 left-6 flex flex-col items-center">
         <img
           src={logoUrl}
           alt={`${title} logo`}
-          className="w-16 h-16 rounded-full object-cover"
+          className="w-16 h-16 rounded-full object-cover p-1"
         />
-        <span className="text-sm font-medium text-gray-900 mt-2">{title}</span>
+        <span className="text-sm font-medium text-gray-900 mt-3">{title}</span>
       </div>
     </div>
   );
