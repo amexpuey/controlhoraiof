@@ -1,7 +1,6 @@
 import { Check } from "lucide-react";
 import VoteButton from "./VoteButton";
 import { Card } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import type { Database } from "@/integrations/supabase/types";
 import { useNavigate } from "react-router-dom";
 import { AppCardHeader } from "./app-card/AppCardHeader";
@@ -13,17 +12,11 @@ type Company = Database["public"]["Tables"]["companies"]["Row"];
 interface AppCardProps {
   app: Company;
   onClick?: () => void;
-  showCompare?: boolean;
-  isSelected?: boolean;
-  onCompareToggle?: () => void;
   highlightedFeatures?: string[];
 }
 
 export default function AppCard({ 
   app, 
-  showCompare, 
-  isSelected, 
-  onCompareToggle,
   highlightedFeatures = []
 }: AppCardProps) {
   const navigate = useNavigate();
@@ -34,11 +27,6 @@ export default function AppCard({
     e.preventDefault();
     e.stopPropagation();
     navigate(`/mejores-apps-control-horario/${app.slug}`);
-  };
-
-  const handleCompareClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    onCompareToggle?.();
   };
 
   const displayDescription = app.use_case || "En revisión";
@@ -106,25 +94,6 @@ export default function AppCard({
               )}
             </div>
           </div>
-
-          {showCompare && (
-            <div 
-              className="flex items-center gap-2"
-              onClick={handleCompareClick}
-            >
-              <Checkbox
-                checked={isSelected}
-                id={`compare-${app.id}`}
-                className="border-blue-500"
-              />
-              <label
-                htmlFor={`compare-${app.id}`}
-                className="text-sm font-medium text-blue-700 cursor-pointer"
-              >
-                Comparar
-              </label>
-            </div>
-          )}
         </div>
       </div>
     </Card>

@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { Database } from "@/integrations/supabase/types";
-import { Button } from "@/components/ui/button";
 import { FilterSection } from "./FilterSection";
 import { useNavigate } from "react-router-dom";
-import ComparisonTable from "@/components/comparison/ComparisonTable";
 import AppsGrid from "@/components/AppsGrid";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -14,7 +12,6 @@ interface AppWithMatches extends Company {
   totalSelectedFeatures?: number;
   score?: number;
   hasMatches?: boolean;
-  isSelected?: boolean;
 }
 
 interface DashboardAppsProps {
@@ -33,8 +30,6 @@ export default function DashboardApps({
   loading = false
 }: DashboardAppsProps) {
   const navigate = useNavigate();
-  const [selectedApps, setSelectedApps] = useState<AppWithMatches[]>([]);
-  const [showComparison, setShowComparison] = useState(false);
   const [filteredApps, setFilteredApps] = useState<AppWithMatches[]>([]);
   const [apps, setApps] = useState<AppWithMatches[]>([]);
 
@@ -56,34 +51,6 @@ export default function DashboardApps({
     fetchApps();
   }, []);
 
-  const handleCompareToggle = (appId: string) => {
-    setSelectedApps(prevApps => {
-      const app = apps.find(a => a.id === appId);
-      if (!app) return prevApps;
-
-      const isCurrentlySelected = prevApps.some(a => a.id === appId);
-      if (isCurrentlySelected) {
-        return prevApps.filter(a => a.id !== appId);
-      } else {
-        if (prevApps.length >= 3) {
-          return prevApps;
-        }
-        return [...prevApps, app];
-      }
-    });
-  };
-
-  const handleCompareClick = () => {
-    if (selectedApps.length < 2) {
-      return;
-    }
-    setShowComparison(true);
-  };
-
-  const handleCloseComparison = () => {
-    setShowComparison(false);
-  };
-
   useEffect(() => {
     if (!apps) return;
     
@@ -95,8 +62,7 @@ export default function DashboardApps({
       matchingFeaturesCount: selectedFeatures.filter(feature => 
         app.features?.includes(feature)
       ).length,
-      totalSelectedFeatures: selectedFeatures.length,
-      isSelected: selectedApps.some(selectedApp => selectedApp.id === app.id)
+      totalSelectedFeatures: selectedFeatures.length
     }));
 
     filtered = appsWithMatchingCount;
@@ -133,16 +99,7 @@ export default function DashboardApps({
     });
 
     setFilteredApps(filtered);
-  }, [apps, selectedFeatures, searchQuery, selectedApps]);
-
-  if (showComparison) {
-    return (
-      <div className="space-y-8">
-        <ComparisonTable apps={selectedApps} onClose={handleCloseComparison} />
-        <Button onClick={handleCloseComparison}>Volver a la lista</Button>
-      </div>
-    );
-  }
+  }, [apps, selectedFeatures, searchQuery]);
 
   return (
     <div className="space-y-8">
@@ -155,23 +112,9 @@ export default function DashboardApps({
         onTopRatedToggle={() => {}}
       />
 
-      {selectedApps.length > 0 && (
-        <div className="flex justify-end">
-          <Button
-            onClick={handleCompareClick}
-            disabled={selectedApps.length < 2}
-            className="bg-primary-600 hover:bg-primary-700"
-          >
-            Comparar ({selectedApps.length}/3)
-          </Button>
-        </div>
-      )}
-
       <AppsGrid
         apps={filteredApps}
         onAppClick={(app) => navigate(`/mejores-apps-control-horario/${app.slug}`)}
-        onCompareToggle={handleCompareToggle}
-        showCompare={true}
         highlightedFeatures={selectedFeatures}
       />
     </div>
