@@ -22,7 +22,9 @@ const router = createBrowserRouter([
     path: "*",
     element: <Dashboard />,
   }
-]);
+], {
+  basename: import.meta.env.BASE_URL || '/',
+});
 
 function App() {
   return (

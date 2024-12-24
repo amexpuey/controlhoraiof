@@ -16,33 +16,37 @@ const Dashboard = () => {
 
   useEffect(() => {
     const checkOnboardingStatus = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (session?.user) {
-        const { data: profile, error } = await supabase
-          .from('profiles')
-          .select('onboarding_status, selected_features, company_size')
-          .eq('id', session.user.id)
-          .single();
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (session?.user) {
+          const { data: profile, error } = await supabase
+            .from('profiles')
+            .select('onboarding_status, selected_features, company_size')
+            .eq('id', session.user.id)
+            .single();
 
-        if (error) {
-          console.error('Error fetching profile:', error);
-          toast({
-            title: "Error",
-            description: "No se pudo cargar tu perfil.",
-            variant: "destructive",
-          });
-          return;
-        }
+          if (error) {
+            console.error('Error fetching profile:', error);
+            toast({
+              title: "Error",
+              description: "No se pudo cargar tu perfil.",
+              variant: "destructive",
+            });
+            return;
+          }
 
-        if (profile) {
-          console.log('Profile data:', profile);
-          if (profile.onboarding_status === 'completed') {
-            setSelectedFeatures(profile.selected_features || []);
-            setCompanySize(profile.company_size || "");
-            setShowApps(true);
+          if (profile) {
+            console.log('Profile data:', profile);
+            if (profile.onboarding_status === 'completed') {
+              setSelectedFeatures(profile.selected_features || []);
+              setCompanySize(profile.company_size || "");
+              setShowApps(true);
+            }
           }
         }
+      } catch (error) {
+        console.error('Error in checkOnboardingStatus:', error);
       }
     };
 
@@ -50,31 +54,35 @@ const Dashboard = () => {
   }, [toast]);
 
   const handleFeatureSelect = async (features: string[]) => {
-    const { data: { session } } = await supabase.auth.getSession();
-    
-    if (session?.user) {
-      const { error } = await supabase
-        .from('profiles')
-        .update({
-          selected_features: features,
-          company_size: companySize,
-          onboarding_status: 'completed'
-        })
-        .eq('id', session.user.id);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (session?.user) {
+        const { error } = await supabase
+          .from('profiles')
+          .update({
+            selected_features: features,
+            company_size: companySize,
+            onboarding_status: 'completed'
+          })
+          .eq('id', session.user.id);
 
-      if (error) {
-        console.error('Error updating profile:', error);
-        toast({
-          title: "Error",
-          description: "No se pudieron guardar tus preferencias.",
-          variant: "destructive",
-        });
-        return;
+        if (error) {
+          console.error('Error updating profile:', error);
+          toast({
+            title: "Error",
+            description: "No se pudieron guardar tus preferencias.",
+            variant: "destructive",
+          });
+          return;
+        }
+
+        setSelectedFeatures(features);
+        setShowApps(true);
       }
+    } catch (error) {
+      console.error('Error in handleFeatureSelect:', error);
     }
-
-    setSelectedFeatures(features);
-    setShowApps(true);
   };
 
   const handleSizeSelect = (size: string) => {
