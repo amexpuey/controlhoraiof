@@ -71,19 +71,27 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
   useEffect(() => {
     let filtered = [...apps];
 
+    // Calculate matching features count for each app
+    const appsWithMatchingCount = filtered.map(app => {
+      const matchingFeaturesCount = selectedFeatures.filter(feature => 
+        app.features?.includes(feature)
+      ).length;
+      return { ...app, matchingFeaturesCount };
+    });
+
+    // Apply filters
     if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(app => 
-        app.title?.toLowerCase().includes(query) ||
-        app.description?.toLowerCase().includes(query) ||
-        app.features?.some(feature => feature.toLowerCase().includes(query)) ||
-        app.type?.toLowerCase().includes(query) ||
-        app.highlights?.some(highlight => highlight.toLowerCase().includes(query))
+      filtered = appsWithMatchingCount.filter(app => 
+        app.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        app.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        app.features?.some(feature => feature.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        app.type?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        app.highlights?.some(highlight => highlight.toLowerCase().includes(searchQuery.toLowerCase()))
       );
     }
 
     if (selectedFeatures.length > 0) {
-      filtered = filtered.filter(app => 
+      filtered = appsWithMatchingCount.filter(app => 
         selectedFeatures.some(feature => app.features?.includes(feature))
       );
     }
@@ -108,11 +116,20 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
       filtered = filtered.filter(app => app.is_top_rated);
     }
 
+    // Sort by matching features count and ensure INWOUT is first
     filtered.sort((a, b) => {
       if (a.title === 'INWOUT') return -1;
       if (b.title === 'INWOUT') return 1;
-      return 0;
+      return (b.matchingFeaturesCount || 0) - (a.matchingFeaturesCount || 0);
     });
+
+    // If we have less than 6 apps after filtering, add more from the original list
+    if (filtered.length < 6) {
+      const remainingApps = apps
+        .filter(app => !filtered.find(f => f.id === app.id))
+        .slice(0, 6 - filtered.length);
+      filtered = [...filtered, ...remainingApps];
+    }
 
     setFilteredApps(filtered);
   }, [apps, selectedFeatures, selectedTypes, showTopRated, searchQuery, selectedPlatforms, selectedAvailability]);
@@ -170,7 +187,6 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
         highlightedFeatures={selectedFeatures}
       />
 
-      {/* Comparison Table Section */}
       <div className="py-12 bg-gray-50 rounded-lg">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold text-center mb-8">
