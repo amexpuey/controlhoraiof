@@ -5,6 +5,7 @@ import ComparisonPage from "@/pages/ComparisonPage";
 import UserView from "@/pages/UserView";
 import { Toaster } from "@/components/ui/toaster";
 
+// Move router configuration outside component to prevent recreation
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
   {
     path: "*",
     element: <Dashboard />,
-  }
+  },
 ]);
 
 function App() {
