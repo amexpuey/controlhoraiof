@@ -2,6 +2,7 @@ import { useState } from "react";
 import AppCard from "../AppCard";
 import { FilterSection } from "./FilterSection";
 import type { Database } from "@/integrations/supabase/types";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
@@ -16,9 +17,10 @@ interface AppWithMatches extends Company {
 interface DashboardAppsProps {
   apps: Company[];
   selectedFeatures: string[];
+  isLoading?: boolean;
 }
 
-export default function DashboardApps({ apps, selectedFeatures }: DashboardAppsProps) {
+export default function DashboardApps({ apps, selectedFeatures, isLoading = false }: DashboardAppsProps) {
   const [filteredApps, setFilteredApps] = useState<AppWithMatches[]>([]);
   const [showTopRated, setShowTopRated] = useState(false);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
@@ -55,6 +57,27 @@ export default function DashboardApps({ apps, selectedFeatures }: DashboardAppsP
       prev.includes(option) ? prev.filter(o => o !== option) : [...prev, option]
     );
   };
+
+  if (isLoading) {
+    return (
+      <div>
+        <div className="space-y-4 mb-8">
+          <Skeleton className="h-12 w-full" />
+          <Skeleton className="h-12 w-3/4" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[1, 2, 3, 4, 5, 6].map((index) => (
+            <div key={index} className="space-y-4 p-6 border rounded-lg">
+              <Skeleton className="h-40 w-full" />
+              <Skeleton className="h-6 w-3/4" />
+              <Skeleton className="h-4 w-1/2" />
+              <Skeleton className="h-4 w-2/3" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>

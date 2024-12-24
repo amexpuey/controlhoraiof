@@ -72,10 +72,6 @@ const Dashboard = () => {
     }
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
       <DashboardHeader 
@@ -93,6 +89,7 @@ const Dashboard = () => {
           <DashboardApps 
             apps={allApps}
             selectedFeatures={selectedFeatures}
+            isLoading={loading}
           />
         )}
       </main>
