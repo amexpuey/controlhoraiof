@@ -10,20 +10,32 @@ interface SidebarProps {
 }
 
 export function Sidebar({ company }: SidebarProps) {
+  const formatPrice = () => {
+    if (company.pricing_starting_price === 0) return "Gratis";
+    
+    const price = company.pricing_starting_price.toLocaleString('es-ES', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+    
+    const perUser = company.pricing_per_user ? "/usuario" : "";
+    const period = company.pricing_billing_period === 'mensual' ? '/mes' : `/${company.pricing_billing_period}`;
+    const billingNote = company.pricing_billed_annually ? " (facturado anualmente)" : "";
+    
+    return `${price}€${perUser}${period}${billingNote}`;
+  };
+
   return (
     <div className="space-y-6">
       <Card className="p-6">
         <h3 className="text-xl font-semibold mb-4">Precios</h3>
         <div className="space-y-4">
-          {company.pricing_description ? (
-            <div className="text-gray-700">
+          <div className="text-2xl font-bold text-gray-900">
+            {formatPrice()}
+          </div>
+          {company.pricing_description && (
+            <div className="text-gray-600 text-sm">
               <ReactMarkdown>{company.pricing_description}</ReactMarkdown>
-            </div>
-          ) : (
-            <div className="text-3xl font-bold text-blue-600">
-              {company.pricing_starting_price === 0 
-                ? "Gratis"
-                : `${company.pricing_starting_price}${company.pricing_currency}/${company.pricing_billing_period}`}
             </div>
           )}
           <a
@@ -38,11 +50,17 @@ export function Sidebar({ company }: SidebarProps) {
         </div>
       </Card>
 
-      <Card className="p-6">
+      <Card className="p-6 space-y-4">
         <div className="flex items-center gap-3 text-gray-600">
           <Users className="w-5 h-5" />
           <span>{company.votes} usuarios han votado</span>
         </div>
+        
+        {company.use_case && (
+          <div className="pt-2 border-t border-gray-200">
+            <p className="text-sm text-gray-600">{company.use_case}</p>
+          </div>
+        )}
       </Card>
     </div>
   );
