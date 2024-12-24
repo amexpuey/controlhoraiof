@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import AppCard from "@/components/AppCard";
 import { useToast } from "@/hooks/use-toast";
 import type { Database } from "@/integrations/supabase/types";
 import { FilterSection } from "./FilterSection";
@@ -8,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import ComparisonTable from "@/components/comparison/ComparisonTable";
+import AppsGrid from "@/components/AppsGrid";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
@@ -177,15 +177,11 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
         }}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredApps.map((app) => (
-          <AppCard
-            key={app.id}
-            app={app}
-            onClick={() => handleAppClick(app)}
-          />
-        ))}
-      </div>
+      <AppsGrid
+        apps={filteredApps}
+        onAppClick={handleAppClick}
+        highlightedFeatures={selectedFeatures}
+      />
 
       {/* Comparison Table Section */}
       <div className="py-12 bg-gray-50 rounded-lg">

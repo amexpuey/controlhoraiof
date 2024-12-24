@@ -13,9 +13,16 @@ interface AppCardProps {
   showCompare?: boolean;
   isSelected?: boolean;
   onCompareToggle?: () => void;
+  highlightedFeatures?: string[];
 }
 
-export default function AppCard({ app, showCompare, isSelected, onCompareToggle }: AppCardProps) {
+export default function AppCard({ 
+  app, 
+  showCompare, 
+  isSelected, 
+  onCompareToggle,
+  highlightedFeatures = []
+}: AppCardProps) {
   const navigate = useNavigate();
   
   if (!app) return null;
@@ -42,6 +49,45 @@ export default function AppCard({ app, showCompare, isSelected, onCompareToggle 
       default:
         return null;
     }
+  };
+
+  const renderFeature = (feature: string, index: number) => {
+    const isHighlighted = highlightedFeatures.includes(feature);
+    
+    if (isHighlighted) {
+      return (
+        <span
+          key={index}
+          className="flex items-center gap-1 text-sm text-blue-600 bg-blue-50 px-3 py-1 rounded-full"
+        >
+          <Check className="w-4 h-4" />
+          {feature}
+        </span>
+      );
+    }
+
+    return (
+      <span
+        key={index}
+        className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
+      >
+        {feature}
+      </span>
+    );
+  };
+
+  const getDisplayFeatures = () => {
+    const features = app.features || [];
+    const highlightedCount = features.filter(f => highlightedFeatures.includes(f)).length;
+    const remainingSlots = 5 - highlightedCount;
+    
+    const highlighted = features.filter(f => highlightedFeatures.includes(f));
+    const nonHighlighted = features.filter(f => !highlightedFeatures.includes(f));
+    
+    return [
+      ...highlighted,
+      ...nonHighlighted.slice(0, remainingSlots)
+    ];
   };
 
   return (
@@ -120,17 +166,10 @@ export default function AppCard({ app, showCompare, isSelected, onCompareToggle 
         <p className="mt-4 text-gray-600 line-clamp-2">{app.description}</p>
 
         <div className="mt-4 flex flex-wrap gap-2">
-          {app.features?.slice(0, 3).map((feature, index) => (
-            <span
-              key={index}
-              className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
-            >
-              {feature}
-            </span>
-          ))}
-          {app.features && app.features.length > 3 && (
+          {getDisplayFeatures().map((feature, index) => renderFeature(feature, index))}
+          {(app.features?.length || 0) > 5 && (
             <span className="text-gray-500 text-sm">
-              +{app.features.length - 3} más
+              +{app.features!.length - 5} más
             </span>
           )}
         </div>

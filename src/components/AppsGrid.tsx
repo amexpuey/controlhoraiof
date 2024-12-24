@@ -17,9 +17,16 @@ interface AppsGridProps {
   onAppClick: (app: Company) => void;
   onCompareToggle?: (appId: string) => void;
   showCompare?: boolean;
+  highlightedFeatures?: string[];
 }
 
-export default function AppsGrid({ apps, onAppClick, onCompareToggle, showCompare = false }: AppsGridProps) {
+export default function AppsGrid({ 
+  apps, 
+  onAppClick, 
+  onCompareToggle, 
+  showCompare = false,
+  highlightedFeatures = []
+}: AppsGridProps) {
   if (apps.length === 0) {
     return (
       <div className="text-center text-gray-600">
@@ -38,6 +45,7 @@ export default function AppsGrid({ apps, onAppClick, onCompareToggle, showCompar
             showCompare={showCompare}
             isSelected={app.isSelected}
             onCompareToggle={() => onCompareToggle?.(app.id)}
+            highlightedFeatures={highlightedFeatures}
           />
         </div>
       ))}
