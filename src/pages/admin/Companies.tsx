@@ -27,14 +27,6 @@ export default function AdminCompanies() {
     navigate(`/admin/user-view/${app.id}`);
   };
 
-  const handleCompareToggle = (appId: string) => {
-    setSelectedApps((prev) =>
-      prev.includes(appId)
-        ? prev.filter((id) => id !== appId)
-        : [...prev, appId]
-    );
-  };
-
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white p-8">
@@ -56,8 +48,7 @@ export default function AdminCompanies() {
         <AppsGrid
           apps={companies}
           onAppClick={handleAppClick}
-          onCompareToggle={handleCompareToggle}
-          showCompare={true}
+          highlightedFeatures={[]}
         />
       </div>
     </div>
