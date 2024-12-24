@@ -1,9 +1,12 @@
-import { ExternalLink, Award, CheckCircle, Check, X, Globe, Apple, Smartphone } from "lucide-react";
+import { Check } from "lucide-react";
 import VoteButton from "./VoteButton";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { Database } from "@/integrations/supabase/types";
 import { useNavigate } from "react-router-dom";
+import { AppCardHeader } from "./app-card/AppCardHeader";
+import { AppCardTitle } from "./app-card/AppCardTitle";
+import { AppCardFeatures } from "./app-card/AppCardFeatures";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
@@ -38,115 +41,27 @@ export default function AppCard({
     onCompareToggle?.();
   };
 
-  const getPlatformIcon = (platform: string) => {
-    switch (platform.toLowerCase()) {
-      case 'web':
-        return <Globe className="w-4 h-4" />;
-      case 'ios':
-        return <Apple className="w-4 h-4" />;
-      case 'android':
-        return <Smartphone className="w-4 h-4" />;
-      default:
-        return null;
-    }
-  };
-
-  const renderFeature = (feature: string, index: number) => {
-    const isHighlighted = highlightedFeatures.includes(feature);
-    
-    if (isHighlighted) {
-      return (
-        <span
-          key={index}
-          className="flex items-center gap-1 text-sm text-blue-600 bg-blue-50 px-3 py-1 rounded-full"
-        >
-          <Check className="w-4 h-4" />
-          {feature}
-        </span>
-      );
-    }
-
-    return (
-      <span
-        key={index}
-        className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
-      >
-        {feature}
-      </span>
-    );
-  };
-
-  const getDisplayFeatures = () => {
-    const features = app.features || [];
-    const highlightedCount = features.filter(f => highlightedFeatures.includes(f)).length;
-    const remainingSlots = 5 - highlightedCount;
-    
-    const highlighted = features.filter(f => highlightedFeatures.includes(f));
-    const nonHighlighted = features.filter(f => !highlightedFeatures.includes(f));
-    
-    return [
-      ...highlighted,
-      ...nonHighlighted.slice(0, remainingSlots)
-    ];
-  };
+  const displayDescription = app.use_case || app.pricing_description || "No description available";
 
   return (
     <Card 
       className="overflow-hidden transition-all hover:shadow-lg cursor-pointer relative"
       onClick={handleCardClick}
     >
-      <div className="relative h-48 overflow-hidden">
-        <img
-          src={app.img_url}
-          alt={app.title}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute top-4 right-4 flex gap-2">
-          {app.verified && (
-            <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
-              <CheckCircle className="w-4 h-4" />
-              Verificado
-            </span>
-          )}
-          {app.is_top_rated && (
-            <span className="bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
-              <Award className="w-4 h-4" />
-              Top Rated
-            </span>
-          )}
-        </div>
-      </div>
+      <AppCardHeader
+        imgUrl={app.img_url}
+        title={app.title}
+        verified={app.verified}
+        isTopRated={app.is_top_rated}
+      />
       
       <div className="p-6">
-        <div className="flex items-start justify-between">
-          <div className="flex items-center gap-3">
-            <img
-              src={app.logo_url}
-              alt={`${app.title} logo`}
-              className="w-12 h-12 rounded-lg object-contain"
-            />
-            <div>
-              <h3 className="text-xl font-bold text-gray-900">{app.title}</h3>
-              <div className="flex flex-wrap gap-2 mt-1">
-                {app.platforms?.map((platform) => (
-                  <span key={platform} className="text-gray-600">
-                    {getPlatformIcon(platform)}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-          
-          <a
-            href={app.url}
-            onClick={(e) => e.stopPropagation()}
-            className="text-blue-600 hover:text-blue-800"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <ExternalLink className="w-5 h-5" />
-          </a>
-        </div>
+        <AppCardTitle
+          title={app.title}
+          logoUrl={app.logo_url}
+          platforms={app.platforms}
+          url={app.url}
+        />
 
         <div className="mt-4 flex flex-wrap gap-2">
           {app.free_trial === 'yes' && (
@@ -165,14 +80,10 @@ export default function AppCard({
 
         <p className="mt-4 text-gray-600 line-clamp-2">{app.description}</p>
 
-        <div className="mt-4 flex flex-wrap gap-2">
-          {getDisplayFeatures().map((feature, index) => renderFeature(feature, index))}
-          {(app.features?.length || 0) > 5 && (
-            <span className="text-gray-500 text-sm">
-              +{app.features!.length - 5} más
-            </span>
-          )}
-        </div>
+        <AppCardFeatures 
+          features={app.features || []}
+          highlightedFeatures={highlightedFeatures}
+        />
 
         <div className="mt-6 flex items-center justify-between border-t pt-4">
           <div className="flex items-center gap-4">
@@ -183,8 +94,8 @@ export default function AppCard({
                   ? "Gratis"
                   : `Desde ${app.pricing_starting_price}€/${app.pricing_billing_period}`}
               </div>
-              {app.use_case && (
-                <div className="text-sm text-gray-500">{app.use_case}</div>
+              {displayDescription && (
+                <div className="text-sm text-gray-500">{displayDescription}</div>
               )}
             </div>
           </div>
