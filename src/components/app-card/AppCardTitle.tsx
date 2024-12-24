@@ -1,3 +1,5 @@
+import { Monitor, Phone, Globe } from "lucide-react";
+
 interface AppCardTitleProps {
   title: string;
   platforms?: string[];
@@ -9,20 +11,33 @@ export function AppCardTitle({
   platforms,
   url
 }: AppCardTitleProps) {
+  const getPlatformIcon = (platform: string) => {
+    switch (platform.toLowerCase()) {
+      case 'web':
+        return <Globe className="w-4 h-4 text-blue-500" />;
+      case 'ios':
+      case 'android':
+        return <Phone className="w-4 h-4 text-blue-500" />;
+      default:
+        return <Monitor className="w-4 h-4 text-blue-500" />;
+    }
+  };
+
   return (
     <div className="flex flex-col gap-2">
       <h3 className="text-lg font-semibold text-gray-900">
         {title}
       </h3>
       {platforms && platforms.length > 0 && (
-        <div className="flex flex-wrap gap-2">
+        <div className="flex gap-2">
           {platforms.map((platform, index) => (
-            <span
+            <div
               key={index}
-              className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full"
+              className="flex items-center gap-1"
+              title={platform}
             >
-              {platform}
-            </span>
+              {getPlatformIcon(platform)}
+            </div>
           ))}
         </div>
       )}

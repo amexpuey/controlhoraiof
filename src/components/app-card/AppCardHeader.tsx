@@ -29,6 +29,15 @@ export function AppCardHeader({ imgUrl, title, verified, isTopRated }: AppCardHe
           </span>
         )}
       </div>
+      <div className="absolute -bottom-6 left-6">
+        <div className="w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center p-2">
+          <img
+            src={imgUrl}
+            alt={`${title} logo`}
+            className="w-full h-full object-contain rounded-full"
+          />
+        </div>
+      </div>
     </div>
   );
 }
