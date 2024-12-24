@@ -11,18 +11,13 @@ interface SidebarProps {
 
 export function Sidebar({ company }: SidebarProps) {
   const formatPrice = () => {
-    if (company.pricing_starting_price === 0) return "Gratis";
-    
-    const price = company.pricing_starting_price.toLocaleString('es-ES', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    });
-    
+    const price = company.pricing_starting_price === 0 ? "Gratis" : `${company.pricing_starting_price}€`;
     const perUser = company.pricing_per_user ? "/usuario" : "";
     const period = company.pricing_billing_period === 'mensual' ? '/mes' : `/${company.pricing_billing_period}`;
     const billingNote = company.pricing_billed_annually ? " (facturado anualmente)" : "";
+    const prefix = company.pricing_starting_price === 0 ? "" : "";
     
-    return `desde ${price}€${perUser}${period}${billingNote}`;
+    return `${prefix}${price}${perUser}${period}${billingNote}`;
   };
 
   return (
@@ -30,12 +25,18 @@ export function Sidebar({ company }: SidebarProps) {
       <Card className="p-6">
         <h3 className="text-xl font-semibold mb-4">Precios</h3>
         <div className="space-y-4">
-          <div className="text-2xl font-bold text-gray-900">
-            {formatPrice()}
-          </div>
-          {company.pricing_description && (
+          {company.pricing_description ? (
             <div className="text-gray-600 text-sm">
               <ReactMarkdown>{company.pricing_description}</ReactMarkdown>
+            </div>
+          ) : (
+            <div>
+              {company.pricing_starting_price !== 0 && (
+                <div className="text-sm text-gray-500 mb-1">Desde</div>
+              )}
+              <div className="font-medium text-gray-900">
+                {formatPrice()}
+              </div>
             </div>
           )}
           <a

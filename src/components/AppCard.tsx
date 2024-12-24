@@ -36,7 +36,7 @@ export default function AppCard({
     const perUser = app.pricing_per_user ? "/usuario" : "";
     const period = app.pricing_billing_period === 'mensual' ? '/mes' : `/${app.pricing_billing_period}`;
     const billingNote = app.pricing_billed_annually ? " (facturado anualmente)" : "";
-    const prefix = app.pricing_starting_price === 0 ? "" : "desde ";
+    const prefix = app.pricing_starting_price === 0 ? "" : "";
     
     return `${prefix}${price}${perUser}${period}${billingNote}`;
   };
@@ -88,6 +88,9 @@ export default function AppCard({
 
         <div className="mt-6 border-t pt-4">
           <div className="text-gray-700">
+            {app.pricing_starting_price !== 0 && (
+              <div className="text-sm text-gray-500 mb-1">Desde</div>
+            )}
             <div className="font-medium text-sm">
               {formatPrice()}
             </div>
