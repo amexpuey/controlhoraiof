@@ -10,19 +10,11 @@ interface DashboardHeaderProps {
 export default function DashboardHeader({ matchingFeaturesCount = 0, totalSelectedFeatures = 0 }: DashboardHeaderProps) {
   return (
     <div className="space-y-8">
-      {/* Blog Header */}
+      {/* Header */}
       <div className="h-10 bg-white border-b flex items-center justify-between px-4">
         <h1 className="text-lg font-semibold text-primary-900">
           Control Horario Electrónico
         </h1>
-        <a 
-          href="https://blog.controlhorarioelectronico.com" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="text-sm text-primary-600 hover:text-primary-800 font-medium"
-        >
-          Visitar nuestro Blog →
-        </a>
       </div>
 
       {/* Header Section */}
