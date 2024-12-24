@@ -4,6 +4,14 @@ import { FilterSection } from "./FilterSection";
 import { useNavigate } from "react-router-dom";
 import AppsGrid from "@/components/AppsGrid";
 import { supabase } from "@/integrations/supabase/client";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
@@ -34,6 +42,8 @@ export default function DashboardApps({
   const [apps, setApps] = useState<AppWithMatches[]>([]);
   const [showTopRated, setShowTopRated] = useState(false);
   const [selectedAvailability, setSelectedAvailability] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
   useEffect(() => {
     const fetchApps = async () => {
@@ -127,6 +137,12 @@ export default function DashboardApps({
     );
   };
 
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredApps.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentApps = filteredApps.slice(startIndex, endIndex);
+
   return (
     <div className="space-y-8">
       <FilterSection
@@ -141,10 +157,46 @@ export default function DashboardApps({
       />
 
       <AppsGrid
-        apps={filteredApps}
+        apps={currentApps}
         onAppClick={(app) => navigate(`/mejores-apps-control-horario/${app.slug}`)}
         highlightedFeatures={selectedFeatures}
       />
+
+      {totalPages > 1 && (
+        <Pagination className="mt-8">
+          <PaginationContent>
+            {currentPage > 1 && (
+              <PaginationItem>
+                <PaginationPrevious 
+                  onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                  className="cursor-pointer"
+                />
+              </PaginationItem>
+            )}
+            
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <PaginationItem key={page}>
+                <PaginationLink
+                  onClick={() => setCurrentPage(page)}
+                  isActive={currentPage === page}
+                  className="cursor-pointer"
+                >
+                  {page}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+
+            {currentPage < totalPages && (
+              <PaginationItem>
+                <PaginationNext 
+                  onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                  className="cursor-pointer"
+                />
+              </PaginationItem>
+            )}
+          </PaginationContent>
+        </Pagination>
+      )}
     </div>
   );
 }
