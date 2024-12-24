@@ -93,11 +93,11 @@ const availability = [
 ];
 
 export function FilterSection({
-  selectedFeatures,
+  selectedFeatures = [],
   onFeatureToggle,
-  selectedTypes,
+  selectedTypes = [],
   onTypeToggle,
-  showTopRated,
+  showTopRated = false,
   onTopRatedToggle,
   selectedPlatforms = [],
   onPlatformToggle = () => {},

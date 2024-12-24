@@ -86,8 +86,15 @@ const Dashboard = () => {
           />
         ) : (
           <DashboardApps 
-            userFeatures={selectedFeatures} 
-            companySize={companySize}
+            selectedFeatures={selectedFeatures}
+            onFeatureToggle={(feature) => {
+              const newFeatures = selectedFeatures.includes(feature)
+                ? selectedFeatures.filter(f => f !== feature)
+                : [...selectedFeatures, feature];
+              setSelectedFeatures(newFeatures);
+            }}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
           />
         )}
       </main>
