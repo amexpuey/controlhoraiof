@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CompanySizeStep } from "./onboarding/CompanySizeStep";
 import { FeaturesStep } from "./onboarding/FeaturesStep";
+import { ProgressBar } from "./onboarding/ProgressBar";
 
 interface OnboardingProps {
   onFeaturesSelect: (features: string[]) => void;
@@ -32,6 +33,8 @@ export function Onboarding({ onFeaturesSelect, onSizeSelect }: OnboardingProps) 
 
   return (
     <div className="w-full max-w-4xl mx-auto px-4">
+      <ProgressBar currentStep={step} totalSteps={2} />
+      
       {step === 1 && (
         <CompanySizeStep
           selectedSize={selectedSize}
