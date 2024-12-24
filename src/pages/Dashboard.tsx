@@ -78,7 +78,7 @@ const Dashboard = () => {
       />
 
       <main className="container mx-auto px-4">
-        {!showApps ? (
+        {!showApps || selectedFeatures.length === 0 ? (
           <Onboarding
             onFeaturesSelect={handleFeatureSelect}
             onSizeSelect={handleSizeSelect}
