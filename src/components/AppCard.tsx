@@ -59,6 +59,7 @@ export default function AppCard({
     >
       <AppCardHeader
         imgUrl={app.img_url}
+        logoUrl={app.logo_url}
         title={app.title}
         verified={app.verified}
         isTopRated={app.is_top_rated}

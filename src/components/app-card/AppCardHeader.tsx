@@ -2,12 +2,13 @@ import { Award, CheckCircle } from "lucide-react";
 
 interface AppCardHeaderProps {
   imgUrl: string;
+  logoUrl: string;
   title: string;
   verified: boolean;
   isTopRated: boolean;
 }
 
-export function AppCardHeader({ imgUrl, title, verified, isTopRated }: AppCardHeaderProps) {
+export function AppCardHeader({ imgUrl, logoUrl, title, verified, isTopRated }: AppCardHeaderProps) {
   return (
     <div className="relative h-48 overflow-hidden">
       <img
@@ -32,7 +33,7 @@ export function AppCardHeader({ imgUrl, title, verified, isTopRated }: AppCardHe
       <div className="absolute -bottom-6 left-6">
         <div className="w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center p-2">
           <img
-            src={imgUrl}
+            src={logoUrl}
             alt={`${title} logo`}
             className="w-full h-full object-contain rounded-full"
           />
