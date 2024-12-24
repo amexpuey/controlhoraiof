@@ -54,11 +54,14 @@ export default function AppCard({
       />
       
       <div className="p-6">
-        <AppCardTitle
-          title={app.title}
-          platforms={app.platforms}
-          url={app.url}
-        />
+        <div className="flex justify-between items-start">
+          <AppCardTitle
+            title={app.title}
+            platforms={app.platforms}
+            url={app.url}
+          />
+          <VoteButton companyId={app.id} votes={app.votes} />
+        </div>
 
         <div className="mt-4 flex flex-wrap gap-2">
           {app.free_trial === 'yes' && (
@@ -75,24 +78,21 @@ export default function AppCard({
           )}
         </div>
 
-        <p className="mt-4 text-gray-600 line-clamp-2">{app.description}</p>
+        <p className="mt-4 text-gray-600 line-clamp-2 text-sm">{app.description}</p>
 
         <AppCardFeatures 
           features={app.features || []}
           highlightedFeatures={highlightedFeatures}
         />
 
-        <div className="mt-6 flex items-center justify-between border-t pt-4">
-          <div className="flex items-center gap-4">
-            <VoteButton companyId={app.id} votes={app.votes} />
-            <div className="text-gray-700">
-              <div className="font-medium">
-                {formatPrice()}
-              </div>
-              {displayDescription && (
-                <div className="text-sm text-gray-500">{displayDescription}</div>
-              )}
+        <div className="mt-6 border-t pt-4">
+          <div className="text-gray-700">
+            <div className="font-medium text-sm">
+              {formatPrice()}
             </div>
+            {displayDescription && (
+              <div className="text-sm text-gray-500 mt-1">{displayDescription}</div>
+            )}
           </div>
         </div>
       </div>
