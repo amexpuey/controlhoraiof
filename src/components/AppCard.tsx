@@ -13,6 +13,8 @@ interface AppCardProps {
   app: Company;
   onClick?: () => void;
   highlightedFeatures?: string[];
+  isSelected?: boolean;
+  onCompareToggle?: () => void;
 }
 
 export default function AppCard({ 

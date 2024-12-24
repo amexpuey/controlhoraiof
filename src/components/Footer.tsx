@@ -33,9 +33,9 @@ export function Footer() {
           {/* Logo and Slogan Section */}
           <div className="flex flex-col items-center md:items-start space-y-4">
             <img
-              src="/controlhorario-logo.svg"
+              src="/lovable-uploads/654278fc-cbcc-4b9d-8b9a-0a7065e56d8d.png"
               alt="Control Horario Logo"
-              className="h-12"
+              className="h-12 bg-white p-2 rounded"
             />
             <p className="text-[#8E9196] text-sm">
               Control Horario Electronico - Tu solución integral para la gestión del tiempo
