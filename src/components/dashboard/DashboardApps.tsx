@@ -6,11 +6,16 @@ import { FilterSection } from "./FilterSection";
 import { useNavigate } from "react-router-dom";
 import ComparisonTable from "@/components/comparison/ComparisonTable";
 import AppsGrid from "@/components/AppsGrid";
+import DashboardHeader from "@/components/DashboardHeader";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
 interface AppWithMatches extends Company {
   matchingFeaturesCount?: number;
+  totalSelectedFeatures?: number;
+  score?: number;
+  hasMatches?: boolean;
+  isSelected?: boolean;
 }
 
 interface DashboardAppsProps {
@@ -76,26 +81,29 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
     let filtered = [...apps];
 
     // Calculate matching features count for each app
-    const appsWithMatchingCount = filtered.map(app => {
-      const matchingFeaturesCount = selectedFeatures.filter(feature => 
+    const appsWithMatchingCount = filtered.map(app => ({
+      ...app,
+      matchingFeaturesCount: selectedFeatures.filter(feature => 
         app.features?.includes(feature)
-      ).length;
-      return { ...app, matchingFeaturesCount };
-    });
+      ).length,
+      totalSelectedFeatures: selectedFeatures.length
+    }));
 
     filtered = appsWithMatchingCount;
 
-    // Apply filters
+    // Apply search filter
     if (searchQuery) {
+      const query = searchQuery.toLowerCase().trim();
       filtered = filtered.filter(app => 
-        app.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        app.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        app.features?.some(feature => feature.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        app.type?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        app.highlights?.some(highlight => highlight.toLowerCase().includes(searchQuery.toLowerCase()))
+        app.title?.toLowerCase().includes(query) ||
+        app.description?.toLowerCase().includes(query) ||
+        app.features?.some(feature => feature.toLowerCase().includes(query)) ||
+        app.type?.toLowerCase().includes(query) ||
+        app.highlights?.some(highlight => highlight.toLowerCase().includes(query))
       );
     }
 
+    // Apply other filters
     if (selectedFeatures.length > 0) {
       filtered = filtered.filter(app => 
         selectedFeatures.some(feature => app.features?.includes(feature))
@@ -142,6 +150,11 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
 
   return (
     <div className="space-y-8">
+      <DashboardHeader 
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+      />
+      
       <FilterSection
         selectedFeatures={selectedFeatures}
         onFeatureToggle={(feature) => {
