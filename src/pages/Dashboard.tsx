@@ -4,6 +4,7 @@ import DashboardApps from "@/components/dashboard/DashboardApps";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import DashboardHeader from "@/components/DashboardHeader";
+import { useDashboardData } from "@/hooks/useDashboardData";
 
 const Dashboard = () => {
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
@@ -11,8 +12,8 @@ const Dashboard = () => {
   const [companySize, setCompanySize] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
+  const { allApps, loading } = useDashboardData();
 
-  // Check onboarding status on component mount
   useEffect(() => {
     const checkOnboardingStatus = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -71,6 +72,10 @@ const Dashboard = () => {
     }
   }, []);
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
       <DashboardHeader 
@@ -86,8 +91,8 @@ const Dashboard = () => {
           />
         ) : (
           <DashboardApps 
-            apps={[]} // You'll need to pass your apps data here
-            selectedFeatures={selectedFeatures} 
+            apps={allApps}
+            selectedFeatures={selectedFeatures}
           />
         )}
       </main>
