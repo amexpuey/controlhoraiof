@@ -27,7 +27,7 @@ export function AppCardTitle({ title, logoUrl, platforms, url }: AppCardTitlePro
         <img
           src={logoUrl}
           alt={`${title} logo`}
-          className="w-12 h-12 rounded-lg object-contain"
+          className="w-12 h-12 rounded-full object-cover"
         />
         <div>
           <h3 className="text-xl font-bold text-gray-900">{title}</h3>
