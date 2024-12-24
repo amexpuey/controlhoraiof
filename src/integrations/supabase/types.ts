@@ -22,9 +22,11 @@ export type Database = {
           is_top_rated: boolean
           logo_url: string
           platforms: string[] | null
+          pricing_billed_annually: boolean | null
           pricing_billing_period: string
           pricing_currency: string
           pricing_description: string | null
+          pricing_per_user: boolean | null
           pricing_starting_price: number
           rating: number | null
           slug: string
@@ -48,9 +50,11 @@ export type Database = {
           is_top_rated?: boolean
           logo_url?: string
           platforms?: string[] | null
+          pricing_billed_annually?: boolean | null
           pricing_billing_period?: string
           pricing_currency?: string
           pricing_description?: string | null
+          pricing_per_user?: boolean | null
           pricing_starting_price?: number
           rating?: number | null
           slug: string
@@ -74,9 +78,11 @@ export type Database = {
           is_top_rated?: boolean
           logo_url?: string
           platforms?: string[] | null
+          pricing_billed_annually?: boolean | null
           pricing_billing_period?: string
           pricing_currency?: string
           pricing_description?: string | null
+          pricing_per_user?: boolean | null
           pricing_starting_price?: number
           rating?: number | null
           slug?: string

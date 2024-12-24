@@ -43,6 +43,15 @@ export default function AppCard({
 
   const displayDescription = app.use_case || "En revisión";
 
+  const formatPrice = () => {
+    const price = app.pricing_starting_price === 0 ? "Gratis" : `${app.pricing_starting_price}€`;
+    const perUser = app.pricing_per_user ? "/usuario" : "";
+    const period = `/${app.pricing_billing_period}`;
+    const billingNote = app.pricing_billed_annually ? " (facturado anualmente)" : "";
+    
+    return `${price}${perUser}${period}${billingNote}`;
+  };
+
   return (
     <Card 
       className="overflow-hidden transition-all hover:shadow-lg cursor-pointer relative"
@@ -89,9 +98,7 @@ export default function AppCard({
             <VoteButton companyId={app.id} votes={app.votes} />
             <div className="text-gray-700">
               <div className="font-medium">
-                {app.pricing_starting_price === 0 
-                  ? "Gratis"
-                  : `Desde ${app.pricing_starting_price}€/${app.pricing_billing_period}`}
+                {formatPrice()}
               </div>
               {displayDescription && (
                 <div className="text-sm text-gray-500">{displayDescription}</div>
