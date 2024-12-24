@@ -32,6 +32,8 @@ export default function DashboardApps({
   const navigate = useNavigate();
   const [filteredApps, setFilteredApps] = useState<AppWithMatches[]>([]);
   const [apps, setApps] = useState<AppWithMatches[]>([]);
+  const [showTopRated, setShowTopRated] = useState(false);
+  const [selectedAvailability, setSelectedAvailability] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchApps = async () => {
@@ -79,10 +81,26 @@ export default function DashboardApps({
       );
     }
 
-    // Apply other filters
+    // Apply features filter
     if (selectedFeatures.length > 0) {
       filtered = filtered.filter(app => 
         selectedFeatures.some(feature => app.features?.includes(feature))
+      );
+    }
+
+    // Apply top rated filter
+    if (showTopRated) {
+      filtered = filtered.filter(app => app.is_top_rated);
+    }
+
+    // Apply availability filters (free trial and free plan)
+    if (selectedAvailability.length > 0) {
+      filtered = filtered.filter(app => 
+        selectedAvailability.every(filter => {
+          if (filter === 'free_trial') return app.free_trial === 'yes';
+          if (filter === 'free_plan') return app.free_plan === 'yes';
+          return true;
+        })
       );
     }
 
@@ -99,7 +117,15 @@ export default function DashboardApps({
     });
 
     setFilteredApps(filtered);
-  }, [apps, selectedFeatures, searchQuery]);
+  }, [apps, selectedFeatures, searchQuery, showTopRated, selectedAvailability]);
+
+  const handleAvailabilityToggle = (option: string) => {
+    setSelectedAvailability(prev => 
+      prev.includes(option) 
+        ? prev.filter(item => item !== option)
+        : [...prev, option]
+    );
+  };
 
   return (
     <div className="space-y-8">
@@ -108,8 +134,10 @@ export default function DashboardApps({
         onFeatureToggle={onFeatureToggle}
         selectedTypes={[]}
         onTypeToggle={() => {}}
-        showTopRated={false}
-        onTopRatedToggle={() => {}}
+        showTopRated={showTopRated}
+        onTopRatedToggle={() => setShowTopRated(!showTopRated)}
+        selectedAvailability={selectedAvailability}
+        onAvailabilityToggle={handleAvailabilityToggle}
       />
 
       <AppsGrid

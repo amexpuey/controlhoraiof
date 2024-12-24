@@ -29,7 +29,6 @@ import {
   ChevronDown,
   ChevronUp,
   Check,
-  X,
   Globe,
   Apple
 } from "lucide-react";
@@ -45,10 +44,8 @@ interface FilterSectionProps {
   onTypeToggle: (type: string) => void;
   showTopRated: boolean;
   onTopRatedToggle: () => void;
-  selectedPlatforms?: string[];
-  onPlatformToggle?: (platform: string) => void;
-  selectedAvailability?: string[];
-  onAvailabilityToggle?: (option: string) => void;
+  selectedAvailability: string[];
+  onAvailabilityToggle: (option: string) => void;
 }
 
 const features = [
@@ -99,10 +96,8 @@ export function FilterSection({
   onTypeToggle,
   showTopRated = false,
   onTopRatedToggle,
-  selectedPlatforms = [],
-  onPlatformToggle = () => {},
   selectedAvailability = [],
-  onAvailabilityToggle = () => {},
+  onAvailabilityToggle,
 }: FilterSectionProps) {
   const [showFeatures, setShowFeatures] = useState(false);
 
@@ -146,25 +141,6 @@ export function FilterSection({
               </div>
             </ScrollArea>
           )}
-        </div>
-
-        {/* Platforms Filter */}
-        <div>
-          <h3 className="text-sm font-medium mb-3">Disponible en</h3>
-          <div className="flex flex-wrap gap-3">
-            {platforms.map(({ id, icon: Icon }) => (
-              <Button
-                key={id}
-                variant={selectedPlatforms.includes(id) ? "default" : "outline"}
-                size="sm"
-                onClick={() => onPlatformToggle(id)}
-                className="h-8"
-              >
-                <Icon className="w-4 h-4 mr-2" />
-                {id}
-              </Button>
-            ))}
-          </div>
         </div>
 
         {/* Availability Filter */}
