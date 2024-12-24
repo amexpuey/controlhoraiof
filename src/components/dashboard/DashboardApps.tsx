@@ -9,6 +9,10 @@ import AppsGrid from "@/components/AppsGrid";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
+interface AppWithMatches extends Company {
+  matchingFeaturesCount?: number;
+}
+
 interface DashboardAppsProps {
   userFeatures: string[];
   companySize?: string;
@@ -16,7 +20,7 @@ interface DashboardAppsProps {
 
 export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps) {
   const [apps, setApps] = useState<Company[]>([]);
-  const [filteredApps, setFilteredApps] = useState<Company[]>([]);
+  const [filteredApps, setFilteredApps] = useState<AppWithMatches[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
@@ -79,9 +83,11 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
       return { ...app, matchingFeaturesCount };
     });
 
+    filtered = appsWithMatchingCount;
+
     // Apply filters
     if (searchQuery) {
-      filtered = appsWithMatchingCount.filter(app => 
+      filtered = filtered.filter(app => 
         app.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         app.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         app.features?.some(feature => feature.toLowerCase().includes(searchQuery.toLowerCase())) ||
@@ -91,7 +97,7 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
     }
 
     if (selectedFeatures.length > 0) {
-      filtered = appsWithMatchingCount.filter(app => 
+      filtered = filtered.filter(app => 
         selectedFeatures.some(feature => app.features?.includes(feature))
       );
     }
@@ -122,14 +128,6 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
       if (b.title === 'INWOUT') return 1;
       return (b.matchingFeaturesCount || 0) - (a.matchingFeaturesCount || 0);
     });
-
-    // If we have less than 6 apps after filtering, add more from the original list
-    if (filtered.length < 6) {
-      const remainingApps = apps
-        .filter(app => !filtered.find(f => f.id === app.id))
-        .slice(0, 6 - filtered.length);
-      filtered = [...filtered, ...remainingApps];
-    }
 
     setFilteredApps(filtered);
   }, [apps, selectedFeatures, selectedTypes, showTopRated, searchQuery, selectedPlatforms, selectedAvailability]);
@@ -192,7 +190,7 @@ export function DashboardApps({ userFeatures, companySize }: DashboardAppsProps)
           <h2 className="text-2xl font-bold text-center mb-8">
             Comparación Detallada de Soluciones
           </h2>
-          <ComparisonTable apps={filteredApps.slice(0, 6)} />
+          <ComparisonTable apps={filteredApps} />
         </div>
       </div>
     </div>
