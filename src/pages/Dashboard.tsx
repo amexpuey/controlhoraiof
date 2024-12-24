@@ -12,10 +12,22 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
 
-  // Check onboarding status on component mount
+  // Check saved filters and onboarding status on component mount
   useEffect(() => {
-    const checkOnboardingStatus = async () => {
+    const checkFiltersAndStatus = async () => {
       try {
+        // First check if we have saved filters
+        const savedFeatures = localStorage.getItem('selectedFeatures');
+        const savedShowApps = localStorage.getItem('showApps');
+
+        if (savedFeatures && savedShowApps === 'true') {
+          // If we have saved filters, use them and show apps immediately
+          setSelectedFeatures(JSON.parse(savedFeatures));
+          setShowApps(true);
+          return; // Skip checking onboarding status if we have saved filters
+        }
+
+        // If no saved filters, check onboarding status
         const { data: { session } } = await supabase.auth.getSession();
         
         if (session?.user) {
@@ -30,38 +42,27 @@ const Dashboard = () => {
             return;
           }
 
-          if (profile) {
-            console.log('Profile data:', profile);
-            
-            // Check if we have saved filters in localStorage
-            const savedFeatures = localStorage.getItem('selectedFeatures');
-            const savedShowApps = localStorage.getItem('showApps');
-            
-            if (savedFeatures && savedShowApps === 'true') {
-              // If we have saved filters, use them
-              setSelectedFeatures(JSON.parse(savedFeatures));
-              setShowApps(true);
-            } else if (profile.onboarding_status === 'completed') {
-              // If no saved filters but onboarding is completed, use profile data
-              setSelectedFeatures(profile.selected_features || []);
-              setCompanySize(profile.company_size || "");
-              setShowApps(true);
-            }
+          if (profile && profile.onboarding_status === 'completed') {
+            setSelectedFeatures(profile.selected_features || []);
+            setCompanySize(profile.company_size || "");
+            setShowApps(true);
+            // Save to localStorage for future returns
+            localStorage.setItem('selectedFeatures', JSON.stringify(profile.selected_features || []));
+            localStorage.setItem('showApps', 'true');
           }
         }
       } catch (error) {
-        console.error('Error checking onboarding status:', error);
+        console.error('Error checking filters and status:', error);
       }
     };
 
-    checkOnboardingStatus();
+    checkFiltersAndStatus();
   }, []);
 
   const handleFeatureSelect = async (features: string[]) => {
     setSelectedFeatures(features);
     setShowApps(true);
     localStorage.setItem('selectedFeatures', JSON.stringify(features));
-    localStorage.setItem('companySize', companySize);
     localStorage.setItem('showApps', 'true');
   };
 
