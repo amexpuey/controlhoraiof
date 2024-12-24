@@ -27,6 +27,11 @@ const Dashboard = () => {
 
         if (error) {
           console.error('Error fetching profile:', error);
+          toast({
+            title: "Error",
+            description: "No se pudo cargar tu perfil.",
+            variant: "destructive",
+          });
           return;
         }
 
@@ -42,7 +47,7 @@ const Dashboard = () => {
     };
 
     checkOnboardingStatus();
-  }, []);
+  }, [toast]);
 
   const handleFeatureSelect = async (features: string[]) => {
     setSelectedFeatures(features);
@@ -79,7 +84,7 @@ const Dashboard = () => {
         onSearchChange={setSearchQuery}
       />
 
-      <main className="container mx-auto px-4">
+      <main className="container mx-auto px-4 py-8">
         {!showApps ? (
           <Onboarding
             onFeaturesSelect={handleFeatureSelect}
@@ -87,7 +92,7 @@ const Dashboard = () => {
           />
         ) : (
           <DashboardApps 
-            apps={allApps}
+            apps={allApps || []}
             selectedFeatures={selectedFeatures}
             isLoading={loading}
           />

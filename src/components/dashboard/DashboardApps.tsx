@@ -7,11 +7,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
 interface AppWithMatches extends Company {
-  matchingFeaturesCount: number;
-  totalSelectedFeatures: number;
-  score: number;
-  hasMatches: boolean;
-  isSelected: boolean;
+  matchingFeaturesCount?: number;
+  totalSelectedFeatures?: number;
+  score?: number;
+  hasMatches?: boolean;
+  isSelected?: boolean;
 }
 
 interface DashboardAppsProps {
@@ -21,22 +21,14 @@ interface DashboardAppsProps {
 }
 
 export default function DashboardApps({ apps, selectedFeatures, isLoading = false }: DashboardAppsProps) {
-  const [filteredApps, setFilteredApps] = useState<AppWithMatches[]>([]);
   const [showTopRated, setShowTopRated] = useState(false);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
   const [selectedAvailability, setSelectedAvailability] = useState<string[]>([]);
 
   const handleFeatureToggle = (feature: string) => {
-    setFilteredApps(prev =>
-      prev.map(app => {
-        const isSelected = app.features?.includes(feature);
-        return {
-          ...app,
-          hasMatches: isSelected,
-          matchingFeaturesCount: isSelected ? app.matchingFeaturesCount + 1 : app.matchingFeaturesCount - 1,
-        };
-      })
+    setSelectedTypes(prev =>
+      prev.includes(feature) ? prev.filter(t => t !== feature) : [...prev, feature]
     );
   };
 
@@ -75,6 +67,15 @@ export default function DashboardApps({ apps, selectedFeatures, isLoading = fals
             </div>
           ))}
         </div>
+      </div>
+    );
+  }
+
+  // If apps array is empty after loading, show a message
+  if (!isLoading && (!apps || apps.length === 0)) {
+    return (
+      <div className="text-center py-10">
+        <p className="text-gray-600">No se encontraron aplicaciones disponibles.</p>
       </div>
     );
   }
