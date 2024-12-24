@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Database } from "@/integrations/supabase/types";
+import type { Database } from "@/integrations/supabase/types";
 import { Button } from "@/components/ui/button";
-import FilterSection from "./FilterSection";
+import { FilterSection } from "./FilterSection";
 import { useNavigate } from "react-router-dom";
 import ComparisonTable from "@/components/comparison/ComparisonTable";
 import AppsGrid from "@/components/AppsGrid";
@@ -75,7 +75,8 @@ export default function DashboardApps({
       matchingFeaturesCount: selectedFeatures.filter(feature => 
         app.features?.includes(feature)
       ).length,
-      totalSelectedFeatures: selectedFeatures.length
+      totalSelectedFeatures: selectedFeatures.length,
+      isSelected: selectedApps.some(selectedApp => selectedApp.id === app.id)
     }));
 
     filtered = appsWithMatchingCount;
@@ -112,14 +113,14 @@ export default function DashboardApps({
     });
 
     setFilteredApps(filtered);
-  }, [apps, selectedFeatures, searchQuery]);
+  }, [apps, selectedFeatures, searchQuery, selectedApps]);
 
   if (showComparison) {
     return (
-      <ComparisonTable
-        apps={selectedApps}
-        onClose={handleCloseComparison}
-      />
+      <div className="space-y-8">
+        <ComparisonTable apps={selectedApps} />
+        <Button onClick={handleCloseComparison}>Volver a la lista</Button>
+      </div>
     );
   }
 
@@ -127,9 +128,11 @@ export default function DashboardApps({
     <div className="space-y-8">
       <FilterSection
         selectedFeatures={selectedFeatures}
-        onFeatureToggle={(feature) => {
-          onFeatureToggle(feature);
-        }}
+        onFeatureToggle={onFeatureToggle}
+        selectedTypes={[]}
+        onTypeToggle={() => {}}
+        showTopRated={false}
+        onTopRatedToggle={() => {}}
       />
 
       {selectedApps.length > 0 && (
@@ -146,9 +149,10 @@ export default function DashboardApps({
 
       <AppsGrid
         apps={filteredApps}
-        selectedApps={selectedApps}
+        onAppClick={(app) => navigate(`/mejores-apps-control-horario/${app.slug}`)}
         onCompareToggle={handleCompareToggle}
-        loading={loading}
+        showCompare={true}
+        highlightedFeatures={selectedFeatures}
       />
     </div>
   );
