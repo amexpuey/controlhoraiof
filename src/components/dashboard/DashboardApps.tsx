@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AppCard from "../AppCard";
 import { Button } from "../ui/button";
-import { CompareIcon } from "lucide-react";
+import { GitCompareIcon } from "lucide-react";
 import type { Database } from "@/integrations/supabase/types";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
@@ -31,7 +31,17 @@ export default function DashboardApps({ apps, selectedFeatures }: DashboardAppsP
         return prev.filter(app => app.id !== appId);
       } else {
         const appToAdd = apps.find(app => app.id === appId);
-        return appToAdd ? [...prev, { ...appToAdd, isSelected: true }] : prev;
+        if (!appToAdd) return prev;
+        
+        const appWithMatches: AppWithMatches = {
+          ...appToAdd,
+          matchingFeaturesCount: 0,
+          totalSelectedFeatures: selectedFeatures.length,
+          score: 0,
+          hasMatches: false,
+          isSelected: true
+        };
+        return [...prev, appWithMatches];
       }
     });
   };
@@ -41,7 +51,7 @@ export default function DashboardApps({ apps, selectedFeatures }: DashboardAppsP
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">Aplicaciones</h2>
         <Button onClick={() => navigate('/admin/app-add')} className="flex items-center">
-          <CompareIcon className="mr-2" />
+          <GitCompareIcon className="mr-2" />
           Comparar
         </Button>
       </div>

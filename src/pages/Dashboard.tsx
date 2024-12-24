@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Onboarding } from "@/components/Onboarding";
-import { DashboardApps } from "@/components/dashboard/DashboardApps";
+import DashboardApps from "@/components/dashboard/DashboardApps";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import DashboardHeader from "@/components/DashboardHeader";
@@ -86,8 +86,8 @@ const Dashboard = () => {
           />
         ) : (
           <DashboardApps 
-            userFeatures={selectedFeatures} 
-            companySize={companySize}
+            apps={[]} // You'll need to pass your apps data here
+            selectedFeatures={selectedFeatures} 
           />
         )}
       </main>
