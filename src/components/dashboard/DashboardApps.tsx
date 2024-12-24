@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import type { Database } from "@/integrations/supabase/types";
+import { Database } from "@/integrations/supabase/types";
 import { Button } from "@/components/ui/button";
 import { FilterSection } from "./FilterSection";
 import { useNavigate } from "react-router-dom";
 import ComparisonTable from "@/components/comparison/ComparisonTable";
 import AppsGrid from "@/components/AppsGrid";
+import { supabase } from "@/integrations/supabase/client";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
@@ -17,7 +18,6 @@ interface AppWithMatches extends Company {
 }
 
 interface DashboardAppsProps {
-  apps: AppWithMatches[];
   selectedFeatures: string[];
   onFeatureToggle: (feature: string) => void;
   searchQuery: string;
@@ -26,10 +26,9 @@ interface DashboardAppsProps {
 }
 
 export default function DashboardApps({
-  apps,
-  selectedFeatures,
+  selectedFeatures = [],
   onFeatureToggle,
-  searchQuery,
+  searchQuery = "",
   setSearchQuery,
   loading = false
 }: DashboardAppsProps) {
@@ -37,6 +36,25 @@ export default function DashboardApps({
   const [selectedApps, setSelectedApps] = useState<AppWithMatches[]>([]);
   const [showComparison, setShowComparison] = useState(false);
   const [filteredApps, setFilteredApps] = useState<AppWithMatches[]>([]);
+  const [apps, setApps] = useState<AppWithMatches[]>([]);
+
+  useEffect(() => {
+    const fetchApps = async () => {
+      const { data, error } = await supabase
+        .from('companies')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching apps:', error);
+        return;
+      }
+
+      setApps(data || []);
+    };
+
+    fetchApps();
+  }, []);
 
   const handleCompareToggle = (appId: string) => {
     setSelectedApps(prevApps => {
@@ -67,6 +85,8 @@ export default function DashboardApps({
   };
 
   useEffect(() => {
+    if (!apps) return;
+    
     let filtered = [...apps];
 
     // Calculate matching features count for each app
@@ -118,7 +138,7 @@ export default function DashboardApps({
   if (showComparison) {
     return (
       <div className="space-y-8">
-        <ComparisonTable apps={selectedApps} />
+        <ComparisonTable apps={selectedApps} onClose={handleCloseComparison} />
         <Button onClick={handleCloseComparison}>Volver a la lista</Button>
       </div>
     );
