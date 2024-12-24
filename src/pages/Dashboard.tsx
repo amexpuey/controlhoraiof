@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Onboarding } from "@/components/Onboarding";
 import { DashboardApps } from "@/components/dashboard/DashboardApps";
-import { Building2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import DashboardHeader from "@/components/DashboardHeader";
@@ -10,6 +9,7 @@ const Dashboard = () => {
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [showApps, setShowApps] = useState(false);
   const [companySize, setCompanySize] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
 
   // Check onboarding status on component mount
@@ -78,10 +78,12 @@ const Dashboard = () => {
       <DashboardHeader 
         matchingFeaturesCount={selectedFeatures.length} 
         totalSelectedFeatures={selectedFeatures.length}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
       />
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4">
         {!showApps ? (
           <Onboarding
             onFeaturesSelect={handleFeatureSelect}
