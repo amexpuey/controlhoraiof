@@ -96,6 +96,30 @@ export type Database = {
         }
         Relationships: []
       }
+      contact_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          observations: string | null
+          phone: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          observations?: string | null
+          phone?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          observations?: string | null
+          phone?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           company_size: string | null

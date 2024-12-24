@@ -3,27 +3,46 @@ import { Mail, Phone, MessageSquare, Copyright, Link } from "lucide-react";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
-import { useToast } from "./ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 export function Footer() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [observations, setObservations] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
-    // Here you would typically send this data to your backend
-    toast({
-      title: "Formulario enviado",
-      description: "Gracias por tu mensaje. Nos pondremos en contacto contigo pronto.",
-    });
-    
-    // Reset form
-    setEmail("");
-    setPhone("");
-    setObservations("");
+    try {
+      const { error } = await supabase.functions.invoke('handle-contact-form', {
+        body: { email, phone, observations }
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Formulario enviado",
+        description: "Gracias por tu mensaje. Nos pondremos en contacto contigo pronto.",
+      });
+      
+      // Reset form
+      setEmail("");
+      setPhone("");
+      setObservations("");
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        title: "Error",
+        description: "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -51,6 +70,7 @@ export function Footer() {
                   <Input
                     type="email"
                     placeholder="Email"
+                    required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="pl-10 bg-[#221F26] border-[#403E43] text-white placeholder:text-[#8E9196]"
@@ -78,9 +98,10 @@ export function Footer() {
               </div>
               <Button 
                 type="submit"
+                disabled={isSubmitting}
                 className="w-full md:w-auto bg-[#9b87f5] hover:bg-[#8B5CF6] text-white"
               >
-                Enviar
+                {isSubmitting ? "Enviando..." : "Enviar"}
               </Button>
             </form>
           </div>
