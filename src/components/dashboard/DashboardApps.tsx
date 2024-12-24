@@ -11,6 +11,10 @@ type Company = Database["public"]["Tables"]["companies"]["Row"];
 
 interface AppWithMatches extends Company {
   matchingFeaturesCount?: number;
+  totalSelectedFeatures?: number;
+  score?: number;
+  hasMatches?: boolean;
+  isSelected?: boolean;
 }
 
 interface DashboardAppsProps {

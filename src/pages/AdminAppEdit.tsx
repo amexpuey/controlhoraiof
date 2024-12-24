@@ -30,7 +30,9 @@ const initialFormData: Omit<Company, 'id' | 'created_at' | 'updated_at'> = {
   free_trial: 'yes',
   free_plan: 'yes',
   use_case: 'Good for basic time tracking',
-  platforms: ['Web', 'iOS', 'Android']
+  platforms: ['Web', 'iOS', 'Android'],
+  pricing_per_user: false,
+  pricing_billed_annually: false
 };
 
 export default function AdminAppEdit() {
@@ -71,7 +73,9 @@ export default function AdminAppEdit() {
         free_trial: company.free_trial || 'yes',
         free_plan: company.free_plan || 'yes',
         use_case: company.use_case || 'Good for basic time tracking',
-        platforms: company.platforms || ['Web', 'iOS', 'Android']
+        platforms: company.platforms || ['Web', 'iOS', 'Android'],
+        pricing_per_user: company.pricing_per_user || false,
+        pricing_billed_annually: company.pricing_billed_annually || false
       });
     }
   }, [company]);
