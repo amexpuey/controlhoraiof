@@ -48,7 +48,7 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         from: 'Control Horario Electrónico <onboarding@controlhorarioelectronico.com>',
-        to: ['support@inwoutapp.com'],
+        to: ['amexpuey@gmail.com'],
         subject: `Nuevo mensaje de contacto de ${formData.email}`,
         html: emailHtml,
       }),
