@@ -4,7 +4,6 @@ import DashboardApps from "@/components/dashboard/DashboardApps";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import DashboardHeader from "@/components/DashboardHeader";
-import { Footer } from "@/components/Footer";
 
 const Dashboard = () => {
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
@@ -78,7 +77,7 @@ const Dashboard = () => {
         onSearchChange={setSearchQuery}
       />
 
-      <main className="container mx-auto px-4">
+      <main className="container mx-auto px-4 pb-20">
         {!showApps ? (
           <Onboarding
             onFeaturesSelect={handleFeatureSelect}
@@ -99,8 +98,6 @@ const Dashboard = () => {
           />
         )}
       </main>
-      
-      <Footer />
     </div>
   );
 };

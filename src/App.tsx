@@ -3,6 +3,7 @@ import Index from "@/pages/Index";
 import Dashboard from "@/pages/Dashboard";
 import ComparisonPage from "@/pages/ComparisonPage";
 import UserView from "@/pages/UserView";
+import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
 
 // Move router configuration outside component to prevent recreation
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
     element: <UserView />,
   },
   {
+    path: "/mejores-apps-control-horario/comparar/:ids",
+    element: <ComparisonPage />,
+  },
+  {
     path: "*",
     element: <Dashboard />,
   },
@@ -27,10 +32,13 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <>
-      <RouterProvider router={router} />
+    <div className="flex flex-col min-h-screen">
+      <div className="flex-grow">
+        <RouterProvider router={router} />
+      </div>
+      <Footer />
       <Toaster />
-    </>
+    </div>
   );
 }
 
