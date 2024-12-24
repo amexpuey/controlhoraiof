@@ -11,8 +11,9 @@ const Dashboard = () => {
   const [showApps, setShowApps] = useState(false);
   const [companySize, setCompanySize] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
-  const { allApps, loading } = useDashboardData();
+  const { allApps, loading: appsLoading } = useDashboardData();
 
   useEffect(() => {
     const checkOnboardingStatus = async () => {
@@ -28,6 +29,8 @@ const Dashboard = () => {
 
           if (error) {
             console.error('Error fetching profile:', error);
+            setShowApps(true);
+            setIsLoading(false);
             return;
           }
 
@@ -45,13 +48,14 @@ const Dashboard = () => {
         }
       } catch (error) {
         console.error('Error in checkOnboardingStatus:', error);
-        // On error, show apps without filters
         setShowApps(true);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     checkOnboardingStatus();
-  }, [toast]);
+  }, []);
 
   const handleFeatureSelect = async (features: string[]) => {
     try {
@@ -95,6 +99,28 @@ const Dashboard = () => {
     setCompanySize(size);
   };
 
+  if (isLoading || appsLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
+        <DashboardHeader 
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+        />
+        <main className="container mx-auto px-4 py-8">
+          <div className="animate-pulse space-y-4">
+            <div className="h-12 bg-gray-200 rounded w-3/4"></div>
+            <div className="h-8 bg-gray-200 rounded w-1/2"></div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="h-64 bg-gray-200 rounded"></div>
+              ))}
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
       <DashboardHeader 
@@ -112,7 +138,7 @@ const Dashboard = () => {
           <DashboardApps 
             apps={allApps || []}
             selectedFeatures={selectedFeatures}
-            isLoading={loading}
+            isLoading={appsLoading}
           />
         )}
       </main>
