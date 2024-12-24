@@ -30,11 +30,11 @@ export function AppCardHeader({ imgUrl, logoUrl, title, verified, isTopRated }: 
           </span>
         )}
       </div>
-      <div className="absolute -bottom-8 left-6">
+      <div className="absolute -bottom-10 left-6">
         <img
           src={logoUrl}
           alt={`${title} logo`}
-          className="w-16 h-16 object-contain rounded-full"
+          className="w-20 h-20 object-contain"
         />
       </div>
     </div>
