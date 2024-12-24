@@ -13,11 +13,15 @@ interface AppCardProps {
   app: Company;
   onClick?: () => void;
   highlightedFeatures?: string[];
+  isSelected?: boolean;
+  onCompareToggle?: () => void;
 }
 
 export default function AppCard({ 
   app, 
-  highlightedFeatures = []
+  highlightedFeatures = [],
+  isSelected = false,
+  onCompareToggle
 }: AppCardProps) {
   const navigate = useNavigate();
   
@@ -27,6 +31,14 @@ export default function AppCard({
     e.preventDefault();
     e.stopPropagation();
     navigate(`/mejores-apps-control-horario/${app.slug}`);
+  };
+
+  const handleCompareClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (onCompareToggle) {
+      onCompareToggle();
+    }
   };
 
   const displayDescription = app.use_case || "En revisión";
@@ -43,7 +55,9 @@ export default function AppCard({
 
   return (
     <Card 
-      className="overflow-hidden transition-all hover:shadow-lg cursor-pointer relative"
+      className={`overflow-hidden transition-all hover:shadow-lg cursor-pointer relative ${
+        isSelected ? 'ring-2 ring-primary' : ''
+      }`}
       onClick={handleCardClick}
     >
       <AppCardHeader
@@ -61,7 +75,21 @@ export default function AppCard({
             platforms={app.platforms}
             url={app.url}
           />
-          <VoteButton companyId={app.id} votes={app.votes} />
+          <div className="flex gap-2">
+            {onCompareToggle && (
+              <button
+                onClick={handleCompareClick}
+                className={`px-3 py-1 text-sm rounded-full transition-colors ${
+                  isSelected
+                    ? 'bg-primary text-white'
+                    : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                }`}
+              >
+                {isSelected ? 'Selected' : 'Compare'}
+              </button>
+            )}
+            <VoteButton companyId={app.id} votes={app.votes} />
+          </div>
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2">
