@@ -11,7 +11,10 @@ export default function DashboardHeader({ matchingFeaturesCount = 0, totalSelect
   return (
     <div className="space-y-8">
       {/* Blog Header */}
-      <div className="h-10 bg-white border-b flex items-center justify-end px-4">
+      <div className="h-10 bg-white border-b flex items-center justify-between px-4">
+        <h1 className="text-lg font-semibold text-primary-900">
+          Control Horario Electrónico
+        </h1>
         <a 
           href="https://blog.controlhorarioelectronico.com" 
           target="_blank" 
