@@ -41,7 +41,7 @@ export default function AppCard({
     onCompareToggle?.();
   };
 
-  const displayDescription = app.use_case || app.pricing_description || "No description available";
+  const displayDescription = app.use_case || "En revisión";
 
   return (
     <Card 
