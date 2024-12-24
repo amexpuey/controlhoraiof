@@ -8,7 +8,6 @@ import { Toaster } from "@/components/ui/toaster";
 
 function App() {
   const router = useMemo(() => {
-    const basename = import.meta.env.BASE_URL || '/';
     return createBrowserRouter([
       {
         path: "/",
@@ -26,10 +25,8 @@ function App() {
         path: "*",
         element: <Dashboard />,
       }
-    ], {
-      basename,
-    });
-  }, []); // Empty dependency array since basename won't change
+    ]);
+  }, []); 
 
   return (
     <>

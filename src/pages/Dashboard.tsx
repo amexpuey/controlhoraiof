@@ -28,11 +28,6 @@ const Dashboard = () => {
 
           if (error) {
             console.error('Error fetching profile:', error);
-            toast({
-              title: "Error",
-              description: "No se pudo cargar tu perfil.",
-              variant: "destructive",
-            });
             return;
           }
 
@@ -44,9 +39,14 @@ const Dashboard = () => {
               setShowApps(true);
             }
           }
+        } else {
+          // If no session, show apps without filters
+          setShowApps(true);
         }
       } catch (error) {
         console.error('Error in checkOnboardingStatus:', error);
+        // On error, show apps without filters
+        setShowApps(true);
       }
     };
 
@@ -79,9 +79,15 @@ const Dashboard = () => {
 
         setSelectedFeatures(features);
         setShowApps(true);
+      } else {
+        // If no session, just update local state
+        setSelectedFeatures(features);
+        setShowApps(true);
       }
     } catch (error) {
       console.error('Error in handleFeatureSelect:', error);
+      // On error, still show apps
+      setShowApps(true);
     }
   };
 
