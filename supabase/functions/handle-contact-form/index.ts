@@ -17,6 +17,7 @@ interface ContactFormData {
 }
 
 serve(async (req) => {
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders })
   }
@@ -25,12 +26,17 @@ serve(async (req) => {
     const supabase = createClient(SUPABASE_URL!, SUPABASE_ANON_KEY!)
     const formData: ContactFormData = await req.json()
     
+    console.log('Received form data:', formData);
+    
     // Store submission in database
     const { error: dbError } = await supabase
       .from('contact_submissions')
       .insert([formData])
 
-    if (dbError) throw dbError
+    if (dbError) {
+      console.error('Database error:', dbError);
+      throw dbError;
+    }
 
     // Send email notification
     const emailHtml = `
@@ -55,7 +61,9 @@ serve(async (req) => {
     })
 
     if (!emailRes.ok) {
-      console.error('Error sending email:', await emailRes.text())
+      const errorText = await emailRes.text();
+      console.error('Error sending email:', errorText);
+      throw new Error(`Error sending email: ${errorText}`);
     }
 
     return new Response(JSON.stringify({ success: true }), {
@@ -63,7 +71,7 @@ serve(async (req) => {
       status: 200,
     })
   } catch (error) {
-    console.error('Error processing contact form:', error)
+    console.error('Error processing contact form:', error);
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 500,
