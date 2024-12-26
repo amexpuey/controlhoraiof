@@ -83,45 +83,45 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Contact Form Section - Made smaller */}
-          <div className="max-w-sm mx-auto md:ml-auto">
-            <form onSubmit={handleSubmit} className="space-y-3">
-              <div className="space-y-3">
+          {/* Contact Form Section - Made slightly larger */}
+          <div className="max-w-md mx-auto md:ml-auto">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-4">
                 <div className="relative">
-                  <Mail className="absolute left-3 top-2.5 h-4 w-4 text-yellow-500" />
+                  <Mail className="absolute left-3 top-3 h-5 w-5 text-yellow-500" />
                   <Input
                     type="email"
                     placeholder="Email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10 bg-white border-yellow-200 text-yellow-900 placeholder:text-yellow-400 focus:ring-yellow-400 h-9 text-sm"
+                    className="pl-10 bg-white border-yellow-200 text-yellow-900 placeholder:text-yellow-400 focus:ring-yellow-400 h-11"
                   />
                 </div>
                 <div className="relative">
-                  <Phone className="absolute left-3 top-2.5 h-4 w-4 text-yellow-500" />
+                  <Phone className="absolute left-3 top-3 h-5 w-5 text-yellow-500" />
                   <Input
                     type="tel"
                     placeholder="Teléfono"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="pl-10 bg-white border-yellow-200 text-yellow-900 placeholder:text-yellow-400 focus:ring-yellow-400 h-9 text-sm"
+                    className="pl-10 bg-white border-yellow-200 text-yellow-900 placeholder:text-yellow-400 focus:ring-yellow-400 h-11"
                   />
                 </div>
               </div>
               <div className="relative">
-                <MessageSquare className="absolute left-3 top-2.5 h-4 w-4 text-yellow-500" />
+                <MessageSquare className="absolute left-3 top-3 h-5 w-5 text-yellow-500" />
                 <Textarea
                   placeholder="Observaciones"
                   value={observations}
                   onChange={(e) => setObservations(e.target.value)}
-                  className="pl-10 bg-white border-yellow-200 text-yellow-900 placeholder:text-yellow-400 focus:ring-yellow-400 text-sm min-h-[60px]"
+                  className="pl-10 bg-white border-yellow-200 text-yellow-900 placeholder:text-yellow-400 focus:ring-yellow-400 min-h-[80px]"
                 />
               </div>
               <Button 
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-yellow-500 hover:bg-yellow-600 text-white text-sm h-9"
+                className="w-full bg-yellow-500 hover:bg-yellow-600 text-white h-11"
               >
                 {isSubmitting ? "Enviando..." : "Enviar"}
               </Button>
