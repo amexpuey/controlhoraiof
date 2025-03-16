@@ -121,13 +121,86 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
           <p>Las empresas que apuestan por una gestión transparente y eficiente del control horario no solo evitan sanciones, sino que también mejoran la productividad y el clima laboral. Adoptar estas prácticas y tecnologías es un paso decisivo para construir un entorno laboral justo, seguro y competitivo, en el que el cumplimiento normativo se convierta en una ventaja estratégica.</p>
         </div>
       `;
+    } else if (slug === "sistemas-modernos-control-acceso") {
+      // Format the content with proper HTML tags according to guidelines for this article
+      return `
+        <div class="article-content">
+          <h1 class="text-3xl font-bold mb-6">Sistemas modernos de control de acceso: Seguridad y eficiencia en el registro horario</h1>
+          
+          <p>En un mundo laboral donde el tiempo es dinero y la seguridad es clave, las empresas buscan soluciones tecnológicas que les permitan gestionar el acceso de sus empleados de manera eficiente. Los sistemas modernos de control de acceso han evolucionado, pasando de los tradicionales relojes de fichaje a sofisticadas plataformas digitales que combinan biometría, geolocalización y automatización. Estos avances no solo garantizan el cumplimiento normativo, sino que también mejoran la productividad y reducen errores en la gestión del tiempo laboral.</p>
+          
+          <h2 class="text-2xl font-bold mt-8 mb-4">¿Por qué es importante modernizar el control de acceso?</h2>
+          
+          <p>Durante años, muchas empresas han confiado en métodos tradicionales como tarjetas de fichaje o registros en papel. Sin embargo, estos sistemas presentan inconvenientes como el riesgo de fraude, la pérdida de datos y la falta de precisión en los reportes de jornada laboral. Con la llegada de tecnologías avanzadas, las compañías pueden garantizar <strong>un control más preciso, seguro y eficiente</strong>.</p>
+          
+          <p>Hoy en día, un buen sistema de control de acceso no solo <strong>registra quién entra y sale</strong>, sino que también <strong>analiza patrones de asistencia, detecta anomalías y facilita la gestión de recursos humanos</strong>. Esto resulta especialmente útil en entornos con turnos rotativos, teletrabajo o empleados que operan en múltiples ubicaciones.</p>
+          
+          <h2 class="text-2xl font-bold mt-8 mb-4">Principales tecnologías en el control de acceso</h2>
+          
+          <p>Las soluciones modernas han incorporado tecnologías innovadoras que hacen que el registro horario sea más seguro y preciso. Algunas de las más destacadas incluyen:</p>
+          
+          <ul class="list-disc pl-6 my-4 space-y-2">
+            <li><strong>Biometría:</strong> Uso de huellas dactilares, reconocimiento facial o escaneo de retina para autenticar a los empleados sin riesgo de suplantación.</li>
+            <li><strong>Geofencing:</strong> Define un perímetro virtual en torno a una ubicación de trabajo para detectar automáticamente la presencia del empleado.</li>
+            <li><strong>Tarjetas RFID y NFC:</strong> Acceso mediante tarjetas inteligentes que pueden integrarse con otros sistemas de seguridad.</li>
+            <li><strong>Códigos QR y PIN:</strong> Alternativas digitales que permiten fichar desde cualquier dispositivo autorizado.</li>
+            <li><strong>Aplicaciones móviles:</strong> Soluciones basadas en la nube que permiten a los empleados registrar su jornada desde su smartphone, con autenticación segura.</li>
+          </ul>
+          
+          <h2 class="text-2xl font-bold mt-8 mb-4">Beneficios de los sistemas modernos de control de acceso</h2>
+          
+          <p>La implementación de estos sistemas aporta <strong>múltiples beneficios</strong> para las empresas y los empleados. Entre ellos destacan:</p>
+          
+          <ul class="list-disc pl-6 my-4 space-y-2">
+            <li><strong>Mayor seguridad:</strong> Reduce el fraude y el uso indebido de credenciales.</li>
+            <li><strong>Automatización del registro:</strong> Minimiza errores humanos y simplifica la generación de informes.</li>
+            <li><strong>Cumplimiento normativo:</strong> Garantiza el respeto de la legislación laboral sobre registro horario.</li>
+            <li><strong>Mejora de la productividad:</strong> Permite gestionar ausencias y retrasos de forma más eficiente.</li>
+            <li><strong>Facilidad de integración:</strong> Se conecta con otros sistemas de RRHH y nóminas.</li>
+          </ul>
+          
+          <blockquote class="border-l-4 border-gray-300 pl-4 italic my-6">
+            "La modernización del control de acceso no solo mejora la seguridad, sino que también transforma la manera en que las empresas gestionan el tiempo de trabajo."
+          </blockquote>
+          
+          <h2 class="text-2xl font-bold mt-8 mb-4">El futuro del control de acceso</h2>
+          
+          <p>Con la creciente adopción del <strong>trabajo híbrido y remoto</strong>, el control de acceso seguirá evolucionando hacia modelos más flexibles y personalizados. La inteligencia artificial y el aprendizaje automático desempeñarán un papel clave en la optimización del registro horario, permitiendo predecir ausencias, mejorar la distribución de turnos y reforzar la ciberseguridad en entornos corporativos.</p>
+          
+          <p>Las empresas que apuesten por estas soluciones no solo cumplirán con la normativa vigente, sino que también <strong>lograrán una mejor gestión del talento y un ambiente laboral más organizado</strong>. En definitiva, invertir en <strong>sistemas modernos de control de acceso</strong> es una decisión estratégica que impulsa la seguridad y la eficiencia en el entorno de trabajo.</p>
+          
+          <h2 class="text-2xl font-bold mt-8 mb-4">Implementación de un sistema moderno: Pasos a seguir</h2>
+          
+          <p>La transición hacia un sistema moderno de control de acceso requiere una planificación cuidadosa. A continuación, presentamos los pasos fundamentales para una implementación exitosa:</p>
+          
+          <ol class="list-decimal pl-6 my-4 space-y-2">
+            <li><strong>Análisis de necesidades:</strong> Evaluar los requisitos específicos de la empresa, considerando el número de empleados, ubicaciones y modalidades de trabajo.</li>
+            <li><strong>Selección de la tecnología adecuada:</strong> Elegir entre las diferentes opciones disponibles según presupuesto y objetivos.</li>
+            <li><strong>Diseño e implementación:</strong> Configurar el sistema y realizar pruebas antes de su despliegue completo.</li>
+            <li><strong>Formación del personal:</strong> Capacitar a todos los empleados en el uso del nuevo sistema.</li>
+            <li><strong>Monitorización y mejora continua:</strong> Evaluar regularmente el rendimiento y realizar ajustes cuando sea necesario.</li>
+          </ol>
+          
+          <p>Es importante destacar que la transparencia en la comunicación con los empleados es clave para el éxito de la implementación. Explicar los beneficios del nuevo sistema y cómo contribuye a mejorar el entorno laboral ayudará a reducir resistencias y facilitar la adopción.</p>
+          
+          <blockquote class="border-l-4 border-gray-300 pl-4 italic my-6">
+            "La clave del éxito no está solo en la tecnología elegida, sino en cómo se integra en la cultura organizacional de la empresa."
+          </blockquote>
+          
+          <h2 class="text-2xl font-bold mt-8 mb-4">Conclusión</h2>
+          
+          <p>Los sistemas modernos de control de acceso representan un avance significativo en la gestión del tiempo y la seguridad laboral. Su adopción no solo permite cumplir con las exigencias legales, sino que también optimiza procesos, reduce costes operativos y mejora la experiencia de los empleados.</p>
+          
+          <p>En un entorno empresarial cada vez más competitivo y digitalizado, contar con herramientas que garanticen un registro horario eficiente y seguro se ha convertido en una necesidad estratégica. Las organizaciones que sepan aprovechar el potencial de estas tecnologías estarán mejor posicionadas para enfrentar los desafíos del futuro laboral.</p>
+        </div>
+      `;
     }
     
     return null; // Return null for other articles to use default ReactMarkdown
   };
   
-  const formattedContent = post.content && post.slug === "como-cumplir-normativa-registro-horario" 
-    ? formatSpecialArticleContent(post.slug, post.content) 
+  const formattedContent = post.slug && (post.slug === "como-cumplir-normativa-registro-horario" || post.slug === "sistemas-modernos-control-acceso") 
+    ? formatSpecialArticleContent(post.slug, post.content || '') 
     : null;
   
   return (
