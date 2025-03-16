@@ -21,7 +21,7 @@ export function ToolsDropdown() {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="sm" className="text-white">
-            Herramientas
+            Tools
             <ChevronDown className="ml-1 h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
