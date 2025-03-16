@@ -88,54 +88,22 @@ export default function Blog() {
             </TabsTrigger>
           </TabsList>
           
-          <TabsContent value="all" className="space-y-8">
-            {/* Featured Post */}
-            {filteredPosts.length > 0 && (
-              <FeaturedPost post={filteredPosts[0]} />
-            )}
-            
-            {/* Blog Posts Grid */}
-            {filteredPosts.length > 1 && (
-              <BlogPostsGrid posts={filteredPosts.slice(1)} />
-            )}
-          </TabsContent>
-          
-          {/* Same content structure for other tabs, filtered by activeCategory */}
-          <TabsContent value="Time Tracking" className="space-y-8">
-            {filteredPosts.length > 0 && (
-              <>
-                <FeaturedPost post={filteredPosts[0]} />
-                {filteredPosts.length > 1 && <BlogPostsGrid posts={filteredPosts.slice(1)} />}
-              </>
-            )}
-          </TabsContent>
-          
-          <TabsContent value="HR Compliance" className="space-y-8">
-            {filteredPosts.length > 0 && (
-              <>
-                <FeaturedPost post={filteredPosts[0]} />
-                {filteredPosts.length > 1 && <BlogPostsGrid posts={filteredPosts.slice(1)} />}
-              </>
-            )}
-          </TabsContent>
-          
-          <TabsContent value="Productivity" className="space-y-8">
-            {filteredPosts.length > 0 && (
-              <>
-                <FeaturedPost post={filteredPosts[0]} />
-                {filteredPosts.length > 1 && <BlogPostsGrid posts={filteredPosts.slice(1)} />}
-              </>
-            )}
-          </TabsContent>
-          
-          <TabsContent value="Remote Work" className="space-y-8">
-            {filteredPosts.length > 0 && (
-              <>
-                <FeaturedPost post={filteredPosts[0]} />
-                {filteredPosts.length > 1 && <BlogPostsGrid posts={filteredPosts.slice(1)} />}
-              </>
-            )}
-          </TabsContent>
+          {/* All tabs content */}
+          {["all", "Time Tracking", "HR Compliance", "Productivity", "Remote Work"].map((category) => (
+            <TabsContent key={category} value={category} className="space-y-8">
+              {filteredPosts.length > 0 && (
+                <>
+                  {/* Featured Post - only show the first post as featured */}
+                  <FeaturedPost post={filteredPosts[0]} />
+                  
+                  {/* Blog Posts Grid - show the remaining posts */}
+                  {filteredPosts.length > 1 && (
+                    <BlogPostsGrid posts={filteredPosts.slice(1)} />
+                  )}
+                </>
+              )}
+            </TabsContent>
+          ))}
         </Tabs>
         
         {/* In-content Ad */}
