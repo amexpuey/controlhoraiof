@@ -5,6 +5,7 @@ import DashboardApps from "@/components/dashboard/DashboardApps";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import DashboardHeader from "@/components/DashboardHeader";
+import AdBanner from "@/components/ads/AdBanner";
 
 const Dashboard = () => {
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
@@ -76,13 +77,16 @@ const Dashboard = () => {
       <DashboardHeader 
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
+        isOnboarding={!showApps}
       />
 
       <main className="container mx-auto px-4 pb-20">
         {/* Top Ad Container */}
-        <div className="w-full h-24 bg-gray-100 flex items-center justify-center my-4 rounded-lg border border-gray-200 overflow-hidden">
-          <p className="text-gray-400 text-sm">Espacio Reservado para Anuncios</p>
-        </div>
+        <AdBanner 
+          className="w-full h-24 my-4" 
+          position="top"
+          adSize="728x90"
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 relative">
           {/* Main Content - 3/4 width on desktop */}
@@ -110,16 +114,20 @@ const Dashboard = () => {
 
           {/* Side Ad Container - 1/4 width, only visible on desktop - Now fixed when scrolling */}
           <div className="hidden lg:block lg:sticky lg:top-4 h-[600px] bg-gray-100 rounded-lg border border-gray-200 overflow-hidden">
-            <div className="h-full flex items-center justify-center">
-              <p className="text-gray-400 text-sm">Espacio Reservado para Anuncios</p>
-            </div>
+            <AdBanner
+              className="h-full"
+              position="sidebar"
+              adSize="300x600"
+            />
           </div>
         </div>
 
         {/* Bottom Ad Container */}
-        <div className="w-full h-24 bg-gray-100 flex items-center justify-center my-8 rounded-lg border border-gray-200 overflow-hidden">
-          <p className="text-gray-400 text-sm">Espacio Reservado para Anuncios</p>
-        </div>
+        <AdBanner 
+          className="w-full h-24 my-8" 
+          position="bottom"
+          adSize="728x90"
+        />
       </main>
     </div>
   );

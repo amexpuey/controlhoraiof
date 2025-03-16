@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FilterSection } from "./FilterSection";
@@ -5,6 +6,7 @@ import AppsGrid from "@/components/AppsGrid";
 import { useAppsFiltering } from "./useAppsFiltering";
 import type { Database } from "@/integrations/supabase/types";
 import { Button } from "@/components/ui/button";
+import AdBanner from "@/components/ads/AdBanner";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
@@ -61,9 +63,15 @@ export default function DashboardApps({
     }
   };
 
-  // Split apps into two groups: first 6 and the rest
-  const firstSixApps = filteredApps.slice(0, 6);
-  const remainingApps = filteredApps.slice(6);
+  // Split apps into groups of two rows (6 apps per row on desktop)
+  const appsGroups = [];
+  const appsPerRow = 3;
+  const rowsPerGroup = 2;
+  const appsPerGroup = appsPerRow * rowsPerGroup;
+
+  for (let i = 0; i < filteredApps.length; i += appsPerGroup) {
+    appsGroups.push(filteredApps.slice(i, i + appsPerGroup));
+  }
 
   return (
     <div className="space-y-8">
@@ -76,15 +84,6 @@ export default function DashboardApps({
         onTopRatedToggle={() => setShowTopRated(!showTopRated)}
         selectedAvailability={selectedAvailability}
         onAvailabilityToggle={handleAvailabilityToggle}
-      />
-
-      {/* First 6 apps */}
-      <AppsGrid
-        apps={firstSixApps}
-        onAppClick={(app) => navigate(`/mejores-apps-control-horario/${app.slug}`)}
-        highlightedFeatures={selectedFeatures}
-        selectedAppsForComparison={selectedAppsForComparison}
-        onCompareToggle={handleCompareToggle}
       />
 
       {/* Comparison Section */}
@@ -109,17 +108,32 @@ export default function DashboardApps({
         </div>
       )}
 
-      {/* Remaining apps */}
-      {remainingApps.length > 0 && (
-        <div className="mt-12">
-          <h2 className="text-2xl font-semibold mb-8">Más aplicaciones para comparar</h2>
+      {/* Display apps with ad banners between groups */}
+      {appsGroups.map((group, groupIndex) => (
+        <div key={groupIndex} className="space-y-8">
           <AppsGrid
-            apps={remainingApps}
+            apps={group}
             onAppClick={(app) => navigate(`/mejores-apps-control-horario/${app.slug}`)}
             highlightedFeatures={selectedFeatures}
             selectedAppsForComparison={selectedAppsForComparison}
             onCompareToggle={handleCompareToggle}
           />
+          
+          {/* Add an ad banner after each group except the last one */}
+          {groupIndex < appsGroups.length - 1 && (
+            <AdBanner
+              className="w-full h-[250px]"
+              position="in-content"
+              adSize="970x250"
+            />
+          )}
+        </div>
+      ))}
+
+      {/* Show message if no apps are found */}
+      {filteredApps.length === 0 && (
+        <div className="text-center text-gray-600 py-8">
+          No se encontraron aplicaciones que coincidan con tus criterios.
         </div>
       )}
     </div>

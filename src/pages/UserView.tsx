@@ -1,3 +1,4 @@
+
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -6,6 +7,7 @@ import { AboutSection } from "@/components/user-view/AboutSection";
 import { FeaturesSection } from "@/components/user-view/FeaturesSection";
 import { HighlightsSection } from "@/components/user-view/HighlightsSection";
 import { Sidebar } from "@/components/user-view/Sidebar";
+import AdBanner from "@/components/ads/AdBanner";
 
 export default function UserView() {
   const { slug } = useParams();
@@ -73,15 +75,58 @@ export default function UserView() {
     <div className="min-h-screen bg-gray-50">
       <AppHeader company={company} />
 
+      {/* Top Ad Banner */}
+      <div className="container mx-auto px-4 mt-6">
+        <AdBanner 
+          className="w-full h-24"
+          position="app-page"
+          adSize="728x90"
+        />
+      </div>
+
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
             <AboutSection company={company} />
+            
+            {/* In-content Ad */}
+            <AdBanner 
+              className="w-full h-[250px]"
+              position="app-page"
+              adSize="300x250"
+            />
+            
             <FeaturesSection company={company} />
             <HighlightsSection company={company} />
+            
+            {/* Bottom Content Ad */}
+            <AdBanner 
+              className="w-full h-[250px]"
+              position="app-page"
+              adSize="300x250"
+            />
           </div>
-          <Sidebar company={company} />
+          
+          <div className="space-y-6">
+            <Sidebar company={company} />
+            
+            {/* Sidebar Ad */}
+            <AdBanner 
+              className="w-full h-[600px] sticky top-4"
+              position="app-page"
+              adSize="300x600"
+            />
+          </div>
         </div>
+      </div>
+      
+      {/* Bottom Ad Banner */}
+      <div className="container mx-auto px-4 mb-6">
+        <AdBanner 
+          className="w-full h-24"
+          position="app-page"
+          adSize="728x90"
+        />
       </div>
     </div>
   );
