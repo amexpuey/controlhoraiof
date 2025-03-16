@@ -1,5 +1,7 @@
+
 import * as React from "react"
 import { Drawer as DrawerPrimitive } from "vaul"
+import SquareAdBanner from "@/components/ads/SquareAdBanner"
 
 import { cn } from "@/lib/utils"
 
@@ -47,6 +49,7 @@ const DrawerContent = React.forwardRef<
       {...props}
     >
       <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
+      <SquareAdBanner className="mt-2" />
       {children}
     </DrawerPrimitive.Content>
   </DrawerPortal>

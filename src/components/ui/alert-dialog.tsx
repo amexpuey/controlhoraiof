@@ -1,5 +1,7 @@
+
 import * as React from "react"
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog"
+import SquareAdBanner from "@/components/ads/SquareAdBanner"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
@@ -38,7 +40,10 @@ const AlertDialogContent = React.forwardRef<
         className
       )}
       {...props}
-    />
+    >
+      <SquareAdBanner />
+      {props.children}
+    </AlertDialogPrimitive.Content>
   </AlertDialogPortal>
 ))
 AlertDialogContent.displayName = AlertDialogPrimitive.Content.displayName
