@@ -1,110 +1,137 @@
 
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { 
   Dialog, 
-  DialogContent, 
-  DialogHeader, 
-  DialogTitle, 
-  DialogDescription 
+  DialogContent
 } from "@/components/ui/dialog";
-import { CheckCircle, Calculator, Book } from "lucide-react";
+import { CheckCircle, Calculator, Book, ChevronRight } from "lucide-react";
 import ComplianceChecker from "./ComplianceChecker";
 import LearningModules from "../learning/LearningModules";
 
-// Interactive Tool Component
-const InteractiveTool = ({ toolType }: { toolType: string }) => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const openTool = () => {
-    setIsDialogOpen(true);
-  };
-
+export default function InteractiveToolsSection() {
+  const [showComplianceDialog, setShowComplianceDialog] = useState(false);
+  const [showLearningDialog, setShowLearningDialog] = useState(false);
+  
   return (
     <>
-      <Card className="shadow-md border-blue-200 hover:shadow-lg transition-shadow">
-        <CardHeader className="bg-blue-50">
-          <CardTitle className="text-xl text-blue-800 text-left">
-            {toolType === 'calculator' && '🧮 Calculadora de Ahorro'}
-            {toolType === 'checker' && '✅ Verificador de Cumplimiento'}
-            {toolType === 'learning' && '📚 Módulos de Aprendizaje'}
-          </CardTitle>
-          <CardDescription className="text-left">
-            {toolType === 'calculator' && 'Calcula el ahorro con control horario'}
-            {toolType === 'checker' && 'Comprueba si cumples con la normativa'}
-            {toolType === 'learning' && 'Aprende todo sobre el control horario'}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="pt-4">
-          <p className="text-gray-600 mb-4 text-left">
-            {toolType === 'calculator' && '¡Próximamente! Podrás calcular cuánto te costará implementar una solución de control horario en base al número de empleados y funcionalidades.'}
-            {toolType === 'checker' && 'Verifica si tu empresa cumple con la normativa española de registro horario a través de este sencillo test. Identificaremos posibles riesgos y sanciones.'}
-            {toolType === 'learning' && 'Descubre qué es el control horario, por qué es obligatorio y cómo afecta a tu empresa a través de nuestros módulos interactivos.'}
-          </p>
-        </CardContent>
-        <CardFooter>
-          <Button 
-            variant="outline" 
-            className={`w-full ${toolType === 'calculator'
-              ? 'bg-gray-100 hover:bg-gray-200 text-gray-600 border-gray-300 cursor-not-allowed'
-              : 'bg-blue-100 hover:bg-blue-200 text-blue-800 border-blue-300'}`}
-            onClick={openTool}
-            disabled={toolType === 'calculator'}
-          >
-            {toolType === 'checker' && 'Verificar cumplimiento'}
-            {toolType === 'calculator' && 'Próximamente'}
-            {toolType === 'learning' && 'Comenzar a aprender'}
-          </Button>
-        </CardFooter>
-      </Card>
+      <section className="my-12">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+          Herramientas Interactivas
+        </h2>
+        <div className="grid md:grid-cols-3 gap-6">
+          {/* Verificador de cumplimiento */}
+          <Card className="overflow-hidden">
+            <CardContent className="p-0">
+              <div className="bg-blue-50 p-4 border-b border-blue-100">
+                <div className="flex items-center mb-2">
+                  <CheckCircle className="h-6 w-6 text-blue-600 mr-2" />
+                  <h3 className="text-lg font-semibold text-blue-800">
+                    Verificador de Cumplimiento
+                  </h3>
+                </div>
+                <p className="text-sm text-gray-600">
+                  Comprueba si cumples con la normativa
+                </p>
+              </div>
+              <div className="p-4">
+                <p className="text-sm text-gray-600 mb-4">
+                  Verifica si tu empresa cumple con la normativa española de registro horario a través de este sencillo test. Identificaremos posibles riesgos y sanciones.
+                </p>
+                <Button 
+                  className="bg-blue-500 hover:bg-blue-600 w-full"
+                  onClick={() => setShowComplianceDialog(true)}
+                >
+                  Verificar cumplimiento
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
 
-      {toolType === 'checker' && (
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogContent className="sm:max-w-[900px] max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle className="text-2xl font-bold text-blue-800">
-                Verificador de Cumplimiento Normativo
-              </DialogTitle>
-              <DialogDescription className="text-blue-700">
-                Comprueba si tu empresa cumple con la normativa de registro horario en España
-              </DialogDescription>
-            </DialogHeader>
-            <ComplianceChecker />
-          </DialogContent>
-        </Dialog>
-      )}
+          {/* Calculadora */}
+          <Card className="overflow-hidden">
+            <CardContent className="p-0">
+              <div className="bg-blue-50 p-4 border-b border-blue-100">
+                <div className="flex items-center mb-2">
+                  <Calculator className="h-6 w-6 text-blue-600 mr-2" />
+                  <h3 className="text-lg font-semibold text-blue-800">
+                    Calculadora de Ahorro
+                  </h3>
+                </div>
+                <p className="text-sm text-gray-600">
+                  Calcula el ahorro con control horario
+                </p>
+              </div>
+              <div className="p-4">
+                <p className="text-sm text-gray-600 mb-4">
+                  ¡Próximamente! Podrás calcular cuánto te costará implementar una solución de control horario en base al número de empleados y funcionalidades.
+                </p>
+                <Button 
+                  className="bg-gray-400 hover:bg-gray-500 cursor-not-allowed w-full"
+                  disabled={true}
+                >
+                  Próximamente
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
 
-      {toolType === 'learning' && (
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogContent className="sm:max-w-[900px] max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle className="text-2xl font-bold text-blue-800">
-                Módulos de Aprendizaje Interactivo
-              </DialogTitle>
-              <DialogDescription className="text-blue-700">
-                Aprende todo sobre el control horario y su normativa en España
-              </DialogDescription>
-            </DialogHeader>
-            <LearningModules />
-          </DialogContent>
-        </Dialog>
-      )}
+          {/* Módulos de aprendizaje */}
+          <Card className="overflow-hidden">
+            <CardContent className="p-0">
+              <div className="bg-blue-50 p-4 border-b border-blue-100">
+                <div className="flex items-center mb-2">
+                  <Book className="h-6 w-6 text-blue-600 mr-2" />
+                  <h3 className="text-lg font-semibold text-blue-800">
+                    Módulos de Aprendizaje
+                  </h3>
+                </div>
+                <p className="text-sm text-gray-600">
+                  Aprende todo sobre el control horario
+                </p>
+              </div>
+              <div className="p-4">
+                <p className="text-sm text-gray-600 mb-4">
+                  Descubre qué es el control horario, por qué es obligatorio y cómo afecta a tu empresa a través de nuestros módulos interactivos.
+                </p>
+                <Button 
+                  className="bg-blue-500 hover:bg-blue-600 w-full"
+                  onClick={() => setShowLearningDialog(true)}
+                >
+                  Comenzar a aprender
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Compliance Checker Dialog */}
+      <Dialog 
+        open={showComplianceDialog} 
+        onOpenChange={(open) => {
+          setShowComplianceDialog(open);
+          if (!open) document.body.style.pointerEvents = "";
+        }}
+      >
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <ComplianceChecker onClose={() => setShowComplianceDialog(false)} />
+        </DialogContent>
+      </Dialog>
+
+      {/* Learning Modules Dialog */}
+      <Dialog 
+        open={showLearningDialog} 
+        onOpenChange={(open) => {
+          setShowLearningDialog(open);
+          if (!open) document.body.style.pointerEvents = "";
+        }}
+      >
+        <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
+          <LearningModules />
+        </DialogContent>
+      </Dialog>
     </>
-  );
-};
-
-export default function InteractiveToolsSection() {
-  return (
-    <section className="my-12">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-        Herramientas Interactivas
-      </h2>
-      <div className="grid md:grid-cols-3 gap-6">
-        <InteractiveTool toolType="checker" />
-        <InteractiveTool toolType="calculator" />
-        <InteractiveTool toolType="learning" />
-      </div>
-    </section>
   );
 }
