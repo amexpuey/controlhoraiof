@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -262,9 +261,18 @@ export default function ComplianceChecker() {
                   </div>
                   <span className="ml-1">Anuncio</span>
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-700">Solución Recomendada:</p>
-                  <p className="text-sm text-gray-600 mb-2">INWOUT - Plataforma de control horario que garantiza el cumplimiento normativo</p>
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-10 flex-shrink-0">
+                    <img 
+                      src="/public/lovable-uploads/9f226ae3-40a9-4b11-879e-fa474b885dfb.png" 
+                      alt="INWOUT Logo" 
+                      className="w-full h-full object-contain" 
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-700">Solución Recomendada:</p>
+                    <p className="text-sm text-gray-600 mb-2">INWOUT - Plataforma de control horario que garantiza el cumplimiento normativo</p>
+                  </div>
                 </div>
                 <a 
                   href="https://inwout.com/demo-online" 
