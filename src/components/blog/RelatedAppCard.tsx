@@ -32,7 +32,7 @@ export default function RelatedAppCard({ appId }: RelatedAppCardProps) {
         setAppData({
           id: appId,
           title: "TimeTracker Pro",
-          logo_url: `${STORAGE_BASE_URL}/puey_IMAGE_TYPE_logo__GENRE_Time_Tracking__EMOTION_Rel_65f6ce82-d242-4113-a48c-2e8c1bf5a35c_1.png`,
+          logo_url: `${STORAGE_BASE_URL}/puey_IMAGE_TYPE_Workplace_photo__GENRE_Employment__Law__EMOTI_37ccdd7d-df45-4edf-a1bd-ac4cf42b57d0_3.png`,
           slug: "timetracker-pro"
         });
       }
