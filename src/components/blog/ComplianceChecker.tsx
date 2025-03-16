@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -10,7 +9,6 @@ import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 
-// Define the questions with their risk levels
 const complianceQuestions = [
   {
     id: "q1",
@@ -53,7 +51,7 @@ const complianceQuestions = [
     block: "Control de Horas Extras y Límite de Jornada",
     riskLevel: "grave",
     sanction: "€625 - €6.250",
-    invertedLogic: true // This question is inverted - "Sí" means non-compliance
+    invertedLogic: true
   },
   {
     id: "q7",
@@ -75,11 +73,10 @@ const complianceQuestions = [
     block: "Pago y Transparencia Salarial",
     riskLevel: "muy grave",
     sanction: "€6.251 - €187.515",
-    invertedLogic: true // This question is inverted - "Sí" means non-compliance
+    invertedLogic: true
   }
 ];
 
-// Define question blocks for UI grouping
 const questionBlocks = [
   { id: "Registro de Jornada", emoji: "🟢", title: "Registro de Jornada" },
   { id: "Control de Horas Extras y Límite de Jornada", emoji: "🟡", title: "Control de Horas Extras y Límite de Jornada" },
@@ -97,7 +94,6 @@ export default function ComplianceChecker() {
     complianceScore: number;
   } | null>(null);
   
-  // New state for interactive UI
   const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -108,19 +104,15 @@ export default function ComplianceChecker() {
     defaultValues: complianceQuestions.reduce((acc, q) => ({ ...acc, [q.id]: "si" }), {})
   });
 
-  // Get questions for current block
   const currentBlockId = questionBlocks[currentBlockIndex]?.id;
   const questionsInCurrentBlock = complianceQuestions.filter(q => q.block === currentBlockId);
   const currentQuestion = questionsInCurrentBlock[currentQuestionIndex];
   
-  // Calculate progress
   const totalQuestions = complianceQuestions.length;
   const answeredCount = answeredQuestions.length;
   const progress = (answeredCount / totalQuestions) * 100;
   
-  // Handle next question
   const handleNext = () => {
-    // Check if question is answered
     if (!answeredQuestions.includes(currentQuestion.id)) {
       setAnsweredQuestions([...answeredQuestions, currentQuestion.id]);
     }
@@ -128,24 +120,17 @@ export default function ComplianceChecker() {
     setIsTransitioning(true);
     
     setTimeout(() => {
-      // If we have more questions in this block
       if (currentQuestionIndex < questionsInCurrentBlock.length - 1) {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
-      } 
-      // Move to next block
-      else {
-        // Mark current block as completed
+      } else {
         if (!completedBlocks.includes(currentBlockId)) {
           setCompletedBlocks([...completedBlocks, currentBlockId]);
         }
         
-        // If there are more blocks
         if (currentBlockIndex < questionBlocks.length - 1) {
           setCurrentBlockIndex(currentBlockIndex + 1);
           setCurrentQuestionIndex(0);
-        } 
-        // If we've gone through all blocks, submit the form
-        else {
+        } else {
           form.handleSubmit(onSubmit)();
           return;
         }
@@ -154,18 +139,14 @@ export default function ComplianceChecker() {
       setIsTransitioning(false);
     }, 300);
   };
-  
-  // Handle previous question
+
   const handlePrevious = () => {
     setIsTransitioning(true);
     
     setTimeout(() => {
-      // If we have previous questions in this block
       if (currentQuestionIndex > 0) {
         setCurrentQuestionIndex(currentQuestionIndex - 1);
-      } 
-      // Move to previous block
-      else if (currentBlockIndex > 0) {
+      } else if (currentBlockIndex > 0) {
         setCurrentBlockIndex(currentBlockIndex - 1);
         const prevBlockQuestions = complianceQuestions.filter(
           q => q.block === questionBlocks[currentBlockIndex - 1].id
@@ -178,7 +159,6 @@ export default function ComplianceChecker() {
   };
 
   const onSubmit = (data: FormValues) => {
-    // Count violations by risk level
     const violations = complianceQuestions.filter(q => {
       const answer = data[q.id];
       return q.invertedLogic ? answer === "si" : answer === "no";
@@ -188,7 +168,6 @@ export default function ComplianceChecker() {
       riskLevel: q.riskLevel
     }));
 
-    // Calculate compliance level
     const hasVerySerious = violations.some(v => v.riskLevel === "muy grave");
     const complianceScore = ((complianceQuestions.length - violations.length) / complianceQuestions.length) * 100;
     
@@ -213,8 +192,7 @@ export default function ComplianceChecker() {
     setAnsweredQuestions([]);
     setCompletedBlocks([]);
   };
-  
-  // If we have results, show them instead of the form
+
   if (results) {
     return (
       <div className="space-y-6 animate-fade-in">
@@ -286,7 +264,7 @@ export default function ComplianceChecker() {
                   <p className="text-sm text-gray-600 mb-2">INWOUT - Plataforma de control horario que garantiza el cumplimiento normativo</p>
                 </div>
                 <a 
-                  href="https://inwout.com/solicitar-demo" 
+                  href="https://inwout.com/demo-online" 
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center text-blue-600 hover:text-blue-800 text-sm"
@@ -305,11 +283,9 @@ export default function ComplianceChecker() {
     );
   }
 
-  // Show the interactive quiz form
   return (
     <Form {...form}>
       <form className="space-y-6">
-        {/* Progress bar */}
         <div className="w-full bg-gray-200 rounded-full h-1.5 mb-4">
           <div 
             className="bg-blue-600 h-1.5 rounded-full transition-all duration-500 ease-in-out" 
@@ -317,7 +293,6 @@ export default function ComplianceChecker() {
           />
         </div>
         
-        {/* Current block header */}
         <div className="mb-4">
           <h3 className="font-semibold text-lg flex items-center gap-2 mb-1">
             <span>{questionBlocks[currentBlockIndex].emoji}</span> 
@@ -328,7 +303,6 @@ export default function ComplianceChecker() {
           </p>
         </div>
         
-        {/* Current question */}
         <div className={cn(
           "transition-all duration-300",
           isTransitioning ? "opacity-0 transform translate-x-4" : "opacity-100 transform translate-x-0"
@@ -366,7 +340,6 @@ export default function ComplianceChecker() {
           />
         </div>
         
-        {/* Navigation buttons */}
         <div className="flex justify-between pt-4">
           <Button 
             type="button" 
@@ -397,8 +370,7 @@ export default function ComplianceChecker() {
       </form>
     </Form>
   );
-  
-  // Helper function to check if we're at the last question of the last block
+
   function isLastQuestionAndBlock() {
     return (
       currentBlockIndex === questionBlocks.length - 1 && 
