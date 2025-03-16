@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Onboarding } from "@/components/Onboarding";
 import DashboardApps from "@/components/dashboard/DashboardApps";
@@ -7,6 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import DashboardHeader from "@/components/DashboardHeader";
 import AdBanner from "@/components/ads/AdBanner";
 import DashboardTools from "@/components/dashboard/DashboardTools";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
@@ -14,16 +14,16 @@ const Dashboard = () => {
   const [companySize, setCompanySize] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkFiltersAndStatus = async () => {
       try {
-        const savedFeatures = localStorage.getItem('selectedFeatures');
-        const savedShowApps = localStorage.getItem('showApps');
-
-        if (savedFeatures && savedShowApps === 'true') {
-          setSelectedFeatures(JSON.parse(savedFeatures));
+        const searchParams = new URLSearchParams(location.search);
+        if (searchParams.get('fromTool') === 'appfinder') {
           setShowApps(true);
+          navigate(location.pathname, { replace: true });
           return;
         }
 
@@ -55,7 +55,7 @@ const Dashboard = () => {
     };
 
     checkFiltersAndStatus();
-  }, []);
+  }, [location, navigate]);
 
   const handleFeatureSelect = async (features: string[]) => {
     setSelectedFeatures(features);
@@ -65,17 +65,17 @@ const Dashboard = () => {
   };
 
   const handleToolFeatureSelect = (features: string[]) => {
-    // Update selected features and ensure the apps are shown
     setSelectedFeatures(features);
     setShowApps(true);
     localStorage.setItem('selectedFeatures', JSON.stringify(features));
     localStorage.setItem('showApps', 'true');
     
-    // Show a toast notification to indicate filters were applied
     toast({
       title: "Filtros aplicados",
       description: `${features.length} características seleccionadas`,
     });
+
+    navigate(`${location.pathname}?fromTool=appfinder`);
   };
 
   const handleSizeSelect = (size: string) => {
@@ -83,14 +83,12 @@ const Dashboard = () => {
   };
 
   const handleFeatureToggle = (feature: string) => {
-    // Special case for clearing all filters
     if (feature === "CLEAR_ALL") {
       setSelectedFeatures([]);
       localStorage.setItem('selectedFeatures', JSON.stringify([]));
       return;
     }
 
-    // Normal toggle behavior
     const newFeatures = selectedFeatures.includes(feature)
       ? selectedFeatures.filter(f => f !== feature)
       : [...selectedFeatures, feature];

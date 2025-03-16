@@ -1,6 +1,6 @@
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { FilterSection } from "./FilterSection";
 import AppsGrid from "@/components/AppsGrid";
 import { useAppsFiltering } from "./useAppsFiltering";
@@ -27,9 +27,20 @@ export default function DashboardApps({
   loading = false
 }: DashboardAppsProps) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [showTopRated, setShowTopRated] = useState(false);
   const [selectedAvailability, setSelectedAvailability] = useState<string[]>([]);
   const [selectedAppsForComparison, setSelectedAppsForComparison] = useState<string[]>([]);
+  const [autoOpenFeatures, setAutoOpenFeatures] = useState(false);
+
+  // Check if we're coming from the tool card
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const fromTool = searchParams.get('fromTool');
+    if (fromTool === 'appfinder') {
+      setAutoOpenFeatures(true);
+    }
+  }, [location]);
 
   const { filteredApps } = useAppsFiltering(
     selectedFeatures,
@@ -101,6 +112,7 @@ export default function DashboardApps({
         selectedAvailability={selectedAvailability}
         onAvailabilityToggle={handleAvailabilityToggle}
         onClearAllFilters={clearAllFilters}
+        autoOpenFeatures={autoOpenFeatures}
       />
 
       {/* Comparison Section */}

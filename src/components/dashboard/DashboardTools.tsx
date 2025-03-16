@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -13,7 +13,7 @@ interface DashboardToolsProps {
 
 export default function DashboardTools({ onFeatureSelect }: DashboardToolsProps) {
   const navigate = useNavigate();
-  const [activeToolIndex, setActiveToolIndex] = useState<number | null>(null);
+  const [activeToolIndex, setActiveToolIndex] = useState<number | null>(1); // Preselect app finder (index 1)
   
   const handleToolClick = (index: number) => {
     setActiveToolIndex(activeToolIndex === index ? null : index);
@@ -64,14 +64,14 @@ export default function DashboardTools({ onFeatureSelect }: DashboardToolsProps)
           </CardContent>
         </Card>
 
-        {/* Encuentra tu app de control horario */}
-        <Card className="overflow-hidden">
-          <CardHeader className="bg-blue-50">
-            <CardTitle className="flex items-center text-lg">
+        {/* Encuentra tu app de control horario - HIGHLIGHTED CARD */}
+        <Card className={`overflow-hidden transform transition-all duration-200 ${activeToolIndex === 1 ? 'ring-2 ring-blue-400 shadow-lg scale-105' : ''}`}>
+          <CardHeader className="bg-blue-100">
+            <CardTitle className="flex items-center text-lg text-blue-800">
               <Search className="mr-2 h-5 w-5 text-blue-600" />
               Encuentra tu app de control horario
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-blue-700">
               Ayuda para encontrar la app perfecta para ti
             </CardDescription>
           </CardHeader>
@@ -82,11 +82,11 @@ export default function DashboardTools({ onFeatureSelect }: DashboardToolsProps)
               </ScrollArea>
             ) : (
               <div className="p-4 flex flex-col items-center">
-                <p className="text-sm text-center text-gray-600 mb-4">
+                <p className="text-sm text-center text-blue-700 mb-4 font-medium">
                   Selecciona las características que necesitas para tu empresa
                 </p>
                 <Button 
-                  className="bg-blue-500 hover:bg-blue-600"
+                  className="bg-blue-500 hover:bg-blue-600 font-medium text-base px-6 py-5"
                   onClick={() => handleToolClick(1)}
                 >
                   Buscar ahora

@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { 
   Clock, 
@@ -37,7 +36,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface FilterSectionProps {
   selectedFeatures: string[];
@@ -49,6 +48,7 @@ interface FilterSectionProps {
   selectedAvailability: string[];
   onAvailabilityToggle: (option: string) => void;
   onClearAllFilters?: () => void;
+  autoOpenFeatures?: boolean;
 }
 
 const features = [
@@ -102,8 +102,15 @@ export function FilterSection({
   selectedAvailability = [],
   onAvailabilityToggle,
   onClearAllFilters,
+  autoOpenFeatures = false,
 }: FilterSectionProps) {
-  const [showFeatures, setShowFeatures] = useState(false);
+  const [showFeatures, setShowFeatures] = useState(autoOpenFeatures);
+  
+  useEffect(() => {
+    if (autoOpenFeatures) {
+      setShowFeatures(true);
+    }
+  }, [autoOpenFeatures]);
   
   const hasActiveFilters = selectedFeatures.length > 0 || 
                           selectedTypes.length > 0 || 
