@@ -1,11 +1,11 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, AlertTriangle, AlertCircle } from "lucide-react";
+import { CheckCircle, AlertTriangle, AlertCircle, ExternalLink } from "lucide-react";
+import AdBanner from "../ads/AdBanner";
 
 // Define the questions with their risk levels
 const complianceQuestions = [
@@ -188,12 +188,31 @@ export default function ComplianceChecker() {
             )}
           </CardContent>
           <CardFooter className="flex flex-col space-y-2">
-            <Button 
-              className="w-full bg-blue-500 hover:bg-blue-600"
-              onClick={() => window.open("https://inwout.com/solicitar-demo", "_blank")}
-            >
-              Solicita una Demo de INWOUT y cumple con la normativa
-            </Button>
+            <div className="w-full bg-gray-50 border border-gray-200 rounded-md p-3 relative">
+              <div className="flex items-center">
+                <div className="absolute top-1 right-1 bg-yellow-100 text-yellow-800 text-xs px-1 rounded flex items-center">
+                  <img 
+                    src="/public/lovable-uploads/d48380f9-f5c9-4f3f-8184-8ef27150846d.png" 
+                    alt="Ad" 
+                    className="w-3 h-3 mr-1" 
+                  />
+                  Anuncio
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-gray-700">Solución Recomendada:</p>
+                  <p className="text-sm text-gray-600 mb-2">INWOUT - Plataforma de control horario que garantiza el cumplimiento normativo</p>
+                </div>
+                <a 
+                  href="https://inwout.com/solicitar-demo" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center text-blue-600 hover:text-blue-800 text-sm"
+                >
+                  Solicitar Demo
+                  <ExternalLink className="h-4 w-4 ml-1" />
+                </a>
+              </div>
+            </div>
             <Button variant="outline" className="w-full" onClick={resetForm}>
               Volver a realizar el test
             </Button>
