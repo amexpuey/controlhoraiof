@@ -9,7 +9,7 @@ interface BlogPostSidebarProps {
 
 export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 sticky top-4">
       {/* Sidebar Ad */}
       <AdBanner position="sidebar" adSize="300x250" />
       
