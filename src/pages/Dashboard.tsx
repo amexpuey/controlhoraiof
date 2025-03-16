@@ -84,7 +84,7 @@ const Dashboard = () => {
           <p className="text-gray-400 text-sm">Espacio Reservado para Anuncios</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 relative">
           {/* Main Content - 3/4 width on desktop */}
           <div className="lg:col-span-3">
             {!showApps ? (
@@ -108,8 +108,8 @@ const Dashboard = () => {
             )}
           </div>
 
-          {/* Side Ad Container - 1/4 width, only visible on desktop */}
-          <div className="hidden lg:block h-[600px] bg-gray-100 rounded-lg border border-gray-200 overflow-hidden">
+          {/* Side Ad Container - 1/4 width, only visible on desktop - Now fixed when scrolling */}
+          <div className="hidden lg:block lg:sticky lg:top-4 h-[600px] bg-gray-100 rounded-lg border border-gray-200 overflow-hidden">
             <div className="h-full flex items-center justify-center">
               <p className="text-gray-400 text-sm">Espacio Reservado para Anuncios</p>
             </div>
