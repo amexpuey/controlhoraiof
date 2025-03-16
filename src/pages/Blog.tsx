@@ -7,7 +7,6 @@ import BlogLayout from "@/components/blog/BlogLayout";
 import BlogHeader from "@/components/blog/BlogHeader";
 import FeaturedPost, { BlogPost } from "@/components/blog/FeaturedPost";
 import BlogPostsGrid from "@/components/blog/BlogPostsGrid";
-import InteractiveToolsSection from "@/components/blog/InteractiveToolsSection";
 import { mockBlogPosts } from "@/data/mockBlogPosts";
 
 export default function Blog() {
@@ -110,9 +109,6 @@ export default function Blog() {
         <div className="flex justify-center my-10">
           <AdBanner position="in-content" adSize="300x250" />
         </div>
-        
-        {/* Interactive Tools Section */}
-        <InteractiveToolsSection />
         
         {/* Bottom Ad */}
         <div className="flex justify-center mt-10">
