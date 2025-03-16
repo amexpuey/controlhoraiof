@@ -8,6 +8,7 @@ import BlogPostContent from "@/components/blog/BlogPostContent";
 import BlogPostSidebar from "@/components/blog/BlogPostSidebar";
 import BlogLayout from "@/components/blog/BlogLayout";
 import type { BlogPost } from "@/components/blog/FeaturedPost";
+import { mockBlogPosts } from "@/data/mockBlogPosts";
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -18,14 +19,23 @@ export default function BlogPost() {
     const fetchPost = async () => {
       try {
         setLoading(true);
+        
+        // First try to get from Supabase
         const { data, error } = await supabase
           .from('blog_posts')
           .select('*')
           .eq('slug', slug)
           .single();
           
-        if (error) throw error;
-        setPost(data as BlogPost);
+        if (!error && data) {
+          setPost(data as BlogPost);
+        } else {
+          // If not found in Supabase, check mock data
+          const mockPost = mockBlogPosts.find(p => p.slug === slug);
+          if (mockPost) {
+            setPost(mockPost);
+          }
+        }
       } catch (error) {
         console.error('Error fetching blog post:', error);
       } finally {

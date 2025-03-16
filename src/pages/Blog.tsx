@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
@@ -7,6 +8,7 @@ import BlogHeader from "@/components/blog/BlogHeader";
 import FeaturedPost, { BlogPost } from "@/components/blog/FeaturedPost";
 import BlogPostsGrid from "@/components/blog/BlogPostsGrid";
 import InteractiveToolsSection from "@/components/blog/InteractiveToolsSection";
+import { mockBlogPosts } from "@/data/mockBlogPosts";
 
 export default function Blog() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -17,17 +19,22 @@ export default function Blog() {
     const fetchPosts = async () => {
       try {
         setLoading(true);
+        // Try to fetch from Supabase first
         const { data, error } = await supabase
           .from('blog_posts')
           .select('*')
           .order('published_at', { ascending: false });
           
-        if (error) throw error;
-        if (data && data.length > 0) {
+        if (!error && data && data.length > 0) {
           setPosts(data as BlogPost[]);
+        } else {
+          // If no posts or error, use mock data
+          setPosts(mockBlogPosts);
         }
       } catch (error) {
         console.error('Error fetching blog posts:', error);
+        // Fallback to mock data
+        setPosts(mockBlogPosts);
       } finally {
         setLoading(false);
       }
@@ -81,7 +88,7 @@ export default function Blog() {
             </TabsTrigger>
           </TabsList>
           
-          <TabsContent value="all" className="space-y-4">
+          <TabsContent value="all" className="space-y-8">
             {/* Featured Post */}
             {filteredPosts.length > 0 && (
               <FeaturedPost post={filteredPosts[0]} />
@@ -93,18 +100,41 @@ export default function Blog() {
             )}
           </TabsContent>
           
-          {/* Same content for other tabs, will be filtered by the state */}
-          <TabsContent value="Time Tracking" className="space-y-4">
-            {/* Content is filtered by the activeCategory state */}
+          {/* Same content structure for other tabs, filtered by activeCategory */}
+          <TabsContent value="Time Tracking" className="space-y-8">
+            {filteredPosts.length > 0 && (
+              <>
+                <FeaturedPost post={filteredPosts[0]} />
+                {filteredPosts.length > 1 && <BlogPostsGrid posts={filteredPosts.slice(1)} />}
+              </>
+            )}
           </TabsContent>
-          <TabsContent value="HR Compliance" className="space-y-4">
-            {/* Content is filtered by the activeCategory state */}
+          
+          <TabsContent value="HR Compliance" className="space-y-8">
+            {filteredPosts.length > 0 && (
+              <>
+                <FeaturedPost post={filteredPosts[0]} />
+                {filteredPosts.length > 1 && <BlogPostsGrid posts={filteredPosts.slice(1)} />}
+              </>
+            )}
           </TabsContent>
-          <TabsContent value="Productivity" className="space-y-4">
-            {/* Content is filtered by the activeCategory state */}
+          
+          <TabsContent value="Productivity" className="space-y-8">
+            {filteredPosts.length > 0 && (
+              <>
+                <FeaturedPost post={filteredPosts[0]} />
+                {filteredPosts.length > 1 && <BlogPostsGrid posts={filteredPosts.slice(1)} />}
+              </>
+            )}
           </TabsContent>
-          <TabsContent value="Remote Work" className="space-y-4">
-            {/* Content is filtered by the activeCategory state */}
+          
+          <TabsContent value="Remote Work" className="space-y-8">
+            {filteredPosts.length > 0 && (
+              <>
+                <FeaturedPost post={filteredPosts[0]} />
+                {filteredPosts.length > 1 && <BlogPostsGrid posts={filteredPosts.slice(1)} />}
+              </>
+            )}
           </TabsContent>
         </Tabs>
         
