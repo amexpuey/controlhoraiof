@@ -264,7 +264,7 @@ export default function ComplianceChecker() {
                 <div className="flex items-center gap-2">
                   <div className="w-10 h-10 flex-shrink-0">
                     <img 
-                      src="/public/lovable-uploads/9f226ae3-40a9-4b11-879e-fa474b885dfb.png" 
+                      src="https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/logos/android-chrome-192x192.png" 
                       alt="INWOUT Logo" 
                       className="w-full h-full object-contain" 
                     />
