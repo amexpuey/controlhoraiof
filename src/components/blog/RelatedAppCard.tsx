@@ -5,6 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 
+// Base URL for Supabase storage
+const STORAGE_BASE_URL = "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/blog_img";
+
 interface RelatedAppCardProps {
   appId: string;
 }
@@ -29,7 +32,7 @@ export default function RelatedAppCard({ appId }: RelatedAppCardProps) {
         setAppData({
           id: appId,
           title: "TimeTracker Pro",
-          logo_url: "/lovable-uploads/f7394dd3-ddba-4a77-9701-646eed9be539.png",
+          logo_url: `${STORAGE_BASE_URL}/puey_IMAGE_TYPE_logo__GENRE_Time_Tracking__EMOTION_Rel_65f6ce82-d242-4113-a48c-2e8c1bf5a35c_1.png`,
           slug: "timetracker-pro"
         });
       }
