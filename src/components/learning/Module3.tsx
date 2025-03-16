@@ -198,13 +198,13 @@ export default function Module3({ onComplete }: Module3Props) {
         "Sin necesidad de intervención del usuario"
       ],
       cons: [
-        "No apto para oficinas sin movilidad",
+        "No apto para empleados en movilidad",
         "Puede requerir permisos de ubicación en los dispositivos"
       ]
     },
     {
       icon: Smartphone,
-      title: "App Nativa / Web App (Móvil)",
+      title: "App Nativa",
       description: "Fichaje manual desde el smartphone del empleado",
       pros: [
         "Funciona en cualquier lugar",
