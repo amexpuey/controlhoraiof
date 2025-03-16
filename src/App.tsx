@@ -8,6 +8,15 @@ import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
+import MainHeader from "@/components/MainHeader";
+
+// Wrap components that need consistent layout
+const WithLayout = ({ children }: { children: React.ReactNode }) => (
+  <>
+    <MainHeader />
+    {children}
+  </>
+);
 
 // Move router configuration outside component to prevent recreation
 const router = createBrowserRouter([
@@ -37,7 +46,7 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <Dashboard />,
+    element: <Index />,
   },
 ]);
 
