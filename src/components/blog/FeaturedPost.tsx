@@ -21,6 +21,13 @@ interface FeaturedPostProps {
 }
 
 export default function FeaturedPost({ post }: FeaturedPostProps) {
+  // Format the date in Spanish
+  const formattedDate = new Date(post.published_at).toLocaleDateString('es-ES', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+
   return (
     <div className="relative bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
       <div className="flex flex-col md:flex-row">
@@ -43,7 +50,7 @@ export default function FeaturedPost({ post }: FeaturedPostProps) {
           <div className="mt-auto">
             <div className="flex items-center text-gray-500 mb-4">
               <CalendarDays className="w-4 h-4 mr-1" />
-              <span className="text-sm">{new Date(post.published_at).toLocaleDateString('es-ES')}</span>
+              <span className="text-sm">{formattedDate}</span>
               <span className="mx-2">•</span>
               <span className="text-sm">{post.reading_time} min de lectura</span>
             </div>

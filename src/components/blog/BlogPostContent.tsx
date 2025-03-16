@@ -3,6 +3,7 @@ import React from "react";
 import type { BlogPost } from "@/components/blog/FeaturedPost";
 import { CalendarDays, Clock, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ReactMarkdown from "react-markdown";
 
 interface BlogPostContentProps {
   post: BlogPost;
@@ -53,9 +54,9 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
         </h1>
         
         {/* Post Content */}
-        <div className="prose max-w-none mb-6">
+        <div className="prose prose-lg max-w-none mb-6">
           {post.content && (
-            <div dangerouslySetInnerHTML={{ __html: post.content }} />
+            <ReactMarkdown>{post.content}</ReactMarkdown>
           )}
         </div>
         
