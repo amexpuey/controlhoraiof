@@ -8,12 +8,16 @@ import { supabase } from "@/integrations/supabase/client";
 // Base URL for Supabase storage
 const STORAGE_BASE_URL = "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/blog_img";
 
+// Default fallback image if app image is not found
+const DEFAULT_APP_IMAGE = `${STORAGE_BASE_URL}/puey_IMAGE_TYPE_Workplace_photo__GENRE_Employment__Law__EMOTI_37ccdd7d-df45-4edf-a1bd-ac4cf42b57d0_3.png`;
+
 interface RelatedAppCardProps {
   appId: string;
 }
 
 export default function RelatedAppCard({ appId }: RelatedAppCardProps) {
   const [appData, setAppData] = useState<any>(null);
+  const [imageError, setImageError] = useState(false);
   
   useEffect(() => {
     const fetchAppData = async () => {
@@ -32,7 +36,7 @@ export default function RelatedAppCard({ appId }: RelatedAppCardProps) {
         setAppData({
           id: appId,
           title: "TimeTracker Pro",
-          logo_url: `${STORAGE_BASE_URL}/puey_IMAGE_TYPE_Workplace_photo__GENRE_Employment__Law__EMOTI_37ccdd7d-df45-4edf-a1bd-ac4cf42b57d0_3.png`,
+          logo_url: DEFAULT_APP_IMAGE,
           slug: "timetracker-pro"
         });
       }
@@ -43,14 +47,19 @@ export default function RelatedAppCard({ appId }: RelatedAppCardProps) {
   
   if (!appData) return null;
   
+  const handleImageError = () => {
+    setImageError(true);
+  };
+  
   return (
     <Link to={`/mejores-apps-control-horario/${appData.slug}`} className="block">
       <Card className="hover:shadow-md transition-shadow">
         <CardHeader className="flex flex-row items-center gap-3 pb-2">
           <img 
-            src={appData.logo_url} 
+            src={imageError ? DEFAULT_APP_IMAGE : appData.logo_url} 
             alt={appData.title} 
-            className="w-10 h-10 rounded"
+            className="w-10 h-10 rounded object-cover"
+            onError={handleImageError}
           />
           <CardTitle className="text-base">{appData.title}</CardTitle>
         </CardHeader>

@@ -55,9 +55,11 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
         
         {/* Post Content */}
         <div className="prose prose-lg max-w-none mb-6">
-          {post.content && (
+          {post.content && post.slug === "como-cumplir-normativa-registro-horario" ? (
+            <div dangerouslySetInnerHTML={{ __html: post.content }} />
+          ) : post.content ? (
             <ReactMarkdown>{post.content}</ReactMarkdown>
-          )}
+          ) : null}
         </div>
         
         {/* Share Buttons */}
