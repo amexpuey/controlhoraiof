@@ -14,6 +14,7 @@ export type BlogPost = {
   author: string;
   reading_time: number;
   related_apps?: string[];
+  content?: string; // Added the content property as optional
 };
 
 interface FeaturedPostProps {
