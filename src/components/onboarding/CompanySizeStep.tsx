@@ -54,7 +54,11 @@ export function CompanySizeStep({ selectedSize, onSizeSelect }: CompanySizeStepP
           >
             <Button
               variant={selectedSize === size.id ? "default" : "outline"}
-              className={`h-24 text-lg w-full ${selectedSize === size.id ? 'bg-yellow-500 hover:bg-yellow-600' : 'hover:border-yellow-300 hover:bg-yellow-50'}`}
+              className={`h-24 text-lg w-full ${
+                selectedSize === size.id 
+                  ? 'bg-yellow-500 hover:bg-yellow-600' 
+                  : 'hover:border-yellow-300 hover:bg-yellow-50'
+              }`}
               onClick={() => handleSizeSelect(size.id)}
             >
               <div className="flex items-center justify-center w-full">
