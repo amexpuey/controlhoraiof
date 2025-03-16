@@ -31,6 +31,8 @@ export function Onboarding({ onFeaturesSelect, onSizeSelect }: OnboardingProps) 
   };
 
   const handleFeaturesSubmit = () => {
+    // Scroll to top before submitting
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     onFeaturesSelect(selectedFeatures);
   };
 

@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+
+import { useState, useEffect, useRef } from "react";
 import { Onboarding } from "@/components/Onboarding";
 import DashboardApps from "@/components/dashboard/DashboardApps";
 import { supabase } from "@/integrations/supabase/client";
@@ -16,6 +17,7 @@ const Dashboard = () => {
   const { toast } = useToast();
   const location = useLocation();
   const navigate = useNavigate();
+  const appsListRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const checkFiltersAndStatus = async () => {
@@ -56,6 +58,15 @@ const Dashboard = () => {
 
     checkFiltersAndStatus();
   }, [location, navigate]);
+
+  // Scroll to the top of the apps list when transitioning from onboarding to apps
+  useEffect(() => {
+    if (showApps && appsListRef.current) {
+      setTimeout(() => {
+        appsListRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }, [showApps]);
 
   const handleFeatureSelect = async (features: string[]) => {
     setSelectedFeatures(features);
@@ -120,23 +131,25 @@ const Dashboard = () => {
           />
         ) : (
           <>
-            <DashboardTools onFeatureSelect={handleToolFeatureSelect} />
-            
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 relative mt-8">
-              <div className="lg:col-span-3">
-                <DashboardApps 
-                  selectedFeatures={selectedFeatures}
-                  onFeatureToggle={handleFeatureToggle}
-                  searchQuery={searchQuery}
-                  setSearchQuery={setSearchQuery}
-                />
-              </div>
+            <div ref={appsListRef} className="scroll-mt-4">
+              <DashboardTools onFeatureSelect={handleToolFeatureSelect} />
+              
+              <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 relative mt-8">
+                <div className="lg:col-span-3">
+                  <DashboardApps 
+                    selectedFeatures={selectedFeatures}
+                    onFeatureToggle={handleFeatureToggle}
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
+                  />
+                </div>
 
-              <div className="hidden lg:block sticky top-4 h-fit">
-                <AdBanner
-                  position="sidebar"
-                  adSize="300x600"
-                />
+                <div className="hidden lg:block sticky top-4 h-fit">
+                  <AdBanner
+                    position="sidebar"
+                    adSize="300x600"
+                  />
+                </div>
               </div>
             </div>
           </>
