@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Onboarding } from "@/components/Onboarding";
 import DashboardApps from "@/components/dashboard/DashboardApps";
@@ -14,22 +13,18 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
 
-  // Check saved filters and onboarding status on component mount
   useEffect(() => {
     const checkFiltersAndStatus = async () => {
       try {
-        // First check if we have saved filters
         const savedFeatures = localStorage.getItem('selectedFeatures');
         const savedShowApps = localStorage.getItem('showApps');
 
         if (savedFeatures && savedShowApps === 'true') {
-          // If we have saved filters, use them and show apps immediately
           setSelectedFeatures(JSON.parse(savedFeatures));
           setShowApps(true);
-          return; // Skip checking onboarding status if we have saved filters
+          return;
         }
 
-        // If no saved filters, check onboarding status
         const { data: { session } } = await supabase.auth.getSession();
         
         if (session?.user) {
@@ -48,7 +43,6 @@ const Dashboard = () => {
             setSelectedFeatures(profile.selected_features || []);
             setCompanySize(profile.company_size || "");
             setShowApps(true);
-            // Save to localStorage for future returns
             localStorage.setItem('selectedFeatures', JSON.stringify(profile.selected_features || []));
             localStorage.setItem('showApps', 'true');
           }
@@ -81,15 +75,14 @@ const Dashboard = () => {
       />
 
       <main className="container mx-auto px-4 pb-20">
-        {/* Top Ad Container */}
-        <AdBanner 
-          className="w-full h-24 my-4" 
-          position="top"
-          adSize="728x90"
-        />
+        <div className="my-4 flex justify-center">
+          <AdBanner 
+            position="top"
+            adSize="728x90"
+          />
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 relative">
-          {/* Main Content - 3/4 width on desktop */}
           <div className="lg:col-span-3">
             {!showApps ? (
               <Onboarding
@@ -112,22 +105,20 @@ const Dashboard = () => {
             )}
           </div>
 
-          {/* Side Ad Container - 1/4 width, only visible on desktop - Now fixed when scrolling */}
-          <div className="hidden lg:block lg:sticky lg:top-4 h-[600px] bg-gray-100 rounded-lg border border-gray-200 overflow-hidden">
+          <div className="hidden lg:flex lg:sticky lg:top-4 justify-center">
             <AdBanner
-              className="h-full"
               position="sidebar"
               adSize="300x600"
             />
           </div>
         </div>
 
-        {/* Bottom Ad Container */}
-        <AdBanner 
-          className="w-full h-24 my-8" 
-          position="bottom"
-          adSize="728x90"
-        />
+        <div className="my-8 flex justify-center">
+          <AdBanner 
+            position="bottom"
+            adSize="728x90"
+          />
+        </div>
       </main>
     </div>
   );

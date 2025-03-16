@@ -76,9 +76,8 @@ export default function UserView() {
       <AppHeader company={company} />
 
       {/* Top Ad Banner */}
-      <div className="container mx-auto px-4 mt-6">
+      <div className="container mx-auto px-4 mt-6 flex justify-center">
         <AdBanner 
-          className="w-full h-24"
           position="app-page"
           adSize="728x90"
         />
@@ -90,40 +89,42 @@ export default function UserView() {
             <AboutSection company={company} />
             
             {/* In-content Ad */}
-            <AdBanner 
-              className="w-full h-[250px]"
-              position="app-page"
-              adSize="300x250"
-            />
+            <div className="flex justify-center">
+              <AdBanner 
+                position="app-page"
+                adSize="300x250"
+              />
+            </div>
             
             <FeaturesSection company={company} />
             <HighlightsSection company={company} />
             
             {/* Bottom Content Ad */}
-            <AdBanner 
-              className="w-full h-[250px]"
-              position="app-page"
-              adSize="300x250"
-            />
+            <div className="flex justify-center">
+              <AdBanner 
+                position="app-page"
+                adSize="300x250"
+              />
+            </div>
           </div>
           
           <div className="space-y-6">
             <Sidebar company={company} />
             
             {/* Sidebar Ad */}
-            <AdBanner 
-              className="w-full h-[600px] sticky top-4"
-              position="app-page"
-              adSize="300x600"
-            />
+            <div className="flex justify-center sticky top-4">
+              <AdBanner 
+                position="app-page"
+                adSize="300x600"
+              />
+            </div>
           </div>
         </div>
       </div>
       
       {/* Bottom Ad Banner */}
-      <div className="container mx-auto px-4 mb-6">
+      <div className="container mx-auto px-4 mb-6 flex justify-center">
         <AdBanner 
-          className="w-full h-24"
           position="app-page"
           adSize="728x90"
         />

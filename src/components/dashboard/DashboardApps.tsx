@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FilterSection } from "./FilterSection";
@@ -121,11 +120,12 @@ export default function DashboardApps({
           
           {/* Add an ad banner after each group except the last one */}
           {groupIndex < appsGroups.length - 1 && (
-            <AdBanner
-              className="w-full h-[250px]"
-              position="in-content"
-              adSize="970x250"
-            />
+            <div className="flex justify-center">
+              <AdBanner
+                position="in-content"
+                adSize="970x250"
+              />
+            </div>
           )}
         </div>
       ))}
