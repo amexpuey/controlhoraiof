@@ -123,9 +123,6 @@ export default function DashboardTools({ onFeatureSelect }: DashboardToolsProps)
           <LearningModules />
         </DialogContent>
       </Dialog>
-
-      {/* Embedded Learning Modules */}
-      <LearningModules />
     </>
   );
 }

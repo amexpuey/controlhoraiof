@@ -8,6 +8,7 @@ import DashboardHeader from "@/components/DashboardHeader";
 import AdBanner from "@/components/ads/AdBanner";
 import DashboardTools from "@/components/dashboard/DashboardTools";
 import { useLocation, useNavigate } from "react-router-dom";
+import LearningModules from "@/components/learning/LearningModules";
 
 const Dashboard = () => {
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
@@ -150,6 +151,11 @@ const Dashboard = () => {
                     adSize="300x600"
                   />
                 </div>
+              </div>
+              
+              {/* Learning Modules Section - Added below the app grid */}
+              <div className="mt-16 mb-8">
+                <LearningModules />
               </div>
             </div>
           </>
