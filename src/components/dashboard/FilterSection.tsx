@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { 
   Clock, 
@@ -140,7 +141,7 @@ export function FilterSection({
         <div>
           <Button
             variant="ghost"
-            className="w-full flex justify-between items-center mb-3"
+            className="w-full flex justify-between items-center mb-3 features-toggle-button"
             onClick={() => setShowFeatures(!showFeatures)}
           >
             <span className="text-sm font-medium">

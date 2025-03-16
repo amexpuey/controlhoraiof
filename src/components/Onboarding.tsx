@@ -52,7 +52,7 @@ export function Onboarding({ onFeaturesSelect, onSizeSelect }: OnboardingProps) 
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-4">
+    <div className="w-full max-w-4xl mx-auto px-4 onboarding-section">
       <motion.div 
         className="bg-white shadow-xl rounded-xl p-8 border border-yellow-100"
         initial={{ opacity: 0, y: 20 }}

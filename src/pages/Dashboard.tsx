@@ -19,6 +19,7 @@ const Dashboard = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const appsListRef = useRef<HTMLDivElement>(null);
+  const filterSectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const checkFiltersAndStatus = async () => {
@@ -126,17 +127,19 @@ const Dashboard = () => {
         </div>
 
         {!showApps ? (
-          <Onboarding
-            onFeaturesSelect={handleFeatureSelect}
-            onSizeSelect={handleSizeSelect}
-          />
+          <div className="onboarding-section">
+            <Onboarding
+              onFeaturesSelect={handleFeatureSelect}
+              onSizeSelect={handleSizeSelect}
+            />
+          </div>
         ) : (
           <>
             <div ref={appsListRef} className="scroll-mt-4">
               <DashboardTools onFeatureSelect={handleToolFeatureSelect} />
               
               <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 relative mt-8">
-                <div className="lg:col-span-3">
+                <div ref={filterSectionRef} className="lg:col-span-3 filter-section scroll-mt-20">
                   <DashboardApps 
                     selectedFeatures={selectedFeatures}
                     onFeatureToggle={handleFeatureToggle}

@@ -18,10 +18,25 @@ export default function DashboardHeader({
   isOnboarding = false
 }: DashboardHeaderProps) {
   const handleEmpezarAhora = () => {
-    // Scroll to the onboarding section
-    const onboardingElement = document.querySelector('.onboarding-section');
-    if (onboardingElement) {
-      onboardingElement.scrollIntoView({ behavior: 'smooth' });
+    // If in onboarding mode, scroll to onboarding section
+    if (isOnboarding) {
+      const onboardingElement = document.querySelector('.onboarding-section');
+      if (onboardingElement) {
+        onboardingElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // If in dashboard mode, scroll to filter section
+      const filterElement = document.querySelector('.filter-section');
+      if (filterElement) {
+        filterElement.scrollIntoView({ behavior: 'smooth' });
+        
+        // Also automatically open the features section if it's closed
+        const featuresButton = document.querySelector('.features-toggle-button');
+        if (featuresButton) {
+          // Use click() to simulate a user click on the features toggle button
+          (featuresButton as HTMLElement).click();
+        }
+      }
     }
   };
 
