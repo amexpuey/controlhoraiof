@@ -1,6 +1,8 @@
+
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, ArrowRight } from "lucide-react";
+import { CheckCircle2, ArrowRight, Check } from "lucide-react";
 import { OnboardingStepProps } from "@/types/onboarding";
+import { motion } from "framer-motion";
 
 const features = [
   { id: "Control Horario", label: "Control Horario" },
@@ -38,41 +40,93 @@ interface FeaturesStepProps extends OnboardingStepProps {
 }
 
 export function FeaturesStep({ selectedFeatures, onFeatureToggle, onNext }: FeaturesStepProps) {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        when: "beforeChildren",
+        staggerChildren: 0.05
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: { opacity: 1, scale: 1 }
+  };
+
   return (
     <div className="space-y-8">
-      <div className="text-center">
-        <CheckCircle2 className="w-12 h-12 mx-auto mb-4 text-primary" />
-        <h2 className="text-2xl font-bold mb-2">
-          Selecciona las características necesarias
+      <motion.div 
+        className="text-center"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <CheckCircle2 className="w-16 h-16 mx-auto mb-4 text-yellow-500" />
+        <h2 className="text-2xl font-bold mb-2 text-yellow-800">
+          ¿Qué características necesitas?
         </h2>
-        <p className="text-gray-600">
-          Marca todas las funciones que necesitas
+        <p className="text-yellow-700 max-w-md mx-auto">
+          Selecciona todas las funcionalidades que son importantes para tu empresa
         </p>
-      </div>
+      </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <motion.div 
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {features.map((feature) => (
-          <Button
-            key={feature.id}
-            variant={selectedFeatures.includes(feature.id) ? "default" : "outline"}
-            className="h-16 text-sm"
-            onClick={() => onFeatureToggle(feature.id)}
-          >
-            {feature.label}
-          </Button>
+          <motion.div key={feature.id} variants={itemVariants}>
+            <Button
+              variant={selectedFeatures.includes(feature.id) ? "default" : "outline"}
+              className={`h-16 text-sm justify-start w-full ${
+                selectedFeatures.includes(feature.id) 
+                  ? 'bg-yellow-500 hover:bg-yellow-600 text-white' 
+                  : 'hover:border-yellow-300 hover:bg-yellow-50'
+              }`}
+              onClick={() => onFeatureToggle(feature.id)}
+            >
+              {selectedFeatures.includes(feature.id) && (
+                <Check className="mr-2 h-4 w-4 flex-shrink-0" />
+              )}
+              <span className="truncate">{feature.label}</span>
+            </Button>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
-      <div className="flex justify-center">
+      <motion.div 
+        className="flex justify-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8 }}
+      >
         <Button
           onClick={onNext}
-          className="w-full md:w-auto"
+          className={`w-full md:w-auto ${selectedFeatures.length > 0 ? 'bg-yellow-500 hover:bg-yellow-600' : ''}`}
           disabled={selectedFeatures.length === 0}
         >
-          Continuar
+          Ver soluciones recomendadas
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
-      </div>
+      </motion.div>
+
+      <motion.div 
+        className="text-center text-yellow-700 mt-2 text-sm"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+      >
+        <p>
+          {selectedFeatures.length === 0 
+            ? "Selecciona al menos una característica para continuar" 
+            : `${selectedFeatures.length} características seleccionadas`}
+        </p>
+      </motion.div>
     </div>
   );
 }
