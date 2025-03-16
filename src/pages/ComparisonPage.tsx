@@ -1,11 +1,9 @@
-
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import ComparisonHeader from "@/components/comparison/ComparisonHeader";
 import ComparisonTable from "@/components/comparison/ComparisonTable";
-import AdBanner from "@/components/ads/AdBanner";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
@@ -14,12 +12,8 @@ export default function ComparisonPage() {
   const [apps, setApps] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [adKey, setAdKey] = useState(Date.now());
 
   useEffect(() => {
-    // Regenerate adKey when component mounts
-    setAdKey(Date.now());
-    
     const fetchApps = async () => {
       try {
         if (!ids) {
@@ -94,20 +88,7 @@ export default function ComparisonPage() {
     <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
       <div className="container py-12">
         <ComparisonHeader />
-        
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mt-8">
-          <div className="lg:col-span-3">
-            <ComparisonTable apps={apps} />
-          </div>
-          
-          <div className="hidden lg:flex lg:sticky lg:top-4 justify-center">
-            <AdBanner 
-              key={`sidebar-${adKey}`}
-              position="sidebar"
-              adSize="300x600"
-            />
-          </div>
-        </div>
+        <ComparisonTable apps={apps} />
       </div>
     </div>
   );

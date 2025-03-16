@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FilterSection } from "./FilterSection";
 import AppsGrid from "@/components/AppsGrid";
@@ -28,11 +28,6 @@ export default function DashboardApps({
   const [showTopRated, setShowTopRated] = useState(false);
   const [selectedAvailability, setSelectedAvailability] = useState<string[]>([]);
   const [selectedAppsForComparison, setSelectedAppsForComparison] = useState<string[]>([]);
-  const [adKey, setAdKey] = useState(Date.now());
-
-  useEffect(() => {
-    setAdKey(Date.now());
-  }, []);
 
   const { filteredApps } = useAppsFiltering(
     selectedFeatures,
@@ -67,6 +62,7 @@ export default function DashboardApps({
     }
   };
 
+  // Split apps into groups of two rows (6 apps per row on desktop)
   const appsGroups = [];
   const appsPerRow = 3;
   const rowsPerGroup = 2;
@@ -89,6 +85,7 @@ export default function DashboardApps({
         onAvailabilityToggle={handleAvailabilityToggle}
       />
 
+      {/* Comparison Section */}
       {selectedAppsForComparison.length > 0 && (
         <div className="bg-white p-6 rounded-lg shadow-sm">
           <h2 className="text-xl font-semibold mb-4">
@@ -110,6 +107,7 @@ export default function DashboardApps({
         </div>
       )}
 
+      {/* Display apps with ad banners between groups */}
       {appsGroups.map((group, groupIndex) => (
         <div key={groupIndex} className="space-y-8">
           <AppsGrid
@@ -120,10 +118,10 @@ export default function DashboardApps({
             onCompareToggle={handleCompareToggle}
           />
           
+          {/* Add an ad banner after each group except the last one */}
           {groupIndex < appsGroups.length - 1 && (
             <div className="flex justify-center">
               <AdBanner
-                key={`in-content-${adKey}-${groupIndex}`}
                 position="in-content"
                 adSize="970x250"
               />
@@ -132,6 +130,7 @@ export default function DashboardApps({
         </div>
       ))}
 
+      {/* Show message if no apps are found */}
       {filteredApps.length === 0 && (
         <div className="text-center text-gray-600 py-8">
           No se encontraron aplicaciones que coincidan con tus criterios.

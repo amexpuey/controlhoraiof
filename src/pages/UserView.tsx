@@ -8,16 +8,10 @@ import { FeaturesSection } from "@/components/user-view/FeaturesSection";
 import { HighlightsSection } from "@/components/user-view/HighlightsSection";
 import { Sidebar } from "@/components/user-view/Sidebar";
 import AdBanner from "@/components/ads/AdBanner";
-import { useEffect, useState } from "react";
 
 export default function UserView() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const [adKey, setAdKey] = useState(Date.now());
-
-  useEffect(() => {
-    setAdKey(Date.now());
-  }, [slug]);
 
   const { data: company, isLoading, error } = useQuery({
     queryKey: ['company', slug],
@@ -81,26 +75,59 @@ export default function UserView() {
     <div className="min-h-screen bg-gray-50">
       <AppHeader company={company} />
 
+      {/* Top Ad Banner */}
+      <div className="container mx-auto px-4 mt-6 flex justify-center">
+        <AdBanner 
+          position="app-page"
+          adSize="728x90"
+        />
+      </div>
+
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
             <AboutSection company={company} />
+            
+            {/* In-content Ad */}
+            <div className="flex justify-center">
+              <AdBanner 
+                position="app-page"
+                adSize="300x250"
+              />
+            </div>
+            
             <FeaturesSection company={company} />
             <HighlightsSection company={company} />
+            
+            {/* Bottom Content Ad */}
+            <div className="flex justify-center">
+              <AdBanner 
+                position="app-page"
+                adSize="300x250"
+              />
+            </div>
           </div>
           
           <div className="space-y-6">
             <Sidebar company={company} />
             
+            {/* Sidebar Ad */}
             <div className="flex justify-center sticky top-4">
               <AdBanner 
-                key={`sidebar-${adKey}`}
                 position="app-page"
                 adSize="300x600"
               />
             </div>
           </div>
         </div>
+      </div>
+      
+      {/* Bottom Ad Banner */}
+      <div className="container mx-auto px-4 mb-6 flex justify-center">
+        <AdBanner 
+          position="app-page"
+          adSize="728x90"
+        />
       </div>
     </div>
   );

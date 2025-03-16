@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Onboarding } from "@/components/Onboarding";
 import DashboardApps from "@/components/dashboard/DashboardApps";
@@ -12,12 +11,9 @@ const Dashboard = () => {
   const [showApps, setShowApps] = useState(false);
   const [companySize, setCompanySize] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [adKey, setAdKey] = useState(Date.now());
   const { toast } = useToast();
 
   useEffect(() => {
-    setAdKey(Date.now());
-    
     const checkFiltersAndStatus = async () => {
       try {
         const savedFeatures = localStorage.getItem('selectedFeatures');
@@ -79,6 +75,13 @@ const Dashboard = () => {
       />
 
       <main className="container mx-auto px-4 pb-20">
+        <div className="my-4 flex justify-center">
+          <AdBanner 
+            position="top"
+            adSize="728x90"
+          />
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 relative">
           <div className="lg:col-span-3">
             {!showApps ? (
@@ -104,11 +107,17 @@ const Dashboard = () => {
 
           <div className="hidden lg:flex lg:sticky lg:top-4 justify-center">
             <AdBanner
-              key={`sidebar-${adKey}`}
               position="sidebar"
               adSize="300x600"
             />
           </div>
+        </div>
+
+        <div className="my-8 flex justify-center">
+          <AdBanner 
+            position="bottom"
+            adSize="728x90"
+          />
         </div>
       </main>
     </div>
