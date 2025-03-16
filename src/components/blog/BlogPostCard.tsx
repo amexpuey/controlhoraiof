@@ -30,10 +30,7 @@ export default function BlogPostCard({ post }: BlogPostCardProps) {
         </div>
       </CardHeader>
       <CardFooter>
-        <Link 
-          to={`/blog/${post.slug}`} 
-          className="text-yellow-600 hover:text-yellow-700 text-sm font-medium flex items-center"
-        >
+        <Link to={`/blog/${post.slug}`} className="text-yellow-600 hover:text-yellow-700 text-sm font-medium flex items-center">
           Leer más <ChevronRight className="w-4 h-4 ml-1" />
         </Link>
       </CardFooter>

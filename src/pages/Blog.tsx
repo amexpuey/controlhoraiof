@@ -31,26 +31,16 @@ export default function Blog() {
     const fetchPosts = async () => {
       try {
         setLoading(true);
-        let fetchedPosts: BlogPost[] = [];
-        
-        try {
-          const { data, error } = await supabase
-            .from('blog_posts')
-            .select('*')
-            .order('published_at', { ascending: false });
-            
-          if (!error && data && data.length > 0) {
-            fetchedPosts = data as BlogPost[];
-          }
-        } catch (e) {
-          console.error('Supabase error:', e);
+        const { data, error } = await supabase
+          .from('blog_posts')
+          .select('*')
+          .order('published_at', { ascending: false });
+          
+        if (!error && data && data.length > 0) {
+          setPosts(data as BlogPost[]);
+        } else {
+          setPosts(mockBlogPosts);
         }
-        
-        if (fetchedPosts.length === 0) {
-          fetchedPosts = mockBlogPosts;
-        }
-        
-        setPosts(fetchedPosts);
       } catch (error) {
         console.error('Error fetching blog posts:', error);
         setPosts(mockBlogPosts);
@@ -72,20 +62,19 @@ export default function Blog() {
     : posts.filter(post => post.category === activeCategory);
     
   // Calculate pagination
-  const totalPages = Math.ceil((filteredPosts.length - (currentPage === 1 ? 1 : 0)) / POSTS_PER_PAGE);
-  const startIndex = currentPage === 1 ? 1 : (currentPage - 1) * POSTS_PER_PAGE + 1; // +1 because first post is featured
+  const totalPages = Math.ceil((filteredPosts.length - 1) / POSTS_PER_PAGE);
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE + 1; // +1 because first post is featured
   const endIndex = Math.min(startIndex + POSTS_PER_PAGE - 1, filteredPosts.length);
   
   const currentPosts = filteredPosts.length > 0 
     ? (currentPage === 1 
-        ? filteredPosts.slice(0, POSTS_PER_PAGE + 1) 
+        ? [filteredPosts[0], ...filteredPosts.slice(1, POSTS_PER_PAGE + 1)] 
         : filteredPosts.slice(startIndex, endIndex + 1))
     : [];
     
   if (loading) {
     return (
       <BlogLayout>
-        <BlogHeader />
         <div className="min-h-screen flex items-center justify-center">
           <p className="text-lg">Cargando artículos...</p>
         </div>
@@ -121,92 +110,54 @@ export default function Blog() {
             </TabsTrigger>
           </TabsList>
           
-          <TabsContent value="all" className="space-y-8">
-            {filteredPosts.length > 0 && currentPage === 1 && (
-              <FeaturedPost post={filteredPosts[0]} />
-            )}
-            
-            {filteredPosts.length > 1 && (
-              <BlogPostsGrid posts={currentPage === 1 ? filteredPosts.slice(1, POSTS_PER_PAGE + 1) : currentPosts} />
-            )}
-          </TabsContent>
-          
-          <TabsContent value="Time Tracking" className="space-y-8">
-            {filteredPosts.length > 0 && currentPage === 1 && (
-              <FeaturedPost post={filteredPosts[0]} />
-            )}
-            
-            {filteredPosts.length > 1 && (
-              <BlogPostsGrid posts={currentPage === 1 ? filteredPosts.slice(1, POSTS_PER_PAGE + 1) : currentPosts} />
-            )}
-          </TabsContent>
-          
-          <TabsContent value="HR Compliance" className="space-y-8">
-            {filteredPosts.length > 0 && currentPage === 1 && (
-              <FeaturedPost post={filteredPosts[0]} />
-            )}
-            
-            {filteredPosts.length > 1 && (
-              <BlogPostsGrid posts={currentPage === 1 ? filteredPosts.slice(1, POSTS_PER_PAGE + 1) : currentPosts} />
-            )}
-          </TabsContent>
-          
-          <TabsContent value="Productivity" className="space-y-8">
-            {filteredPosts.length > 0 && currentPage === 1 && (
-              <FeaturedPost post={filteredPosts[0]} />
-            )}
-            
-            {filteredPosts.length > 1 && (
-              <BlogPostsGrid posts={currentPage === 1 ? filteredPosts.slice(1, POSTS_PER_PAGE + 1) : currentPosts} />
-            )}
-          </TabsContent>
-          
-          <TabsContent value="Remote Work" className="space-y-8">
-            {filteredPosts.length > 0 && currentPage === 1 && (
-              <FeaturedPost post={filteredPosts[0]} />
-            )}
-            
-            {filteredPosts.length > 1 && (
-              <BlogPostsGrid posts={currentPage === 1 ? filteredPosts.slice(1, POSTS_PER_PAGE + 1) : currentPosts} />
-            )}
-          </TabsContent>
-          
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <Pagination className="mt-8">
-              <PaginationContent>
-                {currentPage > 1 && (
-                  <PaginationItem>
-                    <PaginationPrevious 
-                      onClick={() => setCurrentPage(current => Math.max(current - 1, 1))} 
-                      className="cursor-pointer"
-                    />
-                  </PaginationItem>
-                )}
-                
-                {Array.from({ length: totalPages }).map((_, i) => (
-                  <PaginationItem key={i}>
-                    <PaginationLink 
-                      isActive={currentPage === i + 1}
-                      onClick={() => setCurrentPage(i + 1)}
-                      className="cursor-pointer"
-                    >
-                      {i + 1}
-                    </PaginationLink>
-                  </PaginationItem>
-                ))}
-                
-                {currentPage < totalPages && (
-                  <PaginationItem>
-                    <PaginationNext 
-                      onClick={() => setCurrentPage(current => Math.min(current + 1, totalPages))}
-                      className="cursor-pointer" 
-                    />
-                  </PaginationItem>
-                )}
-              </PaginationContent>
-            </Pagination>
-          )}
+          {["all", "Time Tracking", "HR Compliance", "Productivity", "Remote Work"].map((category) => (
+            <TabsContent key={category} value={category} className="space-y-8">
+              {filteredPosts.length > 0 && currentPage === 1 && (
+                <FeaturedPost post={filteredPosts[0]} />
+              )}
+              
+              {currentPosts.length > (currentPage === 1 ? 1 : 0) && (
+                <BlogPostsGrid posts={currentPage === 1 ? currentPosts.slice(1) : currentPosts} />
+              )}
+              
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <Pagination className="mt-8">
+                  <PaginationContent>
+                    {currentPage > 1 && (
+                      <PaginationItem>
+                        <PaginationPrevious 
+                          onClick={() => setCurrentPage(current => Math.max(current - 1, 1))} 
+                          className="cursor-pointer"
+                        />
+                      </PaginationItem>
+                    )}
+                    
+                    {[...Array(totalPages)].map((_, i) => (
+                      <PaginationItem key={i}>
+                        <PaginationLink 
+                          isActive={currentPage === i + 1}
+                          onClick={() => setCurrentPage(i + 1)}
+                          className="cursor-pointer"
+                        >
+                          {i + 1}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ))}
+                    
+                    {currentPage < totalPages && (
+                      <PaginationItem>
+                        <PaginationNext 
+                          onClick={() => setCurrentPage(current => Math.min(current + 1, totalPages))}
+                          className="cursor-pointer" 
+                        />
+                      </PaginationItem>
+                    )}
+                  </PaginationContent>
+                </Pagination>
+              )}
+            </TabsContent>
+          ))}
         </Tabs>
         
         <div className="flex justify-center my-10">
