@@ -1,10 +1,31 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import { createBrowserRouter, RouterProvider, useLocation } from "react-router-dom";
 import Index from "@/pages/Index";
 import Dashboard from "@/pages/Dashboard";
 import ComparisonPage from "@/pages/ComparisonPage";
 import UserView from "@/pages/UserView";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
+import { useEffect, useState } from "react";
+
+// Wrapper component to generate a new ad key on route change
+const RouteChangeHandler = ({ children }: { children: React.ReactNode }) => {
+  const location = useLocation();
+  const [adKey, setAdKey] = useState(Date.now());
+  
+  // Update adKey when location changes
+  useEffect(() => {
+    setAdKey(Date.now());
+  }, [location]);
+  
+  // Add adKey to global window object for other components to access
+  useEffect(() => {
+    // @ts-ignore
+    window.adKey = adKey;
+  }, [adKey]);
+  
+  return <>{children}</>;
+};
 
 // Move router configuration outside component to prevent recreation
 const router = createBrowserRouter([

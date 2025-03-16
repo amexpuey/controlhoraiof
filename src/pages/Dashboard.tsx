@@ -11,9 +11,12 @@ const Dashboard = () => {
   const [showApps, setShowApps] = useState(false);
   const [companySize, setCompanySize] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [adKey, setAdKey] = useState(Date.now());
   const { toast } = useToast();
 
   useEffect(() => {
+    setAdKey(Date.now());
+    
     const checkFiltersAndStatus = async () => {
       try {
         const savedFeatures = localStorage.getItem('selectedFeatures');
@@ -77,6 +80,7 @@ const Dashboard = () => {
       <main className="container mx-auto px-4 pb-20">
         <div className="my-4 flex justify-center">
           <AdBanner 
+            key={`top-${adKey}`}
             position="top"
             adSize="728x90"
           />
@@ -107,6 +111,7 @@ const Dashboard = () => {
 
           <div className="hidden lg:flex lg:sticky lg:top-4 justify-center">
             <AdBanner
+              key={`sidebar-${adKey}`}
               position="sidebar"
               adSize="300x600"
             />
@@ -115,6 +120,7 @@ const Dashboard = () => {
 
         <div className="my-8 flex justify-center">
           <AdBanner 
+            key={`bottom-${adKey}`}
             position="bottom"
             adSize="728x90"
           />

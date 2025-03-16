@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -8,10 +7,16 @@ import { FeaturesSection } from "@/components/user-view/FeaturesSection";
 import { HighlightsSection } from "@/components/user-view/HighlightsSection";
 import { Sidebar } from "@/components/user-view/Sidebar";
 import AdBanner from "@/components/ads/AdBanner";
+import { useEffect, useState } from "react";
 
 export default function UserView() {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const [adKey, setAdKey] = useState(Date.now());
+
+  useEffect(() => {
+    setAdKey(Date.now());
+  }, [slug]);
 
   const { data: company, isLoading, error } = useQuery({
     queryKey: ['company', slug],
@@ -75,9 +80,9 @@ export default function UserView() {
     <div className="min-h-screen bg-gray-50">
       <AppHeader company={company} />
 
-      {/* Top Ad Banner */}
       <div className="container mx-auto px-4 mt-6 flex justify-center">
         <AdBanner 
+          key={`top-${adKey}`}
           position="app-page"
           adSize="728x90"
         />
@@ -88,9 +93,9 @@ export default function UserView() {
           <div className="lg:col-span-2 space-y-8">
             <AboutSection company={company} />
             
-            {/* In-content Ad */}
             <div className="flex justify-center">
               <AdBanner 
+                key={`content-${adKey}`}
                 position="app-page"
                 adSize="300x250"
               />
@@ -99,9 +104,9 @@ export default function UserView() {
             <FeaturesSection company={company} />
             <HighlightsSection company={company} />
             
-            {/* Bottom Content Ad */}
             <div className="flex justify-center">
               <AdBanner 
+                key={`bottom-content-${adKey}`}
                 position="app-page"
                 adSize="300x250"
               />
@@ -111,9 +116,9 @@ export default function UserView() {
           <div className="space-y-6">
             <Sidebar company={company} />
             
-            {/* Sidebar Ad */}
             <div className="flex justify-center sticky top-4">
               <AdBanner 
+                key={`sidebar-${adKey}`}
                 position="app-page"
                 adSize="300x600"
               />
@@ -122,9 +127,9 @@ export default function UserView() {
         </div>
       </div>
       
-      {/* Bottom Ad Banner */}
       <div className="container mx-auto px-4 mb-6 flex justify-center">
         <AdBanner 
+          key={`bottom-${adKey}`}
           position="app-page"
           adSize="728x90"
         />
