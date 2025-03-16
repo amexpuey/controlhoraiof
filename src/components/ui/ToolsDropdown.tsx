@@ -29,7 +29,6 @@ export function ToolsDropdown() {
         <DropdownMenuContent 
           align="end" 
           className="w-56 bg-white z-50"
-          forceMount={false}
         >
           <DropdownMenuItem
             className="flex items-center gap-2 py-2 cursor-pointer"

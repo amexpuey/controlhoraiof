@@ -317,7 +317,7 @@ export default function Module3({ onComplete }: Module3Props) {
 
   return (
     <div className="space-y-6">
-      <Tabs defaultValue="overview" className="w-full" onValueChange={setActiveTab}>
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid grid-cols-2 mb-4">
           <TabsTrigger value="overview">Resumen</TabsTrigger>
           <TabsTrigger value="methods">Métodos de Fichaje</TabsTrigger>
