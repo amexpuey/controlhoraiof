@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Book, Play, CheckCircle, AlertTriangle, Info, ChevronRight } from "lucide-react";
 import Module1 from "./Module1";
 import Module2 from "./Module2";
+import Module3 from "./Module3";
 
 const modules = [
   {
@@ -30,8 +31,8 @@ const modules = [
     title: "Cómo implementar un sistema de fichajes",
     description: "Conoce las diferentes opciones y encuentra la mejor para tu empresa",
     icon: Play,
-    component: null,
-    status: "coming-soon"
+    component: Module3,
+    status: "available"
   },
   {
     id: "module4",
