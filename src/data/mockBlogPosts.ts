@@ -106,5 +106,57 @@ export const mockBlogPosts: BlogPost[] = [
     reading_time: 8,
     content: "<p>Contenido del artículo sobre diseño de dashboards para control horario.</p>",
     related_apps: ["app6", "app10"]
+  },
+  {
+    id: "9",
+    title: "Cómo cumplir con la normativa de registro horario en España",
+    slug: "como-cumplir-normativa-registro-horario",
+    excerpt: "Guía completa para empresas sobre la implementación del registro horario según la legislación española.",
+    category: "HR Compliance",
+    featured_image: "/lovable-uploads/31df0511-1d28-437f-acc9-02f6e0322086.png",
+    published_at: "2024-06-10",
+    author: "Roberto Vázquez",
+    reading_time: 10,
+    content: "<p>Contenido del artículo sobre cumplimiento normativo de registro horario.</p>",
+    related_apps: ["app1", "app4"]
+  },
+  {
+    id: "10",
+    title: "Mejores aplicaciones de control horario para empresas",
+    slug: "mejores-aplicaciones-control-horario-empresas",
+    excerpt: "Comparativa de las soluciones más efectivas para la gestión del tiempo laboral en diferentes sectores.",
+    category: "Time Tracking",
+    featured_image: "/lovable-uploads/2e8076e7-4ba4-4f10-a1f9-24e70a51c158.png",
+    published_at: "2024-06-25",
+    author: "Carmen Jiménez",
+    reading_time: 7,
+    content: "<p>Contenido del artículo sobre mejores aplicaciones de control horario.</p>",
+    related_apps: ["app2", "app7"]
+  },
+  {
+    id: "11",
+    title: "Control horario para trabajo remoto: Las mejores prácticas",
+    slug: "control-horario-trabajo-remoto-mejores-practicas",
+    excerpt: "Implementa un sistema de registro eficaz para equipos distribuidos y teletrabajadores.",
+    category: "Remote Work",
+    featured_image: "/lovable-uploads/e32846ec-2b1e-4ca6-956c-4a90277bbeef.png",
+    published_at: "2024-07-05",
+    author: "Daniel Torres",
+    reading_time: 6,
+    content: "<p>Contenido del artículo sobre control horario para trabajo remoto.</p>",
+    related_apps: ["app3", "app8"]
+  },
+  {
+    id: "12",
+    title: "Automatización de nóminas: Conectando el control horario con el departamento financiero",
+    slug: "automatizacion-nominas-control-horario",
+    excerpt: "Cómo integrar los sistemas de registro de jornada con la gestión de nóminas para mayor eficiencia.",
+    category: "HR Compliance",
+    featured_image: "/lovable-uploads/f9edefc2-fbcc-42f1-b37c-826997216a3e.png",
+    published_at: "2024-07-20",
+    author: "Lucía Martín",
+    reading_time: 9,
+    content: "<p>Contenido del artículo sobre automatización de nóminas y control horario.</p>",
+    related_apps: ["app5", "app10"]
   }
 ];

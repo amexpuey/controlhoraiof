@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/pagination";
 
 // Number of posts to show per page (excluding the featured post)
-const POSTS_PER_PAGE = 6;
+const POSTS_PER_PAGE = 9; // Changed from 6 to 9 to show 10 articles total (1 featured + 9 grid)
 
 export default function Blog() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -31,18 +31,23 @@ export default function Blog() {
     const fetchPosts = async () => {
       try {
         setLoading(true);
+        console.log("Fetching blog posts from Supabase...");
         const { data, error } = await supabase
           .from('blog_posts')
           .select('*')
           .order('published_at', { ascending: false });
           
         if (!error && data && data.length > 0) {
+          console.log(`Fetched ${data.length} blog posts from Supabase`);
           setPosts(data as BlogPost[]);
         } else {
+          console.error('Error or no data from Supabase:', error);
+          console.log('Falling back to mock data');
           setPosts(mockBlogPosts);
         }
       } catch (error) {
-        console.error('Error fetching blog posts:', error);
+        console.error('Exception fetching blog posts:', error);
+        console.log('Falling back to mock data due to exception');
         setPosts(mockBlogPosts);
       } finally {
         setLoading(false);
