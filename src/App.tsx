@@ -1,8 +1,11 @@
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Index from "@/pages/Index";
 import Dashboard from "@/pages/Dashboard";
 import ComparisonPage from "@/pages/ComparisonPage";
 import UserView from "@/pages/UserView";
+import Blog from "@/pages/Blog";
+import BlogPost from "@/pages/BlogPost";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -23,6 +26,14 @@ const router = createBrowserRouter([
   {
     path: "/mejores-apps-control-horario/comparar/:ids",
     element: <ComparisonPage />,
+  },
+  {
+    path: "/blog",
+    element: <Blog />,
+  },
+  {
+    path: "/blog/:slug",
+    element: <BlogPost />,
   },
   {
     path: "*",

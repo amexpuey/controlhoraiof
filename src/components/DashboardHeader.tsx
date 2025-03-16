@@ -2,6 +2,7 @@
 import { Search, Info } from "lucide-react";
 import { Input } from "./ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
+import { Link } from "react-router-dom";
 
 interface DashboardHeaderProps {
   searchQuery?: string;
@@ -16,29 +17,25 @@ export default function DashboardHeader({
 }: DashboardHeaderProps) {
   return (
     <div className="space-y-0">
-      {/* Top Header with Blog Link - Future Ad Placement */}
-      <div className="h-10 bg-white border-b flex items-center justify-between px-4">
-        <h1 className="text-lg font-semibold text-yellow-600">
+      {/* Top Header with black background and yellow text */}
+      <div className="h-14 bg-black border-b flex items-center justify-between px-4">
+        <h1 className="text-xl font-semibold text-yellow-500">
           Control Horario Electrónico
         </h1>
-        <a 
-          href="https://controlhorarioelectronico.webflow.io" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="text-sm text-yellow-600 hover:text-yellow-700 transition-colors duration-200 flex items-center gap-1"
-        >
-          Visitar Blog
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            className="text-yellow-600"
+        <div className="flex items-center gap-4">
+          <Link 
+            to="/blog" 
+            className="text-sm text-yellow-500 hover:text-yellow-400 transition-colors duration-200"
           >
-            <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-          </svg>
-        </a>
+            Blog
+          </Link>
+          <Link 
+            to="/dashboard" 
+            className="text-sm text-yellow-500 hover:text-yellow-400 transition-colors duration-200"
+          >
+            Directorio
+          </Link>
+        </div>
       </div>
 
       {/* Hero Section with New Yellow Theme */}
