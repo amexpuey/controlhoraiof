@@ -51,7 +51,7 @@ export default function DashboardHeader({
           <ToolsDropdown />
           <Link 
             to="/blog" 
-            className="text-sm text-white hover:text-gray-200 transition-colors"
+            className="text-sm font-medium text-white hover:text-gray-200 transition-colors"
           >
             Blog
           </Link>
