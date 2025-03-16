@@ -25,7 +25,7 @@ export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
         <h3 className="text-lg font-bold mb-4">App Destacada</h3>
         <a href="/mejores-apps-control-horario/inwout" className="block">
           <img 
-            src="/lovable-uploads/a3718b6b-3e70-4b2d-a974-9e7329743615.png" 
+            src="/lovable-uploads/d6062b36-0681-45de-b8e9-c72886e9b4eb.png" 
             alt="INWOUT - Automatiza el Control Horario con Geofence" 
             className="w-full h-auto rounded-lg hover:opacity-95 transition-opacity"
             style={{ maxWidth: "300px" }}
