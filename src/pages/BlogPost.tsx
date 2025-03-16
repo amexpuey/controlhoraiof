@@ -23,6 +23,7 @@ export default function BlogPost() {
     const fetchPost = async () => {
       try {
         setLoading(true);
+        console.info("Fetching blog posts from Supabase...");
         
         // First try to get from Supabase
         const { data, error } = await supabase
@@ -32,9 +33,13 @@ export default function BlogPost() {
           .single();
           
         if (!error && data) {
+          console.info("Found post in Supabase");
           setPost(data as BlogPost);
         } else {
+          console.info("Supabase query response:", { data, error });
+          console.error("Error or no data from Supabase:", error);
           // If not found in Supabase, check mock data
+          console.info("Falling back to mock data");
           const mockPost = mockBlogPosts.find(p => p.slug === slug);
           if (mockPost) {
             setPost(mockPost);
@@ -48,6 +53,8 @@ export default function BlogPost() {
     };
     
     fetchPost();
+    // Scroll to top when navigating to a new blog post
+    window.scrollTo(0, 0);
   }, [slug]);
   
   if (loading) {
@@ -72,7 +79,7 @@ export default function BlogPost() {
             <BlogPostContent post={post} />
             
             {/* Learning Modules Section */}
-            <Card className="my-8 border border-blue-100 bg-blue-50/40">
+            <Card className="my-8 border border-blue-100 bg-blue-50/40 shadow-sm hover:shadow transition-shadow">
               <CardContent className="pt-6">
                 <div className="flex items-center gap-3 mb-3">
                   <Book className="w-6 h-6 text-blue-600" />
@@ -84,15 +91,15 @@ export default function BlogPost() {
                 <Button 
                   className="bg-blue-500 hover:bg-blue-600"
                   size="lg"
-                  onClick={() => setShowLearningModules(true)}
+                  onClick={() => setShowLearningModules(prev => !prev)}
                 >
-                  Empezar a aprender
+                  {showLearningModules ? 'Ocultar módulos' : 'Empezar a aprender'}
                 </Button>
               </CardContent>
             </Card>
 
             {showLearningModules && (
-              <div className="mb-8">
+              <div className="mb-8 animate-fadeIn">
                 <LearningModules />
               </div>
             )}
