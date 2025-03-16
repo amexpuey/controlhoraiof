@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,55 +18,8 @@ type BlogPost = {
   published_at: string;
   author: string;
   reading_time: number;
+  related_apps?: string[];
 };
-
-// Mock blog posts for initial development
-const MOCK_POSTS: BlogPost[] = [
-  {
-    id: "1",
-    title: "Las 10 mejores aplicaciones de control horario para empresas pequeñas",
-    slug: "mejores-aplicaciones-control-horario-empresas-pequenas",
-    excerpt: "Descubre cuáles son las mejores soluciones de control horario para empresas de menos de 50 empleados, con análisis detallado de funcionalidades y precios.",
-    category: "Time Tracking",
-    featured_image: "/lovable-uploads/9f226ae3-40a9-4b11-879e-fa474b885dfb.png",
-    published_at: "2023-10-15",
-    author: "Carlos Rodríguez",
-    reading_time: 8
-  },
-  {
-    id: "2",
-    title: "Cómo cumplir con la normativa de registro horario en España",
-    slug: "como-cumplir-normativa-registro-horario-espana",
-    excerpt: "Guía completa sobre la legislación española de registro horario y cómo las herramientas digitales pueden ayudarte a cumplir con la normativa vigente.",
-    category: "HR Compliance",
-    featured_image: "/lovable-uploads/c2b90205-f41e-4c0d-bf34-bb7a5bba9103.png",
-    published_at: "2023-09-28",
-    author: "María González",
-    reading_time: 12
-  },
-  {
-    id: "3",
-    title: "5 estrategias para aumentar la productividad con herramientas de control horario",
-    slug: "estrategias-aumentar-productividad-herramientas-control-horario",
-    excerpt: "Aprende cómo utilizar el software de control horario no solo para cumplir con la ley, sino para optimizar los flujos de trabajo y mejorar la productividad.",
-    category: "Productivity",
-    featured_image: "/lovable-uploads/c2b90205-f41e-4c0d-bf34-bb7a5bba9103.png",
-    published_at: "2023-09-15",
-    author: "Ana Martínez",
-    reading_time: 6
-  },
-  {
-    id: "4",
-    title: "Control horario en entornos de trabajo remoto: mejores prácticas",
-    slug: "control-horario-trabajo-remoto-mejores-practicas",
-    excerpt: "Descubre cómo implementar un sistema de control horario efectivo en equipos distribuidos y asegurar el cumplimiento normativo en el teletrabajo.",
-    category: "Remote Work",
-    featured_image: "/lovable-uploads/c2b90205-f41e-4c0d-bf34-bb7a5bba9103.png",
-    published_at: "2023-08-22",
-    author: "Pablo Sánchez",
-    reading_time: 10
-  }
-];
 
 // Interactive Tool Component
 const InteractiveTool = ({ toolType }: { toolType: string }) => {
@@ -102,13 +54,14 @@ const InteractiveTool = ({ toolType }: { toolType: string }) => {
 };
 
 export default function Blog() {
-  const [posts, setPosts] = useState<BlogPost[]>(MOCK_POSTS);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
   const [activeCategory, setActiveCategory] = useState("all");
+  const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    // In a real implementation, we would fetch posts from Supabase here
     const fetchPosts = async () => {
       try {
+        setLoading(true);
         const { data, error } = await supabase
           .from('blog_posts')
           .select('*')
@@ -120,18 +73,24 @@ export default function Blog() {
         }
       } catch (error) {
         console.error('Error fetching blog posts:', error);
-        // Fallback to mock data if there's an error
+      } finally {
+        setLoading(false);
       }
     };
     
-    // Commented out for now since the table doesn't exist yet
-    // fetchPosts();
+    fetchPosts();
   }, []);
   
   const filteredPosts = activeCategory === "all" 
     ? posts 
     : posts.filter(post => post.category === activeCategory);
     
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">
+      <p className="text-lg">Cargando artículos...</p>
+    </div>;
+  }
+  
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
       {/* Black Header with Yellow Text */}

@@ -22,63 +22,6 @@ type BlogPost = {
   related_apps?: string[];
 };
 
-// Mock blog post for development
-const MOCK_POST: BlogPost = {
-  id: "1",
-  title: "Las 10 mejores aplicaciones de control horario para empresas pequeñas",
-  slug: "mejores-aplicaciones-control-horario-empresas-pequenas",
-  excerpt: "Descubre cuáles son las mejores soluciones de control horario para empresas de menos de 50 empleados, con análisis detallado de funcionalidades y precios.",
-  content: `
-## Introducción al control horario en pequeñas empresas
-
-El control horario es una necesidad para cualquier empresa, independientemente de su tamaño. Sin embargo, las empresas pequeñas tienen necesidades específicas y limitaciones presupuestarias que hacen que la elección de una herramienta adecuada sea especialmente importante.
-
-### ¿Por qué es importante el control horario?
-
-La implementación de un sistema de control horario no solo ayuda a cumplir con la legislación vigente, sino que también proporciona beneficios tangibles para la empresa:
-
-- **Optimización de recursos**: Permite identificar patrones de productividad y asignar mejor los recursos humanos.
-- **Transparencia**: Ofrece claridad tanto a empleadores como a empleados sobre las horas trabajadas.
-- **Facturación precisa**: Para empresas que facturan por hora, garantiza un registro exacto del tiempo dedicado a cada cliente.
-
-## Las 10 mejores aplicaciones
-
-A continuación, analizamos las 10 mejores soluciones disponibles en el mercado español, considerando aspectos como facilidad de uso, precio, y funcionalidades específicas para pequeñas empresas.
-
-### 1. TimeTracker Pro
-
-TimeTracker Pro destaca por su interfaz intuitiva y su precio competitivo. Ideal para empresas de hasta 50 empleados, ofrece funcionalidades como:
-
-- Registro de horas mediante web y aplicación móvil
-- Informes personalizables
-- Integración con software de nóminas
-- Precio: Desde 2€/mes por empleado
-
-### 2. HoraControl
-
-Desarrollada específicamente para el mercado español, HoraControl garantiza el cumplimiento de la normativa vigente sobre registro horario. Sus principales características incluyen:
-
-- Validación biométrica
-- Gestión de turnos y vacaciones
-- Exportación de informes para inspecciones laborales
-- Precio: 3€/mes por empleado
-
-[continúa con el resto de aplicaciones...]
-
-## Conclusión
-
-La elección de una aplicación de control horario dependerá de las necesidades específicas de cada empresa, pero cualquiera de las opciones presentadas en esta lista garantiza un sistema fiable y ajustado a la normativa española.
-
-Recuerda que la implementación exitosa de un sistema de control horario no solo depende del software elegido, sino también de una correcta formación a los empleados y de establecer políticas claras sobre su uso.
-  `,
-  category: "Time Tracking",
-  featured_image: "/lovable-uploads/9f226ae3-40a9-4b11-879e-fa474b885dfb.png",
-  published_at: "2023-10-15",
-  author: "Carlos Rodríguez",
-  reading_time: 8,
-  related_apps: ["app-1", "app-2", "app-3"]
-};
-
 // Related App Card Component
 const RelatedAppCard = ({ appId }: { appId: string }) => {
   const [appData, setAppData] = useState<any>(null);
@@ -151,19 +94,12 @@ export default function BlogPost() {
         setPost(data as BlogPost);
       } catch (error) {
         console.error('Error fetching blog post:', error);
-        // For demo purposes, use mock data
-        setPost(MOCK_POST);
       } finally {
         setLoading(false);
       }
     };
     
-    // Commented out for now since the table doesn't exist yet
-    // fetchPost();
-    
-    // For demo purposes
-    setPost(MOCK_POST);
-    setLoading(false);
+    fetchPost();
   }, [slug]);
   
   if (loading) {
@@ -281,14 +217,16 @@ export default function BlogPost() {
             <AdBanner position="sidebar" adSize="300x250" />
             
             {/* Related Apps */}
-            <div className="bg-white rounded-lg shadow-sm p-4">
-              <h3 className="text-lg font-bold mb-4">Aplicaciones relacionadas</h3>
-              <div className="space-y-4">
-                {post.related_apps?.map((appId) => (
-                  <RelatedAppCard key={appId} appId={appId} />
-                ))}
+            {post.related_apps && post.related_apps.length > 0 && (
+              <div className="bg-white rounded-lg shadow-sm p-4">
+                <h3 className="text-lg font-bold mb-4">Aplicaciones relacionadas</h3>
+                <div className="space-y-4">
+                  {post.related_apps.map((appId) => (
+                    <RelatedAppCard key={appId} appId={appId} />
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
             
             {/* Interactive Tool Teaser */}
             <div className="bg-yellow-50 rounded-lg shadow-sm p-4 border border-yellow-200">
