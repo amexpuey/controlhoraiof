@@ -1,5 +1,6 @@
 
 import { Link } from "react-router-dom";
+import { ToolsDropdown } from "../ui/ToolsDropdown";
 
 interface BlogLayoutProps {
   children: React.ReactNode;
@@ -7,24 +8,19 @@ interface BlogLayoutProps {
 
 export default function BlogLayout({ children }: BlogLayoutProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
-      {/* Black Header with Yellow Text */}
-      <div className="h-14 bg-black border-b flex items-center justify-between px-4">
-        <Link to="/" className="text-xl font-semibold text-yellow-500">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+      {/* Header with dark gradient background */}
+      <div className="h-16 bg-gradient-to-r from-gray-800 to-gray-900 border-b flex items-center justify-between px-6 shadow-md">
+        <Link to="/" className="text-xl font-semibold text-white hover:text-gray-200 transition-colors">
           Control Horario Electrónico
         </Link>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-6">
+          <ToolsDropdown />
           <Link 
             to="/blog" 
-            className="text-sm text-yellow-500 hover:text-yellow-400 transition-colors duration-200"
+            className="text-sm text-white hover:text-gray-200 transition-colors"
           >
             Blog
-          </Link>
-          <Link 
-            to="/dashboard" 
-            className="text-sm text-yellow-500 hover:text-yellow-400 transition-colors duration-200"
-          >
-            Directorio
           </Link>
         </div>
       </div>
