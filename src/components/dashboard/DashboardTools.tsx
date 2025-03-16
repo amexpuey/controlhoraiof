@@ -6,6 +6,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Check, CheckCircle, Calculator, Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import ComplianceChecker from "@/components/blog/ComplianceChecker";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 interface DashboardToolsProps {
   onFeatureSelect?: (features: string[]) => void;
@@ -14,9 +15,15 @@ interface DashboardToolsProps {
 export default function DashboardTools({ onFeatureSelect }: DashboardToolsProps) {
   const navigate = useNavigate();
   const [activeToolIndex, setActiveToolIndex] = useState<number | null>(1); // Preselect app finder (index 1)
+  const [showComplianceDialog, setShowComplianceDialog] = useState(false);
   
   const handleToolClick = (index: number) => {
-    setActiveToolIndex(activeToolIndex === index ? null : index);
+    if (index === 0) {
+      // Open compliance checker dialog
+      setShowComplianceDialog(true);
+    } else {
+      setActiveToolIndex(activeToolIndex === index ? null : index);
+    }
   };
 
   const handleFeatureSelect = (features: string[]) => {
@@ -27,28 +34,24 @@ export default function DashboardTools({ onFeatureSelect }: DashboardToolsProps)
   };
 
   return (
-    <section className="mb-8">
-      <h2 className="text-2xl font-bold text-blue-800 mb-6">
-        Herramientas Interactivas
-      </h2>
-      <div className="grid md:grid-cols-3 gap-6">
-        {/* Verificador de cumplimiento */}
-        <Card className="overflow-hidden">
-          <CardHeader className="bg-blue-50">
-            <CardTitle className="flex items-center text-lg">
-              <CheckCircle className="mr-2 h-5 w-5 text-blue-600" />
-              Verificador de cumplimiento
-            </CardTitle>
-            <CardDescription>
-              Comprueba si cumples con la normativa laboral
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="p-0">
-            {activeToolIndex === 0 ? (
-              <div className="p-4">
-                <ComplianceChecker onClose={() => setActiveToolIndex(null)} />
-              </div>
-            ) : (
+    <>
+      <section className="mb-8">
+        <h2 className="text-2xl font-bold text-blue-800 mb-6">
+          Herramientas Interactivas
+        </h2>
+        <div className="grid md:grid-cols-3 gap-6">
+          {/* Verificador de cumplimiento */}
+          <Card className="overflow-hidden">
+            <CardHeader className="bg-blue-50">
+              <CardTitle className="flex items-center text-lg">
+                <CheckCircle className="mr-2 h-5 w-5 text-blue-600" />
+                Verificador de cumplimiento
+              </CardTitle>
+              <CardDescription>
+                Comprueba si cumples con la normativa laboral
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-0">
               <div className="p-4 flex flex-col items-center">
                 <p className="text-sm text-center text-gray-600 mb-4">
                   Verifica si tu empresa cumple con la normativa de registro horario y evita multas
@@ -60,82 +63,89 @@ export default function DashboardTools({ onFeatureSelect }: DashboardToolsProps)
                   Comprobar ahora
                 </Button>
               </div>
-            )}
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
 
-        {/* Encuentra tu app de control horario - HIGHLIGHTED CARD */}
-        <Card className={`overflow-hidden transform transition-all duration-200 ${activeToolIndex === 1 ? 'ring-2 ring-blue-400 shadow-lg scale-105' : ''}`}>
-          <CardHeader className="bg-blue-100">
-            <CardTitle className="flex items-center text-lg text-blue-800">
-              <Search className="mr-2 h-5 w-5 text-blue-600" />
-              Encuentra tu app de control horario
-            </CardTitle>
-            <CardDescription className="text-blue-700">
-              Ayuda para encontrar la app perfecta para ti
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="p-0">
-            {activeToolIndex === 1 ? (
-              <ScrollArea className="h-96 p-4">
-                <FeatureSelector onSelect={handleFeatureSelect} />
-              </ScrollArea>
-            ) : (
-              <div className="p-4 flex flex-col items-center">
-                <p className="text-sm text-center text-blue-700 mb-4 font-medium">
-                  Selecciona las características que necesitas para tu empresa
-                </p>
-                <Button 
-                  className="bg-blue-500 hover:bg-blue-600 font-medium text-base px-6 py-5"
-                  onClick={() => handleToolClick(1)}
-                >
-                  Buscar ahora
-                </Button>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+          {/* Encuentra tu app de control horario - HIGHLIGHTED CARD */}
+          <Card className={`overflow-hidden transform transition-all duration-200 ${activeToolIndex === 1 ? 'ring-2 ring-blue-400 shadow-lg scale-105' : ''}`}>
+            <CardHeader className="bg-blue-100">
+              <CardTitle className="flex items-center text-lg text-blue-800">
+                <Search className="mr-2 h-5 w-5 text-blue-600" />
+                Encuentra tu app de control horario
+              </CardTitle>
+              <CardDescription className="text-blue-700">
+                Ayuda para encontrar la app perfecta para ti
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-0">
+              {activeToolIndex === 1 ? (
+                <ScrollArea className="h-96 p-4">
+                  <FeatureSelector onSelect={handleFeatureSelect} />
+                </ScrollArea>
+              ) : (
+                <div className="p-4 flex flex-col items-center">
+                  <p className="text-sm text-center text-blue-700 mb-4 font-medium">
+                    Selecciona las características que necesitas para tu empresa
+                  </p>
+                  <Button 
+                    className="bg-blue-500 hover:bg-blue-600 font-medium text-base px-6 py-5"
+                    onClick={() => handleToolClick(1)}
+                  >
+                    Buscar ahora
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
 
-        {/* Calculadora */}
-        <Card className="overflow-hidden">
-          <CardHeader className="bg-blue-50">
-            <CardTitle className="flex items-center text-lg">
-              <Calculator className="mr-2 h-5 w-5 text-blue-600" />
-              Calculadora de ahorro
-            </CardTitle>
-            <CardDescription>
-              Calcula cuánto puedes ahorrar con una app de control horario
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="p-0">
-            {activeToolIndex === 2 ? (
-              <div className="p-4">
-                <p>Calculadora en desarrollo</p>
-                <Button 
-                  className="mt-4"
-                  variant="outline"
-                  onClick={() => setActiveToolIndex(null)}
-                >
-                  Cerrar
-                </Button>
-              </div>
-            ) : (
-              <div className="p-4 flex flex-col items-center">
-                <p className="text-sm text-center text-gray-600 mb-4">
-                  Estima cuánto tiempo y dinero puedes ahorrar con una solución de control horario
-                </p>
-                <Button 
-                  className="bg-blue-500 hover:bg-blue-600"
-                  onClick={() => handleToolClick(2)}
-                >
-                  Calcular ahorro
-                </Button>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-    </section>
+          {/* Calculadora */}
+          <Card className="overflow-hidden">
+            <CardHeader className="bg-blue-50">
+              <CardTitle className="flex items-center text-lg">
+                <Calculator className="mr-2 h-5 w-5 text-blue-600" />
+                Calculadora de ahorro
+              </CardTitle>
+              <CardDescription>
+                Calcula cuánto puedes ahorrar con una app de control horario
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-0">
+              {activeToolIndex === 2 ? (
+                <div className="p-4">
+                  <p>Calculadora en desarrollo</p>
+                  <Button 
+                    className="mt-4"
+                    variant="outline"
+                    onClick={() => setActiveToolIndex(null)}
+                  >
+                    Cerrar
+                  </Button>
+                </div>
+              ) : (
+                <div className="p-4 flex flex-col items-center">
+                  <p className="text-sm text-center text-gray-600 mb-4">
+                    Estima cuánto tiempo y dinero puedes ahorrar con una solución de control horario
+                  </p>
+                  <Button 
+                    className="bg-blue-500 hover:bg-blue-600"
+                    onClick={() => handleToolClick(2)}
+                  >
+                    Calcular ahorro
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Compliance Checker Dialog */}
+      <Dialog open={showComplianceDialog} onOpenChange={setShowComplianceDialog}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <ComplianceChecker onClose={() => setShowComplianceDialog(false)} />
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 
