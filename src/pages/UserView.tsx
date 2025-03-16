@@ -1,3 +1,4 @@
+
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -80,37 +81,12 @@ export default function UserView() {
     <div className="min-h-screen bg-gray-50">
       <AppHeader company={company} />
 
-      <div className="container mx-auto px-4 mt-6 flex justify-center">
-        <AdBanner 
-          key={`top-${adKey}`}
-          position="app-page"
-          adSize="728x90"
-        />
-      </div>
-
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
             <AboutSection company={company} />
-            
-            <div className="flex justify-center">
-              <AdBanner 
-                key={`content-${adKey}`}
-                position="app-page"
-                adSize="300x250"
-              />
-            </div>
-            
             <FeaturesSection company={company} />
             <HighlightsSection company={company} />
-            
-            <div className="flex justify-center">
-              <AdBanner 
-                key={`bottom-content-${adKey}`}
-                position="app-page"
-                adSize="300x250"
-              />
-            </div>
           </div>
           
           <div className="space-y-6">
@@ -125,14 +101,6 @@ export default function UserView() {
             </div>
           </div>
         </div>
-      </div>
-      
-      <div className="container mx-auto px-4 mb-6 flex justify-center">
-        <AdBanner 
-          key={`bottom-${adKey}`}
-          position="app-page"
-          adSize="728x90"
-        />
       </div>
     </div>
   );

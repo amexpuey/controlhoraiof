@@ -95,24 +95,18 @@ export default function ComparisonPage() {
       <div className="container py-12">
         <ComparisonHeader />
         
-        {/* Top Ad Banner */}
-        <div className="my-6 flex justify-center">
-          <AdBanner 
-            key={`top-${adKey}`}
-            position="top"
-            adSize="728x90"
-          />
-        </div>
-        
-        <ComparisonTable apps={apps} />
-        
-        {/* Bottom Ad Banner */}
-        <div className="mt-8 flex justify-center">
-          <AdBanner 
-            key={`bottom-${adKey}`}
-            position="bottom"
-            adSize="728x90"
-          />
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mt-8">
+          <div className="lg:col-span-3">
+            <ComparisonTable apps={apps} />
+          </div>
+          
+          <div className="hidden lg:flex lg:sticky lg:top-4 justify-center">
+            <AdBanner 
+              key={`sidebar-${adKey}`}
+              position="sidebar"
+              adSize="300x600"
+            />
+          </div>
         </div>
       </div>
     </div>

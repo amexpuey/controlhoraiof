@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 interface AdBannerProps {
   className?: string;
-  position: "top" | "bottom" | "sidebar" | "in-content" | "app-page";
+  position: "top" | "bottom" | "sidebar" | "app-page";
   adSize: "728x90" | "300x600" | "300x250" | "320x50" | "970x250";
 }
 
