@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -33,14 +32,6 @@ const modules = [
     icon: Play,
     component: Module3,
     status: "available"
-  },
-  {
-    id: "module4",
-    title: "Consecuencias del incumplimiento",
-    description: "Sanciones y cómo evitarlas",
-    icon: AlertTriangle,
-    component: null,
-    status: "coming-soon"
   }
 ];
 
@@ -77,7 +68,7 @@ export default function LearningModules({ initialModule }: LearningModulesProps)
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {modules.map((module) => (
             <Card 
               key={module.id}
