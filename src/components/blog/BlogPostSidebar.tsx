@@ -2,10 +2,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import AdBanner from "@/components/ads/AdBanner";
-import RelatedAppCard from "./RelatedAppCard";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import ComplianceChecker from "./ComplianceChecker";
 import { useNavigate } from "react-router-dom";
+import { Book } from "lucide-react";
 
 interface BlogPostSidebarProps {
   relatedApps?: string[];
@@ -20,17 +20,18 @@ export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
       {/* Sidebar Ad */}
       <AdBanner position="sidebar" adSize="300x250" />
       
-      {/* Related Apps */}
-      {relatedApps && relatedApps.length > 0 && (
-        <div className="bg-white rounded-lg shadow-sm p-4">
-          <h3 className="text-lg font-bold mb-4">Aplicaciones relacionadas</h3>
-          <div className="space-y-4">
-            {relatedApps.map((appId) => (
-              <RelatedAppCard key={appId} appId={appId} />
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Featured App Banner (300x600px) */}
+      <div className="bg-white rounded-lg shadow-sm p-4">
+        <h3 className="text-lg font-bold mb-4">App Destacada</h3>
+        <a href="/mejores-apps-control-horario/inwout" className="block">
+          <img 
+            src="/lovable-uploads/a3718b6b-3e70-4b2d-a974-9e7329743615.png" 
+            alt="INWOUT - Automatiza el Control Horario con Geofence" 
+            className="w-full h-auto rounded-lg hover:opacity-95 transition-opacity"
+            style={{ maxWidth: "300px" }}
+          />
+        </a>
+      </div>
       
       {/* Compliance Checker Tool Teaser */}
       <div className="bg-blue-50 rounded-lg shadow-sm p-4 border border-blue-200">

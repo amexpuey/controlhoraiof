@@ -1,12 +1,15 @@
 
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Book } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import AdBanner from "@/components/ads/AdBanner";
 import BlogPostContent from "@/components/blog/BlogPostContent";
 import BlogPostSidebar from "@/components/blog/BlogPostSidebar";
 import BlogLayout from "@/components/blog/BlogLayout";
+import LearningModules from "@/components/learning/LearningModules";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import type { BlogPost } from "@/components/blog/FeaturedPost";
 import { mockBlogPosts } from "@/data/mockBlogPosts";
 
@@ -14,6 +17,7 @@ export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showLearningModules, setShowLearningModules] = useState(false);
   
   useEffect(() => {
     const fetchPost = async () => {
@@ -66,6 +70,32 @@ export default function BlogPost() {
         <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-2">
             <BlogPostContent post={post} />
+            
+            {/* Learning Modules Section */}
+            <Card className="my-8 border border-blue-100 bg-blue-50/40">
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <Book className="w-6 h-6 text-blue-600" />
+                  <h3 className="text-xl font-bold text-blue-800">Módulos de aprendizaje</h3>
+                </div>
+                <p className="text-gray-600 mb-4">
+                  Aprende todo sobre el control horario, su normativa y cómo implementarlo correctamente
+                </p>
+                <Button 
+                  className="bg-blue-500 hover:bg-blue-600"
+                  size="lg"
+                  onClick={() => setShowLearningModules(true)}
+                >
+                  Empezar a aprender
+                </Button>
+              </CardContent>
+            </Card>
+
+            {showLearningModules && (
+              <div className="mb-8">
+                <LearningModules />
+              </div>
+            )}
             
             {/* Bottom Ad */}
             <div className="flex justify-center my-8">
