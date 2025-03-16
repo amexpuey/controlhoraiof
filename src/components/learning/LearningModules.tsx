@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Book, Play, CheckCircle, AlertTriangle, Info, ChevronRight } from "lucide-react";
 import Module1 from "./Module1";
+import Module2 from "./Module2";
 
 const modules = [
   {
@@ -21,8 +22,8 @@ const modules = [
     title: "¿Es obligatorio para tu empresa?",
     description: "Descubre si tu empresa está obligada a implementar un sistema de fichaje",
     icon: CheckCircle,
-    component: null,
-    status: "coming-soon"
+    component: Module2,
+    status: "available"
   },
   {
     id: "module3",
