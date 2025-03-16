@@ -17,55 +17,62 @@ export default function DashboardHeader({
 }: DashboardHeaderProps) {
   return (
     <div className="space-y-0">
-      {/* Top Header with dark background */}
-      <div className="h-14 bg-gray-800 flex items-center justify-between px-6">
-        <h1 className="text-lg font-medium text-white">
-          Control Horario
+      {/* Top Header with black background and yellow text */}
+      <div className="h-14 bg-black border-b flex items-center justify-between px-4">
+        <h1 className="text-xl font-semibold text-yellow-500">
+          Control Horario Electrónico
         </h1>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-4">
           <Link 
             to="/blog" 
-            className="text-sm text-gray-200 hover:text-white transition-colors duration-200"
+            className="text-sm text-yellow-500 hover:text-yellow-400 transition-colors duration-200"
           >
             Blog
           </Link>
           <Link 
             to="/dashboard" 
-            className="text-sm text-gray-200 hover:text-white transition-colors duration-200"
+            className="text-sm text-yellow-500 hover:text-yellow-400 transition-colors duration-200"
           >
             Directorio
           </Link>
         </div>
       </div>
 
-      {/* Hero Section with Minimal Design */}
-      <div className="relative bg-gray-100">
-        <div className="container mx-auto px-4 py-14">
-          <div className="flex flex-col items-center justify-center space-y-6">
-            <div className="flex flex-col items-center gap-3">
+      {/* Hero Section with New Yellow Theme - Non-sticky */}
+      <div className="relative bg-gradient-to-r from-yellow-400 to-yellow-500">
+        <div className="absolute inset-0 bg-[#FEF7CD] mix-blend-multiply opacity-30">
+          <img
+            src="/lovable-uploads/c2b90205-f41e-4c0d-bf34-bb7a5bba9103.png"
+            alt="Hero background"
+            className="w-full h-full object-cover opacity-20"
+          />
+        </div>
+        <div className="relative container max-w-4xl mx-auto px-4 py-20">
+          <div className="flex flex-col items-center justify-center space-y-8">
+            <div className="flex flex-col items-center gap-4">
               <img
                 src="/lovable-uploads/c2b90205-f41e-4c0d-bf34-bb7a5bba9103.png"
                 alt="Control Horario Logo"
-                className="w-16 h-16"
+                className="w-24 h-24"
               />
-              <h1 className="text-2xl md:text-3xl font-bold text-gray-800 text-center">
+              <h1 className="text-3xl md:text-4xl font-bold text-yellow-900 text-center">
                 Directorio de Control Horario Digital en 2025
               </h1>
-              <p className="text-base text-gray-600 text-center max-w-xl">
-                Encuentra la solución de control horario adecuada para tu empresa
+              <p className="text-xl text-yellow-800 text-center max-w-2xl">
+                Encuentra la mejor solución de control horario para tu empresa
               </p>
             </div>
 
             {/* Search Bar */}
-            <div className="w-full max-w-lg">
+            <div className="w-full max-w-2xl">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-yellow-500 h-5 w-5" />
                 <Input
                   type="text"
-                  placeholder="Buscar soluciones de control horario..."
+                  placeholder="Buscar por nombre, características, descripción..."
                   value={searchQuery}
                   onChange={(e) => onSearchChange?.(e.target.value)}
-                  className={`pl-10 w-full bg-white text-gray-800 border-gray-200 focus:ring-gray-400 h-11 ${isOnboarding ? 'opacity-70' : ''}`}
+                  className={`pl-10 w-full bg-white/95 text-yellow-900 placeholder:text-yellow-400 border-yellow-200 focus:ring-yellow-400 ${isOnboarding ? 'opacity-70' : ''}`}
                   disabled={isOnboarding}
                 />
                 {isOnboarding && (
@@ -73,15 +80,15 @@ export default function DashboardHeader({
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <div className="absolute right-3 top-1/2 transform -translate-y-1/2 animate-pulse">
-                          <Info className="h-5 w-5 text-gray-500" />
+                          <Info className="h-5 w-5 text-yellow-600" />
                         </div>
                       </TooltipTrigger>
-                      <TooltipContent className="bg-white border border-gray-200 text-gray-700 p-3 max-w-xs">
+                      <TooltipContent className="bg-yellow-50 border border-yellow-200 text-yellow-800 p-4 max-w-xs">
                         <p className="text-center">
-                          Completa el proceso de filtrado para activar la búsqueda.
+                          Completa el proceso de onboarding para activar la búsqueda y ver las aplicaciones disponibles.
                         </p>
                         <div className="mt-2 text-xs text-center">
-                          <span className="animate-bounce inline-block">↓</span> Indica el tamaño de tu empresa <span className="animate-bounce inline-block">↓</span>
+                          <span className="animate-bounce inline-block">↓</span> ¡Empieza indicando el tamaño de tu empresa! <span className="animate-bounce inline-block">↓</span>
                         </div>
                       </TooltipContent>
                     </Tooltip>
