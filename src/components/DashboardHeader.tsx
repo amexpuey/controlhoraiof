@@ -1,3 +1,4 @@
+
 import { Search } from "lucide-react";
 import { Input } from "./ui/input";
 
@@ -12,7 +13,7 @@ export default function DashboardHeader({
 }: DashboardHeaderProps) {
   return (
     <div className="space-y-0">
-      {/* Top Header with Blog Link */}
+      {/* Top Header with Blog Link - Future Ad Placement */}
       <div className="h-10 bg-white border-b flex items-center justify-between px-4">
         <h1 className="text-lg font-semibold text-yellow-600">
           Control Horario Electrónico

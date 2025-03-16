@@ -1,6 +1,8 @@
+
 import { useState } from "react";
 import { CompanySizeStep } from "./onboarding/CompanySizeStep";
 import { FeaturesStep } from "./onboarding/FeaturesStep";
+import { ProgressBar } from "./onboarding/ProgressBar";
 
 interface OnboardingProps {
   onFeaturesSelect: (features: string[]) => void;
@@ -11,6 +13,7 @@ export function Onboarding({ onFeaturesSelect, onSizeSelect }: OnboardingProps) 
   const [step, setStep] = useState(1);
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
+  const totalSteps = 2;
 
   const handleSizeSelect = (size: string) => {
     setSelectedSize(size);
@@ -32,21 +35,25 @@ export function Onboarding({ onFeaturesSelect, onSizeSelect }: OnboardingProps) 
 
   return (
     <div className="w-full max-w-4xl mx-auto px-4">
-      {step === 1 && (
-        <CompanySizeStep
-          selectedSize={selectedSize}
-          onSizeSelect={handleSizeSelect}
-          onNext={() => {}}
-        />
-      )}
+      <div className="bg-white shadow-sm rounded-xl p-6 border border-yellow-100">
+        <ProgressBar currentStep={step} totalSteps={totalSteps} />
+        
+        {step === 1 && (
+          <CompanySizeStep
+            selectedSize={selectedSize}
+            onSizeSelect={handleSizeSelect}
+            onNext={() => {}}
+          />
+        )}
 
-      {step === 2 && (
-        <FeaturesStep
-          selectedFeatures={selectedFeatures}
-          onFeatureToggle={handleFeatureToggle}
-          onNext={handleFeaturesSubmit}
-        />
-      )}
+        {step === 2 && (
+          <FeaturesStep
+            selectedFeatures={selectedFeatures}
+            onFeatureToggle={handleFeatureToggle}
+            onNext={handleFeaturesSubmit}
+          />
+        )}
+      </div>
     </div>
   );
 }

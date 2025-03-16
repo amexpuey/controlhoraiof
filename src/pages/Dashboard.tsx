@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Onboarding } from "@/components/Onboarding";
 import DashboardApps from "@/components/dashboard/DashboardApps";
@@ -78,25 +79,47 @@ const Dashboard = () => {
       />
 
       <main className="container mx-auto px-4 pb-20">
-        {!showApps ? (
-          <Onboarding
-            onFeaturesSelect={handleFeatureSelect}
-            onSizeSelect={handleSizeSelect}
-          />
-        ) : (
-          <DashboardApps 
-            selectedFeatures={selectedFeatures}
-            onFeatureToggle={(feature) => {
-              const newFeatures = selectedFeatures.includes(feature)
-                ? selectedFeatures.filter(f => f !== feature)
-                : [...selectedFeatures, feature];
-              setSelectedFeatures(newFeatures);
-              localStorage.setItem('selectedFeatures', JSON.stringify(newFeatures));
-            }}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-          />
-        )}
+        {/* Top Ad Container */}
+        <div className="w-full h-24 bg-gray-100 flex items-center justify-center my-4 rounded-lg border border-gray-200 overflow-hidden">
+          <p className="text-gray-400 text-sm">Espacio Reservado para Anuncios</p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Main Content - 3/4 width on desktop */}
+          <div className="lg:col-span-3">
+            {!showApps ? (
+              <Onboarding
+                onFeaturesSelect={handleFeatureSelect}
+                onSizeSelect={handleSizeSelect}
+              />
+            ) : (
+              <DashboardApps 
+                selectedFeatures={selectedFeatures}
+                onFeatureToggle={(feature) => {
+                  const newFeatures = selectedFeatures.includes(feature)
+                    ? selectedFeatures.filter(f => f !== feature)
+                    : [...selectedFeatures, feature];
+                  setSelectedFeatures(newFeatures);
+                  localStorage.setItem('selectedFeatures', JSON.stringify(newFeatures));
+                }}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+              />
+            )}
+          </div>
+
+          {/* Side Ad Container - 1/4 width, only visible on desktop */}
+          <div className="hidden lg:block h-[600px] bg-gray-100 rounded-lg border border-gray-200 overflow-hidden">
+            <div className="h-full flex items-center justify-center">
+              <p className="text-gray-400 text-sm">Espacio Reservado para Anuncios</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Ad Container */}
+        <div className="w-full h-24 bg-gray-100 flex items-center justify-center my-8 rounded-lg border border-gray-200 overflow-hidden">
+          <p className="text-gray-400 text-sm">Espacio Reservado para Anuncios</p>
+        </div>
       </main>
     </div>
   );

@@ -1,5 +1,6 @@
+
 import { useState } from "react";
-import { Mail, Phone, MessageSquare, Copyright, Link } from "lucide-react";
+import { Mail, Phone, MessageSquare, Copyright } from "lucide-react";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
@@ -59,28 +60,6 @@ export function Footer() {
             <p className="text-yellow-700 text-sm max-w-md">
               Directorio para encontrar la mejor app para el Registro horario digital, fácil y rápido
             </p>
-            
-            {/* Enlaces de interés */}
-            <div className="flex flex-col space-y-2 mt-4">
-              <a
-                href="https://csv.controlhorarioelectronico.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center space-x-2 text-sm text-yellow-700 hover:text-yellow-900 transition-colors"
-              >
-                <Link className="h-4 w-4" />
-                <span>CSV Control Horario</span>
-              </a>
-              <a
-                href="https://blog.controlhorarioelectronico.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center space-x-2 text-sm text-yellow-700 hover:text-yellow-900 transition-colors"
-              >
-                <Link className="h-4 w-4" />
-                <span>Blog Control Horario</span>
-              </a>
-            </div>
           </div>
 
           {/* Contact Form Section */}
