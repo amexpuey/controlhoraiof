@@ -23,7 +23,7 @@ export default function BlogPostCard({ post }: BlogPostCardProps) {
           <Tag className="w-3 h-3 mr-1 text-yellow-600" />
           <span className="text-xs text-yellow-700">{post.category}</span>
         </div>
-        <CardTitle className="text-lg">{post.title}</CardTitle>
+        <CardTitle className="text-lg line-clamp-2">{post.title}</CardTitle>
         <div className="flex items-center text-xs text-gray-500 mt-1">
           <CalendarDays className="w-3 h-3 mr-1" />
           <span>{new Date(post.published_at).toLocaleDateString('es-ES')}</span>
