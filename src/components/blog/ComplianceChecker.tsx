@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -252,12 +253,14 @@ export default function ComplianceChecker() {
             <div className="w-full bg-gray-50 border border-gray-200 rounded-md p-3 relative">
               <div className="flex items-center">
                 <div className="absolute top-1 right-1 bg-yellow-100 text-yellow-800 text-xs px-1 rounded flex items-center">
-                  <img 
-                    src="/public/lovable-uploads/d48380f9-f5c9-4f3f-8184-8ef27150846d.png" 
-                    alt="Ad" 
-                    className="w-3 h-3 mr-1" 
-                  />
-                  Anuncio
+                  <div className="flex items-center justify-center" style={{ width: "16px", height: "16px" }}>
+                    <img 
+                      src="/public/lovable-uploads/d48380f9-f5c9-4f3f-8184-8ef27150846d.png" 
+                      alt="Ad" 
+                      className="w-auto h-auto max-w-full max-h-full object-contain" 
+                    />
+                  </div>
+                  <span className="ml-1">Anuncio</span>
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-700">Solución Recomendada:</p>
