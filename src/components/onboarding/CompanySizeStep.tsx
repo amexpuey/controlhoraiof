@@ -53,11 +53,11 @@ export function CompanySizeStep({ selectedSize, onSizeSelect }: CompanySizeStepP
             transition={{ delay: index * 0.1 }}
           >
             <Button
-              variant={selectedSize === size.id ? "default" : "outline"}
+              variant="outline"
               className={`h-24 text-lg w-full ${
                 selectedSize === size.id 
-                  ? 'bg-yellow-500 hover:bg-yellow-600' 
-                  : 'hover:border-yellow-300 hover:bg-yellow-50'
+                  ? 'bg-yellow-500 hover:bg-yellow-600 text-white border-yellow-500' 
+                  : 'hover:border-yellow-400 hover:bg-yellow-50 border-yellow-100'
               }`}
               onClick={() => handleSizeSelect(size.id)}
             >

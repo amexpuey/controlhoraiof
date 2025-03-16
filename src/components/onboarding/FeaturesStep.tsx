@@ -82,11 +82,11 @@ export function FeaturesStep({ selectedFeatures, onFeatureToggle, onNext }: Feat
         {features.map((feature) => (
           <motion.div key={feature.id} variants={itemVariants}>
             <Button
-              variant={selectedFeatures.includes(feature.id) ? "default" : "outline"}
+              variant="outline"
               className={`h-16 text-sm justify-start w-full ${
                 selectedFeatures.includes(feature.id) 
-                  ? 'bg-yellow-500 hover:bg-yellow-600 text-white' 
-                  : 'hover:border-yellow-300 hover:bg-yellow-50'
+                  ? 'bg-yellow-500 hover:bg-yellow-600 text-white border-yellow-500' 
+                  : 'hover:border-yellow-400 hover:bg-yellow-50 border-yellow-100'
               }`}
               onClick={() => onFeatureToggle(feature.id)}
             >
