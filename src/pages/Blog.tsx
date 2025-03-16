@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
@@ -19,7 +18,6 @@ export default function Blog() {
     const fetchPosts = async () => {
       try {
         setLoading(true);
-        // Try to fetch from Supabase first
         const { data, error } = await supabase
           .from('blog_posts')
           .select('*')
@@ -28,12 +26,10 @@ export default function Blog() {
         if (!error && data && data.length > 0) {
           setPosts(data as BlogPost[]);
         } else {
-          // If no posts or error, use mock data
           setPosts(mockBlogPosts);
         }
       } catch (error) {
         console.error('Error fetching blog posts:', error);
-        // Fallback to mock data
         setPosts(mockBlogPosts);
       } finally {
         setLoading(false);
@@ -59,16 +55,13 @@ export default function Blog() {
   
   return (
     <BlogLayout>
-      {/* Blog Header */}
       <BlogHeader />
       
       <main className="container mx-auto px-4 py-8">
-        {/* Top Ad */}
         <div className="flex justify-center mb-8">
           <AdBanner position="top" adSize="728x90" />
         </div>
         
-        {/* Category Tabs */}
         <Tabs defaultValue="all" className="mb-8">
           <TabsList className="grid grid-cols-5 mb-8">
             <TabsTrigger value="all" onClick={() => setActiveCategory("all")}>
@@ -88,15 +81,12 @@ export default function Blog() {
             </TabsTrigger>
           </TabsList>
           
-          {/* All tabs content */}
           {["all", "Time Tracking", "HR Compliance", "Productivity", "Remote Work"].map((category) => (
             <TabsContent key={category} value={category} className="space-y-8">
               {filteredPosts.length > 0 && (
                 <>
-                  {/* Featured Post - only show the first post as featured */}
                   <FeaturedPost post={filteredPosts[0]} />
                   
-                  {/* Blog Posts Grid - show the remaining posts */}
                   {filteredPosts.length > 1 && (
                     <BlogPostsGrid posts={filteredPosts.slice(1)} />
                   )}
@@ -106,15 +96,12 @@ export default function Blog() {
           ))}
         </Tabs>
         
-        {/* In-content Ad */}
         <div className="flex justify-center my-10">
           <AdBanner position="in-content" adSize="300x250" />
         </div>
         
-        {/* Interactive Tools Section */}
         <InteractiveToolsSection />
         
-        {/* Bottom Ad */}
         <div className="flex justify-center mt-10">
           <AdBanner position="bottom" adSize="728x90" />
         </div>

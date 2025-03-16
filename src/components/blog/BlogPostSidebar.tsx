@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import AdBanner from "@/components/ads/AdBanner";
 import RelatedAppCard from "./RelatedAppCard";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Onboarding } from "@/components/Onboarding";
+import ComplianceChecker from "./ComplianceChecker";
 import { useNavigate } from "react-router-dom";
 
 interface BlogPostSidebarProps {
@@ -12,7 +12,7 @@ interface BlogPostSidebarProps {
 }
 
 export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
-  const [isQuizOpen, setIsQuizOpen] = useState(false);
+  const [isCheckerOpen, setIsCheckerOpen] = useState(false);
   const navigate = useNavigate();
 
   return (
@@ -32,39 +32,30 @@ export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
         </div>
       )}
       
-      {/* Interactive Tool Teaser */}
+      {/* Compliance Checker Tool Teaser */}
       <div className="bg-blue-50 rounded-lg shadow-sm p-4 border border-blue-200">
-        <h3 className="text-lg font-bold mb-2 text-blue-800">¿Cuál es la mejor app para ti?</h3>
-        <p className="text-sm text-blue-700 mb-4">Nuestro asistente inteligente te ayudará a encontrar la herramienta de control horario ideal para tu empresa.</p>
+        <h3 className="text-lg font-bold mb-2 text-blue-800 text-left">Verificador de cumplimiento</h3>
+        <p className="text-sm text-blue-700 mb-4 text-left">Comprueba si cumples con la normativa laboral de registro horario y evita multas</p>
         <Button 
           className="w-full bg-blue-500 hover:bg-blue-600"
-          onClick={() => setIsQuizOpen(true)}
+          onClick={() => setIsCheckerOpen(true)}
         >
-          Encuentra tu app de control horario
+          Comprobar ahora
         </Button>
       </div>
       
-      {/* Quiz Dialog */}
-      <Dialog open={isQuizOpen} onOpenChange={setIsQuizOpen}>
+      {/* Compliance Checker Dialog */}
+      <Dialog open={isCheckerOpen} onOpenChange={setIsCheckerOpen}>
         <DialogContent className="sm:max-w-[900px] max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-blue-800">
-              Encuentra tu app de control horario ideal
+              Verificador de Cumplimiento Normativo
             </DialogTitle>
             <DialogDescription className="text-blue-700">
-              En solo dos pasos, te recomendaremos las mejores aplicaciones
+              Comprueba si tu empresa cumple con la normativa de registro horario en España
             </DialogDescription>
           </DialogHeader>
-          <Onboarding 
-            onFeaturesSelect={(features) => {
-              // Close dialog first
-              setIsQuizOpen(false);
-              // Then navigate to dashboard with selected features as URL parameters
-              const featuresQuery = features.join(',');
-              navigate(`/mejores-apps-control-horario?features=${featuresQuery}`);
-            }}
-            onSizeSelect={() => {}}
-          />
+          <ComplianceChecker onClose={() => setIsCheckerOpen(false)} />
         </DialogContent>
       </Dialog>
       
