@@ -37,7 +37,7 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <Dashboard />,
+    element: <Index />, // Changed from Dashboard to Index to ensure the default route works
   },
 ]);
 
