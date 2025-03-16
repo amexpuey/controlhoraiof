@@ -2,9 +2,10 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Calculator } from "lucide-react";
+import { CheckCircle, Calculator, Book } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import ComplianceChecker from "@/components/blog/ComplianceChecker";
+import LearningModules from "@/components/learning/LearningModules";
 
 interface DashboardToolsProps {
   onFeatureSelect?: (features: string[]) => void;
@@ -12,9 +13,14 @@ interface DashboardToolsProps {
 
 export default function DashboardTools({ onFeatureSelect }: DashboardToolsProps) {
   const [showComplianceDialog, setShowComplianceDialog] = useState(false);
+  const [showLearningDialog, setShowLearningDialog] = useState(false);
   
   const handleComplianceCheckerClick = () => {
     setShowComplianceDialog(true);
+  };
+
+  const handleLearningModulesClick = () => {
+    setShowLearningDialog(true);
   };
 
   return (
@@ -23,7 +29,7 @@ export default function DashboardTools({ onFeatureSelect }: DashboardToolsProps)
         <h2 className="text-2xl font-bold text-blue-800 mb-6">
           Herramientas Interactivas
         </h2>
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-3 gap-6">
           {/* Verificador de cumplimiento */}
           <Card className="overflow-hidden">
             <CardHeader className="bg-blue-50">
@@ -75,6 +81,32 @@ export default function DashboardTools({ onFeatureSelect }: DashboardToolsProps)
               </div>
             </CardContent>
           </Card>
+
+          {/* Módulos de aprendizaje */}
+          <Card className="overflow-hidden">
+            <CardHeader className="bg-blue-50">
+              <CardTitle className="flex items-center text-lg">
+                <Book className="mr-2 h-5 w-5 text-blue-600" />
+                Módulos de aprendizaje
+              </CardTitle>
+              <CardDescription>
+                Aprende todo sobre el control horario
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-0">
+              <div className="p-4">
+                <p className="text-sm text-left text-gray-600 mb-4">
+                  Descubre qué es el control horario, su normativa y cómo implementarlo correctamente
+                </p>
+                <Button 
+                  className="bg-blue-500 hover:bg-blue-600"
+                  onClick={handleLearningModulesClick}
+                >
+                  Empezar a aprender
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
@@ -84,6 +116,16 @@ export default function DashboardTools({ onFeatureSelect }: DashboardToolsProps)
           <ComplianceChecker onClose={() => setShowComplianceDialog(false)} />
         </DialogContent>
       </Dialog>
+
+      {/* Learning Modules Dialog */}
+      <Dialog open={showLearningDialog} onOpenChange={setShowLearningDialog}>
+        <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
+          <LearningModules />
+        </DialogContent>
+      </Dialog>
+
+      {/* Embedded Learning Modules */}
+      <LearningModules />
     </>
   );
 }
