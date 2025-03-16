@@ -1,14 +1,19 @@
 
 import { useState } from "react";
-import { Mail, Phone, MessageSquare, Copyright, ExternalLink } from "lucide-react";
+import { Mail, Phone, MessageSquare, Copyright, ExternalLink, CheckCircle, Book } from "lucide-react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { Dialog, DialogContent } from "./ui/dialog";
+import ComplianceChecker from "@/components/blog/ComplianceChecker";
+import LearningModules from "@/components/learning/LearningModules";
 
 export function Footer() {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showComplianceDialog, setShowComplianceDialog] = useState(false);
+  const [showLearningDialog, setShowLearningDialog] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -71,10 +76,20 @@ export function Footer() {
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Blog
               </a>
-              <a href="/" className="text-gray-300 hover:text-white flex items-center transition-colors text-sm">
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Herramientas
-              </a>
+              <button 
+                onClick={() => setShowComplianceDialog(true)}
+                className="text-gray-300 hover:text-white flex items-center transition-colors text-sm text-left"
+              >
+                <CheckCircle className="h-4 w-4 mr-2 text-blue-400" />
+                Verificador de cumplimiento
+              </button>
+              <button 
+                onClick={() => setShowLearningDialog(true)}
+                className="text-gray-300 hover:text-white flex items-center transition-colors text-sm text-left"
+              >
+                <Book className="h-4 w-4 mr-2 text-blue-400" />
+                Módulos de aprendizaje
+              </button>
             </nav>
           </div>
 
@@ -139,6 +154,20 @@ export function Footer() {
           </div>
         </div>
       </div>
+
+      {/* Compliance Checker Dialog */}
+      <Dialog open={showComplianceDialog} onOpenChange={setShowComplianceDialog}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <ComplianceChecker onClose={() => setShowComplianceDialog(false)} />
+        </DialogContent>
+      </Dialog>
+
+      {/* Learning Modules Dialog */}
+      <Dialog open={showLearningDialog} onOpenChange={setShowLearningDialog}>
+        <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
+          <LearningModules />
+        </DialogContent>
+      </Dialog>
     </footer>
   );
 }
