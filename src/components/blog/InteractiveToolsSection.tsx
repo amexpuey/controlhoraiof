@@ -5,15 +5,19 @@ import { Button } from "@/components/ui/button";
 import { Onboarding } from "@/components/Onboarding";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useNavigate } from "react-router-dom";
+import ComplianceChecker from "./ComplianceChecker";
 
 // Interactive Tool Component
 const InteractiveTool = ({ toolType }: { toolType: string }) => {
   const [isQuizOpen, setIsQuizOpen] = useState(false);
+  const [isCheckerOpen, setIsCheckerOpen] = useState(false);
   const navigate = useNavigate();
 
-  const openQuiz = () => {
+  const openTool = () => {
     if (toolType === 'quiz') {
       setIsQuizOpen(true);
+    } else if (toolType === 'checker') {
+      setIsCheckerOpen(true);
     }
   };
 
@@ -36,21 +40,21 @@ const InteractiveTool = ({ toolType }: { toolType: string }) => {
           <p className="text-gray-600 mb-4">
             {toolType === 'quiz' && 'Este asistente personalizado te ayudará a encontrar la mejor herramienta de control horario según las necesidades específicas de tu empresa.'}
             {toolType === 'calculator' && '¡Próximamente! Podrás calcular cuánto te costará implementar una solución de control horario en base al número de empleados y funcionalidades.'}
-            {toolType === 'checker' && '¡Próximamente! Verifica si tu empresa cumple con la normativa española de registro horario a través de este sencillo test.'}
+            {toolType === 'checker' && 'Verifica si tu empresa cumple con la normativa española de registro horario a través de este sencillo test. Identificaremos posibles riesgos y sanciones.'}
           </p>
         </CardContent>
         <CardFooter>
           <Button 
             variant="outline" 
-            className={`w-full ${toolType === 'quiz' 
+            className={`w-full ${(toolType === 'quiz' || toolType === 'checker') 
               ? 'bg-yellow-100 hover:bg-yellow-200 text-yellow-800 border-yellow-300' 
               : 'bg-gray-100 hover:bg-gray-200 text-gray-600 border-gray-300 cursor-not-allowed'}`}
-            onClick={openQuiz}
-            disabled={toolType !== 'quiz'}
+            onClick={openTool}
+            disabled={toolType === 'calculator'}
           >
-            {toolType === 'quiz' 
-              ? 'Comenzar asistente' 
-              : 'Próximamente'}
+            {toolType === 'quiz' && 'Comenzar asistente'}
+            {toolType === 'checker' && 'Verificar cumplimiento'}
+            {toolType === 'calculator' && 'Próximamente'}
           </Button>
         </CardFooter>
       </Card>
@@ -76,6 +80,22 @@ const InteractiveTool = ({ toolType }: { toolType: string }) => {
               }}
               onSizeSelect={() => {}}
             />
+          </DialogContent>
+        </Dialog>
+      )}
+
+      {toolType === 'checker' && (
+        <Dialog open={isCheckerOpen} onOpenChange={setIsCheckerOpen}>
+          <DialogContent className="sm:max-w-[900px] max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-bold text-blue-800">
+                Verificador de Cumplimiento Normativo
+              </DialogTitle>
+              <DialogDescription className="text-blue-700">
+                Comprueba si tu empresa cumple con la normativa de registro horario en España
+              </DialogDescription>
+            </DialogHeader>
+            <ComplianceChecker />
           </DialogContent>
         </Dialog>
       )}
