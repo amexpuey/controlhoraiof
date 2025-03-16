@@ -5,7 +5,6 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Link } from "react-router-dom";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -43,7 +42,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-gradient-to-b from-yellow-50 to-yellow-100 mt-20 py-12">
+    <footer className="bg-gradient-to-r from-gray-800 to-gray-900 mt-20 py-12 text-white">
       <div className="container mx-auto px-4">
         {/* Main Footer Content - Three Column Layout */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
@@ -54,25 +53,25 @@ export function Footer() {
               alt="Control Horario Logo"
               className="w-16 h-16"
             />
-            <h3 className="text-yellow-800 font-semibold text-lg">Control Horario Electrónico</h3>
-            <p className="text-yellow-700 text-sm max-w-md">
+            <h3 className="font-semibold text-lg">Control Horario Electrónico</h3>
+            <p className="text-gray-300 text-sm max-w-md">
               Encuentra tu app de registro horario de forma fácil y rápida. El directorio más completo para empresas de todos los tamaños.
             </p>
           </div>
 
           {/* Column 2: Quick Links */}
           <div className="flex flex-col items-center md:items-start space-y-4">
-            <h3 className="text-yellow-800 font-semibold text-lg">Enlaces Rápidos</h3>
+            <h3 className="font-semibold text-lg">Enlaces Rápidos</h3>
             <nav className="flex flex-col space-y-2">
-              <a href="/dashboard" className="text-yellow-700 hover:text-yellow-500 flex items-center transition-colors text-sm">
+              <a href="/dashboard" className="text-gray-300 hover:text-white flex items-center transition-colors text-sm">
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Directorio de Apps
               </a>
-              <a href="/blog" className="text-yellow-700 hover:text-yellow-500 flex items-center transition-colors text-sm">
+              <a href="/blog" className="text-gray-300 hover:text-white flex items-center transition-colors text-sm">
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Blog
               </a>
-              <a href="/" className="text-yellow-700 hover:text-yellow-500 flex items-center transition-colors text-sm">
+              <a href="/" className="text-gray-300 hover:text-white flex items-center transition-colors text-sm">
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Herramientas
               </a>
@@ -81,17 +80,17 @@ export function Footer() {
 
           {/* Column 3: Legal Links */}
           <div className="flex flex-col items-center md:items-start space-y-4">
-            <h3 className="text-yellow-800 font-semibold text-lg">Legal</h3>
+            <h3 className="font-semibold text-lg">Legal</h3>
             <nav className="flex flex-col space-y-2">
-              <a href="/terminos" className="text-yellow-700 hover:text-yellow-500 flex items-center transition-colors text-sm">
+              <a href="/terminos" className="text-gray-300 hover:text-white flex items-center transition-colors text-sm">
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Términos y Condiciones
               </a>
-              <a href="/privacidad" className="text-yellow-700 hover:text-yellow-500 flex items-center transition-colors text-sm">
+              <a href="/privacidad" className="text-gray-300 hover:text-white flex items-center transition-colors text-sm">
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Política de Privacidad
               </a>
-              <a href="/cookies" className="text-yellow-700 hover:text-yellow-500 flex items-center transition-colors text-sm">
+              <a href="/cookies" className="text-gray-300 hover:text-white flex items-center transition-colors text-sm">
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Política de Cookies
               </a>
@@ -100,42 +99,42 @@ export function Footer() {
         </div>
 
         {/* Newsletter Subscription */}
-        <div className="py-8 border-t border-yellow-200">
+        <div className="py-8 border-t border-gray-700">
           <div className="max-w-xl mx-auto text-center">
-            <h3 className="text-xl font-semibold text-yellow-800 mb-2">Suscríbete a nuestro Newsletter</h3>
-            <p className="text-yellow-700 mb-4 text-sm">
+            <h3 className="text-xl font-semibold mb-2">Suscríbete a nuestro Newsletter</h3>
+            <p className="text-gray-300 mb-4 text-sm">
               Recibe consejos y novedades sobre el control horario digital para tu empresa
             </p>
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
               <div className="relative flex-grow">
-                <Mail className="absolute left-3 top-2.5 h-4 w-4 text-yellow-500" />
+                <Mail className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
                 <Input
                   type="email"
                   placeholder="Tu correo electrónico"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="pl-10 bg-white border-yellow-200 text-yellow-900 placeholder:text-yellow-400 focus:ring-yellow-400 h-10 text-sm"
+                  className="pl-10 bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400 focus:ring-blue-400 h-10 text-sm"
                 />
               </div>
               <Button 
                 type="submit"
-                disabled={isSubmitting === true}
-                className="bg-yellow-500 hover:bg-yellow-600 text-white text-sm h-10"
+                disabled={isSubmitting}
+                className="bg-blue-600 hover:bg-blue-700 text-white text-sm h-10"
               >
-                {isSubmitting === true ? "Enviando..." : "Suscribirse"}
+                {isSubmitting ? "Enviando..." : "Suscribirse"}
               </Button>
             </form>
           </div>
         </div>
 
         {/* Bottom copyright section */}
-        <div className="mt-8 pt-4 border-t border-yellow-200 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="flex items-center space-x-2 text-sm text-yellow-700">
+        <div className="mt-8 pt-4 border-t border-gray-700 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div className="flex items-center space-x-2 text-sm text-gray-400">
             <Copyright className="h-4 w-4" />
             <span>Control Horario Electronico 2025</span>
           </div>
-          <div className="flex items-center space-x-4 text-sm text-yellow-700">
+          <div className="flex items-center space-x-4 text-sm text-gray-400">
             <span>Desarrollado con ♥ en España</span>
           </div>
         </div>
