@@ -32,14 +32,34 @@ export default function Blog() {
       try {
         setLoading(true);
         console.log("Fetching blog posts from Supabase...");
+        
+        // The issue might be with this query - let's log more details
         const { data, error } = await supabase
           .from('blog_posts')
           .select('*')
           .order('published_at', { ascending: false });
+        
+        console.log("Supabase query response:", { data, error });
           
         if (!error && data && data.length > 0) {
           console.log(`Fetched ${data.length} blog posts from Supabase`);
-          setPosts(data as BlogPost[]);
+          
+          // Transform the data to match BlogPost structure if needed
+          const transformedPosts = data.map(post => {
+            // Make sure related_apps is always an array
+            let relatedApps = post.related_apps;
+            if (!Array.isArray(relatedApps)) {
+              relatedApps = relatedApps ? [relatedApps] : [];
+            }
+            
+            return {
+              ...post,
+              id: post.id.toString(), // Ensure id is a string
+              related_apps: relatedApps
+            } as BlogPost;
+          });
+          
+          setPosts(transformedPosts);
         } else {
           console.error('Error or no data from Supabase:', error);
           console.log('Falling back to mock data');
