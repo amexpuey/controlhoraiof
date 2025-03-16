@@ -64,18 +64,18 @@ export function Footer() {
           <div className="flex flex-col items-center md:items-start space-y-4">
             <h3 className="text-yellow-800 font-semibold text-lg">Enlaces Rápidos</h3>
             <nav className="flex flex-col space-y-2">
-              <Link to="/dashboard" className="text-yellow-700 hover:text-yellow-500 flex items-center transition-colors text-sm">
+              <a href="/dashboard" className="text-yellow-700 hover:text-yellow-500 flex items-center transition-colors text-sm">
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Directorio de Apps
-              </Link>
-              <Link to="/blog" className="text-yellow-700 hover:text-yellow-500 flex items-center transition-colors text-sm">
+              </a>
+              <a href="/blog" className="text-yellow-700 hover:text-yellow-500 flex items-center transition-colors text-sm">
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Blog
-              </Link>
-              <Link to="/" className="text-yellow-700 hover:text-yellow-500 flex items-center transition-colors text-sm">
+              </a>
+              <a href="/" className="text-yellow-700 hover:text-yellow-500 flex items-center transition-colors text-sm">
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Herramientas
-              </Link>
+              </a>
             </nav>
           </div>
 
@@ -83,18 +83,18 @@ export function Footer() {
           <div className="flex flex-col items-center md:items-start space-y-4">
             <h3 className="text-yellow-800 font-semibold text-lg">Legal</h3>
             <nav className="flex flex-col space-y-2">
-              <Link to="/terminos" className="text-yellow-700 hover:text-yellow-500 flex items-center transition-colors text-sm">
+              <a href="/terminos" className="text-yellow-700 hover:text-yellow-500 flex items-center transition-colors text-sm">
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Términos y Condiciones
-              </Link>
-              <Link to="/privacidad" className="text-yellow-700 hover:text-yellow-500 flex items-center transition-colors text-sm">
+              </a>
+              <a href="/privacidad" className="text-yellow-700 hover:text-yellow-500 flex items-center transition-colors text-sm">
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Política de Privacidad
-              </Link>
-              <Link to="/cookies" className="text-yellow-700 hover:text-yellow-500 flex items-center transition-colors text-sm">
+              </a>
+              <a href="/cookies" className="text-yellow-700 hover:text-yellow-500 flex items-center transition-colors text-sm">
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Política de Cookies
-              </Link>
+              </a>
             </nav>
           </div>
         </div>
@@ -120,10 +120,10 @@ export function Footer() {
               </div>
               <Button 
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting === true}
                 className="bg-yellow-500 hover:bg-yellow-600 text-white text-sm h-10"
               >
-                {isSubmitting ? "Enviando..." : "Suscribirse"}
+                {isSubmitting === true ? "Enviando..." : "Suscribirse"}
               </Button>
             </form>
           </div>
