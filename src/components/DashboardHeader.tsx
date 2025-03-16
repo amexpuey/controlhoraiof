@@ -62,7 +62,7 @@ export default function DashboardHeader({
       <div className="relative bg-gradient-to-b from-blue-50 to-white">
         <div className="absolute inset-0 mix-blend-multiply opacity-10">
           <img
-            src="/lovable-uploads/c2b90205-f41e-4c0d-bf34-bb7a5bba9103.png"
+            src="/lovable-uploads/bfe02090-bf42-4aa1-a40b-853d59bbf5e7.png"
             alt="Hero background"
             className="w-full h-full object-cover"
           />

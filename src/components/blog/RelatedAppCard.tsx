@@ -29,7 +29,7 @@ export default function RelatedAppCard({ appId }: RelatedAppCardProps) {
         setAppData({
           id: appId,
           title: "TimeTracker Pro",
-          logo_url: "/lovable-uploads/c2b90205-f41e-4c0d-bf34-bb7a5bba9103.png",
+          logo_url: "/lovable-uploads/91e7dd43-1049-45fc-ae3d-b7ecbd608938.png",
           slug: "timetracker-pro"
         });
       }
