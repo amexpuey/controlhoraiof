@@ -8,63 +8,48 @@ import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
-import MainHeader from "@/components/MainHeader";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-// Create a client
-const queryClient = new QueryClient();
-
-// Wrap components that need consistent layout
-const WithLayout = ({ children }: { children: React.ReactNode }) => (
-  <>
-    <MainHeader />
-    <div className="flex-grow">
-      {children}
-    </div>
-    <Footer />
-  </>
-);
 
 // Move router configuration outside component to prevent recreation
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <WithLayout><Index /></WithLayout>,
+    element: <Index />,
   },
   {
     path: "/dashboard",
-    element: <WithLayout><Dashboard /></WithLayout>,
+    element: <Dashboard />,
   },
   {
     path: "/mejores-apps-control-horario/:slug",
-    element: <WithLayout><UserView /></WithLayout>,
+    element: <UserView />,
   },
   {
     path: "/mejores-apps-control-horario/comparar/:ids",
-    element: <WithLayout><ComparisonPage /></WithLayout>,
+    element: <ComparisonPage />,
   },
   {
     path: "/blog",
-    element: <WithLayout><Blog /></WithLayout>,
+    element: <Blog />,
   },
   {
     path: "/blog/:slug",
-    element: <WithLayout><BlogPost /></WithLayout>,
+    element: <BlogPost />,
   },
   {
     path: "*",
-    element: <WithLayout><Index /></WithLayout>,
+    element: <Index />, // Changed from Dashboard to Index to ensure the default route works
   },
 ]);
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen">
+      <div className="flex-grow">
         <RouterProvider router={router} />
-        <Toaster />
       </div>
-    </QueryClientProvider>
+      <Footer />
+      <Toaster />
+    </div>
   );
 }
 
