@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { 
   Clock, 
@@ -30,7 +31,8 @@ import {
   ChevronUp,
   Check,
   Globe,
-  Apple
+  Apple,
+  X
 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -46,6 +48,7 @@ interface FilterSectionProps {
   onTopRatedToggle: () => void;
   selectedAvailability: string[];
   onAvailabilityToggle: (option: string) => void;
+  onClearAllFilters?: () => void;
 }
 
 const features = [
@@ -98,12 +101,32 @@ export function FilterSection({
   onTopRatedToggle,
   selectedAvailability = [],
   onAvailabilityToggle,
+  onClearAllFilters,
 }: FilterSectionProps) {
   const [showFeatures, setShowFeatures] = useState(false);
+  
+  const hasActiveFilters = selectedFeatures.length > 0 || 
+                          selectedTypes.length > 0 || 
+                          showTopRated || 
+                          selectedAvailability.length > 0;
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm mb-8">
-      <h2 className="text-xl font-semibold mb-4">Filtros</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold">Filtros</h2>
+        
+        {hasActiveFilters && (
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={onClearAllFilters}
+            className="flex items-center gap-1 text-sm"
+          >
+            <X className="h-4 w-4" />
+            Borrar filtros
+          </Button>
+        )}
+      </div>
       
       <div className="space-y-6">
         {/* Features Filter */}

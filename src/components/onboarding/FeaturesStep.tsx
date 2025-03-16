@@ -64,11 +64,11 @@ export function FeaturesStep({ selectedFeatures, onFeatureToggle, onNext }: Feat
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <CheckCircle2 className="w-16 h-16 mx-auto mb-4 text-yellow-500" />
-        <h2 className="text-2xl font-bold mb-2 text-yellow-800">
+        <CheckCircle2 className="w-16 h-16 mx-auto mb-4 text-primary" />
+        <h2 className="text-2xl font-bold mb-2 text-gray-800">
           ¿Qué características necesitas?
         </h2>
-        <p className="text-yellow-700 max-w-md mx-auto">
+        <p className="text-gray-600 max-w-md mx-auto">
           Selecciona todas las funcionalidades que son importantes para tu empresa
         </p>
       </motion.div>
@@ -85,8 +85,8 @@ export function FeaturesStep({ selectedFeatures, onFeatureToggle, onNext }: Feat
               variant="outline"
               className={`h-16 text-sm justify-start w-full ${
                 selectedFeatures.includes(feature.id) 
-                  ? 'bg-yellow-500 hover:bg-yellow-600 text-white border-yellow-500' 
-                  : 'hover:border-yellow-400 hover:bg-yellow-50 border-yellow-100'
+                  ? 'bg-primary hover:bg-primary/90 text-primary-foreground border-primary' 
+                  : 'hover:border-primary/30 hover:bg-primary/5 border-gray-200'
               }`}
               onClick={() => onFeatureToggle(feature.id)}
             >
@@ -107,7 +107,6 @@ export function FeaturesStep({ selectedFeatures, onFeatureToggle, onNext }: Feat
       >
         <Button
           onClick={onNext}
-          className={`w-full md:w-auto ${selectedFeatures.length > 0 ? 'bg-yellow-500 hover:bg-yellow-600' : ''}`}
           disabled={selectedFeatures.length === 0}
         >
           Ver soluciones recomendadas
@@ -116,7 +115,7 @@ export function FeaturesStep({ selectedFeatures, onFeatureToggle, onNext }: Feat
       </motion.div>
 
       <motion.div 
-        className="text-center text-yellow-700 mt-2 text-sm"
+        className="text-center text-gray-500 mt-2 text-sm"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}

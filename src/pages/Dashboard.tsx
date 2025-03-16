@@ -82,6 +82,23 @@ const Dashboard = () => {
     setCompanySize(size);
   };
 
+  const handleFeatureToggle = (feature: string) => {
+    // Special case for clearing all filters
+    if (feature === "CLEAR_ALL") {
+      setSelectedFeatures([]);
+      localStorage.setItem('selectedFeatures', JSON.stringify([]));
+      return;
+    }
+
+    // Normal toggle behavior
+    const newFeatures = selectedFeatures.includes(feature)
+      ? selectedFeatures.filter(f => f !== feature)
+      : [...selectedFeatures, feature];
+    
+    setSelectedFeatures(newFeatures);
+    localStorage.setItem('selectedFeatures', JSON.stringify(newFeatures));
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
       <DashboardHeader 
@@ -111,13 +128,7 @@ const Dashboard = () => {
               <div className="lg:col-span-3">
                 <DashboardApps 
                   selectedFeatures={selectedFeatures}
-                  onFeatureToggle={(feature) => {
-                    const newFeatures = selectedFeatures.includes(feature)
-                      ? selectedFeatures.filter(f => f !== feature)
-                      : [...selectedFeatures, feature];
-                    setSelectedFeatures(newFeatures);
-                    localStorage.setItem('selectedFeatures', JSON.stringify(newFeatures));
-                  }}
+                  onFeatureToggle={handleFeatureToggle}
                   searchQuery={searchQuery}
                   setSearchQuery={setSearchQuery}
                 />

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import type { Database } from "@/integrations/supabase/types";
 import { supabase } from "@/integrations/supabase/client";
@@ -39,7 +40,18 @@ export function useAppsFiltering(
   }, []);
 
   useEffect(() => {
-    if (!apps) return;
+    if (!apps || apps.length === 0) return;
+    
+    // If no filters are applied, return an empty array
+    const hasActiveFilters = selectedFeatures.length > 0 || 
+                            showTopRated || 
+                            selectedAvailability.length > 0 ||
+                            searchQuery.trim() !== "";
+    
+    if (!hasActiveFilters) {
+      setFilteredApps([]);
+      return;
+    }
     
     let filtered = [...apps];
 

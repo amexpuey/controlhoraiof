@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FilterSection } from "./FilterSection";
@@ -6,6 +7,7 @@ import { useAppsFiltering } from "./useAppsFiltering";
 import type { Database } from "@/integrations/supabase/types";
 import { Button } from "@/components/ui/button";
 import AdBanner from "@/components/ads/AdBanner";
+import { AlertCircle } from "lucide-react";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
@@ -62,14 +64,29 @@ export default function DashboardApps({
     }
   };
 
+  const clearAllFilters = () => {
+    onFeatureToggle("CLEAR_ALL");
+    setShowTopRated(false);
+    setSelectedAvailability([]);
+    setSearchQuery("");
+  };
+
+  const hasActiveFilters = selectedFeatures.length > 0 || 
+                          showTopRated || 
+                          selectedAvailability.length > 0 ||
+                          searchQuery.trim() !== "";
+
   // Split apps into groups of two rows (6 apps per row on desktop)
   const appsGroups = [];
   const appsPerRow = 3;
   const rowsPerGroup = 2;
   const appsPerGroup = appsPerRow * rowsPerGroup;
 
-  for (let i = 0; i < filteredApps.length; i += appsPerGroup) {
-    appsGroups.push(filteredApps.slice(i, i + appsPerGroup));
+  // Only process apps if we have active filters
+  const appsToShow = hasActiveFilters ? filteredApps : [];
+
+  for (let i = 0; i < appsToShow.length; i += appsPerGroup) {
+    appsGroups.push(appsToShow.slice(i, i + appsPerGroup));
   }
 
   return (
@@ -83,6 +100,7 @@ export default function DashboardApps({
         onTopRatedToggle={() => setShowTopRated(!showTopRated)}
         selectedAvailability={selectedAvailability}
         onAvailabilityToggle={handleAvailabilityToggle}
+        onClearAllFilters={clearAllFilters}
       />
 
       {/* Comparison Section */}
@@ -104,6 +122,17 @@ export default function DashboardApps({
               Comparar Aplicaciones
             </Button>
           </div>
+        </div>
+      )}
+
+      {/* Show message when no filters are selected */}
+      {!hasActiveFilters && (
+        <div className="text-center bg-blue-50 p-8 rounded-lg border border-blue-100">
+          <AlertCircle className="h-12 w-12 text-blue-500 mx-auto mb-4" />
+          <h3 className="text-xl font-bold text-blue-800 mb-2">No hay filtros seleccionados</h3>
+          <p className="text-blue-700 mb-4">
+            Selecciona al menos un filtro para visualizar las aplicaciones disponibles.
+          </p>
         </div>
       )}
 
@@ -130,8 +159,8 @@ export default function DashboardApps({
         </div>
       ))}
 
-      {/* Show message if no apps are found */}
-      {filteredApps.length === 0 && (
+      {/* Show message if filters are applied but no apps are found */}
+      {hasActiveFilters && appsToShow.length === 0 && (
         <div className="text-center text-gray-600 py-8">
           No se encontraron aplicaciones que coincidan con tus criterios.
         </div>
