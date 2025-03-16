@@ -20,12 +20,12 @@ const InteractiveTool = ({ toolType }: { toolType: string }) => {
       <Card className="shadow-md border-yellow-200 hover:shadow-lg transition-shadow">
         <CardHeader className="bg-yellow-50">
           <CardTitle className="text-xl text-yellow-800">
-            {toolType === 'quiz' && '🧩 AsistenTech'}
+            {toolType === 'quiz' && '🧩 Encuentra tu app de control horario'}
             {toolType === 'calculator' && '🧮 Calculadora de Costes'}
             {toolType === 'checker' && '✅ Verificador de Cumplimiento'}
           </CardTitle>
           <CardDescription>
-            {toolType === 'quiz' && 'Encuentra la herramienta perfecta para tu empresa'}
+            {toolType === 'quiz' && 'La herramienta perfecta para tu empresa'}
             {toolType === 'calculator' && 'Calcula el coste de implementación'}
             {toolType === 'checker' && 'Comprueba si cumples con la normativa'}
           </CardDescription>
@@ -58,7 +58,7 @@ const InteractiveTool = ({ toolType }: { toolType: string }) => {
           <DialogContent className="sm:max-w-[900px] max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle className="text-2xl font-bold text-yellow-800">
-                AsistenTech: Encuentra tu solución ideal
+                Encuentra tu app de control horario ideal
               </DialogTitle>
             </DialogHeader>
             <Onboarding 
