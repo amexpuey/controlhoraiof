@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -22,9 +23,9 @@ const InteractiveTool = ({ toolType }: { toolType: string }) => {
 
   return (
     <>
-      <Card className="shadow-md border-yellow-200 hover:shadow-lg transition-shadow">
-        <CardHeader className="bg-yellow-50">
-          <CardTitle className="text-xl text-yellow-800">
+      <Card className="shadow-md border-blue-200 hover:shadow-lg transition-shadow">
+        <CardHeader className="bg-blue-50">
+          <CardTitle className="text-xl text-blue-800">
             {toolType === 'quiz' && '🧩 Encuentra tu app de control horario'}
             {toolType === 'calculator' && '🧮 Calculadora de Costes'}
             {toolType === 'checker' && '✅ Verificador de Cumplimiento'}
@@ -46,7 +47,7 @@ const InteractiveTool = ({ toolType }: { toolType: string }) => {
           <Button 
             variant="outline" 
             className={`w-full ${(toolType === 'quiz' || toolType === 'checker') 
-              ? 'bg-yellow-100 hover:bg-yellow-200 text-yellow-800 border-yellow-300' 
+              ? 'bg-blue-100 hover:bg-blue-200 text-blue-800 border-blue-300' 
               : 'bg-gray-100 hover:bg-gray-200 text-gray-600 border-gray-300 cursor-not-allowed'}`}
             onClick={openTool}
             disabled={toolType === 'calculator'}
@@ -62,10 +63,10 @@ const InteractiveTool = ({ toolType }: { toolType: string }) => {
         <Dialog open={isQuizOpen} onOpenChange={setIsQuizOpen}>
           <DialogContent className="sm:max-w-[900px] max-h-[90vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle className="text-2xl font-bold text-yellow-800">
+              <DialogTitle className="text-2xl font-bold text-blue-800">
                 Encuentra tu app de control horario ideal
               </DialogTitle>
-              <DialogDescription className="text-yellow-700">
+              <DialogDescription className="text-blue-700">
                 En solo dos pasos, te recomendaremos las mejores aplicaciones
               </DialogDescription>
             </DialogHeader>

@@ -33,11 +33,11 @@ export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
       )}
       
       {/* Interactive Tool Teaser */}
-      <div className="bg-yellow-50 rounded-lg shadow-sm p-4 border border-yellow-200">
-        <h3 className="text-lg font-bold mb-2 text-yellow-800">¿Cuál es la mejor app para ti?</h3>
-        <p className="text-sm text-yellow-700 mb-4">Nuestro asistente inteligente te ayudará a encontrar la herramienta de control horario ideal para tu empresa.</p>
+      <div className="bg-blue-50 rounded-lg shadow-sm p-4 border border-blue-200">
+        <h3 className="text-lg font-bold mb-2 text-blue-800">¿Cuál es la mejor app para ti?</h3>
+        <p className="text-sm text-blue-700 mb-4">Nuestro asistente inteligente te ayudará a encontrar la herramienta de control horario ideal para tu empresa.</p>
         <Button 
-          className="w-full bg-yellow-500 hover:bg-yellow-600"
+          className="w-full bg-blue-500 hover:bg-blue-600"
           onClick={() => setIsQuizOpen(true)}
         >
           Encuentra tu app de control horario
@@ -48,10 +48,10 @@ export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
       <Dialog open={isQuizOpen} onOpenChange={setIsQuizOpen}>
         <DialogContent className="sm:max-w-[900px] max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-yellow-800">
+            <DialogTitle className="text-2xl font-bold text-blue-800">
               Encuentra tu app de control horario ideal
             </DialogTitle>
-            <DialogDescription className="text-yellow-700">
+            <DialogDescription className="text-blue-700">
               En solo dos pasos, te recomendaremos las mejores aplicaciones
             </DialogDescription>
           </DialogHeader>

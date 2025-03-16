@@ -28,15 +28,15 @@ export default function DashboardTools({ onFeatureSelect }: DashboardToolsProps)
 
   return (
     <section className="mb-8">
-      <h2 className="text-2xl font-bold text-yellow-800 mb-6">
+      <h2 className="text-2xl font-bold text-blue-800 mb-6">
         Herramientas Interactivas
       </h2>
       <div className="grid md:grid-cols-3 gap-6">
         {/* Verificador de cumplimiento */}
         <Card className="overflow-hidden">
-          <CardHeader className="bg-yellow-100">
+          <CardHeader className="bg-blue-50">
             <CardTitle className="flex items-center text-lg">
-              <CheckCircle className="mr-2 h-5 w-5 text-yellow-600" />
+              <CheckCircle className="mr-2 h-5 w-5 text-blue-600" />
               Verificador de cumplimiento
             </CardTitle>
             <CardDescription>
@@ -54,7 +54,7 @@ export default function DashboardTools({ onFeatureSelect }: DashboardToolsProps)
                   Verifica si tu empresa cumple con la normativa de registro horario y evita multas
                 </p>
                 <Button 
-                  className="bg-yellow-500 hover:bg-yellow-600"
+                  className="bg-blue-500 hover:bg-blue-600"
                   onClick={() => handleToolClick(0)}
                 >
                   Comprobar ahora
@@ -66,9 +66,9 @@ export default function DashboardTools({ onFeatureSelect }: DashboardToolsProps)
 
         {/* Encuentra tu app de control horario */}
         <Card className="overflow-hidden">
-          <CardHeader className="bg-yellow-100">
+          <CardHeader className="bg-blue-50">
             <CardTitle className="flex items-center text-lg">
-              <Search className="mr-2 h-5 w-5 text-yellow-600" />
+              <Search className="mr-2 h-5 w-5 text-blue-600" />
               Encuentra tu app de control horario
             </CardTitle>
             <CardDescription>
@@ -86,7 +86,7 @@ export default function DashboardTools({ onFeatureSelect }: DashboardToolsProps)
                   Selecciona las características que necesitas para tu empresa
                 </p>
                 <Button 
-                  className="bg-yellow-500 hover:bg-yellow-600"
+                  className="bg-blue-500 hover:bg-blue-600"
                   onClick={() => handleToolClick(1)}
                 >
                   Buscar ahora
@@ -98,9 +98,9 @@ export default function DashboardTools({ onFeatureSelect }: DashboardToolsProps)
 
         {/* Calculadora */}
         <Card className="overflow-hidden">
-          <CardHeader className="bg-yellow-100">
+          <CardHeader className="bg-blue-50">
             <CardTitle className="flex items-center text-lg">
-              <Calculator className="mr-2 h-5 w-5 text-yellow-600" />
+              <Calculator className="mr-2 h-5 w-5 text-blue-600" />
               Calculadora de ahorro
             </CardTitle>
             <CardDescription>
@@ -125,7 +125,7 @@ export default function DashboardTools({ onFeatureSelect }: DashboardToolsProps)
                   Estima cuánto tiempo y dinero puedes ahorrar con una solución de control horario
                 </p>
                 <Button 
-                  className="bg-yellow-500 hover:bg-yellow-600"
+                  className="bg-blue-500 hover:bg-blue-600"
                   onClick={() => handleToolClick(2)}
                 >
                   Calcular ahorro
@@ -185,7 +185,7 @@ function FeatureSelector({ onSelect }: FeatureSelectorProps) {
             variant={selectedFeatures.includes(feature) ? "default" : "outline"}
             size="sm"
             className={selectedFeatures.includes(feature) 
-              ? "justify-start bg-yellow-500 hover:bg-yellow-600" 
+              ? "justify-start bg-blue-500 hover:bg-blue-600" 
               : "justify-start"}
             onClick={() => handleToggle(feature)}
           >
@@ -198,7 +198,7 @@ function FeatureSelector({ onSelect }: FeatureSelectorProps) {
       </div>
       <div className="pt-4 flex justify-end">
         <Button 
-          className="bg-yellow-500 hover:bg-yellow-600"
+          className="bg-blue-500 hover:bg-blue-600"
           onClick={handleSubmit}
           disabled={selectedFeatures.length === 0}
         >
