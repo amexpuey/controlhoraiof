@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Onboarding } from "@/components/Onboarding";
 import DashboardApps from "@/components/dashboard/DashboardApps";
@@ -6,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import DashboardHeader from "@/components/DashboardHeader";
 import AdBanner from "@/components/ads/AdBanner";
+import DashboardTools from "@/components/dashboard/DashboardTools";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
@@ -64,6 +64,20 @@ const Dashboard = () => {
     localStorage.setItem('showApps', 'true');
   };
 
+  const handleToolFeatureSelect = (features: string[]) => {
+    setSelectedFeatures(features);
+    setShowApps(true);
+    localStorage.setItem('selectedFeatures', JSON.stringify(features));
+    localStorage.setItem('showApps', 'true');
+    
+    toast({
+      title: "Filtros aplicados",
+      description: `${features.length} características seleccionadas`,
+    });
+
+    navigate(`${location.pathname}?fromTool=appfinder`);
+  };
+
   const handleSizeSelect = (size: string) => {
     setCompanySize(size);
   };
@@ -105,23 +119,27 @@ const Dashboard = () => {
             onSizeSelect={handleSizeSelect}
           />
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 relative mt-8">
-            <div className="lg:col-span-3">
-              <DashboardApps 
-                selectedFeatures={selectedFeatures}
-                onFeatureToggle={handleFeatureToggle}
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-              />
-            </div>
+          <>
+            <DashboardTools onFeatureSelect={handleToolFeatureSelect} />
+            
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 relative mt-8">
+              <div className="lg:col-span-3">
+                <DashboardApps 
+                  selectedFeatures={selectedFeatures}
+                  onFeatureToggle={handleFeatureToggle}
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                />
+              </div>
 
-            <div className="hidden lg:block sticky top-4 h-fit">
-              <AdBanner
-                position="sidebar"
-                adSize="300x600"
-              />
+              <div className="hidden lg:block sticky top-4 h-fit">
+                <AdBanner
+                  position="sidebar"
+                  adSize="300x600"
+                />
+              </div>
             </div>
-          </div>
+          </>
         )}
 
         <div className="my-8 flex justify-center">
