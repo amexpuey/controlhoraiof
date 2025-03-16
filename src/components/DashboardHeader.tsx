@@ -38,7 +38,7 @@ export default function DashboardHeader({
         </div>
       </div>
 
-      {/* Hero Section with New Yellow Theme */}
+      {/* Hero Section with New Yellow Theme - Non-sticky */}
       <div className="relative bg-gradient-to-r from-yellow-400 to-yellow-500">
         <div className="absolute inset-0 bg-[#FEF7CD] mix-blend-multiply opacity-30">
           <img
@@ -56,7 +56,7 @@ export default function DashboardHeader({
                 className="w-24 h-24"
               />
               <h1 className="text-3xl md:text-4xl font-bold text-yellow-900 text-center">
-                Directorio para el Control Horario
+                Directorio de Control Horario Digital en 2025
               </h1>
               <p className="text-xl text-yellow-800 text-center max-w-2xl">
                 Encuentra la mejor solución de control horario para tu empresa

@@ -13,12 +13,42 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function MainHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isOnboarded, setIsOnboarded] = useState(false);
   const location = useLocation();
+  
+  // Check if user has completed onboarding
+  useEffect(() => {
+    const checkOnboardingStatus = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (session?.user) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('onboarding_status')
+            .eq('id', session.user.id)
+            .single();
+          
+          setIsOnboarded(profile?.onboarding_status === 'completed');
+        } else {
+          // Check local storage as fallback
+          setIsOnboarded(localStorage.getItem('showApps') === 'true');
+        }
+      } catch (error) {
+        console.error("Error checking onboarding status:", error);
+        // Fallback to localStorage
+        setIsOnboarded(localStorage.getItem('showApps') === 'true');
+      }
+    };
+    
+    checkOnboardingStatus();
+  }, [location.pathname]);
   
   // Handle scroll effect for sticky header
   useEffect(() => {
@@ -38,8 +68,15 @@ export default function MainHeader() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     // Redirect to dashboard with search query
-    if (searchQuery.trim()) {
+    if (searchQuery.trim() && isOnboarded) {
       window.location.href = `/dashboard?search=${encodeURIComponent(searchQuery)}`;
+    }
+  };
+
+  const handleButtonClick = (e: React.MouseEvent, to: string) => {
+    if (!isOnboarded && to === "/dashboard") {
+      e.preventDefault();
+      alert("Por favor, complete el proceso de selección de características primero.");
     }
   };
 
@@ -106,7 +143,7 @@ export default function MainHeader() {
                 </NavigationMenuItem>
                 
                 <NavigationMenuItem>
-                  <Link to="/dashboard">
+                  <Link to="/dashboard" onClick={(e) => handleButtonClick(e, "/dashboard")}>
                     <Button variant="ghost">Directorio</Button>
                   </Link>
                 </NavigationMenuItem>
@@ -158,18 +195,24 @@ export default function MainHeader() {
             </div>
             
             <Link to="/blog" className="py-2 px-4 hover:bg-blue-50 rounded-md">Blog</Link>
-            <Link to="/dashboard" className="py-2 px-4 hover:bg-blue-50 rounded-md">Directorio</Link>
+            <Link 
+              to="/dashboard" 
+              className="py-2 px-4 hover:bg-blue-50 rounded-md"
+              onClick={(e) => handleButtonClick(e, "/dashboard")}
+            >
+              Directorio
+            </Link>
             <Link to="/#contacto" className="py-2 px-4 hover:bg-blue-50 rounded-md">Contacto</Link>
           </nav>
         </div>
       )}
       
-      {/* Hero/Search Section - only show on homepage or other main pages */}
+      {/* Hero/Search Section - only show on homepage, not sticky */}
       {(location.pathname === "/" || location.pathname === "/dashboard") && (
         <div className="bg-gradient-to-r from-blue-100 to-indigo-100 py-12">
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-3xl md:text-4xl font-bold text-blue-800 mb-3">
-              Directorio de Control Horario
+              Directorio de Control Horario Digital en 2025
             </h1>
             <p className="text-lg text-blue-600 max-w-2xl mx-auto mb-8">
               Encuentra y compara soluciones de control horario en un solo lugar, adaptadas a tu empresa
@@ -179,24 +222,38 @@ export default function MainHeader() {
               <Input
                 type="text"
                 placeholder="Busca tu software de control horario..."
-                className="pl-10 pr-20 py-6 text-base rounded-full shadow-md border-blue-200 focus:border-blue-400"
+                className={`pl-10 pr-20 py-6 text-base rounded-full shadow-md border-blue-200 focus:border-blue-400 ${!isOnboarded ? 'opacity-70 cursor-not-allowed' : ''}`}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                disabled={!isOnboarded}
               />
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Search className="h-5 w-5 text-blue-500" />
               </div>
               <button 
                 type="submit"
-                className="absolute right-2 inset-y-2 px-4 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
+                className={`absolute right-2 inset-y-2 px-4 bg-blue-600 text-white rounded-full transition-colors ${!isOnboarded ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700'}`}
+                disabled={!isOnboarded}
               >
                 Buscar
               </button>
             </form>
             
             <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/dashboard">
-                <Button size="lg" className="rounded-full px-6 bg-blue-600 hover:bg-blue-700">
+              <Link 
+                to="/dashboard"
+                onClick={(e) => {
+                  if (!isOnboarded) {
+                    e.preventDefault();
+                    alert("Por favor, complete el proceso de selección de características primero.");
+                  }
+                }}
+              >
+                <Button 
+                  size="lg" 
+                  className={`rounded-full px-6 ${!isOnboarded ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}`}
+                  disabled={!isOnboarded}
+                >
                   Ver todas las herramientas
                 </Button>
               </Link>
