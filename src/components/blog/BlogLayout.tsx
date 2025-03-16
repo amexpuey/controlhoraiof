@@ -10,7 +10,7 @@ export default function BlogLayout({ children }: BlogLayoutProps) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       {/* Header with dark gradient background */}
-      <div className="h-16 bg-gradient-to-r from-gray-800 to-gray-900 border-b flex items-center justify-between px-6 shadow-md">
+      <div className="h-16 bg-gradient-to-r from-gray-800 to-gray-900 border-b flex items-center justify-between px-6 shadow-md z-10 relative">
         <Link to="/" className="text-xl font-semibold text-white hover:text-gray-200 transition-colors">
           Control Horario Electrónico
         </Link>

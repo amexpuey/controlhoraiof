@@ -15,20 +15,28 @@ import LearningModules from "@/components/learning/LearningModules";
 export function ToolsDropdown() {
   const [showComplianceDialog, setShowComplianceDialog] = useState(false);
   const [showLearningDialog, setShowLearningDialog] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
-      <DropdownMenu>
+      <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="sm" className="text-white text-sm font-medium">
             Tools
             <ChevronDown className="ml-1 h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-56 bg-white">
+        <DropdownMenuContent 
+          align="end" 
+          className="w-56 bg-white z-50"
+          forceMount={false}
+        >
           <DropdownMenuItem
             className="flex items-center gap-2 py-2 cursor-pointer"
-            onClick={() => setShowComplianceDialog(true)}
+            onClick={() => {
+              setShowComplianceDialog(true);
+              setOpen(false);
+            }}
           >
             <CheckCircle className="h-5 w-5 text-blue-600" />
             <div>
@@ -45,7 +53,10 @@ export function ToolsDropdown() {
           </DropdownMenuItem>
           <DropdownMenuItem
             className="flex items-center gap-2 py-2 cursor-pointer"
-            onClick={() => setShowLearningDialog(true)}
+            onClick={() => {
+              setShowLearningDialog(true);
+              setOpen(false);
+            }}
           >
             <Book className="h-5 w-5 text-blue-600" />
             <div>
@@ -57,14 +68,26 @@ export function ToolsDropdown() {
       </DropdownMenu>
 
       {/* Compliance Checker Dialog */}
-      <Dialog open={showComplianceDialog} onOpenChange={setShowComplianceDialog}>
+      <Dialog 
+        open={showComplianceDialog} 
+        onOpenChange={(open) => {
+          setShowComplianceDialog(open);
+          if (!open) document.body.style.pointerEvents = "";
+        }}
+      >
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <ComplianceChecker onClose={() => setShowComplianceDialog(false)} />
         </DialogContent>
       </Dialog>
 
       {/* Learning Modules Dialog */}
-      <Dialog open={showLearningDialog} onOpenChange={setShowLearningDialog}>
+      <Dialog 
+        open={showLearningDialog} 
+        onOpenChange={(open) => {
+          setShowLearningDialog(open);
+          if (!open) document.body.style.pointerEvents = "";
+        }}
+      >
         <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
           <LearningModules />
         </DialogContent>

@@ -156,14 +156,26 @@ export function Footer() {
       </div>
 
       {/* Compliance Checker Dialog */}
-      <Dialog open={showComplianceDialog} onOpenChange={setShowComplianceDialog}>
+      <Dialog 
+        open={showComplianceDialog} 
+        onOpenChange={(open) => {
+          setShowComplianceDialog(open);
+          if (!open) document.body.style.pointerEvents = "";
+        }}
+      >
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <ComplianceChecker onClose={() => setShowComplianceDialog(false)} />
         </DialogContent>
       </Dialog>
 
       {/* Learning Modules Dialog */}
-      <Dialog open={showLearningDialog} onOpenChange={setShowLearningDialog}>
+      <Dialog 
+        open={showLearningDialog} 
+        onOpenChange={(open) => {
+          setShowLearningDialog(open);
+          if (!open) document.body.style.pointerEvents = "";
+        }}
+      >
         <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
           <LearningModules />
         </DialogContent>
