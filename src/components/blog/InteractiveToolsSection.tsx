@@ -3,11 +3,13 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Onboarding } from "@/components/Onboarding";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { useNavigate } from "react-router-dom";
 
 // Interactive Tool Component
 const InteractiveTool = ({ toolType }: { toolType: string }) => {
   const [isQuizOpen, setIsQuizOpen] = useState(false);
+  const navigate = useNavigate();
 
   const openQuiz = () => {
     if (toolType === 'quiz') {
@@ -60,11 +62,17 @@ const InteractiveTool = ({ toolType }: { toolType: string }) => {
               <DialogTitle className="text-2xl font-bold text-yellow-800">
                 Encuentra tu app de control horario ideal
               </DialogTitle>
+              <DialogDescription className="text-yellow-700">
+                En solo dos pasos, te recomendaremos las mejores aplicaciones
+              </DialogDescription>
             </DialogHeader>
             <Onboarding 
               onFeaturesSelect={(features) => {
-                // Handle features selection
+                // Close dialog first
                 setIsQuizOpen(false);
+                // Then navigate to dashboard with selected features as URL parameters
+                const featuresQuery = features.join(',');
+                navigate(`/mejores-apps-control-horario?features=${featuresQuery}`);
               }}
               onSizeSelect={() => {}}
             />

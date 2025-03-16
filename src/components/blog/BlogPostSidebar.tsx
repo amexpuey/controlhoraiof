@@ -3,8 +3,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import AdBanner from "@/components/ads/AdBanner";
 import RelatedAppCard from "./RelatedAppCard";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Onboarding } from "@/components/Onboarding";
+import { useNavigate } from "react-router-dom";
 
 interface BlogPostSidebarProps {
   relatedApps?: string[];
@@ -12,6 +13,7 @@ interface BlogPostSidebarProps {
 
 export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
   const [isQuizOpen, setIsQuizOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="space-y-6 sticky top-4">
@@ -49,11 +51,17 @@ export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
             <DialogTitle className="text-2xl font-bold text-yellow-800">
               Encuentra tu app de control horario ideal
             </DialogTitle>
+            <DialogDescription className="text-yellow-700">
+              En solo dos pasos, te recomendaremos las mejores aplicaciones
+            </DialogDescription>
           </DialogHeader>
           <Onboarding 
             onFeaturesSelect={(features) => {
-              // Handle features selection
+              // Close dialog first
               setIsQuizOpen(false);
+              // Then navigate to dashboard with selected features as URL parameters
+              const featuresQuery = features.join(',');
+              navigate(`/mejores-apps-control-horario?features=${featuresQuery}`);
             }}
             onSizeSelect={() => {}}
           />
@@ -68,7 +76,7 @@ export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
             variant="outline" 
             size="sm" 
             className="w-full justify-start bg-gray-50 hover:bg-gray-100"
-            onClick={() => {}}
+            onClick={() => navigate("/mejores-apps-control-horario?filter=free")}
           >
             🆓 Soluciones gratuitas
           </Button>
@@ -76,7 +84,7 @@ export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
             variant="outline" 
             size="sm" 
             className="w-full justify-start bg-gray-50 hover:bg-gray-100"
-            onClick={() => {}}
+            onClick={() => navigate("/mejores-apps-control-horario?filter=spanish")}
           >
             🇪🇸 Software español
           </Button>
@@ -84,7 +92,7 @@ export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
             variant="outline" 
             size="sm" 
             className="w-full justify-start bg-gray-50 hover:bg-gray-100"
-            onClick={() => {}}
+            onClick={() => navigate("/mejores-apps-control-horario?filter=top")}
           >
             🔝 Top 10 más valoradas
           </Button>
@@ -92,7 +100,7 @@ export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
             variant="outline" 
             size="sm" 
             className="w-full justify-start bg-gray-50 hover:bg-gray-100"
-            onClick={() => {}}
+            onClick={() => navigate("/mejores-apps-control-horario?filter=mobile")}
           >
             📱 Con apps móviles
           </Button>
