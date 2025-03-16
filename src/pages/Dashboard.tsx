@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Onboarding } from "@/components/Onboarding";
 import DashboardApps from "@/components/dashboard/DashboardApps";
@@ -106,7 +105,7 @@ const Dashboard = () => {
             )}
           </div>
 
-          <div className="hidden lg:block lg:sticky lg:top-4 h-fit">
+          <div className="hidden lg:block sticky top-4 h-fit">
             <AdBanner
               position="sidebar"
               adSize="300x600"

@@ -9,25 +9,25 @@ interface BlogPostContentProps {
 }
 
 export default function BlogPostContent({ post }: BlogPostContentProps) {
-  // Use optional chaining to safely access content property
-  const formattedDate = new Date(post.created_at).toLocaleDateString('es-ES', {
+  // Calculate formatted date if created_at exists
+  const formattedDate = post.published_at ? new Date(post.published_at).toLocaleDateString('es-ES', {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
-  });
+  }) : '';
   
   // Calculate reading time (assumes average reading speed of 200 words per minute)
-  const contentText = post.body || '';
+  const contentText = post.content || '';
   const wordCount = contentText.split(/\s+/).length;
   const readingTime = Math.max(1, Math.ceil(wordCount / 200));
   
   return (
     <article className="bg-white rounded-lg shadow-sm overflow-hidden">
       {/* Featured Image */}
-      {post.cover_image && (
+      {post.featured_image && (
         <div className="w-full h-64 md:h-96 overflow-hidden">
           <img 
-            src={post.cover_image} 
+            src={post.featured_image} 
             alt={post.title} 
             className="w-full h-full object-cover"
           />
@@ -54,8 +54,8 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
         
         {/* Post Content */}
         <div className="prose max-w-none mb-6">
-          {post.body && (
-            <div dangerouslySetInnerHTML={{ __html: post.body }} />
+          {post.content && (
+            <div dangerouslySetInnerHTML={{ __html: post.content }} />
           )}
         </div>
         
