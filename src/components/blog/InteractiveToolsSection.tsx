@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -110,9 +109,9 @@ export default function InteractiveToolsSection() {
         Herramientas Interactivas
       </h2>
       <div className="grid md:grid-cols-3 gap-6">
+        <InteractiveTool toolType="checker" />
         <InteractiveTool toolType="quiz" />
         <InteractiveTool toolType="calculator" />
-        <InteractiveTool toolType="checker" />
       </div>
     </section>
   );

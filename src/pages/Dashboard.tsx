@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Onboarding } from "@/components/Onboarding";
 import DashboardApps from "@/components/dashboard/DashboardApps";
@@ -5,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import DashboardHeader from "@/components/DashboardHeader";
 import AdBanner from "@/components/ads/AdBanner";
+import DashboardTools from "@/components/dashboard/DashboardTools";
 
 const Dashboard = () => {
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
@@ -82,36 +84,40 @@ const Dashboard = () => {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 relative">
-          <div className="lg:col-span-3">
-            {!showApps ? (
-              <Onboarding
-                onFeaturesSelect={handleFeatureSelect}
-                onSizeSelect={handleSizeSelect}
-              />
-            ) : (
-              <DashboardApps 
-                selectedFeatures={selectedFeatures}
-                onFeatureToggle={(feature) => {
-                  const newFeatures = selectedFeatures.includes(feature)
-                    ? selectedFeatures.filter(f => f !== feature)
-                    : [...selectedFeatures, feature];
-                  setSelectedFeatures(newFeatures);
-                  localStorage.setItem('selectedFeatures', JSON.stringify(newFeatures));
-                }}
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-              />
-            )}
-          </div>
+        {!showApps ? (
+          <Onboarding
+            onFeaturesSelect={handleFeatureSelect}
+            onSizeSelect={handleSizeSelect}
+          />
+        ) : (
+          <>
+            <DashboardTools />
+            
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 relative mt-8">
+              <div className="lg:col-span-3">
+                <DashboardApps 
+                  selectedFeatures={selectedFeatures}
+                  onFeatureToggle={(feature) => {
+                    const newFeatures = selectedFeatures.includes(feature)
+                      ? selectedFeatures.filter(f => f !== feature)
+                      : [...selectedFeatures, feature];
+                    setSelectedFeatures(newFeatures);
+                    localStorage.setItem('selectedFeatures', JSON.stringify(newFeatures));
+                  }}
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                />
+              </div>
 
-          <div className="hidden lg:block sticky top-4 h-fit">
-            <AdBanner
-              position="sidebar"
-              adSize="300x600"
-            />
-          </div>
-        </div>
+              <div className="hidden lg:block sticky top-4 h-fit">
+                <AdBanner
+                  position="sidebar"
+                  adSize="300x600"
+                />
+              </div>
+            </div>
+          </>
+        )}
 
         <div className="my-8 flex justify-center">
           <AdBanner 
