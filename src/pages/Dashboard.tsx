@@ -64,6 +64,20 @@ const Dashboard = () => {
     localStorage.setItem('showApps', 'true');
   };
 
+  const handleToolFeatureSelect = (features: string[]) => {
+    // Update selected features and ensure the apps are shown
+    setSelectedFeatures(features);
+    setShowApps(true);
+    localStorage.setItem('selectedFeatures', JSON.stringify(features));
+    localStorage.setItem('showApps', 'true');
+    
+    // Show a toast notification to indicate filters were applied
+    toast({
+      title: "Filtros aplicados",
+      description: `${features.length} características seleccionadas`,
+    });
+  };
+
   const handleSizeSelect = (size: string) => {
     setCompanySize(size);
   };
@@ -91,7 +105,7 @@ const Dashboard = () => {
           />
         ) : (
           <>
-            <DashboardTools />
+            <DashboardTools onFeatureSelect={handleToolFeatureSelect} />
             
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 relative mt-8">
               <div className="lg:col-span-3">
