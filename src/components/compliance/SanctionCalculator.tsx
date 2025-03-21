@@ -85,7 +85,7 @@ export function SanctionCalculator() {
                   <FormItem>
                     <FormLabel className="flex items-center gap-2">
                       <Users className="h-4 w-4 text-blue-600" />
-                      Número de empleados
+                      Número de empleados con riesgo de sanción para la empresa
                     </FormLabel>
                     <FormControl>
                       <Input
@@ -209,3 +209,4 @@ export function SanctionCalculator() {
     </div>
   );
 }
+
