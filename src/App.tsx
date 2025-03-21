@@ -6,6 +6,7 @@ import ComparisonPage from "@/pages/ComparisonPage";
 import UserView from "@/pages/UserView";
 import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
+import ComplianceCheckerPage from "@/pages/ComplianceCheckerPage";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: "/blog/:slug",
     element: <BlogPost />,
+  },
+  {
+    path: "/compliance-checker",
+    element: <ComplianceCheckerPage />,
   },
   {
     path: "*",
