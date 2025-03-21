@@ -1,12 +1,27 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle, AlertTriangle, AlertCircle, ExternalLink, ArrowRight, ArrowLeft } from "lucide-react";
+import { 
+  CheckCircle, 
+  AlertTriangle, 
+  AlertCircle, 
+  ExternalLink, 
+  ArrowRight, 
+  ArrowLeft,
+  Calculator,
+  Users,
+  Clock,
+  FileText,
+  Calendar
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 const complianceQuestions = [
   {
@@ -82,8 +97,97 @@ const questionBlocks = [
   { id: "Pago y Transparencia Salarial", emoji: "🔴", title: "Pago y Transparencia Salarial" }
 ];
 
+const sanctionTypes = [
+  { id: "no_registro", label: "No llevar registro horario", baseAmount: 625, maxAmount: 6250, level: "grave" },
+  { id: "registro_incompleto", label: "Registro incompleto o inadecuado", baseAmount: 625, maxAmount: 6250, level: "grave" },
+  { id: "no_conservacion", label: "No conservar registros por 4 años", baseAmount: 60, maxAmount: 625, level: "leve" },
+  { id: "horas_extra", label: "No controlar horas extraordinarias", baseAmount: 625, maxAmount: 6250, level: "grave" },
+  { id: "no_comunicacion", label: "No informar a representantes", baseAmount: 625, maxAmount: 6250, level: "grave" },
+  { id: "limites_jornada", label: "Superar límites de jornada laboral", baseAmount: 625, maxAmount: 6250, level: "grave" },
+  { id: "impago_horas", label: "No pagar horas extras realizadas", baseAmount: 6251, maxAmount: 187515, level: "muy grave" },
+  { id: "no_nomina", label: "No reflejar horas extras en nómina", baseAmount: 625, maxAmount: 6250, level: "grave" },
+  { id: "retraso_pago", label: "Retrasos reiterados en el pago", baseAmount: 6251, maxAmount: 187515, level: "muy grave" }
+];
+
+const realCases = [
+  {
+    id: 1,
+    sector: "Hostelería",
+    employees: 5,
+    duration: 2,
+    description: "Restaurante sin registro de jornada",
+    infraction: "No llevar registro horario",
+    sanction: 700,
+    level: "grave"
+  },
+  {
+    id: 2,
+    sector: "Comercio",
+    employees: 12,
+    duration: 3,
+    description: "Tienda con horas extra no pagadas",
+    infraction: "No pagar horas extras realizadas",
+    sanction: 7500,
+    level: "muy grave"
+  },
+  {
+    id: 3,
+    sector: "Servicios",
+    employees: 15,
+    duration: 1,
+    description: "Empresa sin informar a representantes",
+    infraction: "No informar a representantes",
+    sanction: 3000,
+    level: "grave"
+  },
+  {
+    id: 4,
+    sector: "Industria",
+    employees: 25,
+    duration: 4,
+    description: "Fábrica superando límites de jornada",
+    infraction: "Superar límites de jornada laboral",
+    sanction: 8500,
+    level: "grave"
+  },
+  {
+    id: 5,
+    sector: "Tecnología",
+    employees: 8,
+    duration: 6,
+    description: "Startup sin sistema de registro",
+    infraction: "No llevar registro horario",
+    sanction: 1200,
+    level: "grave"
+  }
+];
+
+const getCompanySizeMultiplier = (employees: number) => {
+  if (employees <= 5) return 1;
+  if (employees <= 10) return 1.2;
+  if (employees <= 25) return 1.5;
+  if (employees <= 50) return 1.8;
+  if (employees <= 100) return 2.2;
+  return 2.5;
+};
+
+const getDurationMultiplier = (months: number) => {
+  if (months <= 1) return 1;
+  if (months <= 3) return 1.3;
+  if (months <= 6) return 1.7;
+  if (months <= 12) return 2;
+  return 2.5;
+};
+
 interface FormValues {
   [key: string]: "si" | "no";
+}
+
+interface CalculatorFormValues {
+  employees: number;
+  sector: string;
+  duration: number;
+  infractions: string[];
 }
 
 interface StandaloneComplianceCheckerProps {
@@ -102,9 +206,24 @@ export default function StandaloneComplianceChecker({ isEmbedded = false }: Stan
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [answeredQuestions, setAnsweredQuestions] = useState<string[]>([]);
   const [completedBlocks, setCompletedBlocks] = useState<string[]>([]);
+  const [activeTab, setActiveTab] = useState("calculator");
+  const [estimatedSanctions, setEstimatedSanctions] = useState<{
+    minEstimate: number;
+    maxEstimate: number;
+    selectedInfractions: typeof sanctionTypes;
+  } | null>(null);
   
   const form = useForm<FormValues>({
     defaultValues: complianceQuestions.reduce((acc, q) => ({ ...acc, [q.id]: "si" }), {})
+  });
+
+  const calculatorForm = useForm<CalculatorFormValues>({
+    defaultValues: {
+      employees: 5,
+      sector: "Hostelería",
+      duration: 2,
+      infractions: ["no_registro"]
+    }
   });
 
   const currentBlockId = questionBlocks[currentBlockIndex]?.id;
@@ -114,6 +233,31 @@ export default function StandaloneComplianceChecker({ isEmbedded = false }: Stan
   const totalQuestions = complianceQuestions.length;
   const answeredCount = answeredQuestions.length;
   const progress = (answeredCount / totalQuestions) * 100;
+
+  const calculateSanctions = (data: CalculatorFormValues) => {
+    const { employees, duration, infractions } = data;
+    
+    const companyMultiplier = getCompanySizeMultiplier(employees);
+    const durationMultiplier = getDurationMultiplier(duration);
+    
+    const selectedInfractionTypes = sanctionTypes.filter(type => 
+      infractions.includes(type.id)
+    );
+    
+    const minEstimate = selectedInfractionTypes.reduce((total, infraction) => {
+      return total + (infraction.baseAmount * companyMultiplier * durationMultiplier);
+    }, 0);
+    
+    const maxEstimate = selectedInfractionTypes.reduce((total, infraction) => {
+      return total + (infraction.maxAmount * companyMultiplier * durationMultiplier);
+    }, 0);
+    
+    setEstimatedSanctions({
+      minEstimate: Math.round(minEstimate),
+      maxEstimate: Math.round(maxEstimate),
+      selectedInfractions: selectedInfractionTypes
+    });
+  };
   
   const handleNext = () => {
     if (!answeredQuestions.includes(currentQuestion.id)) {
@@ -196,7 +340,19 @@ export default function StandaloneComplianceChecker({ isEmbedded = false }: Stan
     setCompletedBlocks([]);
   };
 
-  // If showing results, render results screen
+  const getRiskColor = (level: string) => {
+    switch (level) {
+      case "leve":
+        return "text-yellow-600";
+      case "grave":
+        return "text-orange-600";
+      case "muy grave":
+        return "text-red-600";
+      default:
+        return "text-gray-600";
+    }
+  };
+
   if (results) {
     return (
       <div className={`py-6 ${isEmbedded ? "bg-white p-4 rounded-lg shadow-sm" : ""}`}>
@@ -256,6 +412,214 @@ export default function StandaloneComplianceChecker({ isEmbedded = false }: Stan
               )}
             </>
           )}
+        </div>
+
+        <div className="mt-8 mb-6">
+          <div className="bg-gray-50 p-5 rounded-lg border border-gray-200 mb-6">
+            <div className="flex items-center gap-2 mb-4">
+              <Calculator className="h-5 w-5 text-blue-600" />
+              <h3 className="text-lg font-medium text-gray-800">Calculadora de sanciones</h3>
+            </div>
+            
+            <p className="text-sm text-gray-600 mb-4">
+              Calcula una estimación de las posibles sanciones según el tamaño de tu empresa y tipo de incumplimiento.
+            </p>
+            
+            <Tabs defaultValue="calculator" className="w-full" onValueChange={setActiveTab}>
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="calculator">Calculadora</TabsTrigger>
+                <TabsTrigger value="cases">Casos reales</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="calculator" className="pt-4">
+                <Form {...calculatorForm}>
+                  <form 
+                    onSubmit={calculatorForm.handleSubmit(calculateSanctions)} 
+                    className="space-y-4"
+                  >
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={calculatorForm.control}
+                        name="employees"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="flex items-center gap-2">
+                              <Users className="h-4 w-4 text-blue-600" />
+                              Número de empleados
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                type="number"
+                                min={1}
+                                placeholder="Ej: 5"
+                                {...field}
+                                onChange={(e) => field.onChange(parseInt(e.target.value) || 1)}
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                      
+                      <FormField
+                        control={calculatorForm.control}
+                        name="sector"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="flex items-center gap-2">
+                              <FileText className="h-4 w-4 text-blue-600" />
+                              Sector de la empresa
+                            </FormLabel>
+                            <FormControl>
+                              <Input placeholder="Ej: Hostelería" {...field} />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    
+                    <FormField
+                      control={calculatorForm.control}
+                      name="duration"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex items-center gap-2">
+                            <Calendar className="h-4 w-4 text-blue-600" />
+                            Duración del incumplimiento (meses)
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              min={1}
+                              placeholder="Ej: 2"
+                              {...field}
+                              onChange={(e) => field.onChange(parseInt(e.target.value) || 1)}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={calculatorForm.control}
+                      name="infractions"
+                      render={() => (
+                        <FormItem>
+                          <div className="mb-2">
+                            <FormLabel className="flex items-center gap-2">
+                              <AlertTriangle className="h-4 w-4 text-blue-600" />
+                              Tipos de incumplimiento
+                            </FormLabel>
+                          </div>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            {sanctionTypes.map((item) => (
+                              <FormField
+                                key={item.id}
+                                control={calculatorForm.control}
+                                name="infractions"
+                                render={({ field }) => {
+                                  return (
+                                    <FormItem
+                                      key={item.id}
+                                      className="flex flex-row items-start space-x-2 space-y-0"
+                                    >
+                                      <FormControl>
+                                        <Checkbox
+                                          checked={field.value?.includes(item.id)}
+                                          onCheckedChange={(checked) => {
+                                            return checked
+                                              ? field.onChange([...field.value, item.id])
+                                              : field.onChange(
+                                                  field.value?.filter(
+                                                    (value) => value !== item.id
+                                                  )
+                                                )
+                                          }}
+                                        />
+                                      </FormControl>
+                                      <FormLabel className="text-sm font-normal cursor-pointer">
+                                        {item.label}
+                                        <span className={`ml-1 text-xs ${getRiskColor(item.level)}`}>
+                                          ({item.level})
+                                        </span>
+                                      </FormLabel>
+                                    </FormItem>
+                                  )
+                                }}
+                              />
+                            ))}
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
+                      Calcular posibles sanciones
+                    </Button>
+                  </form>
+                </Form>
+                
+                {estimatedSanctions && (
+                  <div className="mt-6 p-4 bg-blue-50 border border-blue-100 rounded-lg">
+                    <h4 className="font-medium text-blue-800 mb-3">Estimación de sanciones:</h4>
+                    <p className="text-lg font-bold text-blue-900 mb-3">
+                      {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(estimatedSanctions.minEstimate)} - {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(estimatedSanctions.maxEstimate)}
+                    </p>
+                    <p className="text-sm text-blue-700 mb-4">
+                      Para {calculatorForm.getValues().employees} empleados con {calculatorForm.getValues().duration} {calculatorForm.getValues().duration === 1 ? 'mes' : 'meses'} de incumplimiento.
+                    </p>
+                    
+                    <div className="space-y-2">
+                      <p className="text-xs text-blue-800 font-medium">Infracciones incluidas:</p>
+                      <ul className="list-disc pl-5 space-y-1">
+                        {estimatedSanctions.selectedInfractions.map((infraction, index) => (
+                          <li key={index} className="text-xs">
+                            <span className={`font-medium ${getRiskColor(infraction.level)}`}>{infraction.label}</span>
+                            <span className="text-gray-600"> - Sanción base: {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(infraction.baseAmount)} - {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(infraction.maxAmount)}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </TabsContent>
+              
+              <TabsContent value="cases" className="pt-4">
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Sector</TableHead>
+                        <TableHead>Empleados</TableHead>
+                        <TableHead>Duración</TableHead>
+                        <TableHead>Infracción</TableHead>
+                        <TableHead>Sanción</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {realCases.map((caseItem) => (
+                        <TableRow key={caseItem.id}>
+                          <TableCell>{caseItem.sector}</TableCell>
+                          <TableCell>{caseItem.employees}</TableCell>
+                          <TableCell>{caseItem.duration} {caseItem.duration === 1 ? 'mes' : 'meses'}</TableCell>
+                          <TableCell>
+                            <span className={getRiskColor(caseItem.level)}>
+                              {caseItem.infraction}
+                            </span>
+                          </TableCell>
+                          <TableCell className="font-medium">
+                            {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(caseItem.sanction)}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+                <p className="text-xs text-gray-500 mt-3">
+                  *Estos son ejemplos basados en casos reales de sanciones impuestas por la Inspección de Trabajo
+                </p>
+              </TabsContent>
+            </Tabs>
+          </div>
         </div>
 
         <div className="flex justify-between mt-6">

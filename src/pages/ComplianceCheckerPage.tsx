@@ -4,7 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import StandaloneComplianceChecker from "@/components/compliance/StandaloneComplianceChecker";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown, CheckCircle, Clock, AlertTriangle, HelpCircle } from "lucide-react";
+import { ChevronDown, CheckCircle, Clock, AlertTriangle, HelpCircle, FileText, Users, Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function ComplianceCheckerPage() {
@@ -84,12 +84,12 @@ export default function ComplianceCheckerPage() {
                 <div className="bg-white rounded-lg p-4 border border-blue-100 shadow-sm">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="bg-blue-100 p-2 rounded-full">
-                      <CheckCircle className="h-5 w-5 text-blue-600" />
+                      <Calculator className="h-5 w-5 text-blue-600" />
                     </div>
                     <h4 className="font-medium">Paso 3</h4>
                   </div>
                   <p className="text-sm text-gray-600">
-                    Descubre soluciones específicas para mejorar la gestión del registro horario y garantizar el cumplimiento legal.
+                    Utiliza la calculadora interactiva para estimar posibles sanciones según el tamaño de tu empresa y tipo de incumplimiento.
                   </p>
                 </div>
               </div>
@@ -101,7 +101,8 @@ export default function ComplianceCheckerPage() {
                     <AccordionTrigger className="text-sm">¿Qué sanciones puede recibir mi empresa por no cumplir con el registro horario?</AccordionTrigger>
                     <AccordionContent className="text-sm">
                       Las sanciones por incumplir la normativa de registro horario pueden ir desde los 625€ hasta los 6.250€ para infracciones graves. 
-                      En casos muy graves, las multas pueden alcanzar los 187.515€.
+                      En casos muy graves, las multas pueden alcanzar los 187.515€. El importe final depende del tamaño de la empresa, 
+                      duración del incumplimiento y si ha habido reincidencia.
                     </AccordionContent>
                   </AccordionItem>
                   <AccordionItem value="item-2">
@@ -116,6 +117,14 @@ export default function ComplianceCheckerPage() {
                     <AccordionContent className="text-sm">
                       El registro debe incluir, como mínimo, la hora de inicio y finalización de la jornada laboral de cada trabajador. 
                       También es recomendable registrar los descansos y pausas no computables como tiempo de trabajo efectivo.
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-4">
+                    <AccordionTrigger className="text-sm">¿Existen casos reales de sanciones por incumplimiento?</AccordionTrigger>
+                    <AccordionContent className="text-sm">
+                      Sí, la Inspección de Trabajo ha impuesto numerosas sanciones. Por ejemplo, un restaurante con 5 empleados fue multado con 
+                      700€ por no registrar la jornada durante 2 meses. Una empresa de servicios con 15 empleados recibió una multa de 3.000€ 
+                      por no comunicar los registros a los representantes de los trabajadores.
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>
