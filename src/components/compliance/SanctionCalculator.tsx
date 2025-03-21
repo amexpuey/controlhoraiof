@@ -11,7 +11,6 @@ import { sanctionTypes, getCompanySizeMultiplier, getDurationMultiplier, getRisk
 
 interface CalculatorFormValues {
   employees: number;
-  sector: string;
   duration: number;
   infractions: string[];
 }
@@ -26,8 +25,7 @@ export function SanctionCalculator() {
   
   const calculatorForm = useForm<CalculatorFormValues>({
     defaultValues: {
-      employees: 5,
-      sector: "Hostelería",
+      employees: 1,
       duration: 2,
       infractions: ["no_registro"]
     }
@@ -80,45 +78,27 @@ export function SanctionCalculator() {
               onSubmit={calculatorForm.handleSubmit(calculateSanctions)} 
               className="space-y-4"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FormField
-                  control={calculatorForm.control}
-                  name="employees"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center gap-2">
-                        <Users className="h-4 w-4 text-blue-600" />
-                        Número de empleados
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          min={1}
-                          placeholder="Ej: 5"
-                          {...field}
-                          onChange={(e) => field.onChange(parseInt(e.target.value) || 1)}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={calculatorForm.control}
-                  name="sector"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center gap-2">
-                        <FileText className="h-4 w-4 text-blue-600" />
-                        Sector de la empresa
-                      </FormLabel>
-                      <FormControl>
-                        <Input placeholder="Ej: Hostelería" {...field} />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
+              <FormField
+                control={calculatorForm.control}
+                name="employees"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center gap-2">
+                      <Users className="h-4 w-4 text-blue-600" />
+                      Número de empleados
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        min={1}
+                        placeholder="Ej: 1"
+                        {...field}
+                        onChange={(e) => field.onChange(parseInt(e.target.value) || 1)}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
               
               <FormField
                 control={calculatorForm.control}
@@ -208,7 +188,7 @@ export function SanctionCalculator() {
                 {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(estimatedSanctions.minEstimate)} - {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(estimatedSanctions.maxEstimate)}
               </p>
               <p className="text-sm text-blue-700 mb-4">
-                Para {calculatorForm.getValues().employees} empleados con {calculatorForm.getValues().duration} {calculatorForm.getValues().duration === 1 ? 'mes' : 'meses'} de incumplimiento.
+                Para {calculatorForm.getValues().employees} {calculatorForm.getValues().employees === 1 ? 'empleado' : 'empleados'} con {calculatorForm.getValues().duration} {calculatorForm.getValues().duration === 1 ? 'mes' : 'meses'} de incumplimiento.
               </p>
               
               <div className="space-y-2">

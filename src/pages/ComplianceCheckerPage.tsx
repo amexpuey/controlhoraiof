@@ -18,6 +18,12 @@ export default function ComplianceCheckerPage() {
       document.body.style.background = "transparent";
       document.body.style.margin = "0";
       document.body.style.padding = "0";
+      
+      // Hide the footer when in embedded mode
+      const footer = document.querySelector('footer');
+      if (footer) {
+        footer.style.display = 'none';
+      }
     }
     
     return () => {
@@ -25,6 +31,12 @@ export default function ComplianceCheckerPage() {
       document.body.style.background = "";
       document.body.style.margin = "";
       document.body.style.padding = "";
+      
+      // Restore footer display
+      const footer = document.querySelector('footer');
+      if (footer) {
+        footer.style.display = '';
+      }
     };
   }, [isEmbedded]);
 
