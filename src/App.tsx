@@ -1,5 +1,5 @@
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, useLocation } from "react-router-dom";
 import Index from "@/pages/Index";
 import Dashboard from "@/pages/Dashboard";
 import ComparisonPage from "@/pages/ComparisonPage";
@@ -46,16 +46,23 @@ const router = createBrowserRouter([
   },
 ]);
 
-function App() {
+function AppContent() {
+  const location = useLocation();
+  const hideFooter = location.pathname === "/compliance-checker";
+
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex-grow">
         <RouterProvider router={router} />
       </div>
-      <Footer />
+      {!hideFooter && <Footer />}
       <Toaster />
     </div>
   );
+}
+
+function App() {
+  return <AppContent />;
 }
 
 export default App;
