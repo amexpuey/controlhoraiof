@@ -113,7 +113,7 @@ const realCases = [
   {
     id: 1,
     sector: "Hostelería",
-    employees: 5,
+    employees: 1,
     duration: 2,
     description: "Restaurante sin registro de jornada",
     infraction: "No llevar registro horario",
@@ -426,9 +426,8 @@ export default function StandaloneComplianceChecker({ isEmbedded = false }: Stan
             </p>
             
             <Tabs defaultValue="calculator" className="w-full" onValueChange={setActiveTab}>
-              <TabsList className="grid w-full grid-cols-2">
+              <TabsList className="grid w-full grid-cols-1">
                 <TabsTrigger value="calculator">Calculadora</TabsTrigger>
-                <TabsTrigger value="cases">Casos reales</TabsTrigger>
               </TabsList>
               
               <TabsContent value="calculator" className="pt-4">
@@ -581,42 +580,6 @@ export default function StandaloneComplianceChecker({ isEmbedded = false }: Stan
                     </div>
                   </div>
                 )}
-              </TabsContent>
-              
-              <TabsContent value="cases" className="pt-4">
-                <div className="overflow-x-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Sector</TableHead>
-                        <TableHead>Empleados</TableHead>
-                        <TableHead>Duración</TableHead>
-                        <TableHead>Infracción</TableHead>
-                        <TableHead>Sanción</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {realCases.map((caseItem) => (
-                        <TableRow key={caseItem.id}>
-                          <TableCell>{caseItem.sector}</TableCell>
-                          <TableCell>{caseItem.employees}</TableCell>
-                          <TableCell>{caseItem.duration} {caseItem.duration === 1 ? 'mes' : 'meses'}</TableCell>
-                          <TableCell>
-                            <span className={getRiskColor(caseItem.level)}>
-                              {caseItem.infraction}
-                            </span>
-                          </TableCell>
-                          <TableCell className="font-medium">
-                            {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(caseItem.sanction)}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
-                <p className="text-xs text-gray-500 mt-3">
-                  *Estos son ejemplos basados en casos reales de sanciones impuestas por la Inspección de Trabajo
-                </p>
               </TabsContent>
             </Tabs>
           </div>
