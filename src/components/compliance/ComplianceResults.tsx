@@ -74,10 +74,6 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
         )}
       </div>
 
-      <div className="mt-8 mb-6">
-        <SanctionCalculator />
-      </div>
-
       <div className="flex justify-between mt-6">
         <Button 
           variant="outline" 

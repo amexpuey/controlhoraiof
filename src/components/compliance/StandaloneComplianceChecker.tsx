@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { ComplianceQuestionForm } from "./ComplianceQuestionForm";
 import { ComplianceResults } from "./ComplianceResults";
+import { SanctionCalculator } from "./SanctionCalculator";
 import { complianceQuestions } from "./complianceData";
 
 interface FormValues {
@@ -18,6 +19,7 @@ export default function StandaloneComplianceChecker({ isEmbedded = false }: Stan
     violations: { question: string; sanction: string; riskLevel: string }[];
     complianceScore: number;
   } | null>(null);
+  const [showCalculator, setShowCalculator] = useState(true);
 
   const onSubmit = (data: FormValues) => {
     const violations = complianceQuestions.filter(q => {
@@ -50,8 +52,18 @@ export default function StandaloneComplianceChecker({ isEmbedded = false }: Stan
   };
 
   if (results) {
-    return <ComplianceResults results={results} resetForm={resetForm} isEmbedded={isEmbedded} />;
+    return (
+      <div className="space-y-6">
+        <ComplianceResults results={results} resetForm={resetForm} isEmbedded={isEmbedded} />
+        {showCalculator && <SanctionCalculator />}
+      </div>
+    );
   }
 
-  return <ComplianceQuestionForm onCompleted={onSubmit} isEmbedded={isEmbedded} />;
+  return (
+    <div className="space-y-6">
+      <ComplianceQuestionForm onCompleted={onSubmit} isEmbedded={isEmbedded} />
+      {showCalculator && <SanctionCalculator />}
+    </div>
+  );
 }
