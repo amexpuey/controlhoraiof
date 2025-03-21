@@ -1,5 +1,5 @@
 
-import { createBrowserRouter, RouterProvider, useLocation } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Index from "@/pages/Index";
 import Dashboard from "@/pages/Dashboard";
 import ComparisonPage from "@/pages/ComparisonPage";
@@ -9,6 +9,9 @@ import BlogPost from "@/pages/BlogPost";
 import ComplianceCheckerPage from "@/pages/ComplianceCheckerPage";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
+
+// Define which routes should hide the footer
+const routesWithoutFooter = ["/compliance-checker"];
 
 // Move router configuration outside component to prevent recreation
 const router = createBrowserRouter([
@@ -38,7 +41,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/compliance-checker",
-    element: <ComplianceCheckerPage />,
+    element: (
+      <>
+        <ComplianceCheckerPage />
+      </>
+    ),
   },
   {
     path: "*",
@@ -46,23 +53,19 @@ const router = createBrowserRouter([
   },
 ]);
 
-function AppContent() {
-  const location = useLocation();
-  const hideFooter = location.pathname === "/compliance-checker";
-
+// Instead of using useLocation inside AppContent, we'll modify our router configuration
+// to determine which routes should render the Footer
+function App() {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex-grow">
         <RouterProvider router={router} />
       </div>
-      {!hideFooter && <Footer />}
+      {/* Render Footer normally - it will not be rendered on compliance-checker route */}
+      {window.location.pathname !== "/compliance-checker" && <Footer />}
       <Toaster />
     </div>
   );
-}
-
-function App() {
-  return <AppContent />;
 }
 
 export default App;
