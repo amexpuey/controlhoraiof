@@ -6,7 +6,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import { Calculator, FileText, Users, Calendar, AlertTriangle, Info, Scale } from "lucide-react";
+import { Calculator, FileText, Users, Calendar, AlertTriangle, Info, Scale, AlertCircle } from "lucide-react";
 import { sanctionTypes, getCompanySizeMultiplier, getDurationMultiplier, getRiskColor } from "./complianceData";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
