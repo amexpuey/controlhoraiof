@@ -9,6 +9,66 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      blog_hyperlinks: {
+        Row: {
+          author_name: string | null
+          author_photo: string | null
+          category: string | null
+          collection_id: string | null
+          created_on: string | null
+          embedding: string | null
+          featured: boolean | null
+          item_id: string
+          main_image: string | null
+          meta_description: string | null
+          metadata: Json | null
+          name: string | null
+          post_body: string | null
+          post_summary: string | null
+          slug: string | null
+          thumbnail_image: string | null
+          url: string | null
+        }
+        Insert: {
+          author_name?: string | null
+          author_photo?: string | null
+          category?: string | null
+          collection_id?: string | null
+          created_on?: string | null
+          embedding?: string | null
+          featured?: boolean | null
+          item_id: string
+          main_image?: string | null
+          meta_description?: string | null
+          metadata?: Json | null
+          name?: string | null
+          post_body?: string | null
+          post_summary?: string | null
+          slug?: string | null
+          thumbnail_image?: string | null
+          url?: string | null
+        }
+        Update: {
+          author_name?: string | null
+          author_photo?: string | null
+          category?: string | null
+          collection_id?: string | null
+          created_on?: string | null
+          embedding?: string | null
+          featured?: boolean | null
+          item_id?: string
+          main_image?: string | null
+          meta_description?: string | null
+          metadata?: Json | null
+          name?: string | null
+          post_body?: string | null
+          post_summary?: string | null
+          slug?: string | null
+          thumbnail_image?: string | null
+          url?: string | null
+        }
+        Relationships: []
+      }
       blog_posts: {
         Row: {
           author: string
@@ -223,19 +283,382 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      blog_hyperlinks_vectorstore: {
+        Row: {
+          embedding: string | null
+          metadata: Json | null
+          pagecontent: string | null
+        }
+        Insert: {
+          embedding?: string | null
+          metadata?: never
+          pagecontent?: string | null
+        }
+        Update: {
+          embedding?: string | null
+          metadata?: never
+          pagecontent?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
+      binary_quantize:
+        | {
+            Args: {
+              "": string
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+      bytea_to_text: {
+        Args: {
+          data: string
+        }
+        Returns: string
+      }
+      halfvec_avg: {
+        Args: {
+          "": number[]
+        }
+        Returns: unknown
+      }
+      halfvec_out: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      halfvec_send: {
+        Args: {
+          "": unknown
+        }
+        Returns: string
+      }
+      halfvec_typmod_in: {
+        Args: {
+          "": unknown[]
+        }
+        Returns: number
+      }
+      hnsw_bit_support: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      hnsw_halfvec_support: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      hnsw_sparsevec_support: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      hnswhandler: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      http: {
+        Args: {
+          request: Database["public"]["CompositeTypes"]["http_request"]
+        }
+        Returns: Database["public"]["CompositeTypes"]["http_response"]
+      }
+      http_delete:
+        | {
+            Args: {
+              uri: string
+            }
+            Returns: Database["public"]["CompositeTypes"]["http_response"]
+          }
+        | {
+            Args: {
+              uri: string
+              content: string
+              content_type: string
+            }
+            Returns: Database["public"]["CompositeTypes"]["http_response"]
+          }
+      http_get:
+        | {
+            Args: {
+              uri: string
+            }
+            Returns: Database["public"]["CompositeTypes"]["http_response"]
+          }
+        | {
+            Args: {
+              uri: string
+              data: Json
+            }
+            Returns: Database["public"]["CompositeTypes"]["http_response"]
+          }
+      http_head: {
+        Args: {
+          uri: string
+        }
+        Returns: Database["public"]["CompositeTypes"]["http_response"]
+      }
+      http_header: {
+        Args: {
+          field: string
+          value: string
+        }
+        Returns: Database["public"]["CompositeTypes"]["http_header"]
+      }
+      http_list_curlopt: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          curlopt: string
+          value: string
+        }[]
+      }
+      http_patch: {
+        Args: {
+          uri: string
+          content: string
+          content_type: string
+        }
+        Returns: Database["public"]["CompositeTypes"]["http_response"]
+      }
+      http_post:
+        | {
+            Args: {
+              uri: string
+              content: string
+              content_type: string
+            }
+            Returns: Database["public"]["CompositeTypes"]["http_response"]
+          }
+        | {
+            Args: {
+              uri: string
+              data: Json
+            }
+            Returns: Database["public"]["CompositeTypes"]["http_response"]
+          }
+      http_put: {
+        Args: {
+          uri: string
+          content: string
+          content_type: string
+        }
+        Returns: Database["public"]["CompositeTypes"]["http_response"]
+      }
+      http_reset_curlopt: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
+      http_set_curlopt: {
+        Args: {
+          curlopt: string
+          value: string
+        }
+        Returns: boolean
+      }
+      ivfflat_bit_support: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      ivfflat_halfvec_support: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      ivfflathandler: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      l2_norm:
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: number
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: number
+          }
+      l2_normalize:
+        | {
+            Args: {
+              "": string
+            }
+            Returns: string
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+      match_documents: {
+        Args: {
+          filter: Json
+          match_count: number
+          query_embedding: string
+        }
+        Returns: {
+          slug: string
+          url: string
+          post_body: string
+          similarity: number
+        }[]
+      }
+      openai_embedding:
+        | {
+            Args: {
+              model: string
+              input: string
+            }
+            Returns: string
+          }
+        | {
+            Args: {
+              model: string
+              input: string
+              api_key: string
+            }
+            Returns: string
+          }
       set_admin_id: {
         Args: Record<PropertyKey, never>
         Returns: undefined
+      }
+      sparsevec_out: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      sparsevec_send: {
+        Args: {
+          "": unknown
+        }
+        Returns: string
+      }
+      sparsevec_typmod_in: {
+        Args: {
+          "": unknown[]
+        }
+        Returns: number
+      }
+      text_to_bytea: {
+        Args: {
+          data: string
+        }
+        Returns: string
+      }
+      urlencode:
+        | {
+            Args: {
+              data: Json
+            }
+            Returns: string
+          }
+        | {
+            Args: {
+              string: string
+            }
+            Returns: string
+          }
+        | {
+            Args: {
+              string: string
+            }
+            Returns: string
+          }
+      vector_avg: {
+        Args: {
+          "": number[]
+        }
+        Returns: string
+      }
+      vector_dims:
+        | {
+            Args: {
+              "": string
+            }
+            Returns: number
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: number
+          }
+      vector_norm: {
+        Args: {
+          "": string
+        }
+        Returns: number
+      }
+      vector_out: {
+        Args: {
+          "": string
+        }
+        Returns: unknown
+      }
+      vector_send: {
+        Args: {
+          "": string
+        }
+        Returns: string
+      }
+      vector_typmod_in: {
+        Args: {
+          "": unknown[]
+        }
+        Returns: number
       }
     }
     Enums: {
       [_ in never]: never
     }
     CompositeTypes: {
-      [_ in never]: never
+      http_header: {
+        field: string | null
+        value: string | null
+      }
+      http_request: {
+        method: unknown | null
+        uri: string | null
+        headers: Database["public"]["CompositeTypes"]["http_header"][] | null
+        content_type: string | null
+        content: string | null
+      }
+      http_response: {
+        status: number | null
+        content_type: string | null
+        headers: Database["public"]["CompositeTypes"]["http_header"][] | null
+        content: string | null
+      }
     }
   }
 }

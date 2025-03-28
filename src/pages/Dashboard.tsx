@@ -11,8 +11,18 @@ import { useLocation, useNavigate } from "react-router-dom";
 import LearningModules from "@/components/learning/LearningModules";
 
 const Dashboard = () => {
-  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
-  const [showApps, setShowApps] = useState(false);
+  // Default features for all users (without onboarding)
+  const defaultFeatures = [
+    "Control Horario", 
+    "Gestión de Turnos", 
+    "Gestión de Ausencias", 
+    "Gestión de Vacaciones", 
+    "Portal del Empleado"
+  ];
+
+  const [selectedFeatures, setSelectedFeatures] = useState<string[]>(defaultFeatures);
+  // Set showApps to true by default to skip onboarding
+  const [showApps, setShowApps] = useState(true);
   const [companySize, setCompanySize] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
@@ -20,6 +30,8 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const appsListRef = useRef<HTMLDivElement>(null);
   const filterSectionRef = useRef<HTMLDivElement>(null);
+  // For future use, if we want to re-enable onboarding
+  const [enableOnboarding, setEnableOnboarding] = useState(false);
 
   useEffect(() => {
     const checkFiltersAndStatus = async () => {
@@ -46,20 +58,34 @@ const Dashboard = () => {
           }
 
           if (profile && profile.onboarding_status === 'completed') {
-            setSelectedFeatures(profile.selected_features || []);
+            setSelectedFeatures(profile.selected_features || defaultFeatures);
             setCompanySize(profile.company_size || "");
             setShowApps(true);
-            localStorage.setItem('selectedFeatures', JSON.stringify(profile.selected_features || []));
+            localStorage.setItem('selectedFeatures', JSON.stringify(profile.selected_features || defaultFeatures));
+            localStorage.setItem('showApps', 'true');
+          } else {
+            // Even if onboarding is not completed, show apps with default features
+            setSelectedFeatures(defaultFeatures);
+            localStorage.setItem('selectedFeatures', JSON.stringify(defaultFeatures));
             localStorage.setItem('showApps', 'true');
           }
+        } else {
+          // For non-authenticated users, use default features
+          setSelectedFeatures(defaultFeatures);
+          localStorage.setItem('selectedFeatures', JSON.stringify(defaultFeatures));
+          localStorage.setItem('showApps', 'true');
         }
       } catch (error) {
         console.error('Error checking filters and status:', error);
+        // Fallback to default features on error
+        setSelectedFeatures(defaultFeatures);
+        localStorage.setItem('selectedFeatures', JSON.stringify(defaultFeatures));
+        localStorage.setItem('showApps', 'true');
       }
     };
 
     checkFiltersAndStatus();
-  }, [location, navigate]);
+  }, [location, navigate, defaultFeatures]);
 
   // Scroll to the top of the apps list when transitioning from onboarding to apps
   useEffect(() => {
@@ -115,7 +141,7 @@ const Dashboard = () => {
       <DashboardHeader 
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
-        isOnboarding={!showApps}
+        isOnboarding={!showApps && enableOnboarding}
       />
 
       <main className="container mx-auto px-4 pb-20">
@@ -126,7 +152,8 @@ const Dashboard = () => {
           />
         </div>
 
-        {!showApps ? (
+        {/* Only show onboarding if explicitly enabled and showApps is false */}
+        {!showApps && enableOnboarding ? (
           <div className="onboarding-section">
             <Onboarding
               onFeaturesSelect={handleFeatureSelect}

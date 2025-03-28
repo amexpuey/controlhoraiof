@@ -83,7 +83,7 @@ export default function DashboardHeader({
               </p>
             </div>
 
-            {/* Search Bar */}
+            {/* Search Bar - Always enabled now */}
             <div className="w-full max-w-2xl">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-500 h-5 w-5" />
@@ -92,25 +92,8 @@ export default function DashboardHeader({
                   placeholder="Buscar por nombre, características, descripción..."
                   value={searchQuery}
                   onChange={(e) => onSearchChange?.(e.target.value)}
-                  className={`pl-10 w-full bg-white/95 text-gray-800 placeholder:text-gray-400 border-gray-200 focus:ring-blue-400 ${isOnboarding ? 'opacity-70' : ''}`}
-                  disabled={isOnboarding}
+                  className="pl-10 w-full bg-white/95 text-gray-800 placeholder:text-gray-400 border-gray-200 focus:ring-blue-400"
                 />
-                {isOnboarding && (
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div className="absolute right-3 top-1/2 transform -translate-y-1/2 animate-pulse">
-                          <Info className="h-5 w-5 text-blue-600" />
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent className="bg-white border border-gray-200 text-gray-800 p-4 max-w-xs">
-                        <p className="text-center">
-                          Completa el proceso de onboarding para activar la búsqueda y ver las aplicaciones disponibles.
-                        </p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                )}
               </div>
             </div>
 
@@ -119,7 +102,7 @@ export default function DashboardHeader({
               onClick={handleEmpezarAhora}
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-6 rounded-lg font-medium text-lg flex items-center gap-2 transition-all hover:shadow-lg"
             >
-              Empezar ahora
+              Ver soluciones de control horario
               <ArrowDown className="h-5 w-5 animate-bounce" />
             </Button>
           </div>
