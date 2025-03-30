@@ -110,6 +110,26 @@ export default function Blog() {
     );
   }
   
+  // Map of category values to display names
+  const categoryLabels = {
+    "all": "Todos",
+    "Normativa": "Normativa",
+    "Registro Horario": "Registro Horario",
+    "Productividad": "Productividad",
+    "Trabajo Remoto": "Trabajo Remoto",
+    "Time Tracking": "Time Tracking"
+  };
+  
+  // Available categories for filtering
+  const availableCategories = [
+    "all", 
+    "Normativa", 
+    "Registro Horario", 
+    "Productividad", 
+    "Trabajo Remoto", 
+    "Time Tracking"
+  ];
+  
   return (
     <BlogLayout>
       <BlogHeader />
@@ -120,45 +140,22 @@ export default function Blog() {
         </div>
         
         <Tabs defaultValue="all" className="mb-8">
-          <TabsList className={`${isMobile ? 'flex flex-wrap overflow-x-auto gap-1 bg-transparent p-0 h-auto' : 'grid grid-cols-5'} mb-8`}>
-            <TabsTrigger 
-              value="all" 
-              onClick={() => setActiveCategory("all")}
-              className={isMobile ? "flex-1 min-w-[90px] bg-white shadow-sm" : ""}
-            >
-              Todos
-            </TabsTrigger>
-            <TabsTrigger 
-              value="Time Tracking" 
-              onClick={() => setActiveCategory("Time Tracking")}
-              className={isMobile ? "flex-1 min-w-[140px] bg-white shadow-sm" : ""}
-            >
-              Control Horario
-            </TabsTrigger>
-            <TabsTrigger 
-              value="HR Compliance" 
-              onClick={() => setActiveCategory("HR Compliance")}
-              className={isMobile ? "flex-1 min-w-[110px] bg-white shadow-sm" : ""}
-            >
-              Normativa
-            </TabsTrigger>
-            <TabsTrigger 
-              value="Productivity" 
-              onClick={() => setActiveCategory("Productivity")}
-              className={isMobile ? "flex-1 min-w-[130px] bg-white shadow-sm" : ""}
-            >
-              Productividad
-            </TabsTrigger>
-            <TabsTrigger 
-              value="Remote Work" 
-              onClick={() => setActiveCategory("Remote Work")}
-              className={isMobile ? "flex-1 min-w-[140px] bg-white shadow-sm" : ""}
-            >
-              Trabajo Remoto
-            </TabsTrigger>
+          <TabsList className={`${isMobile ? 'flex flex-wrap overflow-x-auto gap-1 bg-transparent p-0 h-auto' : 'grid grid-cols-6'} mb-8`}>
+            {availableCategories.map((category) => (
+              <TabsTrigger 
+                key={category}
+                value={category} 
+                onClick={() => setActiveCategory(category)}
+                className={isMobile ? 
+                  `flex-1 min-w-[${category === 'all' ? '90' : category === 'Normativa' ? '110' : category === 'Productividad' ? '130' : category === 'Trabajo Remoto' ? '140' : '140'}px] bg-white shadow-sm` 
+                  : ""}
+              >
+                {categoryLabels[category as keyof typeof categoryLabels]}
+              </TabsTrigger>
+            ))}
           </TabsList>
           
-          {["all", "Time Tracking", "HR Compliance", "Productivity", "Remote Work"].map((category) => (
+          {availableCategories.map((category) => (
             <TabsContent key={category} value={category} className="space-y-8">
               {filteredPosts.length > 0 && currentPage === 1 && (
                 <FeaturedPost post={filteredPosts[0]} />
