@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ChevronLeft, Book } from "lucide-react";
@@ -25,11 +26,12 @@ export default function BlogPost() {
         setLoading(true);
         console.info("Fetching blog posts from Supabase...");
         
-        // First try to get from Supabase
+        // Updated to only fetch published posts (published_at is not NULL)
         const { data, error } = await supabase
           .from('blog_posts')
           .select('*')
           .eq('slug', slug)
+          .not('published_at', 'is', null)
           .single();
           
         if (!error && data) {

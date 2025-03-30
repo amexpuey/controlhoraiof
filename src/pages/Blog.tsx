@@ -33,10 +33,11 @@ export default function Blog() {
         setLoading(true);
         console.log("Fetching blog posts from Supabase...");
         
-        // The issue might be with this query - let's log more details
+        // Updated query to only fetch published posts (published_at is not NULL)
         const { data, error } = await supabase
           .from('blog_posts')
           .select('*')
+          .not('published_at', 'is', null)
           .order('published_at', { ascending: false });
         
         console.log("Supabase query response:", { data, error });
