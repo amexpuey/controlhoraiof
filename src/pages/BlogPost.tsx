@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ChevronLeft, Book } from "lucide-react";
@@ -11,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import type { BlogPost } from "@/components/blog/FeaturedPost";
 import { mockBlogPosts } from "@/data/mockBlogPosts";
+import { toast } from "react-hot-toast";
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -42,10 +44,13 @@ export default function BlogPost() {
           const mockPost = mockBlogPosts.find(p => p.slug === slug);
           if (mockPost) {
             setPost(mockPost);
+          } else {
+            toast.error("Artículo no encontrado");
           }
         }
       } catch (error) {
         console.error('Error fetching blog post:', error);
+        toast.error("Error al cargar el artículo");
       } finally {
         setLoading(false);
       }
@@ -57,11 +62,32 @@ export default function BlogPost() {
   }, [slug]);
   
   if (loading) {
-    return <div className="container mx-auto px-4 py-12 text-center">Cargando...</div>;
+    return (
+      <BlogLayout>
+        <div className="container mx-auto px-4 py-12 text-center">
+          <div className="animate-pulse">
+            <div className="h-8 bg-gray-200 rounded w-1/3 mx-auto mb-4"></div>
+            <div className="h-64 bg-gray-200 rounded mb-4"></div>
+            <div className="h-4 bg-gray-200 rounded w-1/2 mx-auto mb-2"></div>
+            <div className="h-4 bg-gray-200 rounded w-1/3 mx-auto"></div>
+          </div>
+        </div>
+      </BlogLayout>
+    );
   }
   
   if (!post) {
-    return <div className="container mx-auto px-4 py-12 text-center">Artículo no encontrado</div>;
+    return (
+      <BlogLayout>
+        <div className="container mx-auto px-4 py-12 text-center">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Artículo no encontrado</h2>
+          <p className="text-gray-600 mb-6">El artículo que buscas no existe o ha sido eliminado.</p>
+          <Link to="/blog">
+            <Button>Volver al blog</Button>
+          </Link>
+        </div>
+      </BlogLayout>
+    );
   }
   
   return (

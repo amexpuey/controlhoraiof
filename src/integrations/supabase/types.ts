@@ -69,6 +69,24 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_hyperlinks_vectorstore: {
+        Row: {
+          content: string | null
+          embedding: string | null
+          metadata: Json | null
+        }
+        Insert: {
+          content?: string | null
+          embedding?: string | null
+          metadata?: Json | null
+        }
+        Update: {
+          content?: string | null
+          embedding?: string | null
+          metadata?: Json | null
+        }
+        Relationships: []
+      }
       blog_posts: {
         Row: {
           author: string
@@ -228,6 +246,48 @@ export type Database = {
         }
         Relationships: []
       }
+      documents: {
+        Row: {
+          content: string | null
+          embedding: string | null
+          id: number
+          metadata: Json | null
+        }
+        Insert: {
+          content?: string | null
+          embedding?: string | null
+          id?: number
+          metadata?: Json | null
+        }
+        Update: {
+          content?: string | null
+          embedding?: string | null
+          id?: number
+          metadata?: Json | null
+        }
+        Relationships: []
+      }
+      hyperlinker_inwout: {
+        Row: {
+          content: string | null
+          embedding: string | null
+          id: string
+          metadata: Json | null
+        }
+        Insert: {
+          content?: string | null
+          embedding?: string | null
+          id?: string
+          metadata?: Json | null
+        }
+        Update: {
+          content?: string | null
+          embedding?: string | null
+          id?: string
+          metadata?: Json | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           company_size: string | null
@@ -283,24 +343,7 @@ export type Database = {
       }
     }
     Views: {
-      blog_hyperlinks_vectorstore: {
-        Row: {
-          embedding: string | null
-          metadata: Json | null
-          pagecontent: string | null
-        }
-        Insert: {
-          embedding?: string | null
-          metadata?: never
-          pagecontent?: string | null
-        }
-        Update: {
-          embedding?: string | null
-          metadata?: never
-          pagecontent?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       binary_quantize:
@@ -449,6 +492,15 @@ export type Database = {
             }
             Returns: Database["public"]["CompositeTypes"]["http_response"]
           }
+        | {
+            Args: {
+              url: string
+              content_type: string
+              body: string
+              headers: Json
+            }
+            Returns: Json
+          }
       http_put: {
         Args: {
           uri: string
@@ -520,14 +572,14 @@ export type Database = {
           }
       match_documents: {
         Args: {
-          filter: Json
-          match_count: number
           query_embedding: string
+          match_count?: number
+          filter?: Json
         }
         Returns: {
-          slug: string
-          url: string
-          post_body: string
+          id: string
+          content: string
+          metadata: Json
           similarity: number
         }[]
       }
