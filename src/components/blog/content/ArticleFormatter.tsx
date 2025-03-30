@@ -28,8 +28,18 @@ export default function ArticleFormatter({ slug, content }: ArticleFormatterProp
   
   if (containsHtmlTags) {
     // Process HTML-formatted content
+    // Find the first paragraph - it's likely the title
+    const firstParagraphMatch = content.match(/<p>(.*?)<\/p>/);
+    const firstParagraph = firstParagraphMatch ? firstParagraphMatch[1] : null;
+    
+    // Remove the first paragraph from content if it was found
+    let processedContent = content;
+    if (firstParagraph) {
+      processedContent = content.replace(/<p>(.*?)<\/p>/, ''); // Remove first paragraph
+    }
+
     // Convert HTML headings to proper markdown format for better styling
-    let processedContent = content
+    processedContent = processedContent
       // Process headings with proper markdown format
       .replace(/<h1>(.*?)<\/h1>/g, "# $1\n\n")
       .replace(/<h2>(.*?)<\/h2>/g, "## $1\n\n")
@@ -53,18 +63,23 @@ export default function ArticleFormatter({ slug, content }: ArticleFormatterProp
 
     return (
       <div className="article-content">
+        {firstParagraph && (
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-8">
+            {firstParagraph}
+          </h1>
+        )}
         <ReactMarkdown 
           className={cn("prose prose-lg md:prose-xl max-w-none")}
           rehypePlugins={[rehypeRaw]}
           components={{
             h2: ({ node, ...props }) => (
-              <h2 className="text-2xl font-bold mt-8 mb-4 text-gray-800 border-b pb-2" {...props} />
+              <h2 className="text-2xl font-bold mt-12 mb-6 text-gray-800 border-b pb-2" {...props} />
             ),
             h3: ({ node, ...props }) => (
-              <h3 className="text-xl font-bold mt-6 mb-3 text-gray-700" {...props} />
+              <h3 className="text-xl font-bold mt-8 mb-4 text-gray-700" {...props} />
             ),
             p: ({ node, ...props }) => (
-              <p className="mb-6 leading-relaxed" {...props} />
+              <p className="mb-6 leading-relaxed text-gray-700" {...props} />
             ),
             a: ({ node, href, ...props }) => (
               <a 
@@ -79,13 +94,13 @@ export default function ArticleFormatter({ slug, content }: ArticleFormatterProp
               </a>
             ),
             ul: ({ node, ...props }) => (
-              <ul className="mb-6 ml-6 list-disc space-y-2" {...props} />
+              <ul className="mb-8 ml-6 list-disc space-y-3" {...props} />
             ),
             ol: ({ node, ...props }) => (
-              <ol className="mb-6 ml-6 list-decimal space-y-2" {...props} />
+              <ol className="mb-8 ml-6 list-decimal space-y-3" {...props} />
             ),
             li: ({ node, ...props }) => (
-              <li className="leading-relaxed" {...props} />
+              <li className="leading-relaxed mb-2" {...props} />
             ),
           }}
         >
@@ -95,44 +110,56 @@ export default function ArticleFormatter({ slug, content }: ArticleFormatterProp
     );
   }
   
+  // Check if the first line might be a title (for plain text content)
+  const contentLines = content.split('\n');
+  const firstLine = contentLines.length > 0 ? contentLines[0] : null;
+  const restContent = contentLines.length > 1 ? contentLines.slice(1).join('\n') : content;
+  
   // For regular markdown content
   return (
-    <ReactMarkdown 
-      className={cn("prose prose-lg md:prose-xl max-w-none")}
-      components={{
-        h2: ({ node, ...props }) => (
-          <h2 className="text-2xl font-bold mt-8 mb-4 text-gray-800 border-b pb-2" {...props} />
-        ),
-        h3: ({ node, ...props }) => (
-          <h3 className="text-xl font-bold mt-6 mb-3 text-gray-700" {...props} />
-        ),
-        p: ({ node, ...props }) => (
-          <p className="mb-6 leading-relaxed" {...props} />
-        ),
-        a: ({ node, href, ...props }) => (
-          <a 
-            href={href} 
-            className="text-blue-600 hover:text-blue-800 inline-flex items-center gap-1 font-medium underline decoration-2 underline-offset-2 transition-colors" 
-            target="_blank"
-            rel="noopener noreferrer"
-            {...props}
-          >
-            {props.children}
-            <ExternalLink className="w-3.5 h-3.5" />
-          </a>
-        ),
-        ul: ({ node, ...props }) => (
-          <ul className="mb-6 ml-6 list-disc space-y-2" {...props} />
-        ),
-        ol: ({ node, ...props }) => (
-          <ol className="mb-6 ml-6 list-decimal space-y-2" {...props} />
-        ),
-        li: ({ node, ...props }) => (
-          <li className="leading-relaxed" {...props} />
-        ),
-      }}
-    >
-      {content}
-    </ReactMarkdown>
+    <>
+      {firstLine && !firstLine.startsWith('#') && !firstLine.match(/^[\s\d]/) && (
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-8">
+          {firstLine}
+        </h1>
+      )}
+      <ReactMarkdown 
+        className={cn("prose prose-lg md:prose-xl max-w-none")}
+        components={{
+          h2: ({ node, ...props }) => (
+            <h2 className="text-2xl font-bold mt-12 mb-6 text-gray-800 border-b pb-2" {...props} />
+          ),
+          h3: ({ node, ...props }) => (
+            <h3 className="text-xl font-bold mt-8 mb-4 text-gray-700" {...props} />
+          ),
+          p: ({ node, ...props }) => (
+            <p className="mb-6 leading-relaxed text-gray-700" {...props} />
+          ),
+          a: ({ node, href, ...props }) => (
+            <a 
+              href={href} 
+              className="text-blue-600 hover:text-blue-800 inline-flex items-center gap-1 font-medium underline decoration-2 underline-offset-2 transition-colors" 
+              target="_blank"
+              rel="noopener noreferrer"
+              {...props}
+            >
+              {props.children}
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          ),
+          ul: ({ node, ...props }) => (
+            <ul className="mb-8 ml-6 list-disc space-y-3" {...props} />
+          ),
+          ol: ({ node, ...props }) => (
+            <ol className="mb-8 ml-6 list-decimal space-y-3" {...props} />
+          ),
+          li: ({ node, ...props }) => (
+            <li className="leading-relaxed mb-2" {...props} />
+          ),
+        }}
+      >
+        {firstLine && !firstLine.startsWith('#') && !firstLine.match(/^[\s\d]/) ? restContent : content}
+      </ReactMarkdown>
+    </>
   );
 }
