@@ -25,7 +25,9 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
   const readingTime = Math.max(1, Math.ceil(wordCount / 200));
   
   // Check if content starts with HTML tags that include the title
-  const startsWithTitle = post.content && /<h1>.*<\/h1>/i.test(post.content.substring(0, 200));
+  const startsWithTitle = post.content && 
+    (/<h1>.*<\/h1>/i.test(post.content.substring(0, 200)) || 
+     /^#\s.*\n/m.test(post.content.substring(0, 200)));
   
   return (
     <article className="bg-white rounded-lg shadow-sm overflow-hidden">
@@ -51,13 +53,13 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
         {!startsWithTitle && 
          !['como-cumplir-normativa-registro-horario', 'sistemas-modernos-control-acceso', 
            'analisis-datos-tiempo-real', 'estrategias-gestion-tiempo-empresas'].includes(post.slug) && (
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
             {post.title}
           </h1>
         )}
         
         {/* Post Content */}
-        <div className="prose prose-lg max-w-none mb-6">
+        <div className="article-container mb-6">
           <ArticleFormatter 
             slug={post.slug} 
             content={post.content || ''} 
