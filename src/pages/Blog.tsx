@@ -17,6 +17,7 @@ import {
   PaginationNext, 
   PaginationPrevious 
 } from "@/components/ui/pagination";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Number of posts to show per page (excluding the featured post)
 const POSTS_PER_PAGE = 9; // Changed from 6 to 9 to show 10 articles total (1 featured + 9 grid)
@@ -26,6 +27,7 @@ export default function Blog() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const isMobile = useIsMobile();
   
   useEffect(() => {
     const fetchPosts = async () => {
@@ -118,20 +120,40 @@ export default function Blog() {
         </div>
         
         <Tabs defaultValue="all" className="mb-8">
-          <TabsList className="grid grid-cols-5 mb-8">
-            <TabsTrigger value="all" onClick={() => setActiveCategory("all")}>
+          <TabsList className={`${isMobile ? 'flex flex-wrap overflow-x-auto gap-1 bg-transparent p-0 h-auto' : 'grid grid-cols-5'} mb-8`}>
+            <TabsTrigger 
+              value="all" 
+              onClick={() => setActiveCategory("all")}
+              className={isMobile ? "flex-1 min-w-[90px] bg-white shadow-sm" : ""}
+            >
               Todos
             </TabsTrigger>
-            <TabsTrigger value="Time Tracking" onClick={() => setActiveCategory("Time Tracking")}>
+            <TabsTrigger 
+              value="Time Tracking" 
+              onClick={() => setActiveCategory("Time Tracking")}
+              className={isMobile ? "flex-1 min-w-[140px] bg-white shadow-sm" : ""}
+            >
               Control Horario
             </TabsTrigger>
-            <TabsTrigger value="HR Compliance" onClick={() => setActiveCategory("HR Compliance")}>
+            <TabsTrigger 
+              value="HR Compliance" 
+              onClick={() => setActiveCategory("HR Compliance")}
+              className={isMobile ? "flex-1 min-w-[110px] bg-white shadow-sm" : ""}
+            >
               Normativa
             </TabsTrigger>
-            <TabsTrigger value="Productivity" onClick={() => setActiveCategory("Productivity")}>
+            <TabsTrigger 
+              value="Productivity" 
+              onClick={() => setActiveCategory("Productivity")}
+              className={isMobile ? "flex-1 min-w-[130px] bg-white shadow-sm" : ""}
+            >
               Productividad
             </TabsTrigger>
-            <TabsTrigger value="Remote Work" onClick={() => setActiveCategory("Remote Work")}>
+            <TabsTrigger 
+              value="Remote Work" 
+              onClick={() => setActiveCategory("Remote Work")}
+              className={isMobile ? "flex-1 min-w-[140px] bg-white shadow-sm" : ""}
+            >
               Trabajo Remoto
             </TabsTrigger>
           </TabsList>
