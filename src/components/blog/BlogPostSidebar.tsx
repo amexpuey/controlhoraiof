@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import AdBanner from "@/components/ads/AdBanner";
@@ -33,9 +32,7 @@ export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
           .limit(3);
         
         if (!error && data && data.length > 0) {
-          // Transform the data to match BlogPost structure if needed
           const transformedPosts = data.map(post => {
-            // Make sure related_apps is always an array
             let relatedApps = post.related_apps;
             if (!Array.isArray(relatedApps)) {
               relatedApps = relatedApps ? [relatedApps] : [];
@@ -66,7 +63,6 @@ export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
 
   return (
     <div className="space-y-6">
-      {/* Compliance Checker Tool Teaser - Not sticky */}
       <div className="bg-blue-50 rounded-lg shadow-sm p-4 border border-blue-200">
         <h3 className="text-lg font-bold mb-2 text-blue-800 text-left">Verificador de cumplimiento</h3>
         <p className="text-sm text-blue-700 mb-4 text-left">Comprueba si cumples con la normativa laboral de registro horario y evita multas</p>
@@ -78,12 +74,9 @@ export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
         </Button>
       </div>
       
-      {/* Sticky container for ads and recent posts */}
       <div className="sticky top-4">
-        {/* Sidebar Ad */}
         <AdBanner position="sidebar" adSize="300x250" />
         
-        {/* Featured App Banner (300x600px) */}
         <div className="bg-white rounded-lg shadow-sm p-4 mt-6">
           <h3 className="text-lg font-bold mb-4">App Destacada</h3>
           <a href="/mejores-apps-control-horario/inwout" className="block">
@@ -96,7 +89,6 @@ export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
           </a>
         </div>
         
-        {/* Recent Articles */}
         <div className="bg-white rounded-lg shadow-sm p-4 mt-6 border border-gray-200">
           <h3 className="text-lg font-bold mb-4">Últimos artículos</h3>
           {loading ? (
@@ -132,13 +124,11 @@ export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
           )}
         </div>
         
-        {/* Another Sidebar Ad */}
         <div className="mt-6">
           <AdBanner position="sidebar" adSize="300x250" />
         </div>
       </div>
       
-      {/* Compliance Checker Dialog */}
       <Dialog open={isCheckerOpen} onOpenChange={setIsCheckerOpen}>
         <DialogContent className="sm:max-w-[900px] max-h-[90vh] overflow-y-auto">
           <DialogHeader>
