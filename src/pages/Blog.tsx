@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
@@ -116,8 +115,7 @@ export default function Blog() {
     "Normativa": "Normativa",
     "Registro Horario": "Registro Horario",
     "Productividad": "Productividad",
-    "Trabajo Remoto": "Trabajo Remoto",
-    "Time Tracking": "Time Tracking"
+    "Trabajo Remoto": "Trabajo Remoto"
   };
   
   // Available categories for filtering
@@ -126,8 +124,7 @@ export default function Blog() {
     "Normativa", 
     "Registro Horario", 
     "Productividad", 
-    "Trabajo Remoto", 
-    "Time Tracking"
+    "Trabajo Remoto"
   ];
   
   return (
@@ -140,14 +137,14 @@ export default function Blog() {
         </div>
         
         <Tabs defaultValue="all" className="mb-8">
-          <TabsList className={`${isMobile ? 'flex flex-wrap overflow-x-auto gap-1 bg-transparent p-0 h-auto' : 'grid grid-cols-6'} mb-8`}>
+          <TabsList className={`${isMobile ? 'flex flex-wrap overflow-x-auto gap-1 bg-transparent p-0 h-auto' : 'grid grid-cols-5'} mb-8`}>
             {availableCategories.map((category) => (
               <TabsTrigger 
                 key={category}
                 value={category} 
                 onClick={() => setActiveCategory(category)}
                 className={isMobile ? 
-                  `flex-1 min-w-[${category === 'all' ? '90' : category === 'Normativa' ? '110' : category === 'Productividad' ? '130' : category === 'Trabajo Remoto' ? '140' : '140'}px] bg-white shadow-sm` 
+                  `flex-1 min-w-[${category === 'all' ? '90' : category === 'Normativa' ? '110' : category === 'Productividad' ? '130' : category === 'Trabajo Remoto' ? '140' : '120'}px] bg-white shadow-sm` 
                   : ""}
               >
                 {categoryLabels[category as keyof typeof categoryLabels]}
