@@ -41,11 +41,6 @@ export default function DayEditPanel({
     holiday: <Check className="h-4 w-4" />
   };
 
-  // Ensure the component updates when absenceType changes
-  useEffect(() => {
-    // Este useEffect se asegura de que el componente se actualice cuando cambia el tipo de ausencia
-  }, [absenceType]);
-
   const handleAbsenceTypeChange = (value: string) => {
     // Convert string to AbsenceType before setting
     const typedValue = value as AbsenceType;
@@ -132,7 +127,6 @@ export default function DayEditPanel({
         <Button 
           onClick={handleSaveData} 
           className="w-full bg-blue-600 hover:bg-blue-700"
-          type="button"
         >
           Guardar
         </Button>

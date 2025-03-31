@@ -1,6 +1,5 @@
 
-import { useEffect } from "react";
-import { es } from "date-fns/locale";
+import { useEffect, useCallback } from "react";
 import { useWorkCalendarState } from "./useWorkCalendarState";
 import { useWorkCalendarActions } from "./useWorkCalendarActions";
 import { useWorkCalendarCalculations } from "./useWorkCalendarCalculations";
@@ -42,7 +41,19 @@ export const useWorkCalendar = () => {
       newYearData[monthKey] = {};
       state.setYearData(newYearData);
     }
-  }, [state.currentDate, state.yearData]);
+  }, [state.currentDate, state.yearData, calculations.currentYear, calculations.currentMonth]);
+  
+  // Memoize the downloadAsCSV function to prevent unnecessary rerenders
+  const memoizedDownloadAsCSV = useCallback(actions.downloadAsCSV, [actions.downloadAsCSV]);
+  
+  // Memoize the bulkSetWorkDays function to prevent unnecessary rerenders
+  const memoizedBulkSetWorkDays = useCallback(actions.bulkSetWorkDays, [actions.bulkSetWorkDays]);
+  
+  // Memoize the initializeCalendarFromCalculation function to prevent unnecessary rerenders
+  const memoizedInitializeCalendarFromCalculation = useCallback(
+    actions.initializeCalendarFromCalculation,
+    [actions.initializeCalendarFromCalculation]
+  );
   
   return {
     // State
@@ -76,8 +87,8 @@ export const useWorkCalendar = () => {
     handleDateSelect: actions.handleDateSelect,
     calculateYearlyHours: calculations.calculateYearlyHours,
     dayClassName: calculations.dayClassName,
-    downloadAsCSV: actions.downloadAsCSV,
-    initializeCalendarFromCalculation: actions.initializeCalendarFromCalculation,
-    bulkSetWorkDays: actions.bulkSetWorkDays
+    downloadAsCSV: memoizedDownloadAsCSV,
+    initializeCalendarFromCalculation: memoizedInitializeCalendarFromCalculation,
+    bulkSetWorkDays: memoizedBulkSetWorkDays
   };
 };

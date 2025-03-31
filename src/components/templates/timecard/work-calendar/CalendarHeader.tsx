@@ -19,6 +19,10 @@ export default function CalendarHeader({
   goToNextMonth, 
   downloadAsCSV 
 }: CalendarHeaderProps) {
+  const handleDownloadCSV = () => {
+    downloadAsCSV();
+  };
+
   return (
     <div className="flex justify-between items-center mb-4">
       <Button variant="outline" onClick={goToPreviousMonth}>
@@ -41,8 +45,8 @@ export default function CalendarHeader({
               Exportar
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem onClick={downloadAsCSV}>
+          <DropdownMenuContent align="end" className="bg-white shadow-lg z-50">
+            <DropdownMenuItem onClick={handleDownloadCSV} className="cursor-pointer">
               <FileText className="h-4 w-4 mr-2" />
               Descargar CSV
             </DropdownMenuItem>

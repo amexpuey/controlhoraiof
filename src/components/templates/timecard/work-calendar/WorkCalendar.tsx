@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
@@ -80,7 +81,10 @@ export default function WorkCalendar() {
                 month={currentDate}
                 className="rounded-md border"
                 modifiers={{
-                  booked: (date) => getDayData(date)?.absenceType !== "work" && getDayData(date)?.absenceType !== undefined,
+                  booked: (date) => {
+                    const data = getDayData(date);
+                    return data?.absenceType !== "work" && data?.absenceType !== undefined;
+                  },
                 }}
                 modifiersClassNames={{
                   booked: "font-bold",
