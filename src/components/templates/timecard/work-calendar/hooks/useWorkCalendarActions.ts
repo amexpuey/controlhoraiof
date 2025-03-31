@@ -17,7 +17,8 @@ export const useWorkCalendarActions = (
   setAbsenceType: (type: AbsenceType) => void,
   setNotes: (notes: string) => void,
   setYearlyHoursTarget: (target: number) => void,
-  workingHoursPerWeek: number
+  workingHoursPerWeek: number,
+  setWorkingHoursPerWeek: (hours: number) => void
 ) => {
   // Navigate to the previous month
   const goToPreviousMonth = () => {

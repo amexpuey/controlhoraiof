@@ -23,7 +23,8 @@ export const useWorkCalendar = () => {
     state.setAbsenceType,
     state.setNotes,
     state.setYearlyHoursTarget,
-    state.workingHoursPerWeek
+    state.workingHoursPerWeek,
+    state.setWorkingHoursPerWeek
   );
   
   const calculations = useWorkCalendarCalculations(
