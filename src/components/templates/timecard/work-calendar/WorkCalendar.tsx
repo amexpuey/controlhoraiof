@@ -1,9 +1,8 @@
-
 import React, { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "lucide-react";
-import { useWorkCalendar } from "./useWorkCalendar";
+import { useWorkCalendar } from "./hooks/useWorkCalendar";
 import CalendarHeader from "./CalendarHeader";
 import CalendarDay from "./CalendarDay";
 import StatisticsPanel from "./StatisticsPanel";
@@ -44,7 +43,6 @@ export default function WorkCalendar() {
     bulkSetWorkDays
   } = useWorkCalendar();
   
-  // Use the data from URL params if available
   useEffect(() => {
     if (calculatedHours && workdaysPerWeek && hoursPerDay) {
       initializeCalendarFromCalculation(
