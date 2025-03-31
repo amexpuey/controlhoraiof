@@ -42,11 +42,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/compliance-checker",
-    element: (
-      <>
-        <ComplianceCheckerPage />
-      </>
-    ),
+    element: <ComplianceCheckerPage />,
   },
   {
     path: "/plantillas",
@@ -58,16 +54,14 @@ const router = createBrowserRouter([
   },
 ]);
 
-// Instead of using useLocation inside AppContent, we'll modify our router configuration
-// to determine which routes should render the Footer
 function App() {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex-grow">
         <RouterProvider router={router} />
       </div>
-      {/* Render Footer normally - it will not be rendered on compliance-checker route */}
-      {window.location.pathname !== "/compliance-checker" && <Footer />}
+      {/* Render Footer based on current path */}
+      {!routesWithoutFooter.includes(window.location.pathname) && <Footer />}
       <Toaster />
     </div>
   );
