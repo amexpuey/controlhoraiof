@@ -7,18 +7,20 @@ interface ResultsDisplayProps {
   totalWorkHours: number | null;
   watch: UseFormWatch<HoursCalculatorFormValues>;
   extraHolidaysCount: number;
+  isCalculated: boolean;
 }
 
 export function ResultsDisplay({ 
   totalWorkHours, 
   watch, 
-  extraHolidaysCount 
+  extraHolidaysCount,
+  isCalculated
 }: ResultsDisplayProps) {
   return (
     <div className="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-100">
       <h3 className="text-lg font-bold text-blue-800 mb-3">Resultado del cálculo:</h3>
       
-      {totalWorkHours !== null ? (
+      {isCalculated && totalWorkHours !== null ? (
         <div className="space-y-3">
           <div className="flex justify-between items-center">
             <span className="text-blue-700">Total horas laborables estimadas:</span>
@@ -36,7 +38,7 @@ export function ResultsDisplay({
           </div>
         </div>
       ) : (
-        <p className="text-gray-500 italic">Introduce los datos para calcular las horas totales.</p>
+        <p className="text-gray-500 italic">Pulsa el botón "Calcular horas laborables" para ver el resultado.</p>
       )}
     </div>
   );

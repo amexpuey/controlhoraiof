@@ -1,13 +1,15 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Holiday, HoursCalculatorFormValues } from "./types";
+import { toast } from "sonner";
 
 export function useHoursCalculator() {
   const [extraHolidays, setExtraHolidays] = useState<Holiday[]>([]);
   const [nextHolidayId, setNextHolidayId] = useState(1);
   const [totalWorkHours, setTotalWorkHours] = useState<number | null>(null);
   const [holidayName, setHolidayName] = useState("");
+  const [isCalculated, setIsCalculated] = useState(false);
 
   const form = useForm<HoursCalculatorFormValues>({
     defaultValues: {
@@ -39,7 +41,9 @@ export function useHoursCalculator() {
     form.setValue("extraHolidays", updatedHolidays.length);
   };
 
-  const calculateTotalHours = (data: HoursCalculatorFormValues) => {
+  const calculateTotalHours = () => {
+    const data = form.getValues();
+    
     let totalWorkingDays = 0;
     
     // Días laborables según los días de trabajo por semana
@@ -62,17 +66,9 @@ export function useHoursCalculator() {
     const calculatedTotalHours = totalWorkingDays * data.hoursPerDay;
     
     setTotalWorkHours(Math.round(calculatedTotalHours));
+    setIsCalculated(true);
+    toast.success("Cálculo realizado correctamente");
   };
-
-  // Recalcular cuando cambien los valores
-  useEffect(() => {
-    const subscription = form.watch((value) => {
-      if (value) {
-        calculateTotalHours(value as HoursCalculatorFormValues);
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [form.watch, extraHolidays]);
 
   return {
     form,
@@ -81,6 +77,8 @@ export function useHoursCalculator() {
     setHolidayName,
     addHoliday,
     removeHoliday,
-    totalWorkHours
+    totalWorkHours,
+    calculateTotalHours,
+    isCalculated
   };
 }

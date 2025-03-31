@@ -7,6 +7,8 @@ import { ResultsDisplay } from "./ResultsDisplay";
 import { useHoursCalculator } from "./useHoursCalculator";
 import { CardContent } from "@/components/ui/card";
 import { CalculatorHeader } from "./CalculatorHeader";
+import { Button } from "@/components/ui/button";
+import { Calculator } from "lucide-react";
 
 export function HoursCalculatorForm() {
   const {
@@ -16,7 +18,9 @@ export function HoursCalculatorForm() {
     setHolidayName,
     addHoliday,
     removeHoliday,
-    totalWorkHours
+    totalWorkHours,
+    calculateTotalHours,
+    isCalculated
   } = useHoursCalculator();
 
   return (
@@ -34,6 +38,17 @@ export function HoursCalculatorForm() {
               addHoliday={addHoliday}
               removeHoliday={removeHoliday}
             />
+            
+            <div className="mt-6">
+              <Button 
+                type="button" 
+                onClick={() => calculateTotalHours()}
+                className="w-full bg-blue-600 hover:bg-blue-700"
+              >
+                <Calculator className="mr-2 h-5 w-5" />
+                Calcular horas laborables
+              </Button>
+            </div>
           </form>
         </Form>
         
@@ -41,6 +56,7 @@ export function HoursCalculatorForm() {
           totalWorkHours={totalWorkHours}
           watch={form.watch}
           extraHolidaysCount={extraHolidays.length}
+          isCalculated={isCalculated}
         />
       </CardContent>
     </>

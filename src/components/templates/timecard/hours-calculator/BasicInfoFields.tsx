@@ -71,6 +71,7 @@ export function BasicInfoFields({ form }: BasicInfoFieldsProps) {
             <Select 
               onValueChange={(value) => field.onChange(Number(value))}
               defaultValue={field.value.toString()}
+              value={field.value.toString()}
             >
               <FormControl>
                 <SelectTrigger>
@@ -120,6 +121,7 @@ export function BasicInfoFields({ form }: BasicInfoFieldsProps) {
             <Select 
               onValueChange={field.onChange}
               defaultValue={field.value}
+              value={field.value}
             >
               <FormControl>
                 <SelectTrigger>
