@@ -4,7 +4,7 @@ import ReactMarkdown from "react-markdown";
 import { formatSpecialArticleBySlug } from "./articleFormatters";
 import { cn } from "@/lib/utils";
 import rehypeRaw from "rehype-raw";
-import { Link, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 interface ArticleFormatterProps {
   slug: string;
@@ -54,11 +54,11 @@ export default function ArticleFormatter({ slug, content }: ArticleFormatterProp
   // Fix formatting issues with asterisks and markdown headers
   processedContent = processedContent
     // Convert asterisks with space to proper bullet points
-    .replace(/\* \*\*/g, '* **')
+    .replace(/^\s*\*\s+\*\*/gm, '* **')
     // Fix markdown headers with # symbols
-    .replace(/###\s+([^\n]+)/g, '### $1')
-    .replace(/##\s+([^\n]+)/g, '## $1')
-    .replace(/#+\s*([^#\n]+)/g, '## $1')
+    .replace(/^###\s+([^\n]+)/gm, '### $1')
+    .replace(/^##\s+([^\n]+)/gm, '## $1')
+    .replace(/^#\s+([^\n]+)/gm, '# $1')
     // Fix table formatting issues
     .replace(/(\w+)\s+\|/g, '$1 | ')
     .replace(/\|\s+(\w+)/g, '| $1')
@@ -67,7 +67,15 @@ export default function ArticleFormatter({ slug, content }: ArticleFormatterProp
     // Fix markdown emphasis/bold syntax
     .replace(/\*\*([^*\n]+)\*\*/g, '**$1**')
     // Ensure links are properly formatted
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '[$1]($2)');
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '[$1]($2)')
+    // Fix bullet points with asterisks
+    .replace(/^(\s*)\* ([^\n]+)/gm, '$1* $2')
+    // Convert sequences of asterisks used for emphasis
+    .replace(/\*\*\*([^*]+)\*\*\*/g, '***$1***')
+    // Fix headers that use markdown syntax
+    .replace(/^(\s*)## ([^\n]+)/gm, '$1## $2')
+    // Normalize blank lines around list items for better rendering
+    .replace(/(\n\* [^\n]+)(\n)(?!\n|\*)/g, '$1\n\n');
 
   if (containsHtmlTags) {
     // Process HTML-formatted content
@@ -130,13 +138,13 @@ export default function ArticleFormatter({ slug, content }: ArticleFormatterProp
             </a>
           ),
           ul: ({ node, ...props }) => (
-            <ul className="mb-8 ml-6 list-disc space-y-3" {...props} />
+            <ul className="mb-8 ml-6 space-y-3 list-disc marker:text-gray-500" {...props} />
           ),
           ol: ({ node, ...props }) => (
             <ol className="mb-8 ml-6 list-decimal space-y-3" {...props} />
           ),
           li: ({ node, ...props }) => (
-            <li className="leading-relaxed text-lg" {...props} />
+            <li className="leading-relaxed text-lg pl-2" {...props} />
           ),
           blockquote: ({ node, ...props }) => (
             <blockquote className="border-l-4 border-gray-300 pl-4 italic my-6" {...props} />
@@ -160,6 +168,14 @@ export default function ArticleFormatter({ slug, content }: ArticleFormatterProp
           ),
           tr: ({ node, ...props }) => (
             <tr className="border-b border-gray-200 hover:bg-gray-50" {...props} />
+          ),
+          pre: ({ node, ...props }) => (
+            <pre className="p-4 bg-gray-100 rounded-lg overflow-x-auto text-sm" {...props} />
+          ),
+          code: ({ node, inline, ...props }) => (
+            inline ? 
+              <code className="bg-gray-100 rounded px-1 py-0.5 text-sm font-mono" {...props} /> :
+              <code className="block p-4 bg-gray-100 rounded-lg overflow-x-auto text-sm font-mono" {...props} />
           ),
         }}
       >
