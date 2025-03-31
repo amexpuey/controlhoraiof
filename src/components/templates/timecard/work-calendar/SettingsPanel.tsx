@@ -42,7 +42,7 @@ export default function SettingsPanel({
             <SelectTrigger id="workingHoursPerWeek" className="cursor-pointer">
               <SelectValue placeholder="Selecciona horas semanales" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent position="popper" className="z-50 bg-white">
               <SelectItem value="40">40 horas (estándar)</SelectItem>
               <SelectItem value="37.5">37,5 horas (nueva regulación)</SelectItem>
               <SelectItem value="30">30 horas (jornada reducida)</SelectItem>

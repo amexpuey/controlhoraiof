@@ -13,7 +13,7 @@ export const useWorkCalendar = () => {
   const [absenceType, setAbsenceType] = useState<AbsenceType>("work");
   const [notes, setNotes] = useState<string>("");
   const [workingHoursPerWeek, setWorkingHoursPerWeek] = useState<number>(40);
-  const [yearlyHoursTarget, setYearlyHoursTarget] = useState<number>(0);
+  const [yearlyHoursTarget, setYearlyHoursTarget] = useState<number>(1782); // Default for Spain
   
   const currentMonth = getMonth(currentDate);
   const currentYear = getYear(currentDate);

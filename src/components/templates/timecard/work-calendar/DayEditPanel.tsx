@@ -67,7 +67,7 @@ export default function DayEditPanel({
             <SelectTrigger id="absence-type" className="cursor-pointer">
               <SelectValue placeholder="Selecciona el tipo" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent position="popper" className="z-50 bg-white">
               {Object.entries(absenceTypeLabels).map(([type, label]) => (
                 <SelectItem key={type} value={type}>
                   <div className="flex items-center">

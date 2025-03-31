@@ -77,7 +77,7 @@ export function BasicInfoFields({ form }: BasicInfoFieldsProps) {
                   <SelectValue placeholder="Selecciona los días" />
                 </SelectTrigger>
               </FormControl>
-              <SelectContent>
+              <SelectContent position="popper" className="z-50 bg-white">
                 <SelectItem value="5">5 días (L-V)</SelectItem>
                 <SelectItem value="6">6 días (L-S)</SelectItem>
                 <SelectItem value="7">7 días (L-D)</SelectItem>
@@ -126,7 +126,7 @@ export function BasicInfoFields({ form }: BasicInfoFieldsProps) {
                   <SelectValue placeholder="Selecciona el tipo" />
                 </SelectTrigger>
               </FormControl>
-              <SelectContent>
+              <SelectContent position="popper" className="z-50 bg-white">
                 <SelectItem value="business">Días hábiles</SelectItem>
                 <SelectItem value="natural">Días naturales</SelectItem>
               </SelectContent>

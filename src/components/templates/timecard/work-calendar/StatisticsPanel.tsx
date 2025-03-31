@@ -65,7 +65,7 @@ export default function StatisticsPanel({
                 ? `${yearlyHoursDifference} por completar` 
                 : 'Objetivo exacto'
             ) : (
-              'Sin objetivo definido'
+              'Objetivo anual: ' + yearlyHoursTarget + ' horas'
             )}
           </div>
           
