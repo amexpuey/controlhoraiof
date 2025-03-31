@@ -1,8 +1,9 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { AbsenceType, absenceTypeColors, absenceTypeLabels } from "./types";
 import { Briefcase, Home, Heart, Clock, Ban, Check, CalendarDays } from "lucide-react";
 
@@ -19,6 +20,9 @@ export default function SettingsPanel({
   setWorkingHoursPerWeek,
   bulkSetWorkDays
 }: SettingsPanelProps) {
+  const [customHours, setCustomHours] = useState<string>("");
+  const [selectedOption, setSelectedOption] = useState<string>(workingHoursPerWeek.toString());
+  
   // Define absence type icons directly here to avoid circular imports
   const absenceTypeIcons: Record<AbsenceType, React.ReactNode> = {
     work: <Briefcase className="h-4 w-4" />,
@@ -29,6 +33,27 @@ export default function SettingsPanel({
     holiday: <Check className="h-4 w-4" />
   };
 
+  const handleHoursChange = (value: string) => {
+    setSelectedOption(value);
+    
+    if (value === "custom") {
+      // If custom is selected, don't update working hours yet
+      // It will be updated when the input field is used
+    } else {
+      setWorkingHoursPerWeek(Number(value));
+    }
+  };
+
+  const handleCustomHoursChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setCustomHours(value);
+    
+    // Only update if it's a valid number
+    if (value && !isNaN(Number(value))) {
+      setWorkingHoursPerWeek(Number(value));
+    }
+  };
+
   return (
     <div className="p-4 bg-gray-50 rounded-lg border">
       <h3 className="text-lg font-medium mb-4">Ajustes de jornada</h3>
@@ -36,8 +61,8 @@ export default function SettingsPanel({
         <div>
           <Label htmlFor="workingHoursPerWeek">Horas semanales</Label>
           <Select 
-            value={workingHoursPerWeek.toString()} 
-            onValueChange={(value) => setWorkingHoursPerWeek(Number(value))}
+            value={selectedOption} 
+            onValueChange={handleHoursChange}
           >
             <SelectTrigger id="workingHoursPerWeek" className="cursor-pointer">
               <SelectValue placeholder="Selecciona horas semanales" />
@@ -47,8 +72,25 @@ export default function SettingsPanel({
               <SelectItem value="37.5">37,5 horas (nueva regulación)</SelectItem>
               <SelectItem value="30">30 horas (jornada reducida)</SelectItem>
               <SelectItem value="20">20 horas (media jornada)</SelectItem>
+              <SelectItem value="custom">Personalizado</SelectItem>
             </SelectContent>
           </Select>
+          
+          {selectedOption === "custom" && (
+            <div className="mt-2">
+              <Input
+                type="number"
+                placeholder="Introduce horas semanales"
+                value={customHours}
+                onChange={handleCustomHoursChange}
+                min="1"
+                max="60"
+                step="0.5"
+                className="mt-1"
+              />
+            </div>
+          )}
+          
           <p className="text-xs text-gray-500 mt-1">
             Objetivo mensual: {targetHours} horas
           </p>

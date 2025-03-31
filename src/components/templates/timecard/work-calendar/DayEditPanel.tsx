@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Label } from "@/components/ui/label";
@@ -40,13 +40,20 @@ export default function DayEditPanel({
     holiday: <Check className="h-4 w-4" />
   };
 
-  const handleAbsenceTypeChange = (value: AbsenceType) => {
-    setAbsenceType(value);
+  // Ensure the component updates when absenceType changes
+  useEffect(() => {
+    // Este useEffect se asegura de que el componente se actualice cuando cambia el tipo de ausencia
+  }, [absenceType]);
+
+  const handleAbsenceTypeChange = (value: string) => {
+    // Convert string to AbsenceType before setting
+    const typedValue = value as AbsenceType;
+    setAbsenceType(typedValue);
     
     // Automatically adjust hours when type changes
-    if (value === 'unpaid' || value === 'holiday') {
+    if (typedValue === 'unpaid' || typedValue === 'holiday') {
       setHoursForDay(0);
-    } else if (value === 'work') {
+    } else if (typedValue === 'work') {
       setHoursForDay(8); // Default full work day
     }
   };
@@ -62,7 +69,7 @@ export default function DayEditPanel({
           <Label htmlFor="absence-type">Tipo de día</Label>
           <Select 
             value={absenceType} 
-            onValueChange={(value) => handleAbsenceTypeChange(value as AbsenceType)}
+            onValueChange={handleAbsenceTypeChange}
           >
             <SelectTrigger id="absence-type" className="cursor-pointer">
               <SelectValue placeholder="Selecciona el tipo" />
@@ -89,6 +96,7 @@ export default function DayEditPanel({
             type="number" 
             min="0" 
             max="24" 
+            step="0.5"
             value={hoursForDay}
             onChange={(e) => setHoursForDay(Number(e.target.value))}
             disabled={absenceType === 'unpaid' || absenceType === 'holiday'}
