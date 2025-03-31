@@ -1,4 +1,3 @@
-
 import { TemplateData } from "./types";
 
 export const templateData: TemplateData[] = [
@@ -29,10 +28,9 @@ export const templateData: TemplateData[] = [
     description: "Conjunto de documentos y guías para asegurar el cumplimiento de la normativa laboral.",
     imageSrc: "/lovable-uploads/d48380f9-f5c9-4f3f-8184-8ef27150846d.png",
     category: "Normativa Laboral",
-    action: "download",
-    actionLabel: "Descargar ZIP",
-    exampleLink: "#",
-    downloadUrl: "#"
+    action: "edit",
+    actionLabel: "Acceder al Kit",
+    editUrl: "/kit-legal"
   },
   {
     id: "plantilla-onboarding",
