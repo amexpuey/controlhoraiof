@@ -6,7 +6,7 @@ import InstructionsSection from "./instructions/InstructionsSection";
 
 export default function TimecardTemplate() {
   const [period, setPeriod] = useState("month");
-  const [activeTab, setActiveTab] = useState("download");
+  const [activeTab, setActiveTab] = useState("calculator");
   
   return (
     <div className="py-8">

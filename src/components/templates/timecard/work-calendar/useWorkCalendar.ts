@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { format, getDaysInMonth, getMonth, getYear, addMonths, subMonths, isWeekend } from "date-fns";
 import { es } from "date-fns/locale";
 import { toast } from "sonner";
-import { DayData, AbsenceType, YearData } from "./types";
+import { DayData, AbsenceType, YearData, absenceTypeColors } from "./types";
 
 export const useWorkCalendar = () => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
@@ -118,6 +118,14 @@ export const useWorkCalendar = () => {
   
   // Download the data as a CSV file
   const downloadAsCSV = () => {
+    // Verificar si hay datos para descargar
+    const hasData = Object.values(yearData).some(monthData => Object.keys(monthData).length > 0);
+    
+    if (!hasData) {
+      toast.error("No hay datos para descargar. Añade al menos un registro.");
+      return;
+    }
+    
     let csvContent = "Fecha,Horas,Tipo,Notas\n";
     
     Object.values(yearData).forEach(monthData => {
