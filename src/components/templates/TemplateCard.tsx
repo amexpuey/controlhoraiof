@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Download, ExternalLink, Pencil, Book, Clock, FileText, Users, Calendar, MessageSquare, GraduationCap, Briefcase } from "lucide-react";
 import { TemplateData } from "./types";
 import { Link } from "react-router-dom";
+import { Badge } from "@/components/ui/badge";
 
 interface TemplateCardProps {
   template: TemplateData;
@@ -35,25 +36,25 @@ export default function TemplateCard({ template }: TemplateCardProps) {
   const getCategoryIcon = () => {
     switch (template.category) {
       case "Evaluación":
-        return <FileText className="h-10 w-10 text-white" />;
+        return <FileText className="h-8 w-8 text-white" />;
       case "Control horario":
-        return <Clock className="h-10 w-10 text-white" />;
+        return <Clock className="h-8 w-8 text-white" />;
       case "Formación":
-        return <GraduationCap className="h-10 w-10 text-white" />;
+        return <GraduationCap className="h-8 w-8 text-white" />;
       case "Comunicación Interna":
-        return <MessageSquare className="h-10 w-10 text-white" />;
+        return <MessageSquare className="h-8 w-8 text-white" />;
       case "Normativa Laboral":
-        return <Briefcase className="h-10 w-10 text-white" />;
+        return <Briefcase className="h-8 w-8 text-white" />;
       case "Onboarding":
-        return <Users className="h-10 w-10 text-white" />;
+        return <Users className="h-8 w-8 text-white" />;
       case "Productividad":
-        return <Calendar className="h-10 w-10 text-white" />;
+        return <Calendar className="h-8 w-8 text-white" />;
       case "Documentos Legales":
-        return <FileText className="h-10 w-10 text-white" />;
+        return <FileText className="h-8 w-8 text-white" />;
       case "Turnos":
-        return <Clock className="h-10 w-10 text-white" />;
+        return <Clock className="h-8 w-8 text-white" />;
       default:
-        return <Book className="h-10 w-10 text-white" />;
+        return <Book className="h-8 w-8 text-white" />;
     }
   };
 
@@ -63,37 +64,63 @@ export default function TemplateCard({ template }: TemplateCardProps) {
     
     switch (template.category) {
       case "Evaluación":
-        return `${baseStyle} from-blue-500 to-blue-300`;
+        return `${baseStyle} from-blue-700 to-blue-500`;
       case "Control horario":
-        return `${baseStyle} from-violet-500 to-indigo-400`;
+        return `${baseStyle} from-indigo-700 to-indigo-500`;
       case "Formación":
-        return `${baseStyle} from-emerald-500 to-teal-300`;
+        return `${baseStyle} from-teal-700 to-teal-500`;
       case "Comunicación Interna":
-        return `${baseStyle} from-orange-400 to-amber-300`;
+        return `${baseStyle} from-amber-700 to-amber-500`;
       case "Normativa Laboral":
-        return `${baseStyle} from-gray-600 to-gray-400`;
+        return `${baseStyle} from-gray-700 to-gray-500`;
       case "Onboarding":
-        return `${baseStyle} from-pink-500 to-rose-300`;
+        return `${baseStyle} from-rose-700 to-rose-500`;
       case "Productividad":
-        return `${baseStyle} from-green-500 to-emerald-300`;
+        return `${baseStyle} from-emerald-700 to-emerald-500`;
       case "Documentos Legales":
-        return `${baseStyle} from-slate-600 to-slate-400`;
+        return `${baseStyle} from-slate-700 to-slate-500`;
       case "Turnos":
-        return `${baseStyle} from-purple-500 to-purple-300`;
+        return `${baseStyle} from-purple-700 to-purple-500`;
       default:
-        return `${baseStyle} from-emerald-500 via-green-400 to-yellow-300`;
+        return `${baseStyle} from-emerald-700 via-green-600 to-green-500`;
+    }
+  };
+
+  // Function to get the category badge color
+  const getCategoryBadgeStyle = () => {
+    switch (template.category) {
+      case "Evaluación":
+        return "bg-blue-600 text-white";
+      case "Control horario":
+        return "bg-indigo-600 text-white";
+      case "Formación":
+        return "bg-teal-600 text-white";
+      case "Comunicación Interna":
+        return "bg-amber-600 text-white";
+      case "Normativa Laboral":
+        return "bg-gray-600 text-white";
+      case "Onboarding":
+        return "bg-rose-600 text-white";
+      case "Productividad":
+        return "bg-emerald-600 text-white";
+      case "Documentos Legales":
+        return "bg-slate-600 text-white";
+      case "Turnos":
+        return "bg-purple-600 text-white";
+      default:
+        return "bg-emerald-600 text-white";
     }
   };
 
   return (
     <Card className="overflow-hidden h-full flex flex-col transition-all hover:shadow-lg border-0 shadow">
       <div className={getGradientStyle()}>
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="absolute inset-0 flex flex-col justify-center items-center p-4 text-center">
-          <div className="bg-white/20 p-4 rounded-full backdrop-blur-sm">
+        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="absolute inset-0 flex flex-col justify-center items-start p-6 text-left">
+          <div className="bg-white/20 p-3 rounded-full backdrop-blur-sm mb-3">
             {getCategoryIcon()}
           </div>
-          <h3 className="text-white font-bold text-xl mt-4 px-2 py-1 drop-shadow-md">
+          <h3 className="text-white font-bold text-xl drop-shadow-md">
             {template.title}
           </h3>
         </div>
@@ -101,9 +128,9 @@ export default function TemplateCard({ template }: TemplateCardProps) {
       
       <CardHeader className="pb-2">
         <div className="mt-1">
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+          <Badge className={`font-medium ${getCategoryBadgeStyle()}`}>
             {template.category}
-          </span>
+          </Badge>
         </div>
       </CardHeader>
       
