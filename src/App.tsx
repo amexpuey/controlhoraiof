@@ -9,6 +9,7 @@ import BlogPost from "@/pages/BlogPost";
 import ComplianceCheckerPage from "@/pages/ComplianceCheckerPage";
 import Templates from "@/pages/Templates";
 import TalentGuidePage from "@/pages/TalentGuidePage";
+import ComplianceKit from "@/pages/ComplianceKit";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
   {
     path: "/plantillas/guia-talento",
     element: <TalentGuidePage />,
+  },
+  {
+    path: "/kit-legal",
+    element: <ComplianceKit />,
   },
   {
     path: "*",

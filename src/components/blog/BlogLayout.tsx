@@ -52,6 +52,12 @@ export default function BlogLayout({ children }: BlogLayoutProps) {
               Blog
             </Link>
             <Link 
+              to="/kit-legal" 
+              className="text-sm font-medium text-white hover:text-gray-200 transition-colors"
+            >
+              Kit Legal
+            </Link>
+            <Link 
               to="/" 
               className="flex items-center gap-1.5 text-sm font-medium bg-yellow-100 text-gray-800 hover:bg-yellow-200 px-3 py-1.5 rounded-md transition-colors"
             >

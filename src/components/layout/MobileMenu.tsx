@@ -1,100 +1,94 @@
 
-import React from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { 
+  Home, 
+  FileText, 
+  BookOpen, 
+  LayoutGrid, 
+  LogOut, 
+  Shield,
+  User,
+  X 
+} from "lucide-react";
 
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
-  // Prevent scrolling when menu is open
-  React.useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
+export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+  const menuItems = [
+    {
+      label: 'Inicio',
+      href: '/',
+      icon: Home
+    },
+    {
+      label: 'Mejores Apps',
+      href: '/dashboard',
+      icon: LayoutGrid
+    },
+    {
+      label: 'Blog',
+      href: '/blog',
+      icon: BookOpen
+    },
+    {
+      label: 'Plantillas',
+      href: '/plantillas',
+      icon: FileText
+    },
+    {
+      label: 'Kit Legal',
+      href: '/kit-legal',
+      icon: Shield
     }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
-
+  ];
+  
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <>
-          {/* Overlay */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-black/50"
-            onClick={onClose}
-          />
+    <Sheet open={isOpen} onOpenChange={onClose}>
+      <SheetContent side="right" className="p-0 max-w-[280px]">
+        <div className="flex flex-col h-full">
+          <div className="p-4 border-b flex items-center justify-between">
+            <h2 className="font-semibold">Menú</h2>
+            <Button variant="ghost" size="icon" onClick={onClose}>
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
           
-          {/* Menu Panel */}
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed top-0 right-0 z-50 h-full w-[80%] max-w-[300px] bg-gray-800 shadow-lg overflow-auto"
-          >
-            <div className="flex flex-col h-full">
-              <div className="flex items-center justify-between p-4 border-b border-gray-700">
-                <h2 className="text-lg font-semibold text-white">Menú</h2>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  className="text-white hover:bg-gray-700" 
-                  onClick={onClose}
-                >
-                  <X className="h-5 w-5" />
-                </Button>
-              </div>
-              
-              <div className="flex-1 py-4">
-                <nav className="space-y-1 px-3">
-                  <Link 
-                    to="/plantillas" 
-                    className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors"
+          <nav className="flex-1">
+            <ul className="py-2">
+              {menuItems.map((item, index) => (
+                <li key={index}>
+                  <Link
+                    to={item.href}
+                    className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 transition-colors"
                     onClick={onClose}
                   >
-                    Plantillas
+                    <item.icon className="h-5 w-5 text-gray-500" />
+                    <span>{item.label}</span>
                   </Link>
-                  <Link 
-                    to="/blog" 
-                    className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors"
-                    onClick={onClose}
-                  >
-                    Blog
-                  </Link>
-                </nav>
-              </div>
-              
-              <div className="p-4 border-t border-gray-700">
-                <Link 
-                  to="/" 
-                  className="flex items-center gap-1.5 text-sm font-medium bg-yellow-100 text-gray-800 hover:bg-yellow-200 px-3 py-2 rounded-md transition-colors w-full justify-center"
-                  onClick={onClose}
-                >
-                  <img
-                    src="/lovable-uploads/c2b90205-f41e-4c0d-bf34-bb7a5bba9103.png"
-                    alt="Home"
-                    className="w-4 h-4"
-                  />
-                  Descubre las mejores apps
-                </Link>
-              </div>
-            </div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          
+          <div className="p-4 border-t mt-auto">
+            <Button 
+              variant="outline" 
+              className="w-full justify-start text-gray-700"
+              asChild
+            >
+              <a href="https://inwout.com/demo-online" target="_blank" rel="noopener noreferrer">
+                <User className="mr-2 h-4 w-4" />
+                Solicitar Demo
+              </a>
+            </Button>
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
-};
+}
