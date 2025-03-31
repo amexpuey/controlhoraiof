@@ -1,5 +1,5 @@
 
-import { format, addMonths, subMonths } from "date-fns";
+import { format, addMonths, subMonths, getDaysInMonth, isWeekend } from "date-fns";
 import { toast } from "sonner";
 import { DayData, AbsenceType, YearData } from "../types";
 
@@ -53,7 +53,7 @@ export const useWorkCalendarActions = (
     };
     
     setYearData(newYearData);
-    toast.success(`Datos guardados para ${format(selectedDate, "d 'de' MMMM", { locale: require('date-fns/locale/es') })}`);
+    toast.success(`Datos guardados para ${format(selectedDate, "d 'de' MMMM", { locale: 'es' })}`);
   };
   
   // Get the data for a specific day
@@ -77,7 +77,6 @@ export const useWorkCalendarActions = (
   
   // Bulk set work days for current month
   const bulkSetWorkDays = () => {
-    const { getDaysInMonth, isWeekend } = require('date-fns');
     const daysInMonth = getDaysInMonth(currentDate);
     const newYearData = { ...yearData };
     const monthKey = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}`;
@@ -161,7 +160,6 @@ export const useWorkCalendarActions = (
       setNotes(dayData.notes);
     } else {
       // Default values for new entries
-      const { isWeekend } = require('date-fns');
       const hoursPerDay = workingHoursPerWeek / 5;
       setHoursForDay(isWeekend(date) ? 0 : hoursPerDay);
       setAbsenceType(isWeekend(date) ? "holiday" : "work");

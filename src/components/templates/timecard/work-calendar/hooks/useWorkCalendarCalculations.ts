@@ -1,6 +1,6 @@
 
-import { getDaysInMonth, isWeekend, getMonth, getYear } from "date-fns";
-import { YearData } from "../types";
+import { getDaysInMonth, isWeekend, getMonth, getYear, format } from "date-fns";
+import { YearData, absenceTypeColors } from "../types";
 
 export const useWorkCalendarCalculations = (
   currentDate: Date,
@@ -51,12 +51,12 @@ export const useWorkCalendarCalculations = (
   // Assign a CSS class to a day based on its type
   const dayClassName = (date: Date): string => {
     const monthKey = `${date.getFullYear()}-${date.getMonth() + 1}`;
-    const dayKey = require('date-fns').format(date, "yyyy-MM-dd");
+    const dayKey = format(date, "yyyy-MM-dd");
     const dayData = yearData[monthKey]?.[dayKey];
     
     if (!dayData) return isWeekend(date) ? "bg-gray-50" : "";
     
-    return require('../types').absenceTypeColors[dayData.absenceType];
+    return absenceTypeColors[dayData.absenceType];
   };
   
   // Calculate derived values
