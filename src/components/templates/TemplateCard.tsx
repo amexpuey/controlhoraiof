@@ -64,25 +64,25 @@ export default function TemplateCard({ template }: TemplateCardProps) {
     
     switch (template.category) {
       case "Evaluación":
-        return `${baseStyle} from-blue-700 to-blue-500`;
+        return `${baseStyle} from-blue-800 to-blue-600`;
       case "Control horario":
-        return `${baseStyle} from-indigo-700 to-indigo-500`;
+        return `${baseStyle} from-indigo-800 to-indigo-600`;
       case "Formación":
-        return `${baseStyle} from-teal-700 to-teal-500`;
+        return `${baseStyle} from-teal-800 to-teal-600`;
       case "Comunicación Interna":
-        return `${baseStyle} from-amber-700 to-amber-500`;
+        return `${baseStyle} from-amber-800 to-amber-600`;
       case "Normativa Laboral":
-        return `${baseStyle} from-gray-700 to-gray-500`;
+        return `${baseStyle} from-gray-800 to-gray-600`;
       case "Onboarding":
-        return `${baseStyle} from-rose-700 to-rose-500`;
+        return `${baseStyle} from-rose-800 to-rose-600`;
       case "Productividad":
-        return `${baseStyle} from-emerald-700 to-emerald-500`;
+        return `${baseStyle} from-emerald-800 to-emerald-600`;
       case "Documentos Legales":
-        return `${baseStyle} from-slate-700 to-slate-500`;
+        return `${baseStyle} from-slate-800 to-slate-600`;
       case "Turnos":
-        return `${baseStyle} from-purple-700 to-purple-500`;
+        return `${baseStyle} from-purple-800 to-purple-600`;
       default:
-        return `${baseStyle} from-emerald-700 via-green-600 to-green-500`;
+        return `${baseStyle} from-emerald-800 to-green-600`;
     }
   };
 
@@ -112,10 +112,13 @@ export default function TemplateCard({ template }: TemplateCardProps) {
     }
   };
 
+  // Check if template is coming soon (downloads are considered coming soon)
+  const isComingSoon = template.action === "download";
+
   return (
-    <Card className="overflow-hidden h-full flex flex-col transition-all hover:shadow-lg border-0 shadow">
+    <Card className="overflow-hidden h-full flex flex-col transition-all hover:shadow-lg border-0 shadow relative">
       <div className={getGradientStyle()}>
-        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="absolute inset-0 bg-black/40"></div>
         <div className="absolute inset-0 flex flex-col justify-center items-start p-6 text-left">
           <div className="bg-white/20 p-3 rounded-full backdrop-blur-sm mb-3">
             {getCategoryIcon()}
@@ -124,6 +127,14 @@ export default function TemplateCard({ template }: TemplateCardProps) {
             {template.title}
           </h3>
         </div>
+        
+        {isComingSoon && (
+          <div className="absolute top-0 right-0 m-3">
+            <Badge className="bg-yellow-600 text-white py-1 px-3 font-medium">
+              <Clock className="mr-1 h-3 w-3" /> Próximamente
+            </Badge>
+          </div>
+        )}
       </div>
       
       <CardHeader className="pb-2">
@@ -139,9 +150,15 @@ export default function TemplateCard({ template }: TemplateCardProps) {
       </CardContent>
       
       <CardFooter className="flex flex-col items-stretch gap-2 pt-0">
-        {renderActionButton()}
+        {isComingSoon ? (
+          <Button variant="outline" className="w-full" disabled>
+            <Clock className="mr-2 h-4 w-4" /> Próximamente
+          </Button>
+        ) : (
+          renderActionButton()
+        )}
         
-        {template.exampleLink && (
+        {template.exampleLink && !isComingSoon && (
           <Button variant="outline" size="sm" className="w-full" asChild>
             <a href={template.exampleLink} target="_blank" rel="noopener noreferrer">
               <ExternalLink className="mr-2 h-3 w-3" /> Ver ejemplo
