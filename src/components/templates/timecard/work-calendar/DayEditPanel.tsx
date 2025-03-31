@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AbsenceType, absenceTypeLabels } from "./types";
 import { Briefcase, Home, Heart, Clock, Ban, Check } from "lucide-react";
+import { toast } from "sonner";
 
 interface DayEditPanelProps {
   selectedDate: Date;
@@ -58,6 +59,11 @@ export default function DayEditPanel({
     }
   };
 
+  const handleSaveData = () => {
+    saveDayData();
+    toast.success("Datos del día guardados correctamente");
+  };
+
   return (
     <div className="p-4 bg-white rounded-lg border">
       <h3 className="text-lg font-medium mb-4">
@@ -71,10 +77,10 @@ export default function DayEditPanel({
             value={absenceType} 
             onValueChange={handleAbsenceTypeChange}
           >
-            <SelectTrigger id="absence-type" className="cursor-pointer">
+            <SelectTrigger id="absence-type" className="cursor-pointer relative z-10">
               <SelectValue placeholder="Selecciona el tipo" />
             </SelectTrigger>
-            <SelectContent position="popper" className="z-50 bg-white">
+            <SelectContent sideOffset={5} position="popper" className="z-50 bg-white shadow-lg">
               {Object.entries(absenceTypeLabels).map(([type, label]) => (
                 <SelectItem key={type} value={type} className="cursor-pointer">
                   <div className="flex items-center">
@@ -119,7 +125,7 @@ export default function DayEditPanel({
         </div>
         
         <Button 
-          onClick={saveDayData} 
+          onClick={handleSaveData} 
           className="w-full bg-blue-600 hover:bg-blue-700"
           type="button"
         >

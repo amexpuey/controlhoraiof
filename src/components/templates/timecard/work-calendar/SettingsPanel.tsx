@@ -67,6 +67,11 @@ export default function SettingsPanel({
     }
   };
 
+  const handleBulkSetWorkDays = () => {
+    bulkSetWorkDays();
+    toast.success("Días laborables rellenos automáticamente");
+  };
+
   return (
     <div className="p-4 bg-gray-50 rounded-lg border">
       <h3 className="text-lg font-medium mb-4">Ajustes de jornada</h3>
@@ -77,10 +82,10 @@ export default function SettingsPanel({
             value={selectedOption} 
             onValueChange={handleHoursChange}
           >
-            <SelectTrigger id="workingHoursPerWeek" className="cursor-pointer">
+            <SelectTrigger id="workingHoursPerWeek" className="cursor-pointer relative z-10">
               <SelectValue placeholder="Selecciona horas semanales" />
             </SelectTrigger>
-            <SelectContent position="popper" className="z-50 bg-white">
+            <SelectContent sideOffset={5} position="popper" className="z-50 bg-white shadow-lg">
               <SelectItem value="40" className="cursor-pointer">40 horas (estándar)</SelectItem>
               <SelectItem value="37.5" className="cursor-pointer">37,5 horas (nueva regulación)</SelectItem>
               <SelectItem value="30" className="cursor-pointer">30 horas (jornada reducida)</SelectItem>
@@ -113,7 +118,7 @@ export default function SettingsPanel({
           type="button" 
           variant="default" 
           className="w-full bg-blue-600 hover:bg-blue-700 flex items-center justify-center gap-2"
-          onClick={bulkSetWorkDays}
+          onClick={handleBulkSetWorkDays}
         >
           <CalendarDays className="h-4 w-4" />
           Auto-rellenar días laborables
