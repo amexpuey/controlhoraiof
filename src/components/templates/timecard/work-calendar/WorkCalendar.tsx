@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "lucide-react";
@@ -9,8 +9,14 @@ import CalendarDay from "./CalendarDay";
 import StatisticsPanel from "./StatisticsPanel";
 import SettingsPanel from "./SettingsPanel";
 import DayEditPanel from "./DayEditPanel";
+import { useSearchParams } from "react-router-dom";
 
 export default function WorkCalendar() {
+  const [searchParams] = useSearchParams();
+  const calculatedHours = searchParams.get('calculatedHours');
+  const workdaysPerWeek = searchParams.get('workdaysPerWeek');
+  const hoursPerDay = searchParams.get('hoursPerDay');
+  
   const { 
     currentDate,
     selectedDate,
@@ -21,6 +27,7 @@ export default function WorkCalendar() {
     monthlyHours,
     targetHours,
     hoursDifference,
+    yearlyHoursTarget,
     setHoursForDay,
     setAbsenceType,
     setNotes,
@@ -32,8 +39,21 @@ export default function WorkCalendar() {
     handleDateSelect,
     calculateYearlyHours,
     dayClassName,
-    downloadAsCSV
+    downloadAsCSV,
+    initializeCalendarFromCalculation,
+    bulkSetWorkDays
   } = useWorkCalendar();
+  
+  // Use the data from URL params if available
+  useEffect(() => {
+    if (calculatedHours && workdaysPerWeek && hoursPerDay) {
+      initializeCalendarFromCalculation(
+        Number(calculatedHours),
+        Number(workdaysPerWeek),
+        Number(hoursPerDay)
+      );
+    }
+  }, [calculatedHours, workdaysPerWeek, hoursPerDay, initializeCalendarFromCalculation]);
   
   return (
     <Card className="border-2 border-blue-100">
@@ -83,6 +103,7 @@ export default function WorkCalendar() {
               monthlyHours={monthlyHours}
               hoursDifference={hoursDifference}
               yearlyHours={calculateYearlyHours()}
+              yearlyHoursTarget={yearlyHoursTarget}
             />
           </div>
           
@@ -91,6 +112,7 @@ export default function WorkCalendar() {
               workingHoursPerWeek={workingHoursPerWeek}
               targetHours={targetHours}
               setWorkingHoursPerWeek={setWorkingHoursPerWeek}
+              bulkSetWorkDays={bulkSetWorkDays}
             />
             
             {selectedDate && (

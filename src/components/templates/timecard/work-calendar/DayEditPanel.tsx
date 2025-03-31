@@ -40,6 +40,17 @@ export default function DayEditPanel({
     holiday: <Check className="h-4 w-4" />
   };
 
+  const handleAbsenceTypeChange = (value: AbsenceType) => {
+    setAbsenceType(value);
+    
+    // Automatically adjust hours when type changes
+    if (value === 'unpaid' || value === 'holiday') {
+      setHoursForDay(0);
+    } else if (value === 'work') {
+      setHoursForDay(8); // Default full work day
+    }
+  };
+
   return (
     <div className="p-4 bg-white rounded-lg border">
       <h3 className="text-lg font-medium mb-4">
@@ -51,7 +62,7 @@ export default function DayEditPanel({
           <Label htmlFor="absence-type">Tipo de día</Label>
           <Select 
             value={absenceType} 
-            onValueChange={(value) => setAbsenceType(value as AbsenceType)}
+            onValueChange={(value) => handleAbsenceTypeChange(value as AbsenceType)}
           >
             <SelectTrigger id="absence-type" className="cursor-pointer">
               <SelectValue placeholder="Selecciona el tipo" />
@@ -80,7 +91,13 @@ export default function DayEditPanel({
             max="24" 
             value={hoursForDay}
             onChange={(e) => setHoursForDay(Number(e.target.value))}
+            disabled={absenceType === 'unpaid' || absenceType === 'holiday'}
           />
+          {(absenceType === 'unpaid' || absenceType === 'holiday') && (
+            <p className="text-xs text-gray-500 mt-1">
+              Las horas se establecen automáticamente a 0 para {absenceTypeLabels[absenceType].toLowerCase()}
+            </p>
+          )}
         </div>
         
         <div>

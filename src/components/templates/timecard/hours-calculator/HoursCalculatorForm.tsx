@@ -8,9 +8,12 @@ import { useHoursCalculator } from "./useHoursCalculator";
 import { CardContent } from "@/components/ui/card";
 import { CalculatorHeader } from "./CalculatorHeader";
 import { Button } from "@/components/ui/button";
-import { Calculator } from "lucide-react";
+import { Calculator, Calendar } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function HoursCalculatorForm() {
+  const navigate = useNavigate();
+  
   const {
     form,
     extraHolidays,
@@ -22,6 +25,20 @@ export function HoursCalculatorForm() {
     calculateTotalHours,
     isCalculated
   } = useHoursCalculator();
+
+  const openCalendarWithData = () => {
+    if (!totalWorkHours) {
+      calculateTotalHours();
+      return;
+    }
+    
+    const formValues = form.getValues();
+    
+    navigate({
+      pathname: "/plantillas",
+      search: `?tab=calendar&calculatedHours=${totalWorkHours}&workdaysPerWeek=${formValues.workdaysPerWeek}&hoursPerDay=${formValues.hoursPerDay}`
+    });
+  };
 
   return (
     <>
@@ -39,7 +56,7 @@ export function HoursCalculatorForm() {
               removeHoliday={removeHoliday}
             />
             
-            <div className="mt-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Button 
                 type="button" 
                 onClick={() => calculateTotalHours()}
@@ -47,6 +64,16 @@ export function HoursCalculatorForm() {
               >
                 <Calculator className="mr-2 h-5 w-5" />
                 Calcular horas laborables
+              </Button>
+              
+              <Button 
+                type="button" 
+                onClick={openCalendarWithData}
+                className={`w-full ${isCalculated ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-400'}`}
+                disabled={!isCalculated}
+              >
+                <Calendar className="mr-2 h-5 w-5" />
+                Aplicar al calendario
               </Button>
             </div>
           </form>

@@ -31,6 +31,11 @@ export function useHoursCalculator() {
       
       // Actualizar el formulario con el número actualizado de festivos extras
       form.setValue("extraHolidays", updatedHolidays.length);
+      
+      // Si ya se había calculado, recalcular con el nuevo festivo
+      if (isCalculated) {
+        calculateTotalHours();
+      }
     }
   };
 
@@ -40,6 +45,11 @@ export function useHoursCalculator() {
     
     // Actualizar el formulario con el número actualizado de festivos extras
     form.setValue("extraHolidays", updatedHolidays.length);
+    
+    // Si ya se había calculado, recalcular con los festivos actualizados
+    if (isCalculated) {
+      calculateTotalHours();
+    }
   };
 
   const calculateTotalHours = () => {
@@ -61,7 +71,6 @@ export function useHoursCalculator() {
     }
     
     // Restar días festivos extras (asumiendo que todos caen en días laborables)
-    // Restar las horas completas por cada día festivo (usando hoursPerDay)
     totalWorkingDays -= extraHolidays.length;
     
     // Calcular horas totales

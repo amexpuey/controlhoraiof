@@ -2,19 +2,22 @@
 import React from "react";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 import { AbsenceType, absenceTypeColors, absenceTypeLabels } from "./types";
-import { Briefcase, Home, Heart, Clock, Ban, Check } from "lucide-react";
+import { Briefcase, Home, Heart, Clock, Ban, Check, CalendarDays } from "lucide-react";
 
 interface SettingsPanelProps {
   workingHoursPerWeek: number;
   targetHours: number;
   setWorkingHoursPerWeek: (value: number) => void;
+  bulkSetWorkDays: () => void;
 }
 
 export default function SettingsPanel({ 
   workingHoursPerWeek, 
   targetHours, 
-  setWorkingHoursPerWeek 
+  setWorkingHoursPerWeek,
+  bulkSetWorkDays
 }: SettingsPanelProps) {
   // Define absence type icons directly here to avoid circular imports
   const absenceTypeIcons: Record<AbsenceType, React.ReactNode> = {
@@ -51,7 +54,17 @@ export default function SettingsPanel({
           </p>
         </div>
         
-        <div className="grid grid-cols-2 gap-2">
+        <Button 
+          type="button" 
+          variant="default" 
+          className="w-full bg-blue-600 hover:bg-blue-700 flex items-center justify-center gap-2"
+          onClick={bulkSetWorkDays}
+        >
+          <CalendarDays className="h-4 w-4" />
+          Auto-rellenar días laborables
+        </Button>
+        
+        <div className="grid grid-cols-2 gap-2 mt-4">
           {Object.entries(absenceTypeLabels).map(([type, label]) => (
             <div 
               key={type} 

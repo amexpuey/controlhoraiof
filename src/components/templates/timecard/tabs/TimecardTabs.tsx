@@ -1,9 +1,10 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calculator, Calendar } from "lucide-react";
 import HoursCalculator from "../HoursCalculator";
 import WorkCalendar from "../WorkCalendar";
+import { useSearchParams } from "react-router-dom";
 
 interface TimecardTabsProps {
   activeTab: string;
@@ -13,6 +14,16 @@ interface TimecardTabsProps {
 }
 
 export default function TimecardTabs({ activeTab, setActiveTab, period, setPeriod }: TimecardTabsProps) {
+  const [searchParams] = useSearchParams();
+  const tabFromUrl = searchParams.get('tab');
+  
+  // Update active tab based on URL parameter
+  useEffect(() => {
+    if (tabFromUrl && (tabFromUrl === "calculator" || tabFromUrl === "calendar")) {
+      setActiveTab(tabFromUrl);
+    }
+  }, [tabFromUrl, setActiveTab]);
+  
   return (
     <Tabs defaultValue="calculator" value={activeTab} onValueChange={setActiveTab} className="w-full mb-8">
       <TabsList className="grid grid-cols-2 mb-6">

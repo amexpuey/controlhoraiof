@@ -1,6 +1,6 @@
 
-import { useState, useEffect } from "react";
-import { format, getDaysInMonth, getMonth, getYear, addMonths, subMonths, isWeekend } from "date-fns";
+import { useState, useEffect, useCallback } from "react";
+import { format, getDaysInMonth, getMonth, getYear, addMonths, subMonths, isWeekend, addDays, isSameMonth } from "date-fns";
 import { es } from "date-fns/locale";
 import { toast } from "sonner";
 import { DayData, AbsenceType, YearData, absenceTypeColors } from "./types";
@@ -13,6 +13,7 @@ export const useWorkCalendar = () => {
   const [absenceType, setAbsenceType] = useState<AbsenceType>("work");
   const [notes, setNotes] = useState<string>("");
   const [workingHoursPerWeek, setWorkingHoursPerWeek] = useState<number>(40);
+  const [yearlyHoursTarget, setYearlyHoursTarget] = useState<number>(0);
   
   const currentMonth = getMonth(currentDate);
   const currentYear = getYear(currentDate);
@@ -113,6 +114,59 @@ export const useWorkCalendar = () => {
     }, 0);
   };
   
+  // Initialize calendar data from calculator
+  const initializeCalendarFromCalculation = useCallback((calculatedHours: number, workdaysPerWeek: number, hoursPerDay: number) => {
+    // Set yearly hours target
+    setYearlyHoursTarget(calculatedHours);
+    
+    // Set appropriate weekly hours
+    setWorkingHoursPerWeek(workdaysPerWeek * hoursPerDay);
+    
+    toast.success(`Calendario inicializado con ${calculatedHours} horas anuales objetivo`);
+  }, []);
+  
+  // Bulk set work days for current month
+  const bulkSetWorkDays = () => {
+    const daysInMonth = getDaysInMonth(currentDate);
+    const newYearData = { ...yearData };
+    const monthKey = `${currentYear}-${currentMonth + 1}`;
+    
+    if (!newYearData[monthKey]) {
+      newYearData[monthKey] = {};
+    }
+    
+    const hoursPerDay = workingHoursPerWeek / 5;
+    
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(currentYear, currentMonth, day);
+      const dayKey = format(date, "yyyy-MM-dd");
+      
+      // Skip if already has data
+      if (newYearData[monthKey][dayKey]) continue;
+      
+      // Skip weekends
+      if (isWeekend(date)) {
+        newYearData[monthKey][dayKey] = {
+          date,
+          hours: 0,
+          absenceType: "holiday",
+          notes: "Fin de semana"
+        };
+        continue;
+      }
+      
+      newYearData[monthKey][dayKey] = {
+        date,
+        hours: hoursPerDay,
+        absenceType: "work",
+        notes: ""
+      };
+    }
+    
+    setYearData(newYearData);
+    toast.success(`Todos los días laborables del mes configurados automáticamente`);
+  };
+  
   // Assign a CSS class to a day based on its type
   const dayClassName = (date: Date): string => {
     const dayData = getDayData(date);
@@ -185,6 +239,7 @@ export const useWorkCalendar = () => {
     monthlyHours,
     targetHours,
     hoursDifference,
+    yearlyHoursTarget,
     setHoursForDay,
     setAbsenceType,
     setNotes,
@@ -196,6 +251,8 @@ export const useWorkCalendar = () => {
     handleDateSelect,
     calculateYearlyHours,
     dayClassName,
-    downloadAsCSV
+    downloadAsCSV,
+    initializeCalendarFromCalculation,
+    bulkSetWorkDays
   };
 };
