@@ -1,3 +1,4 @@
+
 import { TemplateData } from "./types";
 
 export const templateData: TemplateData[] = [
@@ -12,15 +13,15 @@ export const templateData: TemplateData[] = [
     editUrl: "/plantillas/guia-talento"
   },
   {
-    id: "lecciones-emprender",
-    title: "7 pequeñas lecciones para emprender a lo grande",
-    description: "Guía esencial con consejos prácticos para emprendedores que quieren potenciar su negocio.",
-    imageSrc: "/lovable-uploads/e32846ec-2b1e-4ca6-956c-4a90277bbeef.png",
-    category: "Productividad",
+    id: "registro-horas-trabajadas",
+    title: "Registro de horas trabajadas - Timecard para empleados",
+    description: "Herramienta completa para el control diario, semanal, mensual y anual de las horas laborales de los trabajadores.",
+    imageSrc: "/lovable-uploads/4efc5a5e-0fc6-450c-8097-471f8f05bcd9.png",
+    category: "Control horario",
     action: "download",
-    actionLabel: "Descargar PDF",
+    actionLabel: "Descargar Excel",
     exampleLink: "#",
-    downloadUrl: "#"
+    downloadUrl: "/templates/registro-horas-trabajadas.xlsx"
   },
   {
     id: "kit-herramientas-ley",

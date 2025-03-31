@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,16 +8,27 @@ import { Badge } from "@/components/ui/badge";
 
 interface TemplateCardProps {
   template: TemplateData;
+  onAction?: () => void;
 }
 
-export default function TemplateCard({ template }: TemplateCardProps) {
+export default function TemplateCard({ template, onAction }: TemplateCardProps) {
   const renderActionButton = () => {
     if (template.action === "download") {
       return (
-        <Button className="w-full" asChild>
-          <a href={template.downloadUrl} download>
-            <Download className="mr-2 h-4 w-4" /> {template.actionLabel}
-          </a>
+        <Button 
+          className="w-full" 
+          onClick={onAction ? onAction : undefined}
+          asChild={!onAction}
+        >
+          {onAction ? (
+            <>
+              <Download className="mr-2 h-4 w-4" /> {template.actionLabel}
+            </>
+          ) : (
+            <a href={template.downloadUrl} download>
+              <Download className="mr-2 h-4 w-4" /> {template.actionLabel}
+            </a>
+          )}
         </Button>
       );
     } else if (template.action === "edit") {
@@ -112,8 +122,8 @@ export default function TemplateCard({ template }: TemplateCardProps) {
     }
   };
 
-  // Check if template is coming soon (downloads are considered coming soon)
-  const isComingSoon = template.action === "download";
+  // Check if template is coming soon (some downloads are considered coming soon)
+  const isComingSoon = template.action === "download" && template.id !== "registro-horas-trabajadas";
 
   return (
     <Card className="overflow-hidden h-full flex flex-col transition-all hover:shadow-lg border-0 shadow relative">
@@ -158,7 +168,7 @@ export default function TemplateCard({ template }: TemplateCardProps) {
           renderActionButton()
         )}
         
-        {template.exampleLink && !isComingSoon && (
+        {template.exampleLink && !isComingSoon && template.id !== "registro-horas-trabajadas" && (
           <Button variant="outline" size="sm" className="w-full" asChild>
             <a href={template.exampleLink} target="_blank" rel="noopener noreferrer">
               <ExternalLink className="mr-2 h-3 w-3" /> Ver ejemplo
