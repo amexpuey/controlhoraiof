@@ -11,6 +11,14 @@ interface ArticleFormatterProps {
   content: string;
 }
 
+// Add a type definition for the code component props
+interface CodeProps {
+  node: any;
+  inline?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+}
+
 /**
  * Enhanced formatter for blog articles that properly handles HTML content
  */
@@ -172,7 +180,7 @@ export default function ArticleFormatter({ slug, content }: ArticleFormatterProp
           pre: ({ node, ...props }) => (
             <pre className="p-4 bg-gray-100 rounded-lg overflow-x-auto text-sm" {...props} />
           ),
-          code: ({ node, inline, ...props }) => (
+          code: ({ node, inline, ...props }: CodeProps) => (
             inline ? 
               <code className="bg-gray-100 rounded px-1 py-0.5 text-sm font-mono" {...props} /> :
               <code className="block p-4 bg-gray-100 rounded-lg overflow-x-auto text-sm font-mono" {...props} />
