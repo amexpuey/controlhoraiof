@@ -11,7 +11,6 @@ import { toast } from "sonner";
 export default function TalentGuidePage() {
   const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = React.useState(false);
-  // Nuevo estado para controlar la visualización del botón alternativo
   const [downloadAttempted, setDownloadAttempted] = React.useState(false);
 
   const toggleMenu = () => {
@@ -19,17 +18,73 @@ export default function TalentGuidePage() {
   };
 
   const handleDownload = () => {
-    // En lugar de intentar descargar un PDF inexistente, mostraremos la guía en formato HTML
+    // Instead of using window.open which can be blocked, we'll create a more reliable method
     setDownloadAttempted(true);
     
-    toast.success("Guía disponible", {
-      description: "Puedes ver la guía completa en esta página"
-    });
-    
-    // Desplazamiento suave hacia la sección de la guía
-    document.getElementById('talent-guide-content')?.scrollIntoView({ 
-      behavior: 'smooth' 
-    });
+    try {
+      // Create a new printing iframe that won't be blocked by popup blockers
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+      
+      // Get the content to print
+      const content = document.getElementById('talent-guide-content');
+      
+      if (!content) {
+        throw new Error("Content not found");
+      }
+      
+      // Write the HTML to the iframe
+      const iframeDocument = iframe.contentWindow?.document;
+      if (!iframeDocument) {
+        throw new Error("Could not access iframe document");
+      }
+      
+      iframeDocument.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Guía de Talento: Desempeño y Formación</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 20px; }
+            h1 { color: #1e3a8a; }
+            table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+            th, td { border: 1px solid #ddd; padding: 8px; }
+            th { background-color: #f0f7ff; }
+            .page-break { page-break-after: always; }
+            @media print {
+              .no-print { display: none; }
+              body { margin: 0; padding: 0 15px; }
+            }
+          </style>
+        </head>
+        <body>
+          ${content.innerHTML}
+        </body>
+        </html>
+      `);
+      
+      iframeDocument.close();
+      
+      // Wait for content to load and then print
+      setTimeout(() => {
+        iframe.contentWindow?.print();
+        
+        // Remove the iframe after printing
+        setTimeout(() => {
+          document.body.removeChild(iframe);
+        }, 1000);
+        
+        toast.success("Descarga iniciada", {
+          description: "Se ha iniciado la descarga de la guía como PDF"
+        });
+      }, 500);
+    } catch (error) {
+      console.error("Error during PDF generation:", error);
+      toast.error("Error al generar el PDF", {
+        description: "Intenta nuevamente con otro navegador"
+      });
+    }
   };
 
   return (
@@ -185,7 +240,7 @@ export default function TalentGuidePage() {
             <div className="mt-6 text-center">
               {!downloadAttempted ? (
                 <Button className="bg-blue-600 hover:bg-blue-700" onClick={handleDownload}>
-                  <Download className="mr-2 h-4 w-4" /> Comenzar a usar la guía
+                  <Download className="mr-2 h-4 w-4" /> Descargar Guía en PDF
                 </Button>
               ) : (
                 <div className="flex flex-col items-center space-y-3">
@@ -195,10 +250,10 @@ export default function TalentGuidePage() {
                   </div>
                   <Button 
                     variant="outline" 
-                    onClick={() => document.getElementById('talent-guide-content')?.scrollIntoView({ behavior: 'smooth' })}
+                    onClick={handleDownload}
                     className="border-blue-300 hover:bg-blue-50"
                   >
-                    Ver ahora
+                    <Download className="mr-2 h-4 w-4" /> Intentar descargar nuevamente
                   </Button>
                 </div>
               )}

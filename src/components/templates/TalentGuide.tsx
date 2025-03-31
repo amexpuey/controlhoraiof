@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -11,7 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
-import { CalendarIcon, Download, Star, CheckCircle, X, Plus, Trash2, AlertTriangle, ArrowUp, Save, Printer } from "lucide-react";
+import { CalendarIcon, Download, Star, CheckCircle, X, Plus, Trash2, AlertTriangle, ArrowUp, Printer } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -135,70 +136,224 @@ export default function TalentGuide() {
       .map(comp => comp.name);
   };
 
-  // Handle export with new functionality (imprimir o guardar local)
+  // Handle export to PDF function (optimized)
   const handleExport = () => {
-    // En lugar de descargar un PDF inexistente, ofrecemos imprimir la página
-    const printWindow = window.open('', '_blank');
-    
-    if (printWindow) {
-      // Copia el contenido de la guía para imprimir
-      const content = document.getElementById('talent-guide-content')?.innerHTML || '';
+    try {
+      // Prepare a clean printable version
+      const printWindow = window.open('', '_blank');
       
-      // Crear contenido HTML para la impresión
+      if (!printWindow) {
+        throw new Error("Could not open print window");
+      }
+      
+      // Create optimized HTML content for printing
       printWindow.document.write(`
         <!DOCTYPE html>
         <html>
         <head>
-          <title>Guía de Talento: Desempeño y Formación</title>
+          <title>Guía de Talento: ${employeeData.name}</title>
+          <meta charset="UTF-8">
           <style>
-            body { font-family: Arial, sans-serif; padding: 20px; }
-            h1 { color: #1e3a8a; }
-            table { border-collapse: collapse; width: 100%; margin: 15px 0; }
-            th, td { border: 1px solid #ddd; padding: 8px; }
-            th { background-color: #f0f7ff; }
+            body { 
+              font-family: Arial, sans-serif; 
+              padding: 30px; 
+              line-height: 1.5;
+              color: #333;
+            }
+            h1 { 
+              color: #1e3a8a; 
+              font-size: 24px;
+              margin-bottom: 20px;
+            }
+            h2 { 
+              color: #1e3a8a; 
+              font-size: 20px;
+              margin-top: 30px;
+              margin-bottom: 15px;
+              border-bottom: 1px solid #e5e7eb;
+              padding-bottom: 5px;
+            }
+            h3 { 
+              font-size: 18px;
+              margin-top: 20px;
+              margin-bottom: 10px;
+            }
+            p { margin-bottom: 10px; }
+            table { 
+              border-collapse: collapse; 
+              width: 100%; 
+              margin: 15px 0; 
+            }
+            th, td { 
+              border: 1px solid #e5e7eb; 
+              padding: 8px; 
+              text-align: left;
+            }
+            th { 
+              background-color: #f3f4f6; 
+              font-weight: bold;
+            }
+            .info-row {
+              display: flex;
+              border-bottom: 1px solid #e5e7eb;
+              padding: 8px 0;
+            }
+            .label {
+              font-weight: bold;
+              width: 150px;
+              flex-shrink: 0;
+            }
+            .value {
+              flex-grow: 1;
+            }
+            ul { 
+              padding-left: 20px; 
+              margin-bottom: 15px;
+            }
+            li { margin-bottom: 5px; }
+            .section {
+              margin-bottom: 30px;
+            }
+            .page-break { 
+              page-break-after: always; 
+              height: 0;
+              display: block;
+            }
+            @media print {
+              body { 
+                padding: 0; 
+                margin: 20px; 
+              }
+              .no-print { 
+                display: none; 
+              }
+              h1 { font-size: 22px; }
+              h2 { font-size: 18px; }
+            }
           </style>
         </head>
         <body>
-          <h1>Guía de Talento: Desempeño y Formación</h1>
-          <h2>Datos del empleado</h2>
-          <p><strong>Nombre:</strong> ${employeeData.name}</p>
-          <p><strong>Puesto:</strong> ${employeeData.role}</p>
-          <p><strong>Fecha de incorporación:</strong> ${format(employeeData.startDate, "PPP")}</p>
+          <div class="no-print" style="text-align: center; margin-bottom: 20px;">
+            <button onclick="window.print()" style="padding: 8px 16px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">
+              Imprimir / Guardar como PDF
+            </button>
+          </div>
           
-          <h2>Puntos fuertes</h2>
-          <ul>
-            ${getStrengths().map(s => `<li>${s}</li>`).join('')}
-          </ul>
+          <h1>Guía de Talento y Evaluación de Desempeño</h1>
           
-          <h2>Áreas de mejora</h2>
-          <ul>
-            ${getImprovementAreas().map(a => `<li>${a}</li>`).join('')}
-          </ul>
+          <div class="section">
+            <h2>Datos del colaborador</h2>
+            <div class="info-row">
+              <div class="label">Nombre:</div>
+              <div class="value">${employeeData.name}</div>
+            </div>
+            <div class="info-row">
+              <div class="label">Puesto:</div>
+              <div class="value">${employeeData.role}</div>
+            </div>
+            <div class="info-row">
+              <div class="label">Fecha incorporación:</div>
+              <div class="value">${format(employeeData.startDate, "PPP")}</div>
+            </div>
+            <div class="info-row">
+              <div class="label">Periodo evaluado:</div>
+              <div class="value">${evaluationPeriod === "trimestral" ? "Trimestral" : evaluationPeriod === "semestral" ? "Semestral" : "Anual"}</div>
+            </div>
+          </div>
           
-          <h2>Objetivos</h2>
-          <ul>
-            ${goals.filter(g => g.objective).map(g => 
-              `<li><strong>${g.objective}</strong> - ${
-                g.deadline ? `Fecha límite: ${format(g.deadline, "PPP")}` : "Sin fecha límite"
-              } - ${g.status === "completado" ? "Completado" : g.status === "en-progreso" ? "En progreso" : "No iniciado"}</li>`
-            ).join('')}
-          </ul>
+          <div class="section">
+            <h2>Evaluación de competencias</h2>
+            <table>
+              <tr>
+                <th>Competencia</th>
+                <th>Puntuación</th>
+                <th>Comentarios</th>
+              </tr>
+              ${competencies.map(comp => `
+                <tr>
+                  <td>${comp.name}</td>
+                  <td>${comp.rating}/5</td>
+                  <td>${comp.comment}</td>
+                </tr>
+              `).join('')}
+            </table>
+          </div>
+          
+          <div class="page-break"></div>
+          
+          <div class="section">
+            <h2>Puntos fuertes y áreas de mejora</h2>
+            
+            <h3>Puntos fuertes</h3>
+            <ul>
+              ${getStrengths().length > 0 
+                ? getStrengths().map(s => `<li>${s}</li>`).join('') 
+                : '<li>No se han identificado puntos fuertes destacables.</li>'}
+            </ul>
+            
+            <h3>Áreas de mejora</h3>
+            <ul>
+              ${getImprovementAreas().length > 0 
+                ? getImprovementAreas().map(a => `<li>${a}</li>`).join('') 
+                : '<li>No se han identificado áreas específicas de mejora.</li>'}
+            </ul>
+          </div>
+          
+          <div class="section">
+            <h2>Objetivos establecidos</h2>
+            <table>
+              <tr>
+                <th>Objetivo</th>
+                <th>Prioridad</th>
+                <th>Estado</th>
+                <th>Fecha límite</th>
+                <th>Observaciones</th>
+              </tr>
+              ${goals.filter(g => g.objective).map(goal => `
+                <tr>
+                  <td>${goal.objective}</td>
+                  <td>${goal.priority === "alta" ? "Alta" : goal.priority === "media" ? "Media" : "Baja"}</td>
+                  <td>${goal.status === "completado" ? "Completado" : goal.status === "en-progreso" ? "En progreso" : "No iniciado"}</td>
+                  <td>${goal.deadline ? format(goal.deadline, "PPP") : "No definida"}</td>
+                  <td>${goal.observations}</td>
+                </tr>
+              `).join('')}
+            </table>
+          </div>
+          
+          <div class="section">
+            <h2>Plan de formación</h2>
+            
+            <h3>Áreas de formación recomendadas</h3>
+            <ul>
+              ${trainingAreas.filter(a => a.checked).map(area => `<li>${area.label}</li>`).join('')}
+            </ul>
+            
+            <h3>Descripción del plan formativo</h3>
+            <p>${trainingPlan.description}</p>
+            
+            <h3>Fecha estimada para la formación</h3>
+            <p>${format(trainingPlan.date, "PPP")}</p>
+            
+            <h3>Recursos formativos</h3>
+            <p style="white-space: pre-line">${trainingPlan.resources}</p>
+          </div>
+          
         </body>
         </html>
       `);
       
-      // Esperar a que el contenido se cargue y luego imprimir
       printWindow.document.close();
       
-      setTimeout(() => {
-        printWindow.print();
-        toast.success("Documento preparado", {
-          description: "Se ha abierto una ventana para imprimir o guardar la guía como PDF"
-        });
-      }, 500);
-    } else {
-      toast.error("No se pudo abrir la ventana de impresión", {
-        description: "Intenta nuevamente o verifica la configuración de tu navegador"
+      // Show success message
+      toast.success("PDF listo para descargar", {
+        description: "Utiliza la opción 'Guardar como PDF' de tu navegador"
+      });
+      
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+      toast.error("Error al generar el PDF", {
+        description: "Por favor, intenta con otro navegador o contacta con soporte técnico."
       });
     }
   };
@@ -750,39 +905,13 @@ export default function TalentGuide() {
                   </CardContent>
                 </Card>
                 
-                {/* Modificados los botones de exportación */}
-                <div className="flex justify-end mt-8 space-x-3">
-                  <Button
-                    variant="outline"
-                    className="border-blue-600 text-blue-600 hover:bg-blue-50"
-                    onClick={handleExport}
-                  >
-                    <Printer className="mr-2 h-4 w-4" /> Imprimir/Guardar PDF
-                  </Button>
-                  
+                {/* Modified export button - removed the save functionality */}
+                <div className="flex justify-end mt-8">
                   <Button
                     className="bg-blue-600 hover:bg-blue-700 px-6" 
-                    onClick={() => {
-                      // Guardar datos en localStorage
-                      try {
-                        localStorage.setItem('talent-guide-data', JSON.stringify({
-                          employee: employeeData,
-                          competencies,
-                          goals,
-                          trainingAreas,
-                          trainingPlan
-                        }));
-                        toast.success("Datos guardados", {
-                          description: "Los datos se han guardado en tu navegador"
-                        });
-                      } catch (error) {
-                        toast.error("Error al guardar", {
-                          description: "No se pudieron guardar los datos"
-                        });
-                      }
-                    }}
+                    onClick={handleExport}
                   >
-                    <Save className="mr-2 h-4 w-4" /> Guardar datos
+                    <Printer className="mr-2 h-4 w-4" /> Descargar en PDF
                   </Button>
                 </div>
               </div>
