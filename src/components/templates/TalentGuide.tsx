@@ -17,6 +17,9 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
 export default function TalentGuide() {
+  // Tab state
+  const [activeTab, setActiveTab] = useState("datos");
+
   // Employee data state with default values
   const [employeeData, setEmployeeData] = useState({
     name: "Ana García Martínez",
@@ -112,12 +115,9 @@ export default function TalentGuide() {
     setTrainingAreas(updatedAreas);
   };
 
-  // Navigation functions
+  // Navigation function for tabs
   const navigateToTab = (tabValue: string) => {
-    const tabElement = document.querySelector(`[data-value="${tabValue}"]`) as HTMLElement;
-    if (tabElement) {
-      tabElement.click();
-    }
+    setActiveTab(tabValue);
   };
 
   // Calculate strengths and areas for improvement
@@ -169,7 +169,7 @@ export default function TalentGuide() {
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-6">
-          <Tabs defaultValue="datos" className="w-full">
+          <Tabs defaultValue="datos" value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid grid-cols-2 md:grid-cols-5 mb-6">
               <TabsTrigger value="datos">Datos</TabsTrigger>
               <TabsTrigger value="evaluacion">Evaluación</TabsTrigger>
