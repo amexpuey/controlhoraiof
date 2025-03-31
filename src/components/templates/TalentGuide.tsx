@@ -11,7 +11,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
-import { CalendarIcon, Download, Star, CheckCircle, X, Plus, Trash2, AlertTriangle, ArrowUp } from "lucide-react";
+import { CalendarIcon, Download, Star, CheckCircle, X, Plus, Trash2, AlertTriangle, ArrowUp, Save, Printer } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -135,32 +135,72 @@ export default function TalentGuide() {
       .map(comp => comp.name);
   };
 
-  // Handle export with download functionality
+  // Handle export with new functionality (imprimir o guardar local)
   const handleExport = () => {
-    // Create a URL for the sample PDF file
-    const pdfUrl = "/guia-talento.pdf";
+    // En lugar de descargar un PDF inexistente, ofrecemos imprimir la página
+    const printWindow = window.open('', '_blank');
     
-    // Create a temporary anchor element
-    const link = document.createElement("a");
-    link.href = pdfUrl;
-    link.setAttribute("download", "Guia_Talento_Desempeno_y_Formacion.pdf");
-    
-    // Simulate a click on the anchor
-    document.body.appendChild(link);
-    
-    try {
-      link.click();
-      toast.success("Guía exportada correctamente", {
-        description: "La guía ha sido descargada en formato PDF"
-      });
-    } catch (error) {
-      toast.error("Error al exportar", {
-        description: "Por favor, inténtalo de nuevo más tarde"
+    if (printWindow) {
+      // Copia el contenido de la guía para imprimir
+      const content = document.getElementById('talent-guide-content')?.innerHTML || '';
+      
+      // Crear contenido HTML para la impresión
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Guía de Talento: Desempeño y Formación</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 20px; }
+            h1 { color: #1e3a8a; }
+            table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+            th, td { border: 1px solid #ddd; padding: 8px; }
+            th { background-color: #f0f7ff; }
+          </style>
+        </head>
+        <body>
+          <h1>Guía de Talento: Desempeño y Formación</h1>
+          <h2>Datos del empleado</h2>
+          <p><strong>Nombre:</strong> ${employeeData.name}</p>
+          <p><strong>Puesto:</strong> ${employeeData.role}</p>
+          <p><strong>Fecha de incorporación:</strong> ${format(employeeData.startDate, "PPP")}</p>
+          
+          <h2>Puntos fuertes</h2>
+          <ul>
+            ${getStrengths().map(s => `<li>${s}</li>`).join('')}
+          </ul>
+          
+          <h2>Áreas de mejora</h2>
+          <ul>
+            ${getImprovementAreas().map(a => `<li>${a}</li>`).join('')}
+          </ul>
+          
+          <h2>Objetivos</h2>
+          <ul>
+            ${goals.filter(g => g.objective).map(g => 
+              `<li><strong>${g.objective}</strong> - ${
+                g.deadline ? `Fecha límite: ${format(g.deadline, "PPP")}` : "Sin fecha límite"
+              } - ${g.status === "completado" ? "Completado" : g.status === "en-progreso" ? "En progreso" : "No iniciado"}</li>`
+            ).join('')}
+          </ul>
+        </body>
+        </html>
+      `);
+      
+      // Esperar a que el contenido se cargue y luego imprimir
+      printWindow.document.close();
+      
+      setTimeout(() => {
+        printWindow.print();
+        toast.success("Documento preparado", {
+          description: "Se ha abierto una ventana para imprimir o guardar la guía como PDF"
+        });
+      }, 500);
+    } else {
+      toast.error("No se pudo abrir la ventana de impresión", {
+        description: "Intenta nuevamente o verifica la configuración de tu navegador"
       });
     }
-    
-    // Clean up
-    document.body.removeChild(link);
   };
 
   // Priority helper function to render more informative priorities
@@ -183,7 +223,7 @@ export default function TalentGuide() {
   };
 
   return (
-    <div className="container mx-auto py-6 px-0 md:px-6">
+    <div className="container mx-auto py-6 px-0 md:px-6" id="talent-guide-content">
       <Card className="mb-8">
         <CardHeader className="bg-blue-50">
           <CardTitle className="text-xl md:text-2xl font-bold text-blue-900">
@@ -710,13 +750,39 @@ export default function TalentGuide() {
                   </CardContent>
                 </Card>
                 
-                {/* Export button */}
-                <div className="flex justify-end mt-8">
+                {/* Modificados los botones de exportación */}
+                <div className="flex justify-end mt-8 space-x-3">
                   <Button
-                    className="bg-blue-600 hover:bg-blue-700 px-6" 
+                    variant="outline"
+                    className="border-blue-600 text-blue-600 hover:bg-blue-50"
                     onClick={handleExport}
                   >
-                    <Download className="mr-2 h-4 w-4" /> Exportar guía
+                    <Printer className="mr-2 h-4 w-4" /> Imprimir/Guardar PDF
+                  </Button>
+                  
+                  <Button
+                    className="bg-blue-600 hover:bg-blue-700 px-6" 
+                    onClick={() => {
+                      // Guardar datos en localStorage
+                      try {
+                        localStorage.setItem('talent-guide-data', JSON.stringify({
+                          employee: employeeData,
+                          competencies,
+                          goals,
+                          trainingAreas,
+                          trainingPlan
+                        }));
+                        toast.success("Datos guardados", {
+                          description: "Los datos se han guardado en tu navegador"
+                        });
+                      } catch (error) {
+                        toast.error("Error al guardar", {
+                          description: "No se pudieron guardar los datos"
+                        });
+                      }
+                    }}
+                  >
+                    <Save className="mr-2 h-4 w-4" /> Guardar datos
                   </Button>
                 </div>
               </div>

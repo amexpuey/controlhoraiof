@@ -2,7 +2,7 @@
 import React from "react";
 import TalentGuide from "@/components/templates/TalentGuide";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Download, CheckCircle, Menu } from "lucide-react";
+import { ArrowLeft, Download, CheckCircle, Menu, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -11,37 +11,25 @@ import { toast } from "sonner";
 export default function TalentGuidePage() {
   const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = React.useState(false);
+  // Nuevo estado para controlar la visualización del botón alternativo
+  const [downloadAttempted, setDownloadAttempted] = React.useState(false);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
   const handleDownload = () => {
-    // Create a URL for the sample PDF file
-    const pdfUrl = "/guia-talento.pdf";
+    // En lugar de intentar descargar un PDF inexistente, mostraremos la guía en formato HTML
+    setDownloadAttempted(true);
     
-    // Create a temporary anchor element
-    const link = document.createElement("a");
-    link.href = pdfUrl;
-    link.setAttribute("download", "Guia_Talento_Desempeno_y_Formacion.pdf");
+    toast.success("Guía disponible", {
+      description: "Puedes ver la guía completa en esta página"
+    });
     
-    // Simulate a click on the anchor
-    document.body.appendChild(link);
-    
-    // Try to download and show appropriate toast
-    try {
-      link.click();
-      toast.success("Descarga iniciada", {
-        description: "La guía se está descargando a tu dispositivo"
-      });
-    } catch (error) {
-      toast.error("Error al descargar", {
-        description: "Por favor, inténtalo de nuevo más tarde"
-      });
-    }
-    
-    // Clean up
-    document.body.removeChild(link);
+    // Desplazamiento suave hacia la sección de la guía
+    document.getElementById('talent-guide-content')?.scrollIntoView({ 
+      behavior: 'smooth' 
+    });
   };
 
   return (
@@ -195,14 +183,32 @@ export default function TalentGuidePage() {
             </div>
             
             <div className="mt-6 text-center">
-              <Button className="bg-blue-600 hover:bg-blue-700" onClick={handleDownload}>
-                <Download className="mr-2 h-4 w-4" /> Comenzar a usar la guía
-              </Button>
+              {!downloadAttempted ? (
+                <Button className="bg-blue-600 hover:bg-blue-700" onClick={handleDownload}>
+                  <Download className="mr-2 h-4 w-4" /> Comenzar a usar la guía
+                </Button>
+              ) : (
+                <div className="flex flex-col items-center space-y-3">
+                  <div className="bg-green-100 text-green-800 px-4 py-2 rounded-md flex items-center">
+                    <FileText className="h-5 w-5 mr-2" />
+                    <span>Guía interactiva disponible a continuación</span>
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    onClick={() => document.getElementById('talent-guide-content')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="border-blue-300 hover:bg-blue-50"
+                  >
+                    Ver ahora
+                  </Button>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
         
-        <TalentGuide />
+        <div id="talent-guide-content">
+          <TalentGuide />
+        </div>
       </div>
     </div>
   );
