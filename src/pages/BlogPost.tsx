@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ChevronLeft, Book } from "lucide-react";
+import { ChevronLeft, Book, Download, ExternalLink } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import AdBanner from "@/components/ads/AdBanner";
 import BlogPostContent from "@/components/blog/BlogPostContent";
@@ -13,12 +13,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import type { BlogPost } from "@/components/blog/FeaturedPost";
 import { mockBlogPosts } from "@/data/mockBlogPosts";
 import { toast } from "react-hot-toast";
+import { templateData } from "@/components/templates/templateData";
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [showLearningModules, setShowLearningModules] = useState(false);
+  const [relatedTemplate, setRelatedTemplate] = useState<any>(null);
   
   useEffect(() => {
     const fetchPost = async () => {
@@ -58,6 +60,24 @@ export default function BlogPost() {
     };
     
     fetchPost();
+    
+    // Find related template if exists
+    if (slug) {
+      // Keywords to match in the templates
+      const keywords = ['control horario', 'horario', 'ausencias', 'tiempo', 'fichaje'];
+      const foundTemplate = templateData.find(template => {
+        // Check if title or description contains any keywords, or if slug contains similar words
+        return keywords.some(keyword => 
+          template.title.toLowerCase().includes(keyword) || 
+          template.description.toLowerCase().includes(keyword)
+        ) || slug.includes('control-horario') || slug.includes('horario');
+      });
+      
+      if (foundTemplate) {
+        setRelatedTemplate(foundTemplate);
+      }
+    }
+    
     // Scroll to top when navigating to a new blog post
     window.scrollTo(0, 0);
   }, [slug]);
@@ -103,6 +123,46 @@ export default function BlogPost() {
         <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-2">
             <BlogPostContent post={post} />
+            
+            {/* Template card if related to this post */}
+            {relatedTemplate && (
+              <Card className="my-8 border border-green-100 bg-green-50/40 shadow-sm hover:shadow transition-shadow">
+                <CardContent className="pt-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Download className="w-6 h-6 text-green-600" />
+                    <h3 className="text-xl font-bold text-green-800">Plantilla relacionada</h3>
+                  </div>
+                  <div className="flex flex-col md:flex-row gap-4 items-start">
+                    <div className="w-full md:w-1/4">
+                      <img 
+                        src={relatedTemplate.imageSrc} 
+                        alt={relatedTemplate.title}
+                        className="rounded-lg shadow-sm w-full h-auto object-cover"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-lg font-bold text-gray-800 mb-2">{relatedTemplate.title}</h4>
+                      <p className="text-gray-600 mb-4">{relatedTemplate.description}</p>
+                      <div className="flex items-center gap-2">
+                        <Link to={relatedTemplate.editUrl || relatedTemplate.downloadUrl}>
+                          <Button 
+                            className={`${relatedTemplate.action === 'download' ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'}`}
+                            size="lg"
+                          >
+                            {relatedTemplate.actionLabel}
+                            {relatedTemplate.action === 'download' ? (
+                              <Download className="ml-2 w-4 h-4" />
+                            ) : (
+                              <ExternalLink className="ml-2 w-4 h-4" />
+                            )}
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
             
             {/* Learning Modules Section */}
             <Card className="my-8 border border-blue-100 bg-blue-50/40 shadow-sm hover:shadow transition-shadow">

@@ -47,10 +47,31 @@ export default function ArticleFormatter({ slug, content }: ArticleFormatterProp
       bodyContent = lines.slice(1).join("\n").trim();
     }
   }
+
+  // Pre-process content to fix common markdown formatting issues
+  let processedContent = bodyContent;
   
+  // Fix formatting issues with asterisks and markdown headers
+  processedContent = processedContent
+    // Convert asterisks with space to proper bullet points
+    .replace(/\* \*\*/g, '* **')
+    // Fix markdown headers with # symbols
+    .replace(/###\s+([^\n]+)/g, '### $1')
+    .replace(/##\s+([^\n]+)/g, '## $1')
+    .replace(/#+\s*([^#\n]+)/g, '## $1')
+    // Fix table formatting issues
+    .replace(/(\w+)\s+\|/g, '$1 | ')
+    .replace(/\|\s+(\w+)/g, '| $1')
+    // Ensure list items are properly formatted
+    .replace(/^\s*\*\s*([^\n]+)/gm, '* $1')
+    // Fix markdown emphasis/bold syntax
+    .replace(/\*\*([^*\n]+)\*\*/g, '**$1**')
+    // Ensure links are properly formatted
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '[$1]($2)');
+
   if (containsHtmlTags) {
     // Process HTML-formatted content
-    let processedContent = bodyContent
+    processedContent = processedContent
       // Process headings with proper markdown format
       .replace(/<h1>(.*?)<\/h1>/g, "# $1\n\n")
       .replace(/<h2>(.*?)<\/h2>/g, "## $1\n\n")
@@ -71,66 +92,8 @@ export default function ArticleFormatter({ slug, content }: ArticleFormatterProp
     processedContent = processedContent
       .replace(/(\d+\.\d+\s.*?)\n/g, "$1\n\n")
       .replace(/(\d+\.\s.*?)\n/g, "$1\n\n");
-
-    return (
-      <div className="article-content">
-        {title && (
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
-            {title}
-          </h1>
-        )}
-        <ReactMarkdown 
-          className={cn("prose prose-lg md:prose-xl max-w-none prose-headings:font-bold prose-headings:text-gray-800 prose-p:mb-6 prose-p:leading-relaxed prose-li:mb-2")}
-          rehypePlugins={[rehypeRaw]}
-          components={{
-            h2: ({ node, ...props }) => (
-              <h2 className="text-3xl font-bold mt-10 mb-6 text-gray-800 border-b pb-2" {...props} />
-            ),
-            h3: ({ node, ...props }) => (
-              <h3 className="text-2xl font-bold mt-8 mb-4 text-gray-700" {...props} />
-            ),
-            h4: ({ node, ...props }) => (
-              <h4 className="text-xl font-bold mt-6 mb-3 text-gray-700" {...props} />
-            ),
-            p: ({ node, ...props }) => (
-              <p className="mb-6 leading-relaxed text-lg" {...props} />
-            ),
-            a: ({ node, href, ...props }) => (
-              <a 
-                href={href} 
-                className="text-blue-600 hover:text-blue-800 inline-flex items-center gap-1 font-medium underline decoration-2 underline-offset-2 transition-colors" 
-                target="_blank"
-                rel="noopener noreferrer"
-                {...props}
-              >
-                {props.children}
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            ),
-            ul: ({ node, ...props }) => (
-              <ul className="mb-8 ml-6 list-disc space-y-3" {...props} />
-            ),
-            ol: ({ node, ...props }) => (
-              <ol className="mb-8 ml-6 list-decimal space-y-3" {...props} />
-            ),
-            li: ({ node, ...props }) => (
-              <li className="leading-relaxed text-lg" {...props} />
-            ),
-            blockquote: ({ node, ...props }) => (
-              <blockquote className="border-l-4 border-gray-300 pl-4 italic my-6" {...props} />
-            ),
-            hr: ({ node, ...props }) => (
-              <hr className="my-8 border-gray-300" {...props} />
-            ),
-          }}
-        >
-          {processedContent}
-        </ReactMarkdown>
-      </div>
-    );
   }
-  
-  // For regular markdown content
+
   return (
     <div className="article-content">
       {title && (
@@ -140,6 +103,7 @@ export default function ArticleFormatter({ slug, content }: ArticleFormatterProp
       )}
       <ReactMarkdown 
         className={cn("prose prose-lg md:prose-xl max-w-none prose-headings:font-bold prose-headings:text-gray-800 prose-p:mb-6 prose-p:leading-relaxed prose-li:mb-2")}
+        rehypePlugins={[rehypeRaw]}
         components={{
           h2: ({ node, ...props }) => (
             <h2 className="text-3xl font-bold mt-10 mb-6 text-gray-800 border-b pb-2" {...props} />
@@ -180,9 +144,26 @@ export default function ArticleFormatter({ slug, content }: ArticleFormatterProp
           hr: ({ node, ...props }) => (
             <hr className="my-8 border-gray-300" {...props} />
           ),
+          table: ({ node, ...props }) => (
+            <div className="overflow-x-auto my-8">
+              <table className="min-w-full border border-gray-300 rounded-lg" {...props} />
+            </div>
+          ),
+          thead: ({ node, ...props }) => (
+            <thead className="bg-gray-100" {...props} />
+          ),
+          th: ({ node, ...props }) => (
+            <th className="px-4 py-3 border-b border-gray-300 text-left font-semibold" {...props} />
+          ),
+          td: ({ node, ...props }) => (
+            <td className="px-4 py-3 border-b border-gray-300" {...props} />
+          ),
+          tr: ({ node, ...props }) => (
+            <tr className="border-b border-gray-200 hover:bg-gray-50" {...props} />
+          ),
         }}
       >
-        {bodyContent}
+        {processedContent}
       </ReactMarkdown>
     </div>
   );
