@@ -3,135 +3,134 @@ import { TemplateData } from "./types";
 
 export const templateData: TemplateData[] = [
   {
-    id: "template-1",
+    id: "guia-talento",
     title: "Guía de talento: desempeño y seguimiento de objetivos",
-    description: "Una guía completa para realizar seguimiento efectivo del desempeño y objetivos de tus colaboradores.",
-    imageSrc: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+    description: "Herramienta interactiva para evaluar el desempeño, planificar formaciones y realizar seguimiento de objetivos.",
+    imageSrc: "/lovable-uploads/91e7dd43-1049-45fc-ae3d-b7ecbd608938.png", // Using an existing image from the project
     category: "Evaluación",
+    action: "edit",
+    actionLabel: "Usar plantilla",
+    editUrl: "/plantillas/guia-talento"
+  },
+  {
+    id: "lecciones-emprender",
+    title: "7 pequeñas lecciones para emprender a lo grande",
+    description: "Guía esencial con consejos prácticos para emprendedores que quieren potenciar su negocio.",
+    imageSrc: "/lovable-uploads/e32846ec-2b1e-4ca6-956c-4a90277bbeef.png",
+    category: "Productividad",
     action: "download",
     actionLabel: "Descargar PDF",
-    exampleLink: "/examples/guia-talento",
-    downloadUrl: "/templates/guia-talento.pdf"
+    exampleLink: "#",
+    downloadUrl: "#"
   },
   {
-    id: "template-2",
-    title: "7 pequeñas lecciones para emprender a lo grande",
-    description: "Plantilla interactiva con consejos prácticos para emprendedores y gestores de equipos.",
-    imageSrc: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-    category: "Productividad",
-    action: "edit",
-    actionLabel: "Editar Online",
-    exampleLink: "/examples/lecciones-emprender",
-    editUrl: "/editor/lecciones-emprender"
-  },
-  {
-    id: "template-3",
+    id: "kit-herramientas-ley",
     title: "Kit de herramientas esenciales para cumplir con la Ley",
-    description: "Documentos y plantillas para ayudarte a cumplir con la normativa de registro horario.",
-    imageSrc: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+    description: "Conjunto de documentos y guías para asegurar el cumplimiento de la normativa laboral.",
+    imageSrc: "/lovable-uploads/d48380f9-f5c9-4f3f-8184-8ef27150846d.png",
     category: "Normativa Laboral",
     action: "download",
     actionLabel: "Descargar ZIP",
-    exampleLink: "/examples/kit-cumplimiento",
-    downloadUrl: "/templates/kit-cumplimiento.zip"
+    exampleLink: "#",
+    downloadUrl: "#"
   },
   {
-    id: "template-4",
+    id: "plantilla-onboarding",
     title: "Plantilla de onboarding para nuevas incorporaciones",
-    description: "Una plantilla completa para el proceso de incorporación de nuevos empleados a tu empresa.",
-    imageSrc: "https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+    description: "Guía paso a paso para garantizar una incorporación efectiva de nuevos empleados.",
+    imageSrc: "/lovable-uploads/d6062b36-0681-45de-b8e9-c72886e9b4eb.png",
     category: "Onboarding",
-    action: "edit",
-    actionLabel: "Personalizar",
-    exampleLink: "/examples/plantilla-onboarding",
-    editUrl: "/editor/plantilla-onboarding"
+    action: "download",
+    actionLabel: "Descargar PDF",
+    exampleLink: "#",
+    downloadUrl: "#"
   },
   {
-    id: "template-5",
+    id: "modelo-evaluacion-competencias",
     title: "Modelo de evaluación por competencias",
-    description: "Formulario estructurado para evaluar las competencias profesionales de tu equipo.",
-    imageSrc: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+    description: "Formato estructurado para evaluar las competencias profesionales de tu equipo.",
+    imageSrc: "/lovable-uploads/c5c2388b-0353-48bf-b9e7-a1f741ad108b.png",
     category: "Evaluación",
-    action: "edit",
-    actionLabel: "Editar Online",
-    exampleLink: "/examples/evaluacion-competencias",
-    editUrl: "/editor/evaluacion-competencias"
+    action: "download",
+    actionLabel: "Descargar PDF",
+    exampleLink: "#",
+    downloadUrl: "#"
   },
   {
-    id: "template-6",
+    id: "plantilla-descripcion-puestos",
     title: "Plantilla para la descripción de puestos",
-    description: "Documento estructurado para definir roles, responsabilidades y expectativas de cada posición.",
-    imageSrc: "https://images.unsplash.com/photo-1527525443983-6e60c75fff46?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-    category: "Documentos Legales",
+    description: "Documento para definir con claridad las responsabilidades de cada puesto de trabajo.",
+    imageSrc: "/lovable-uploads/dfe6d0a8-a218-4527-9602-1b4165cbe731.png",
+    category: "Productividad",
     action: "download",
     actionLabel: "Descargar DOCX",
-    exampleLink: "/examples/descripcion-puestos",
-    downloadUrl: "/templates/descripcion-puestos.docx"
+    exampleLink: "#",
+    downloadUrl: "#"
   },
   {
-    id: "template-7",
+    id: "control-ausencias",
     title: "Plantilla para control de ausencias justificadas",
-    description: "Registro sistemático para el seguimiento de ausencias del personal con justificación.",
-    imageSrc: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+    description: "Registro de ausencias laborales con motivos y documentación justificativa.",
+    imageSrc: "/lovable-uploads/bfe02090-bf42-4aa1-a40b-853d59bbf5e7.png",
     category: "Control horario",
-    action: "edit",
-    actionLabel: "Usar Plantilla",
-    exampleLink: "/examples/control-ausencias",
-    editUrl: "/editor/control-ausencias"
+    action: "download",
+    actionLabel: "Descargar Excel",
+    exampleLink: "#",
+    downloadUrl: "#"
   },
   {
-    id: "template-8",
+    id: "acta-reunion-equipos",
     title: "Ejemplo de acta de reunión para equipos remotos",
-    description: "Formato estandarizado para documentar acuerdos y acciones en reuniones de trabajo remoto.",
-    imageSrc: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+    description: "Formato optimizado para documentar reuniones y acuerdos en entornos de trabajo remoto.",
+    imageSrc: "/lovable-uploads/ba53c58c-1385-4d44-85fe-bcaca97175b4.png",
     category: "Comunicación Interna",
     action: "download",
     actionLabel: "Descargar PDF",
-    exampleLink: "/examples/acta-reunion",
-    downloadUrl: "/templates/acta-reunion.pdf"
+    exampleLink: "#",
+    downloadUrl: "#"
   },
   {
-    id: "template-9",
+    id: "calendario-anual",
     title: "Calendario anual editable para planificación de RRHH",
-    description: "Calendario personalizable para planificar actividades anuales del departamento de recursos humanos.",
-    imageSrc: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+    description: "Calendario anual para la planificación de vacaciones, formaciones y eventos de empresa.",
+    imageSrc: "/lovable-uploads/afe2beb8-a0b8-4bb7-8a23-e7ead8320fd4.png",
     category: "Productividad",
-    action: "edit",
-    actionLabel: "Editar Online",
-    exampleLink: "/examples/calendario-rrhh",
-    editUrl: "/editor/calendario-rrhh"
+    action: "download",
+    actionLabel: "Descargar Excel",
+    exampleLink: "#",
+    downloadUrl: "#"
   },
   {
-    id: "template-10",
+    id: "encuesta-clima-laboral",
     title: "Encuesta de clima laboral",
-    description: "Cuestionario para evaluar el ambiente y satisfacción laboral en tu organización.",
-    imageSrc: "https://images.unsplash.com/photo-1484069560501-87d72b0c3669?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-    category: "Evaluación",
-    action: "edit",
-    actionLabel: "Personalizar",
-    exampleLink: "/examples/clima-laboral",
-    editUrl: "/editor/clima-laboral"
+    description: "Cuestionario para evaluar la satisfacción y el ambiente de trabajo en tu organización.",
+    imageSrc: "/lovable-uploads/3cd4bb17-0813-45c8-8472-c691355116b5.png",
+    category: "Comunicación Interna",
+    action: "download",
+    actionLabel: "Descargar PDF",
+    exampleLink: "#",
+    downloadUrl: "#"
   },
   {
-    id: "template-11",
+    id: "guia-planificacion-formaciones",
     title: "Guía de planificación de formaciones trimestrales",
-    description: "Documento para organizar y planificar las formaciones trimestrales de tus equipos.",
-    imageSrc: "https://images.unsplash.com/photo-1558008258-d9404817c048?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+    description: "Estructura para organizar un plan de formación efectivo para tu equipo.",
+    imageSrc: "/lovable-uploads/dd574472-7de1-4a79-98a7-2f1bdae617ff.png",
     category: "Formación",
     action: "download",
     actionLabel: "Descargar PDF",
-    exampleLink: "/examples/planificacion-formaciones",
-    downloadUrl: "/templates/planificacion-formaciones.pdf"
+    exampleLink: "#",
+    downloadUrl: "#"
   },
   {
-    id: "template-12",
+    id: "seguimiento-tareas",
     title: "Hoja de seguimiento de tareas por empleado",
-    description: "Plantilla para seguimiento individual de tareas y proyectos asignados a cada colaborador.",
-    imageSrc: "https://images.unsplash.com/photo-1518349619113-03114f06ac3a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+    description: "Plantilla para realizar un seguimiento eficaz de las tareas asignadas a cada miembro del equipo.",
+    imageSrc: "/lovable-uploads/d4bb9d25-d564-497f-8477-748edb23ed0e.png",
     category: "Productividad",
-    action: "edit",
-    actionLabel: "Usar Plantilla",
-    exampleLink: "/examples/seguimiento-tareas",
-    editUrl: "/editor/seguimiento-tareas"
+    action: "download",
+    actionLabel: "Descargar Excel",
+    exampleLink: "#",
+    downloadUrl: "#"
   }
 ];

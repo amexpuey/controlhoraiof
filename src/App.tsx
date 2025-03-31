@@ -8,6 +8,7 @@ import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import ComplianceCheckerPage from "@/pages/ComplianceCheckerPage";
 import Templates from "@/pages/Templates";
+import TalentGuidePage from "@/pages/TalentGuidePage";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: "/plantillas",
     element: <Templates />,
+  },
+  {
+    path: "/plantillas/guia-talento",
+    element: <TalentGuidePage />,
   },
   {
     path: "*",
