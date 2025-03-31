@@ -1,5 +1,6 @@
 
 import { format, addMonths, subMonths, getDaysInMonth, isWeekend } from "date-fns";
+import { es } from "date-fns/locale";
 import { toast } from "sonner";
 import { DayData, AbsenceType, YearData } from "../types";
 
@@ -53,7 +54,7 @@ export const useWorkCalendarActions = (
     };
     
     setYearData(newYearData);
-    toast.success(`Datos guardados para ${format(selectedDate, "d 'de' MMMM", { locale: 'es' })}`);
+    toast.success(`Datos guardados para ${format(selectedDate, "d 'de' MMMM", { locale: es })}`);
   };
   
   // Get the data for a specific day
