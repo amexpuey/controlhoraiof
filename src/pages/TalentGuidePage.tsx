@@ -1,4 +1,3 @@
-
 import React from "react";
 import TalentGuide from "@/components/templates/TalentGuide";
 import { Link } from "react-router-dom";
@@ -7,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { toast } from "sonner";
+import { MobileMenu } from "@/components/layout/MobileMenu";
 
 export default function TalentGuidePage() {
   const isMobile = useIsMobile();
@@ -106,38 +106,8 @@ export default function TalentGuidePage() {
               <Menu className="h-5 w-5" />
             </Button>
             
-            {menuOpen && (
-              <div className="absolute top-16 right-0 w-full bg-gray-800 z-30 shadow-lg">
-                <div className="flex flex-col p-2">
-                  <Link 
-                    to="/plantillas" 
-                    className="text-sm font-medium text-white hover:bg-gray-700 p-2 rounded"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    Plantillas
-                  </Link>
-                  <Link 
-                    to="/blog" 
-                    className="text-sm font-medium text-white hover:bg-gray-700 p-2 rounded"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    Blog
-                  </Link>
-                  <Link 
-                    to="/" 
-                    className="flex items-center gap-1.5 text-sm font-medium bg-yellow-100 text-gray-800 hover:bg-yellow-200 p-2 rounded mt-2"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    <img
-                      src="/lovable-uploads/c2b90205-f41e-4c0d-bf34-bb7a5bba9103.png"
-                      alt="Home"
-                      className="w-4 h-4"
-                    />
-                    Descubre las mejores apps
-                  </Link>
-                </div>
-              </div>
-            )}
+            {/* Use our new MobileMenu component */}
+            <MobileMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
           </>
         ) : (
           <div className="flex items-center gap-4">
