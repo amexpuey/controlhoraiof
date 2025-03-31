@@ -112,6 +112,14 @@ export default function TalentGuide() {
     setTrainingAreas(updatedAreas);
   };
 
+  // Navigation functions
+  const navigateToTab = (tabValue: string) => {
+    const tabElement = document.querySelector(`[data-value="${tabValue}"]`) as HTMLElement;
+    if (tabElement) {
+      tabElement.click();
+    }
+  };
+
   // Calculate strengths and areas for improvement
   const getStrengths = () => {
     return competencies
@@ -229,7 +237,7 @@ export default function TalentGuide() {
                 </div>
                 
                 <div className="flex justify-end mt-4">
-                  <Button onClick={() => document.querySelector('[data-value="evaluacion"]')?.click()}>
+                  <Button onClick={() => navigateToTab("evaluacion")}>
                     Continuar a evaluación
                   </Button>
                 </div>
@@ -307,12 +315,12 @@ export default function TalentGuide() {
                 <div className="flex justify-between mt-4">
                   <Button 
                     variant="outline" 
-                    onClick={() => document.querySelector('[data-value="datos"]')?.click()}
+                    onClick={() => navigateToTab("datos")}
                   >
                     Anterior
                   </Button>
                   <Button 
-                    onClick={() => document.querySelector('[data-value="objetivos"]')?.click()}
+                    onClick={() => navigateToTab("objetivos")}
                   >
                     Continuar a objetivos
                   </Button>
@@ -454,12 +462,12 @@ export default function TalentGuide() {
                 <div className="flex justify-between mt-4">
                   <Button 
                     variant="outline" 
-                    onClick={() => document.querySelector('[data-value="evaluacion"]')?.click()}
+                    onClick={() => navigateToTab("evaluacion")}
                   >
                     Anterior
                   </Button>
                   <Button 
-                    onClick={() => document.querySelector('[data-value="formacion"]')?.click()}
+                    onClick={() => navigateToTab("formacion")}
                   >
                     Continuar a formación
                   </Button>
@@ -556,12 +564,12 @@ export default function TalentGuide() {
                 <div className="flex justify-between mt-4">
                   <Button 
                     variant="outline" 
-                    onClick={() => document.querySelector('[data-value="objetivos"]')?.click()}
+                    onClick={() => navigateToTab("objetivos")}
                   >
                     Anterior
                   </Button>
                   <Button 
-                    onClick={() => document.querySelector('[data-value="resumen"]')?.click()}
+                    onClick={() => navigateToTab("resumen")}
                   >
                     Continuar al resumen
                   </Button>
