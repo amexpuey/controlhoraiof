@@ -50,6 +50,12 @@ export default function DashboardHeader({
         <div className="flex items-center gap-4">
           <ToolsDropdown />
           <Link 
+            to="/plantillas" 
+            className="text-sm font-medium text-white hover:text-gray-200 transition-colors"
+          >
+            Plantillas
+          </Link>
+          <Link 
             to="/blog" 
             className="text-sm font-medium text-white hover:text-gray-200 transition-colors"
           >

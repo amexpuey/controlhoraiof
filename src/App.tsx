@@ -7,6 +7,7 @@ import UserView from "@/pages/UserView";
 import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import ComplianceCheckerPage from "@/pages/ComplianceCheckerPage";
+import Templates from "@/pages/Templates";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
         <ComplianceCheckerPage />
       </>
     ),
+  },
+  {
+    path: "/plantillas",
+    element: <Templates />,
   },
   {
     path: "*",
