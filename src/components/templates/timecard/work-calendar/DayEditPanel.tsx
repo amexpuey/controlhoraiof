@@ -76,7 +76,7 @@ export default function DayEditPanel({
             </SelectTrigger>
             <SelectContent position="popper" className="z-50 bg-white">
               {Object.entries(absenceTypeLabels).map(([type, label]) => (
-                <SelectItem key={type} value={type}>
+                <SelectItem key={type} value={type} className="cursor-pointer">
                   <div className="flex items-center">
                     <div className="mr-2">
                       {absenceTypeIcons[type as AbsenceType]}
@@ -118,7 +118,11 @@ export default function DayEditPanel({
           />
         </div>
         
-        <Button onClick={saveDayData} className="w-full">
+        <Button 
+          onClick={saveDayData} 
+          className="w-full bg-blue-600 hover:bg-blue-700"
+          type="button"
+        >
           Guardar
         </Button>
       </div>

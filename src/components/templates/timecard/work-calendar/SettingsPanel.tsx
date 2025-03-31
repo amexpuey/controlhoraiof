@@ -1,11 +1,12 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AbsenceType, absenceTypeColors, absenceTypeLabels } from "./types";
 import { Briefcase, Home, Heart, Clock, Ban, Check, CalendarDays } from "lucide-react";
+import { toast } from "sonner";
 
 interface SettingsPanelProps {
   workingHoursPerWeek: number;
@@ -33,6 +34,17 @@ export default function SettingsPanel({
     holiday: <Check className="h-4 w-4" />
   };
 
+  // Update selected option when workingHoursPerWeek changes
+  useEffect(() => {
+    const standardOptions = ["40", "37.5", "30", "20"];
+    if (standardOptions.includes(workingHoursPerWeek.toString())) {
+      setSelectedOption(workingHoursPerWeek.toString());
+    } else {
+      setSelectedOption("custom");
+      setCustomHours(workingHoursPerWeek.toString());
+    }
+  }, [workingHoursPerWeek]);
+
   const handleHoursChange = (value: string) => {
     setSelectedOption(value);
     
@@ -41,6 +53,7 @@ export default function SettingsPanel({
       // It will be updated when the input field is used
     } else {
       setWorkingHoursPerWeek(Number(value));
+      toast.success(`Horas semanales ajustadas a ${value}`);
     }
   };
 
@@ -68,11 +81,11 @@ export default function SettingsPanel({
               <SelectValue placeholder="Selecciona horas semanales" />
             </SelectTrigger>
             <SelectContent position="popper" className="z-50 bg-white">
-              <SelectItem value="40">40 horas (estándar)</SelectItem>
-              <SelectItem value="37.5">37,5 horas (nueva regulación)</SelectItem>
-              <SelectItem value="30">30 horas (jornada reducida)</SelectItem>
-              <SelectItem value="20">20 horas (media jornada)</SelectItem>
-              <SelectItem value="custom">Personalizado</SelectItem>
+              <SelectItem value="40" className="cursor-pointer">40 horas (estándar)</SelectItem>
+              <SelectItem value="37.5" className="cursor-pointer">37,5 horas (nueva regulación)</SelectItem>
+              <SelectItem value="30" className="cursor-pointer">30 horas (jornada reducida)</SelectItem>
+              <SelectItem value="20" className="cursor-pointer">20 horas (media jornada)</SelectItem>
+              <SelectItem value="custom" className="cursor-pointer">Personalizado</SelectItem>
             </SelectContent>
           </Select>
           
