@@ -3,11 +3,13 @@ import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Download, Calendar, Clock } from "lucide-react";
+import { Download, Calendar, Clock, Calculator } from "lucide-react";
 import { toast } from "sonner";
+import HoursCalculator from "./HoursCalculator";
 
 export default function TimecardTemplate() {
   const [period, setPeriod] = useState("month");
+  const [activeTab, setActiveTab] = useState("download");
   
   const handleDownload = (periodType: string) => {
     // En una implementación real, aquí se generaría el archivo Excel dinámicamente
@@ -44,104 +46,124 @@ export default function TimecardTemplate() {
               <li>Cálculos automáticos de totales diarios, semanales y mensuales</li>
               <li>Indicadores visuales de desviaciones respecto a la jornada estándar</li>
               <li>Tablas de resumen para evaluación rápida</li>
+              <li>Calculadora interactiva de horas totales con gestión de vacaciones y festivos</li>
             </ul>
           </div>
         </div>
         
-        <Card className="mb-8 overflow-hidden border-2 border-blue-100">
-          <div className="bg-gradient-to-r from-blue-800 to-blue-600 text-white p-6">
-            <h2 className="text-2xl font-bold mb-2">Descarga tu plantilla</h2>
-            <p>Selecciona el periodo que mejor se adapte a tus necesidades de registro horario</p>
-          </div>
-          <CardContent className="p-6">
-            <Tabs defaultValue="month" value={period} onValueChange={setPeriod} className="w-full">
-              <TabsList className="grid grid-cols-4 mb-6">
-                <TabsTrigger value="week" className="flex flex-col items-center gap-1 py-3">
-                  <Calendar className="h-5 w-5" />
-                  <span>Semanal</span>
-                </TabsTrigger>
-                <TabsTrigger value="month" className="flex flex-col items-center gap-1 py-3">
-                  <Calendar className="h-5 w-5" />
-                  <span>Mensual</span>
-                </TabsTrigger>
-                <TabsTrigger value="quarter" className="flex flex-col items-center gap-1 py-3">
-                  <Calendar className="h-5 w-5" />
-                  <span>Trimestral</span>
-                </TabsTrigger>
-                <TabsTrigger value="year" className="flex flex-col items-center gap-1 py-3">
-                  <Calendar className="h-5 w-5" />
-                  <span>Anual</span>
-                </TabsTrigger>
-              </TabsList>
-
-              <div className="mb-6">
-                <TabsContent value="week" className="mt-0">
-                  <div className="text-center">
-                    <img 
-                      src="/lovable-uploads/4efc5a5e-0fc6-450c-8097-471f8f05bcd9.png" 
-                      alt="Vista previa de la plantilla semanal" 
-                      className="max-w-full h-auto mx-auto mb-4 rounded-lg border shadow-sm" 
-                    />
-                    <p className="text-gray-600 mb-4">
-                      Versión semanal ideal para un control detallado día a día. Perfecto para trabajadores 
-                      con horarios variables o por turnos.
-                    </p>
-                  </div>
-                </TabsContent>
-                
-                <TabsContent value="month" className="mt-0">
-                  <div className="text-center">
-                    <img 
-                      src="/lovable-uploads/4efc5a5e-0fc6-450c-8097-471f8f05bcd9.png" 
-                      alt="Vista previa de la plantilla mensual" 
-                      className="max-w-full h-auto mx-auto mb-4 rounded-lg border shadow-sm" 
-                    />
-                    <p className="text-gray-600 mb-4">
-                      Versión mensual con detalle semanal incluido. La opción más equilibrada entre 
-                      detalle y visión general.
-                    </p>
-                  </div>
-                </TabsContent>
-                
-                <TabsContent value="quarter" className="mt-0">
-                  <div className="text-center">
-                    <img 
-                      src="/lovable-uploads/4efc5a5e-0fc6-450c-8097-471f8f05bcd9.png" 
-                      alt="Vista previa de la plantilla trimestral" 
-                      className="max-w-full h-auto mx-auto mb-4 rounded-lg border shadow-sm" 
-                    />
-                    <p className="text-gray-600 mb-4">
-                      Formato trimestral que permite visualizar tendencias en periodos más largos.
-                      Incluye resúmenes mensuales y semanales.
-                    </p>
-                  </div>
-                </TabsContent>
-                
-                <TabsContent value="year" className="mt-0">
-                  <div className="text-center">
-                    <img 
-                      src="/lovable-uploads/4efc5a5e-0fc6-450c-8097-471f8f05bcd9.png" 
-                      alt="Vista previa de la plantilla anual" 
-                      className="max-w-full h-auto mx-auto mb-4 rounded-lg border shadow-sm" 
-                    />
-                    <p className="text-gray-600 mb-4">
-                      Versión anual completa con todos los meses integrados. Ideal para planificación 
-                      y análisis de patrones de trabajo a largo plazo.
-                    </p>
-                  </div>
-                </TabsContent>
+        <Tabs defaultValue="download" value={activeTab} onValueChange={setActiveTab} className="w-full mb-8">
+          <TabsList className="grid grid-cols-2 mb-6">
+            <TabsTrigger value="download" className="flex items-center gap-2 py-3">
+              <Download className="h-5 w-5" />
+              <span>Descargar Plantilla</span>
+            </TabsTrigger>
+            <TabsTrigger value="calculator" className="flex items-center gap-2 py-3">
+              <Calculator className="h-5 w-5" />
+              <span>Calculadora de Horas</span>
+            </TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="download" className="mt-0">
+            <Card className="overflow-hidden border-2 border-blue-100">
+              <div className="bg-gradient-to-r from-blue-800 to-blue-600 text-white p-6">
+                <h2 className="text-2xl font-bold mb-2">Descarga tu plantilla</h2>
+                <p>Selecciona el periodo que mejor se adapte a tus necesidades de registro horario</p>
               </div>
-              
-              <Button 
-                className="w-full bg-blue-600 hover:bg-blue-700 text-lg py-6"
-                onClick={() => handleDownload(period)}
-              >
-                <Download className="mr-2 h-5 w-5" /> 
-                Descargar plantilla {period === "week" ? "semanal" : period === "month" ? "mensual" : period === "quarter" ? "trimestral" : "anual"}
-              </Button>
-            </Tabs>
-          </CardContent>
-        </Card>
+              <CardContent className="p-6">
+                <Tabs defaultValue="month" value={period} onValueChange={setPeriod} className="w-full">
+                  <TabsList className="grid grid-cols-4 mb-6">
+                    <TabsTrigger value="week" className="flex flex-col items-center gap-1 py-3">
+                      <Calendar className="h-5 w-5" />
+                      <span>Semanal</span>
+                    </TabsTrigger>
+                    <TabsTrigger value="month" className="flex flex-col items-center gap-1 py-3">
+                      <Calendar className="h-5 w-5" />
+                      <span>Mensual</span>
+                    </TabsTrigger>
+                    <TabsTrigger value="quarter" className="flex flex-col items-center gap-1 py-3">
+                      <Calendar className="h-5 w-5" />
+                      <span>Trimestral</span>
+                    </TabsTrigger>
+                    <TabsTrigger value="year" className="flex flex-col items-center gap-1 py-3">
+                      <Calendar className="h-5 w-5" />
+                      <span>Anual</span>
+                    </TabsTrigger>
+                  </TabsList>
+
+                  <div className="mb-6">
+                    <TabsContent value="week" className="mt-0">
+                      <div className="text-center">
+                        <img 
+                          src="/lovable-uploads/4efc5a5e-0fc6-450c-8097-471f8f05bcd9.png" 
+                          alt="Vista previa de la plantilla semanal" 
+                          className="max-w-full h-auto mx-auto mb-4 rounded-lg border shadow-sm" 
+                        />
+                        <p className="text-gray-600 mb-4">
+                          Versión semanal ideal para un control detallado día a día. Perfecto para trabajadores 
+                          con horarios variables o por turnos.
+                        </p>
+                      </div>
+                    </TabsContent>
+                    
+                    <TabsContent value="month" className="mt-0">
+                      <div className="text-center">
+                        <img 
+                          src="/lovable-uploads/4efc5a5e-0fc6-450c-8097-471f8f05bcd9.png" 
+                          alt="Vista previa de la plantilla mensual" 
+                          className="max-w-full h-auto mx-auto mb-4 rounded-lg border shadow-sm" 
+                        />
+                        <p className="text-gray-600 mb-4">
+                          Versión mensual con detalle semanal incluido. La opción más equilibrada entre 
+                          detalle y visión general.
+                        </p>
+                      </div>
+                    </TabsContent>
+                    
+                    <TabsContent value="quarter" className="mt-0">
+                      <div className="text-center">
+                        <img 
+                          src="/lovable-uploads/4efc5a5e-0fc6-450c-8097-471f8f05bcd9.png" 
+                          alt="Vista previa de la plantilla trimestral" 
+                          className="max-w-full h-auto mx-auto mb-4 rounded-lg border shadow-sm" 
+                        />
+                        <p className="text-gray-600 mb-4">
+                          Formato trimestral que permite visualizar tendencias en periodos más largos.
+                          Incluye resúmenes mensuales y semanales.
+                        </p>
+                      </div>
+                    </TabsContent>
+                    
+                    <TabsContent value="year" className="mt-0">
+                      <div className="text-center">
+                        <img 
+                          src="/lovable-uploads/4efc5a5e-0fc6-450c-8097-471f8f05bcd9.png" 
+                          alt="Vista previa de la plantilla anual" 
+                          className="max-w-full h-auto mx-auto mb-4 rounded-lg border shadow-sm" 
+                        />
+                        <p className="text-gray-600 mb-4">
+                          Versión anual completa con todos los meses integrados. Ideal para planificación 
+                          y análisis de patrones de trabajo a largo plazo.
+                        </p>
+                      </div>
+                    </TabsContent>
+                  </div>
+                  
+                  <Button 
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-lg py-6"
+                    onClick={() => handleDownload(period)}
+                  >
+                    <Download className="mr-2 h-5 w-5" /> 
+                    Descargar plantilla {period === "week" ? "semanal" : period === "month" ? "mensual" : period === "quarter" ? "trimestral" : "anual"}
+                  </Button>
+                </Tabs>
+              </CardContent>
+            </Card>
+          </TabsContent>
+          
+          <TabsContent value="calculator" className="mt-0">
+            <HoursCalculator />
+          </TabsContent>
+        </Tabs>
         
         <div className="bg-gray-50 p-6 rounded-lg border">
           <h3 className="text-xl font-bold mb-4">Instrucciones de uso</h3>
@@ -174,6 +196,14 @@ export default function TimecardTemplate() {
               <p className="text-gray-600">
                 Al final de cada mes, la plantilla mostrará un resumen con las horas ordinarias, 
                 extraordinarias y totales trabajadas.
+              </p>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold text-gray-800 mb-1">5. Calculadora de horas</h4>
+              <p className="text-gray-600">
+                Utiliza la calculadora interactiva para estimar las horas trabajadas anuales, teniendo en cuenta 
+                días de vacaciones y festivos. Podrás determinar fácilmente el total de horas laborables.
               </p>
             </div>
           </div>
