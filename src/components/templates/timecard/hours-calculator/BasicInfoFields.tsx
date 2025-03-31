@@ -73,7 +73,7 @@ export function BasicInfoFields({ form }: BasicInfoFieldsProps) {
               value={field.value.toString()}
             >
               <FormControl>
-                <SelectTrigger>
+                <SelectTrigger className="cursor-pointer">
                   <SelectValue placeholder="Selecciona los días" />
                 </SelectTrigger>
               </FormControl>
@@ -122,7 +122,7 @@ export function BasicInfoFields({ form }: BasicInfoFieldsProps) {
               value={field.value}
             >
               <FormControl>
-                <SelectTrigger>
+                <SelectTrigger className="cursor-pointer">
                   <SelectValue placeholder="Selecciona el tipo" />
                 </SelectTrigger>
               </FormControl>

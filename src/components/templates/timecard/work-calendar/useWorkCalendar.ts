@@ -40,7 +40,10 @@ export const useWorkCalendar = () => {
   
   // Save the data for the selected day
   const saveDayData = () => {
-    if (!selectedDate) return;
+    if (!selectedDate) {
+      toast.error("Por favor, selecciona una fecha primero");
+      return;
+    }
     
     const monthKey = `${getYear(selectedDate)}-${getMonth(selectedDate) + 1}`;
     const dayKey = format(selectedDate, "yyyy-MM-dd");
@@ -81,7 +84,9 @@ export const useWorkCalendar = () => {
       setAbsenceType(dayData.absenceType);
       setNotes(dayData.notes);
     } else {
-      setHoursForDay(isWeekend(date) ? 0 : 8);
+      // Default values for new entries
+      const hoursPerDay = workingHoursPerWeek / 5;
+      setHoursForDay(isWeekend(date) ? 0 : hoursPerDay);
       setAbsenceType(isWeekend(date) ? "holiday" : "work");
       setNotes("");
     }
@@ -146,7 +151,7 @@ export const useWorkCalendar = () => {
     toast.success("Registro de horas descargado correctamente");
   };
   
-  // Calculate the target hours for the month (based on a 37.5 or 40 hour work week)
+  // Calculate the target hours for the month (based on working hours per week)
   const calculateTargetHours = (): number => {
     const daysInMonth = getDaysInMonth(currentDate);
     let workDays = 0;

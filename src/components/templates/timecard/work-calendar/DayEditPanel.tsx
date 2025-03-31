@@ -53,7 +53,7 @@ export default function DayEditPanel({
             value={absenceType} 
             onValueChange={(value) => setAbsenceType(value as AbsenceType)}
           >
-            <SelectTrigger id="absence-type">
+            <SelectTrigger id="absence-type" className="cursor-pointer">
               <SelectValue placeholder="Selecciona el tipo" />
             </SelectTrigger>
             <SelectContent>

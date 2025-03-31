@@ -36,7 +36,7 @@ export default function SettingsPanel({
             value={workingHoursPerWeek.toString()} 
             onValueChange={(value) => setWorkingHoursPerWeek(Number(value))}
           >
-            <SelectTrigger id="workingHoursPerWeek">
+            <SelectTrigger id="workingHoursPerWeek" className="cursor-pointer">
               <SelectValue placeholder="Selecciona horas semanales" />
             </SelectTrigger>
             <SelectContent>
