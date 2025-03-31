@@ -1,11 +1,11 @@
-
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Download, Calendar, Clock, Calculator } from "lucide-react";
+import { Download, Calendar, Clock, Calculator, FileText } from "lucide-react";
 import { toast } from "sonner";
 import HoursCalculator from "./HoursCalculator";
+import WorkCalendar from "./WorkCalendar";
 
 export default function TimecardTemplate() {
   const [period, setPeriod] = useState("month");
@@ -47,12 +47,13 @@ export default function TimecardTemplate() {
               <li>Indicadores visuales de desviaciones respecto a la jornada estándar</li>
               <li>Tablas de resumen para evaluación rápida</li>
               <li>Calculadora interactiva de horas totales con gestión de vacaciones y festivos</li>
+              <li>Calendario interactivo para visualización y gestión de jornada laboral</li>
             </ul>
           </div>
         </div>
         
         <Tabs defaultValue="download" value={activeTab} onValueChange={setActiveTab} className="w-full mb-8">
-          <TabsList className="grid grid-cols-2 mb-6">
+          <TabsList className="grid grid-cols-3 mb-6">
             <TabsTrigger value="download" className="flex items-center gap-2 py-3">
               <Download className="h-5 w-5" />
               <span>Descargar Plantilla</span>
@@ -60,6 +61,10 @@ export default function TimecardTemplate() {
             <TabsTrigger value="calculator" className="flex items-center gap-2 py-3">
               <Calculator className="h-5 w-5" />
               <span>Calculadora de Horas</span>
+            </TabsTrigger>
+            <TabsTrigger value="calendar" className="flex items-center gap-2 py-3">
+              <Calendar className="h-5 w-5" />
+              <span>Calendario Interactivo</span>
             </TabsTrigger>
           </TabsList>
           
@@ -163,6 +168,10 @@ export default function TimecardTemplate() {
           <TabsContent value="calculator" className="mt-0">
             <HoursCalculator />
           </TabsContent>
+          
+          <TabsContent value="calendar" className="mt-0">
+            <WorkCalendar />
+          </TabsContent>
         </Tabs>
         
         <div className="bg-gray-50 p-6 rounded-lg border">
@@ -204,6 +213,15 @@ export default function TimecardTemplate() {
               <p className="text-gray-600">
                 Utiliza la calculadora interactiva para estimar las horas trabajadas anuales, teniendo en cuenta 
                 días de vacaciones y festivos. Podrás determinar fácilmente el total de horas laborables.
+              </p>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold text-gray-800 mb-1">6. Calendario interactivo</h4>
+              <p className="text-gray-600">
+                El nuevo calendario interactivo te permite registrar y visualizar las horas trabajadas en un formato 
+                de calendario. Puedes indicar diferentes tipos de días (trabajo, vacaciones, enfermedad, etc.) y ver un 
+                resumen mensual y anual de tus horas. Perfecto para llevar un control visual de tu jornada laboral.
               </p>
             </div>
           </div>
