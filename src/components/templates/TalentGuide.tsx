@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -15,8 +14,11 @@ import { format } from "date-fns";
 import { CalendarIcon, Download, Star, CheckCircle, X, Plus, Trash2, AlertTriangle, ArrowUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function TalentGuide() {
+  const isMobile = useIsMobile();
+  
   // Tab state
   const [activeTab, setActiveTab] = useState("datos");
 
@@ -161,21 +163,21 @@ export default function TalentGuide() {
   };
 
   return (
-    <div className="container mx-auto py-6 px-4 md:px-6">
+    <div className="container mx-auto py-6 px-0 md:px-6">
       <Card className="mb-8">
         <CardHeader className="bg-blue-50">
-          <CardTitle className="text-2xl font-bold text-blue-900">
+          <CardTitle className="text-xl md:text-2xl font-bold text-blue-900">
             Guía de Talento: Desempeño y Seguimiento
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-6">
           <Tabs defaultValue="datos" value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid grid-cols-2 md:grid-cols-5 mb-6">
-              <TabsTrigger value="datos">Datos</TabsTrigger>
-              <TabsTrigger value="evaluacion">Evaluación</TabsTrigger>
-              <TabsTrigger value="objetivos">Objetivos</TabsTrigger>
-              <TabsTrigger value="formacion">Formación</TabsTrigger>
-              <TabsTrigger value="resumen">Resumen</TabsTrigger>
+            <TabsList className={`grid w-full ${isMobile ? 'grid-cols-2 gap-1 mb-4' : 'grid-cols-5 mb-6'}`}>
+              <TabsTrigger value="datos" className="text-sm md:text-base">Datos</TabsTrigger>
+              <TabsTrigger value="evaluacion" className="text-sm md:text-base">Evaluación</TabsTrigger>
+              <TabsTrigger value="objetivos" className="text-sm md:text-base">Objetivos</TabsTrigger>
+              <TabsTrigger value="formacion" className="text-sm md:text-base">Formación</TabsTrigger>
+              <TabsTrigger value="resumen" className="text-sm md:text-base">Resumen</TabsTrigger>
             </TabsList>
 
             {/* Employee Data Section */}
