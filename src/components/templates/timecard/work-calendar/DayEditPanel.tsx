@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React from "react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Label } from "@/components/ui/label";
@@ -71,8 +71,9 @@ export default function DayEditPanel({
           <Select 
             value={absenceType} 
             onValueChange={handleAbsenceTypeChange}
+            defaultOpen={false}
           >
-            <SelectTrigger id="absence-type" className="cursor-pointer relative z-20">
+            <SelectTrigger id="absence-type" className="cursor-pointer relative z-20 bg-white">
               <SelectValue placeholder="Selecciona el tipo" />
             </SelectTrigger>
             <SelectContent 
@@ -127,6 +128,7 @@ export default function DayEditPanel({
         <Button 
           onClick={handleSaveData} 
           className="w-full bg-blue-600 hover:bg-blue-700"
+          type="button"
         >
           Guardar
         </Button>

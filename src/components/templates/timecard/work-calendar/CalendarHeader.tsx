@@ -25,7 +25,7 @@ export default function CalendarHeader({
 
   return (
     <div className="flex justify-between items-center mb-4">
-      <Button variant="outline" onClick={goToPreviousMonth}>
+      <Button variant="outline" onClick={goToPreviousMonth} type="button">
         <ChevronLeft className="h-4 w-4" />
       </Button>
       
@@ -34,13 +34,13 @@ export default function CalendarHeader({
       </h2>
       
       <div className="flex gap-2">
-        <Button variant="outline" onClick={goToNextMonth}>
+        <Button variant="outline" onClick={goToNextMonth} type="button">
           <ChevronRight className="h-4 w-4" />
         </Button>
         
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-2">
+            <Button variant="outline" className="ml-2 relative z-10" type="button">
               <Download className="h-4 w-4 mr-1" />
               Exportar
             </Button>

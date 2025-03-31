@@ -63,7 +63,7 @@ export function BasicInfoFields({ form }: BasicInfoFieldsProps) {
         control={form.control}
         name="workdaysPerWeek"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="relative">
             <FormLabel className="flex items-center gap-2">
               <Calendar className="h-4 w-4 text-blue-600" />
               Días laborables por semana
@@ -71,13 +71,14 @@ export function BasicInfoFields({ form }: BasicInfoFieldsProps) {
             <Select 
               onValueChange={(value) => field.onChange(Number(value))}
               value={field.value.toString()}
+              defaultOpen={false}
             >
               <FormControl>
-                <SelectTrigger className="cursor-pointer">
+                <SelectTrigger className="cursor-pointer relative z-10 bg-white">
                   <SelectValue placeholder="Selecciona los días" />
                 </SelectTrigger>
               </FormControl>
-              <SelectContent position="popper" className="z-50 bg-white">
+              <SelectContent position="popper" align="start" className="z-50 bg-white shadow-lg">
                 <SelectItem value="5">5 días (L-V)</SelectItem>
                 <SelectItem value="6">6 días (L-S)</SelectItem>
                 <SelectItem value="7">7 días (L-D)</SelectItem>
@@ -112,7 +113,7 @@ export function BasicInfoFields({ form }: BasicInfoFieldsProps) {
         control={form.control}
         name="vacationType"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="relative">
             <FormLabel className="flex items-center gap-2">
               <Calendar className="h-4 w-4 text-blue-600" />
               Tipo de días de vacaciones
@@ -120,13 +121,14 @@ export function BasicInfoFields({ form }: BasicInfoFieldsProps) {
             <Select 
               onValueChange={field.onChange}
               value={field.value}
+              defaultOpen={false}
             >
               <FormControl>
-                <SelectTrigger className="cursor-pointer">
+                <SelectTrigger className="cursor-pointer relative z-10 bg-white">
                   <SelectValue placeholder="Selecciona el tipo" />
                 </SelectTrigger>
               </FormControl>
-              <SelectContent position="popper" className="z-50 bg-white">
+              <SelectContent position="popper" align="start" className="z-50 bg-white shadow-lg">
                 <SelectItem value="business">Días hábiles</SelectItem>
                 <SelectItem value="natural">Días naturales</SelectItem>
               </SelectContent>

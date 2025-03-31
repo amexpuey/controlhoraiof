@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "lucide-react";
@@ -9,14 +9,8 @@ import CalendarDay from "./CalendarDay";
 import StatisticsPanel from "./StatisticsPanel";
 import SettingsPanel from "./SettingsPanel";
 import DayEditPanel from "./DayEditPanel";
-import { useSearchParams } from "react-router-dom";
 
 export default function WorkCalendar() {
-  const [searchParams] = useSearchParams();
-  const calculatedHours = searchParams.get('calculatedHours');
-  const workdaysPerWeek = searchParams.get('workdaysPerWeek');
-  const hoursPerDay = searchParams.get('hoursPerDay');
-  
   const { 
     currentDate,
     selectedDate,
@@ -44,16 +38,6 @@ export default function WorkCalendar() {
     bulkSetWorkDays
   } = useWorkCalendar();
   
-  useEffect(() => {
-    if (calculatedHours && workdaysPerWeek && hoursPerDay) {
-      initializeCalendarFromCalculation(
-        Number(calculatedHours),
-        Number(workdaysPerWeek),
-        Number(hoursPerDay)
-      );
-    }
-  }, [calculatedHours, workdaysPerWeek, hoursPerDay, initializeCalendarFromCalculation]);
-  
   return (
     <Card className="border-2 border-blue-100">
       <CardHeader className="bg-gradient-to-r from-blue-800 to-blue-600 text-white">
@@ -73,11 +57,11 @@ export default function WorkCalendar() {
               downloadAsCSV={downloadAsCSV}
             />
             
-            <div className="border rounded-lg overflow-hidden">
+            <div className="border rounded-lg overflow-hidden relative z-10">
               <Calendar
                 mode="single"
                 selected={selectedDate}
-                onSelect={handleDateSelect}
+                onSelect={(date) => date && handleDateSelect(date)}
                 month={currentDate}
                 className="rounded-md border"
                 modifiers={{

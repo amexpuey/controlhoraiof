@@ -3,8 +3,15 @@ import { useEffect, useCallback } from "react";
 import { useWorkCalendarState } from "./useWorkCalendarState";
 import { useWorkCalendarActions } from "./useWorkCalendarActions";
 import { useWorkCalendarCalculations } from "./useWorkCalendarCalculations";
+import { useSearchParams } from "react-router-dom";
+import { toast } from "sonner";
 
 export const useWorkCalendar = () => {
+  const [searchParams] = useSearchParams();
+  const calculatedHours = searchParams.get('calculatedHours');
+  const workdaysPerWeek = searchParams.get('workdaysPerWeek');
+  const hoursPerDay = searchParams.get('hoursPerDay');
+  
   // Combine all the hooks
   const state = useWorkCalendarState();
   
@@ -42,6 +49,25 @@ export const useWorkCalendar = () => {
       state.setYearData(newYearData);
     }
   }, [state.currentDate, state.yearData, calculations.currentYear, calculations.currentMonth]);
+  
+  // Process URL parameters for initialization
+  useEffect(() => {
+    if (calculatedHours && workdaysPerWeek && hoursPerDay) {
+      try {
+        const hours = Number(calculatedHours);
+        const days = Number(workdaysPerWeek);
+        const hoursDay = Number(hoursPerDay);
+        
+        if (!isNaN(hours) && !isNaN(days) && !isNaN(hoursDay)) {
+          actions.initializeCalendarFromCalculation(hours, days, hoursDay);
+          toast.success(`Calendario inicializado con ${hours} horas anuales objetivo`);
+        }
+      } catch (error) {
+        console.error("Error processing URL parameters:", error);
+        toast.error("Error al procesar los parámetros de la URL");
+      }
+    }
+  }, [calculatedHours, workdaysPerWeek, hoursPerDay, actions]);
   
   // Memoize the downloadAsCSV function to prevent unnecessary rerenders
   const memoizedDownloadAsCSV = useCallback(actions.downloadAsCSV, [actions.downloadAsCSV]);

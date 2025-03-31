@@ -81,8 +81,9 @@ export default function SettingsPanel({
           <Select 
             value={selectedOption} 
             onValueChange={handleHoursChange}
+            defaultOpen={false}
           >
-            <SelectTrigger id="workingHoursPerWeek" className="cursor-pointer relative z-20">
+            <SelectTrigger id="workingHoursPerWeek" className="cursor-pointer relative z-20 bg-white">
               <SelectValue placeholder="Selecciona horas semanales" />
             </SelectTrigger>
             <SelectContent 

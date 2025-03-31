@@ -10,6 +10,7 @@ import { CalculatorHeader } from "./CalculatorHeader";
 import { Button } from "@/components/ui/button";
 import { Calculator, Calendar } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export function HoursCalculatorForm() {
   const navigate = useNavigate();
@@ -29,15 +30,19 @@ export function HoursCalculatorForm() {
   const openCalendarWithData = () => {
     if (!totalWorkHours) {
       calculateTotalHours();
+      toast.warning("Primero debes calcular las horas laborables");
       return;
     }
     
     const formValues = form.getValues();
     
+    // Redirigir con parámetros en la URL
     navigate({
       pathname: "/plantillas",
       search: `?tab=calendar&calculatedHours=${totalWorkHours}&workdaysPerWeek=${formValues.workdaysPerWeek}&hoursPerDay=${formValues.hoursPerDay}`
     });
+
+    toast.success("Datos aplicados al calendario correctamente");
   };
 
   return (
@@ -45,7 +50,7 @@ export function HoursCalculatorForm() {
       <CalculatorHeader />
       <CardContent className="p-6">
         <Form {...form}>
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
             <BasicInfoFields form={form} />
             
             <HolidayManager

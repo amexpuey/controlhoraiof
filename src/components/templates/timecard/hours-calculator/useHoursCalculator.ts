@@ -34,12 +34,15 @@ export function useHoursCalculator() {
       
       // Si ya se había calculado, recalcular con el nuevo festivo
       if (isCalculated) {
-        calculateTotalHours();
+        calculateTotalHours(updatedHolidays.length);
       }
+      
+      toast.success(`Festivo "${holidayName}" añadido correctamente`);
     }
   };
 
   const removeHoliday = (id: number) => {
+    const holidayToRemove = extraHolidays.find(holiday => holiday.id === id);
     const updatedHolidays = extraHolidays.filter(holiday => holiday.id !== id);
     setExtraHolidays(updatedHolidays);
     
@@ -48,11 +51,15 @@ export function useHoursCalculator() {
     
     // Si ya se había calculado, recalcular con los festivos actualizados
     if (isCalculated) {
-      calculateTotalHours();
+      calculateTotalHours(updatedHolidays.length);
+    }
+    
+    if (holidayToRemove) {
+      toast.success(`Festivo "${holidayToRemove.name}" eliminado correctamente`);
     }
   };
 
-  const calculateTotalHours = () => {
+  const calculateTotalHours = (customExtraHolidaysCount?: number) => {
     const data = form.getValues();
     
     let totalWorkingDays = 0;
@@ -67,11 +74,17 @@ export function useHoursCalculator() {
     } else {
       // Si son días naturales, calcular cuántos días laborables equivalen
       const businessDayRatio = data.workdaysPerWeek / 7;
-      totalWorkingDays = workdaysPerYear - (data.vacationDays * businessDayRatio);
+      const vacationBusinessDays = Math.round(data.vacationDays * businessDayRatio);
+      totalWorkingDays = workdaysPerYear - vacationBusinessDays;
     }
     
     // Restar días festivos extras (asumiendo que todos caen en días laborables)
-    totalWorkingDays -= extraHolidays.length;
+    const extraHolidaysCount = customExtraHolidaysCount !== undefined ? 
+      customExtraHolidaysCount : extraHolidays.length;
+    totalWorkingDays -= extraHolidaysCount;
+    
+    // Asegurarse de que no haya valores negativos
+    totalWorkingDays = Math.max(0, totalWorkingDays);
     
     // Calcular horas totales
     const calculatedTotalHours = totalWorkingDays * data.hoursPerDay;
