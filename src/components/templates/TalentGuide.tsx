@@ -12,47 +12,67 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
-import { CalendarIcon, Download, Star, CheckCircle, X, Plus, Trash2 } from "lucide-react";
+import { CalendarIcon, Download, Star, CheckCircle, X, Plus, Trash2, AlertTriangle, ArrowUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
 export default function TalentGuide() {
-  // Employee data state
+  // Employee data state with default values
   const [employeeData, setEmployeeData] = useState({
-    name: "",
-    role: "",
-    startDate: null as Date | null,
+    name: "Ana García Martínez",
+    role: "Desarrollador Full-Stack",
+    startDate: new Date(2023, 0, 15), // January 15, 2023
   });
 
-  // Performance evaluation state
+  // Performance evaluation state with default values
   const [evaluationPeriod, setEvaluationPeriod] = useState("trimestral");
   const [competencies, setCompetencies] = useState([
-    { name: "Comunicación", rating: 0, comment: "" },
-    { name: "Responsabilidad", rating: 0, comment: "" },
-    { name: "Resolución de problemas", rating: 0, comment: "" },
-    { name: "Trabajo en equipo", rating: 0, comment: "" },
-    { name: "Autonomía", rating: 0, comment: "" },
-    { name: "Cumplimiento de objetivos", rating: 0, comment: "" },
+    { name: "Comunicación", rating: 4, comment: "Excelente comunicación escrita y verbal. Explica conceptos técnicos de forma clara." },
+    { name: "Responsabilidad", rating: 5, comment: "Siempre cumple con los plazos acordados y avisa con antelación si hay algún problema." },
+    { name: "Resolución de problemas", rating: 3, comment: "Capaz de resolver problemas habituales, pero necesita apoyo en situaciones más complejas." },
+    { name: "Trabajo en equipo", rating: 4, comment: "Colabora activamente con el resto del equipo, ofrece ayuda cuando es necesario." },
+    { name: "Autonomía", rating: 2, comment: "Todavía requiere supervisión en varias tareas. Área para desarrollar durante el próximo trimestre." },
+    { name: "Cumplimiento de objetivos", rating: 4, comment: "Ha conseguido la mayoría de los objetivos marcados para este periodo." },
   ]);
 
-  // Goals tracking state
+  // Goals tracking state with default values
   const [goals, setGoals] = useState([
-    { objective: "", deadline: null as Date | null, priority: "media", status: "no-iniciado", observations: "" },
+    { 
+      objective: "Completar curso de React avanzado", 
+      deadline: new Date(new Date().setMonth(new Date().getMonth() + 1)), // One month from today
+      priority: "alta", 
+      status: "en-progreso", 
+      observations: "Ya ha completado el 60% del curso" 
+    },
+    { 
+      objective: "Implementar sistema de autenticación OAuth", 
+      deadline: new Date(new Date().setMonth(new Date().getMonth() + 2)), // Two months from today
+      priority: "media", 
+      status: "no-iniciado", 
+      observations: "Dependencia: actualización del backend" 
+    },
+    { 
+      objective: "Documentar APIs del proyecto actual", 
+      deadline: new Date(new Date().setMonth(new Date().getMonth() + 1)), // One month from today
+      priority: "baja", 
+      status: "completado", 
+      observations: "Documentación realizada y compartida con el equipo" 
+    },
   ]);
 
-  // Training planning state
+  // Training planning state with default values
   const [trainingAreas, setTrainingAreas] = useState([
     { id: "comunicacion", label: "Comunicación", checked: false },
-    { id: "liderazgo", label: "Liderazgo", checked: false },
-    { id: "tecnicas", label: "Habilidades técnicas", checked: false },
+    { id: "liderazgo", label: "Liderazgo", checked: true },
+    { id: "tecnicas", label: "Habilidades técnicas", checked: true },
     { id: "digitales", label: "Competencias digitales", checked: false },
-    { id: "idiomas", label: "Idiomas", checked: false },
+    { id: "idiomas", label: "Idiomas", checked: true },
     { id: "otras", label: "Otras", checked: false },
   ]);
   const [trainingPlan, setTrainingPlan] = useState({
-    description: "",
-    date: null as Date | null,
-    resources: "",
+    description: "Curso de liderazgo técnico y gestión de proyectos ágiles. Reforzar conocimientos de inglés técnico para comunicación con clientes internacionales.",
+    date: new Date(new Date().setMonth(new Date().getMonth() + 3)), // Three months from today
+    resources: "LinkedIn Learning: https://www.linkedin.com/learning/paths/conviertete-en-tech-lead\nCurso de inglés técnico: https://www.coursera.org/learn/technical-english",
   });
 
   // Handle rating change
@@ -113,27 +133,23 @@ export default function TalentGuide() {
     // In a real implementation, this would generate a PDF
   };
 
-  // Handle save progress (simulated)
-  const handleSaveProgress = () => {
-    // Generate a simple JSON to represent the saved state
-    const savedState = JSON.stringify({
-      employeeData,
-      evaluationPeriod,
-      competencies,
-      goals,
-      trainingAreas,
-      trainingPlan
-    });
-    
-    // In a real app, we could save to localStorage or generate a unique URL
-    const tempId = Math.random().toString(36).substring(2, 10);
-    
-    toast.success("Progreso guardado", {
-      description: `Puedes acceder al ID temporal: ${tempId} para recuperar los datos`
-    });
-    
-    // For simplicity, log the state to console
-    console.log("Saved state:", savedState);
+  // Priority helper function to render more informative priorities
+  const renderPriorityContent = (priority: string) => {
+    switch (priority) {
+      case 'alta':
+        return (
+          <div className="flex items-center gap-1 text-red-600">
+            <ArrowUp className="h-4 w-4" />
+            <span>Alta - Urgente</span>
+          </div>
+        );
+      case 'media':
+        return <span className="text-amber-600">Media - Importante</span>;
+      case 'baja':
+        return <span className="text-green-600">Baja - Planificada</span>;
+      default:
+        return priority;
+    }
   };
 
   return (
@@ -309,6 +325,18 @@ export default function TalentGuide() {
               <div className="space-y-6">
                 <h2 className="text-xl font-semibold">Seguimiento de objetivos</h2>
                 
+                <div className="bg-blue-50 p-4 rounded-md mb-4">
+                  <h3 className="flex items-center text-blue-800 font-medium mb-2">
+                    <AlertTriangle className="h-5 w-5 mr-2" />
+                    Guía sobre prioridades
+                  </h3>
+                  <ul className="text-sm text-blue-700 space-y-1">
+                    <li><strong>Alta - Urgente:</strong> Objetivos críticos con fechas límite ajustadas.</li>
+                    <li><strong>Media - Importante:</strong> Objetivos relevantes pero con margen de tiempo.</li>
+                    <li><strong>Baja - Planificada:</strong> Objetivos a largo plazo o preparatorios.</li>
+                  </ul>
+                </div>
+                
                 <div className="overflow-x-auto">
                   <Table>
                     <TableHeader>
@@ -365,13 +393,15 @@ export default function TalentGuide() {
                               value={goal.priority} 
                               onValueChange={(value) => handleGoalChange(index, 'priority', value)}
                             >
-                              <SelectTrigger className="w-[110px]">
-                                <SelectValue placeholder="Prioridad" />
+                              <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder="Prioridad">
+                                  {renderPriorityContent(goal.priority)}
+                                </SelectValue>
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="alta">Alta</SelectItem>
-                                <SelectItem value="media">Media</SelectItem>
-                                <SelectItem value="baja">Baja</SelectItem>
+                                <SelectItem value="alta">Alta - Urgente</SelectItem>
+                                <SelectItem value="media">Media - Importante</SelectItem>
+                                <SelectItem value="baja">Baja - Planificada</SelectItem>
                               </SelectContent>
                             </Select>
                           </TableCell>
@@ -650,30 +680,14 @@ export default function TalentGuide() {
                   </CardContent>
                 </Card>
                 
-                {/* Action buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 justify-between mt-8">
-                  <Button 
-                    variant="outline" 
-                    onClick={() => document.querySelector('[data-value="formacion"]')?.click()}
+                {/* Export button */}
+                <div className="flex justify-end mt-8">
+                  <Button
+                    className="bg-blue-600 hover:bg-blue-700 px-6" 
+                    onClick={handleExport}
                   >
-                    Anterior
+                    <Download className="mr-2 h-4 w-4" /> Exportar guía
                   </Button>
-                  
-                  <div className="flex flex-col sm:flex-row gap-2">
-                    <Button 
-                      variant="outline"
-                      onClick={handleSaveProgress}
-                    >
-                      Guardar progreso
-                    </Button>
-                    
-                    <Button
-                      className="bg-blue-600 hover:bg-blue-700" 
-                      onClick={handleExport}
-                    >
-                      <Download className="mr-2 h-4 w-4" /> Exportar guía
-                    </Button>
-                  </div>
                 </div>
               </div>
             </TabsContent>
