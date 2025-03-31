@@ -59,31 +59,42 @@ export default function ArticleFormatter({ slug, content }: ArticleFormatterProp
   // Pre-process content to fix common markdown formatting issues
   let processedContent = bodyContent;
   
-  // Fix formatting issues with asterisks and markdown headers
+  // Fix formatting issues with asterisks, headers, and other markdown syntax
   processedContent = processedContent
-    // Convert asterisks with space to proper bullet points
+    // Fix markdown headers (# symbol formatting)
+    .replace(/^(#+)\s*(.+)$/gm, (match, hashes, text) => `${hashes} ${text.trim()}`)
+    
+    // Fix bold/emphasis markdown formatting
+    .replace(/\*\*([^*\n]+)\*\*/g, '**$1**')
+    .replace(/\*([^*\n]+)\*/g, '*$1*')
+    .replace(/\*\*\*([^*\n]+)\*\*\*/g, '***$1***')
+    
+    // Fix improperly formatted asterisks used for bullet points
     .replace(/^\s*\*\s+\*\*/gm, '* **')
-    // Fix markdown headers with # symbols
-    .replace(/^###\s+([^\n]+)/gm, '### $1')
+    .replace(/^\s*\*\s*([^\n*][^\n]*)/gm, '* $1')
+    
+    // Fix multiple asterisks that should be bullet points
+    .replace(/^(\s*)\*\s*\*\s*\*/gm, '$1* ')
+    .replace(/^(\s*)\*\s*\*/gm, '$1* ')
+    
+    // Fix hashtags not intended as headers
     .replace(/^##\s+([^\n]+)/gm, '## $1')
     .replace(/^#\s+([^\n]+)/gm, '# $1')
-    // Fix table formatting issues
+    .replace(/^###\s+([^\n]+)/gm, '### $1')
+    
+    // Normalize bullet points and paragraphs with proper spacing
+    .replace(/(\n\* [^\n]+)(\n)(?!\n|\*)/g, '$1\n\n')
+    .replace(/(\n\d+\.\s+[^\n]+)(\n)(?!\n|\d+\.)/g, '$1\n\n')
+    
+    // Fix table formatting
     .replace(/(\w+)\s+\|/g, '$1 | ')
     .replace(/\|\s+(\w+)/g, '| $1')
-    // Ensure list items are properly formatted
-    .replace(/^\s*\*\s*([^\n]+)/gm, '* $1')
-    // Fix markdown emphasis/bold syntax
-    .replace(/\*\*([^*\n]+)\*\*/g, '**$1**')
-    // Ensure links are properly formatted
+    
+    // Ensure proper formatting of links
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '[$1]($2)')
-    // Fix bullet points with asterisks
-    .replace(/^(\s*)\* ([^\n]+)/gm, '$1* $2')
-    // Convert sequences of asterisks used for emphasis
-    .replace(/\*\*\*([^*]+)\*\*\*/g, '***$1***')
-    // Fix headers that use markdown syntax
-    .replace(/^(\s*)## ([^\n]+)/gm, '$1## $2')
-    // Normalize blank lines around list items for better rendering
-    .replace(/(\n\* [^\n]+)(\n)(?!\n|\*)/g, '$1\n\n');
+    
+    // Add spacing around block elements
+    .replace(/(\n#{1,6}\s+[^\n]+)(\n)(?!\n)/g, '$1\n\n');
 
   if (containsHtmlTags) {
     // Process HTML-formatted content
@@ -107,7 +118,7 @@ export default function ArticleFormatter({ slug, content }: ArticleFormatterProp
     // Add extra newlines for better spacing
     processedContent = processedContent
       .replace(/(\d+\.\d+\s.*?)\n/g, "$1\n\n")
-      .replace(/(\d+\.\s.*?)\n/g, "$1\n\n");
+      .replace(/(\d+\.\s+.*?)\n/g, "$1\n\n");
   }
 
   return (
