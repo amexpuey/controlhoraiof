@@ -71,16 +71,21 @@ export default function DayEditPanel({
       </h3>
       
       <div className="space-y-4">
-        <div>
+        <div className="relative">
           <Label htmlFor="absence-type">Tipo de día</Label>
           <Select 
             value={absenceType} 
             onValueChange={handleAbsenceTypeChange}
           >
-            <SelectTrigger id="absence-type" className="cursor-pointer relative z-10">
+            <SelectTrigger id="absence-type" className="cursor-pointer relative z-20">
               <SelectValue placeholder="Selecciona el tipo" />
             </SelectTrigger>
-            <SelectContent sideOffset={5} position="popper" className="z-50 bg-white shadow-lg">
+            <SelectContent 
+              className="bg-white shadow-lg z-50" 
+              sideOffset={5} 
+              position="popper" 
+              align="start"
+            >
               {Object.entries(absenceTypeLabels).map(([type, label]) => (
                 <SelectItem key={type} value={type} className="cursor-pointer">
                   <div className="flex items-center">

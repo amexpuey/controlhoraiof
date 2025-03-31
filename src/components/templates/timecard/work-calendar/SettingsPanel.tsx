@@ -76,16 +76,21 @@ export default function SettingsPanel({
     <div className="p-4 bg-gray-50 rounded-lg border">
       <h3 className="text-lg font-medium mb-4">Ajustes de jornada</h3>
       <div className="space-y-4">
-        <div>
+        <div className="relative">
           <Label htmlFor="workingHoursPerWeek">Horas semanales</Label>
           <Select 
             value={selectedOption} 
             onValueChange={handleHoursChange}
           >
-            <SelectTrigger id="workingHoursPerWeek" className="cursor-pointer relative z-10">
+            <SelectTrigger id="workingHoursPerWeek" className="cursor-pointer relative z-20">
               <SelectValue placeholder="Selecciona horas semanales" />
             </SelectTrigger>
-            <SelectContent sideOffset={5} position="popper" className="z-50 bg-white shadow-lg">
+            <SelectContent 
+              className="bg-white shadow-lg z-50" 
+              sideOffset={5} 
+              position="popper" 
+              align="start"
+            >
               <SelectItem value="40" className="cursor-pointer">40 horas (estándar)</SelectItem>
               <SelectItem value="37.5" className="cursor-pointer">37,5 horas (nueva regulación)</SelectItem>
               <SelectItem value="30" className="cursor-pointer">30 horas (jornada reducida)</SelectItem>
