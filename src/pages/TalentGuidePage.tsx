@@ -6,6 +6,7 @@ import { ArrowLeft, Download, CheckCircle, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { toast } from "sonner";
 
 export default function TalentGuidePage() {
   const isMobile = useIsMobile();
@@ -13,6 +14,34 @@ export default function TalentGuidePage() {
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const handleDownload = () => {
+    // Create a URL for the sample PDF file
+    const pdfUrl = "/guia-talento.pdf";
+    
+    // Create a temporary anchor element
+    const link = document.createElement("a");
+    link.href = pdfUrl;
+    link.setAttribute("download", "Guia_Talento_Desempeno_y_Formacion.pdf");
+    
+    // Simulate a click on the anchor
+    document.body.appendChild(link);
+    
+    // Try to download and show appropriate toast
+    try {
+      link.click();
+      toast.success("Descarga iniciada", {
+        description: "La guía se está descargando a tu dispositivo"
+      });
+    } catch (error) {
+      toast.error("Error al descargar", {
+        description: "Por favor, inténtalo de nuevo más tarde"
+      });
+    }
+    
+    // Clean up
+    document.body.removeChild(link);
   };
 
   return (
@@ -166,7 +195,7 @@ export default function TalentGuidePage() {
             </div>
             
             <div className="mt-6 text-center">
-              <Button className="bg-blue-600 hover:bg-blue-700">
+              <Button className="bg-blue-600 hover:bg-blue-700" onClick={handleDownload}>
                 <Download className="mr-2 h-4 w-4" /> Comenzar a usar la guía
               </Button>
             </div>

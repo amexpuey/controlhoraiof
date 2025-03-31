@@ -135,12 +135,32 @@ export default function TalentGuide() {
       .map(comp => comp.name);
   };
 
-  // Handle export (this would be expanded with actual export functionality)
+  // Handle export with download functionality
   const handleExport = () => {
-    toast.success("Guía exportada correctamente", {
-      description: "Los datos han sido descargados en formato PDF"
-    });
-    // In a real implementation, this would generate a PDF
+    // Create a URL for the sample PDF file
+    const pdfUrl = "/guia-talento.pdf";
+    
+    // Create a temporary anchor element
+    const link = document.createElement("a");
+    link.href = pdfUrl;
+    link.setAttribute("download", "Guia_Talento_Desempeno_y_Formacion.pdf");
+    
+    // Simulate a click on the anchor
+    document.body.appendChild(link);
+    
+    try {
+      link.click();
+      toast.success("Guía exportada correctamente", {
+        description: "La guía ha sido descargada en formato PDF"
+      });
+    } catch (error) {
+      toast.error("Error al exportar", {
+        description: "Por favor, inténtalo de nuevo más tarde"
+      });
+    }
+    
+    // Clean up
+    document.body.removeChild(link);
   };
 
   // Priority helper function to render more informative priorities
