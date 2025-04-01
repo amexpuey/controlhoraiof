@@ -51,7 +51,7 @@ export default function DashboardApps({
   );
 
   const handleAvailabilityToggle = (option: string) => {
-    console.log('Toggling availability:', option);
+    console.log('Toggling availability in DashboardApps:', option);
     setSelectedAvailability(prev => 
       prev.includes(option) 
         ? prev.filter(item => item !== option)
@@ -88,6 +88,7 @@ export default function DashboardApps({
   };
 
   const clearAllFilters = () => {
+    console.log('Clearing all filters in DashboardApps');
     onFeatureToggle("CLEAR_ALL");
     setShowTopRated(false);
     setSelectedAvailability([]);

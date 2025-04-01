@@ -120,21 +120,21 @@ export function FilterSection({
                           selectedAvailability.length > 0;
 
   const handleFeatureToggle = (featureId: string) => {
-    console.log('Feature clicked:', featureId);
+    console.log('Feature clicked in FilterSection:', featureId);
     if (onFeatureToggle) {
       onFeatureToggle(featureId);
     }
   };
 
   const handleAvailabilityToggle = (option: string) => {
-    console.log('Availability clicked:', option);
+    console.log('Availability clicked in FilterSection:', option);
     if (onAvailabilityToggle) {
       onAvailabilityToggle(option);
     }
   };
 
   const handleTopRatedToggle = () => {
-    console.log('Top rated toggled');
+    console.log('Top rated toggled in FilterSection');
     if (onTopRatedToggle) {
       onTopRatedToggle();
     }
