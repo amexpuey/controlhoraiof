@@ -43,7 +43,7 @@ export default function TemplateFilters({ selectedCategory, onCategoryChange }: 
           <Button
             key={category.value}
             variant={selectedCategory === category.value ? "default" : "outline"}
-            className={`flex items-center ${
+            className={`flex items-center cursor-pointer ${
               selectedCategory === category.value ? "bg-blue-600 hover:bg-blue-700" : "hover:bg-gray-100"
             }`}
             onClick={() => onCategoryChange(category.value)}

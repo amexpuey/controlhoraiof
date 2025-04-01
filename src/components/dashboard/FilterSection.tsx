@@ -169,7 +169,7 @@ export function FilterSection({
                     variant={selectedFeatures.includes(id) ? "default" : "outline"}
                     size="sm"
                     onClick={() => onFeatureToggle(id)}
-                    className={`h-auto py-2 px-3 justify-start ${
+                    className={`h-auto py-2 px-3 justify-start cursor-pointer ${
                       selectedFeatures.includes(id) ? "bg-blue-600 hover:bg-blue-700" : "hover:bg-gray-100"
                     }`}
                     type="button"
@@ -193,7 +193,7 @@ export function FilterSection({
                 variant={selectedAvailability.includes(id) ? "default" : "outline"}
                 size="sm"
                 onClick={() => onAvailabilityToggle(id)}
-                className={`h-8 ${
+                className={`h-8 cursor-pointer ${
                   selectedAvailability.includes(id) ? "bg-blue-600 hover:bg-blue-700" : "hover:bg-gray-100"
                 }`}
                 type="button"
