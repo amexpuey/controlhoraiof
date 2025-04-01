@@ -122,7 +122,9 @@ const Dashboard = () => {
   };
 
   const handleFeatureToggle = (feature: string) => {
+    console.log('Feature toggle in Dashboard:', feature);
     if (feature === "CLEAR_ALL") {
+      console.log('Clearing all features');
       setSelectedFeatures([]);
       localStorage.setItem('selectedFeatures', JSON.stringify([]));
       return;
@@ -132,6 +134,7 @@ const Dashboard = () => {
       ? selectedFeatures.filter(f => f !== feature)
       : [...selectedFeatures, feature];
     
+    console.log('New selected features:', newFeatures);
     setSelectedFeatures(newFeatures);
     localStorage.setItem('selectedFeatures', JSON.stringify(newFeatures));
   };

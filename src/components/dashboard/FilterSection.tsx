@@ -119,6 +119,27 @@ export function FilterSection({
                           showTopRated || 
                           selectedAvailability.length > 0;
 
+  const handleFeatureToggle = (featureId: string) => {
+    console.log('Feature clicked:', featureId);
+    if (onFeatureToggle) {
+      onFeatureToggle(featureId);
+    }
+  };
+
+  const handleAvailabilityToggle = (option: string) => {
+    console.log('Availability clicked:', option);
+    if (onAvailabilityToggle) {
+      onAvailabilityToggle(option);
+    }
+  };
+
+  const handleTopRatedToggle = () => {
+    console.log('Top rated toggled');
+    if (onTopRatedToggle) {
+      onTopRatedToggle();
+    }
+  };
+
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm mb-8">
       <div className="flex justify-between items-center mb-4">
@@ -132,7 +153,7 @@ export function FilterSection({
             variant="outline" 
             size="sm" 
             onClick={onClearAllFilters}
-            className="flex items-center gap-1 text-sm"
+            className="flex items-center gap-1 text-sm cursor-pointer"
             type="button"
           >
             <X className="h-4 w-4" />
@@ -146,7 +167,7 @@ export function FilterSection({
         <div>
           <Button
             variant="ghost"
-            className="w-full flex justify-between items-center mb-3 features-toggle-button"
+            className="w-full flex justify-between items-center mb-3 features-toggle-button cursor-pointer"
             onClick={() => setShowFeatures(!showFeatures)}
             type="button"
           >
@@ -168,7 +189,7 @@ export function FilterSection({
                     key={id}
                     variant={selectedFeatures.includes(id) ? "default" : "outline"}
                     size="sm"
-                    onClick={() => onFeatureToggle(id)}
+                    onClick={() => handleFeatureToggle(id)}
                     className={`h-auto py-2 px-3 justify-start cursor-pointer ${
                       selectedFeatures.includes(id) ? "bg-blue-600 hover:bg-blue-700" : "hover:bg-gray-100"
                     }`}
@@ -192,7 +213,7 @@ export function FilterSection({
                 key={id}
                 variant={selectedAvailability.includes(id) ? "default" : "outline"}
                 size="sm"
-                onClick={() => onAvailabilityToggle(id)}
+                onClick={() => handleAvailabilityToggle(id)}
                 className={`h-8 cursor-pointer ${
                   selectedAvailability.includes(id) ? "bg-blue-600 hover:bg-blue-700" : "hover:bg-gray-100"
                 }`}
@@ -210,7 +231,7 @@ export function FilterSection({
           <Checkbox
             id="top-rated"
             checked={showTopRated}
-            onCheckedChange={onTopRatedToggle}
+            onCheckedChange={handleTopRatedToggle}
           />
           <Label htmlFor="top-rated" className="flex items-center gap-2 cursor-pointer">
             <Award className="w-4 h-4" />

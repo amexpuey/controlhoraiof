@@ -51,11 +51,19 @@ export default function DashboardApps({
   );
 
   const handleAvailabilityToggle = (option: string) => {
+    console.log('Toggling availability:', option);
     setSelectedAvailability(prev => 
       prev.includes(option) 
         ? prev.filter(item => item !== option)
         : [...prev, option]
     );
+  };
+
+  const handleFeatureToggle = (feature: string) => {
+    console.log('Feature toggled in DashboardApps:', feature);
+    if (onFeatureToggle) {
+      onFeatureToggle(feature);
+    }
   };
 
   const handleCompareToggle = (appId: string) => {
@@ -109,7 +117,7 @@ export default function DashboardApps({
     <div className="space-y-8">
       <FilterSection
         selectedFeatures={selectedFeatures}
-        onFeatureToggle={onFeatureToggle}
+        onFeatureToggle={handleFeatureToggle}
         selectedTypes={[]}
         onTypeToggle={() => {}}
         showTopRated={showTopRated}
@@ -136,6 +144,7 @@ export default function DashboardApps({
               onClick={handleCompareClick}
               disabled={selectedAppsForComparison.length < 2}
               type="button"
+              className="cursor-pointer"
             >
               Comparar Aplicaciones
             </Button>
@@ -195,7 +204,7 @@ export default function DashboardApps({
           <Button 
             onClick={clearAllFilters} 
             variant="link" 
-            className="mt-2 text-blue-600"
+            className="mt-2 text-blue-600 cursor-pointer"
             type="button"
           >
             Limpiar filtros
