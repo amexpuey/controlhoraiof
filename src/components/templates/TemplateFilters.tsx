@@ -11,7 +11,8 @@ import {
   Users, 
   GraduationCap, 
   RotateCw, 
-  MessageSquare
+  MessageSquare,
+  Filter
 } from "lucide-react";
 
 interface TemplateFiltersProps {
@@ -22,7 +23,7 @@ interface TemplateFiltersProps {
 export default function TemplateFilters({ selectedCategory, onCategoryChange }: TemplateFiltersProps) {
   // Categories with their corresponding icons
   const categories: { value: TemplateCategory | "all"; label: string; icon: React.ReactNode }[] = [
-    { value: "all", label: "Todas", icon: <Book className="w-4 h-4 mr-1.5" /> },
+    { value: "all", label: "Todas", icon: <Filter className="w-4 h-4 mr-1.5" /> },
     { value: "Control horario", label: "Control horario", icon: <Clock className="w-4 h-4 mr-1.5" /> },
     { value: "Evaluación", label: "Evaluación", icon: <FileText className="w-4 h-4 mr-1.5" /> },
     { value: "Formación", label: "Formación", icon: <GraduationCap className="w-4 h-4 mr-1.5" /> },
@@ -42,8 +43,11 @@ export default function TemplateFilters({ selectedCategory, onCategoryChange }: 
           <Button
             key={category.value}
             variant={selectedCategory === category.value ? "default" : "outline"}
-            className={`flex items-center ${selectedCategory === category.value ? "bg-blue-600" : ""}`}
+            className={`flex items-center ${
+              selectedCategory === category.value ? "bg-blue-600 hover:bg-blue-700" : "hover:bg-gray-100"
+            }`}
             onClick={() => onCategoryChange(category.value)}
+            type="button"
           >
             {category.icon}
             {category.label}

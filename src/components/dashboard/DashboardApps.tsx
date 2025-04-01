@@ -7,7 +7,8 @@ import { useAppsFiltering } from "./useAppsFiltering";
 import type { Database } from "@/integrations/supabase/types";
 import { Button } from "@/components/ui/button";
 import AdBanner from "@/components/ads/AdBanner";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Filter } from "lucide-react";
+import { toast } from "sonner";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
@@ -42,7 +43,7 @@ export default function DashboardApps({
     }
   }, [location]);
 
-  const { filteredApps } = useAppsFiltering(
+  const { filteredApps, loading: isLoading } = useAppsFiltering(
     selectedFeatures,
     searchQuery,
     showTopRated,
@@ -63,6 +64,7 @@ export default function DashboardApps({
         return prev.filter(id => id !== appId);
       }
       if (prev.length >= 3) {
+        toast.warning("Solo puedes comparar hasta 3 aplicaciones");
         return prev;
       }
       return [...prev, appId];
@@ -72,6 +74,8 @@ export default function DashboardApps({
   const handleCompareClick = () => {
     if (selectedAppsForComparison.length > 1) {
       navigate(`/mejores-apps-control-horario/comparar/${selectedAppsForComparison.join(',')}`);
+    } else {
+      toast.warning("Selecciona al menos 2 aplicaciones para comparar");
     }
   };
 
@@ -80,6 +84,7 @@ export default function DashboardApps({
     setShowTopRated(false);
     setSelectedAvailability([]);
     setSearchQuery("");
+    toast.success("Filtros eliminados correctamente");
   };
 
   const hasActiveFilters = selectedFeatures.length > 0 || 
@@ -130,6 +135,7 @@ export default function DashboardApps({
             <Button
               onClick={handleCompareClick}
               disabled={selectedAppsForComparison.length < 2}
+              type="button"
             >
               Comparar Aplicaciones
             </Button>
@@ -137,8 +143,18 @@ export default function DashboardApps({
         </div>
       )}
 
+      {/* Loading State */}
+      {isLoading && (
+        <div className="text-center py-8">
+          <div className="animate-pulse mb-2">
+            <div className="h-4 bg-gray-200 rounded w-32 mx-auto"></div>
+          </div>
+          <p className="text-gray-500">Cargando aplicaciones...</p>
+        </div>
+      )}
+
       {/* Show message when no filters are selected */}
-      {!hasActiveFilters && (
+      {!hasActiveFilters && !isLoading && (
         <div className="text-center bg-blue-50 p-8 rounded-lg border border-blue-100">
           <AlertCircle className="h-12 w-12 text-blue-500 mx-auto mb-4" />
           <h3 className="text-xl font-bold text-blue-800 mb-2">No hay filtros seleccionados</h3>
@@ -149,7 +165,7 @@ export default function DashboardApps({
       )}
 
       {/* Display apps with ad banners between groups */}
-      {appsGroups.map((group, groupIndex) => (
+      {!isLoading && appsGroups.map((group, groupIndex) => (
         <div key={groupIndex} className="space-y-8">
           <AppsGrid
             apps={group}
@@ -172,9 +188,18 @@ export default function DashboardApps({
       ))}
 
       {/* Show message if filters are applied but no apps are found */}
-      {hasActiveFilters && appsToShow.length === 0 && (
-        <div className="text-center text-gray-600 py-8">
-          No se encontraron aplicaciones que coincidan con tus criterios.
+      {hasActiveFilters && appsToShow.length === 0 && !isLoading && (
+        <div className="text-center text-gray-600 py-8 bg-gray-50 rounded-lg border border-gray-100">
+          <AlertCircle className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+          <p className="font-medium">No se encontraron aplicaciones que coincidan con tus criterios.</p>
+          <Button 
+            onClick={clearAllFilters} 
+            variant="link" 
+            className="mt-2 text-blue-600"
+            type="button"
+          >
+            Limpiar filtros
+          </Button>
         </div>
       )}
     </div>

@@ -39,7 +39,7 @@ export function HoursCalculatorForm() {
     // Redirigir con parámetros en la URL
     navigate({
       pathname: "/plantillas",
-      search: `?tab=calendar&calculatedHours=${totalWorkHours}&workdaysPerWeek=${formValues.workdaysPerWeek}&hoursPerDay=${formValues.hoursPerDay}`
+      search: `?tab=calendar&calculatedHours=${totalWorkHours}&workdaysPerWeek=${formValues.workdaysPerWeek}&hoursPerDay=${formValues.hoursPerDay}&year=${formValues.year}&month=${formValues.month}`
     });
 
     toast.success("Datos aplicados al calendario correctamente");

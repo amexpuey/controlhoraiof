@@ -32,7 +32,8 @@ import {
   Check,
   Globe,
   Apple,
-  X
+  X,
+  Filter
 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -121,7 +122,10 @@ export function FilterSection({
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm mb-8">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">Filtros</h2>
+        <h2 className="text-xl font-semibold flex items-center">
+          <Filter className="h-5 w-5 mr-2 text-gray-600" />
+          Filtros
+        </h2>
         
         {hasActiveFilters && (
           <Button 
@@ -129,6 +133,7 @@ export function FilterSection({
             size="sm" 
             onClick={onClearAllFilters}
             className="flex items-center gap-1 text-sm"
+            type="button"
           >
             <X className="h-4 w-4" />
             Borrar filtros
@@ -143,6 +148,7 @@ export function FilterSection({
             variant="ghost"
             className="w-full flex justify-between items-center mb-3 features-toggle-button"
             onClick={() => setShowFeatures(!showFeatures)}
+            type="button"
           >
             <span className="text-sm font-medium">
               Características ({selectedFeatures.length} seleccionadas)
@@ -163,7 +169,10 @@ export function FilterSection({
                     variant={selectedFeatures.includes(id) ? "default" : "outline"}
                     size="sm"
                     onClick={() => onFeatureToggle(id)}
-                    className="h-auto py-2 px-3 justify-start"
+                    className={`h-auto py-2 px-3 justify-start ${
+                      selectedFeatures.includes(id) ? "bg-blue-600 hover:bg-blue-700" : "hover:bg-gray-100"
+                    }`}
+                    type="button"
                   >
                     <Icon className="w-4 h-4 mr-2 shrink-0" />
                     <span className="text-sm text-left">{id}</span>
@@ -184,7 +193,10 @@ export function FilterSection({
                 variant={selectedAvailability.includes(id) ? "default" : "outline"}
                 size="sm"
                 onClick={() => onAvailabilityToggle(id)}
-                className="h-8"
+                className={`h-8 ${
+                  selectedAvailability.includes(id) ? "bg-blue-600 hover:bg-blue-700" : "hover:bg-gray-100"
+                }`}
+                type="button"
               >
                 <Icon className="w-4 h-4 mr-2" />
                 {label}
@@ -200,7 +212,7 @@ export function FilterSection({
             checked={showTopRated}
             onCheckedChange={onTopRatedToggle}
           />
-          <Label htmlFor="top-rated" className="flex items-center gap-2">
+          <Label htmlFor="top-rated" className="flex items-center gap-2 cursor-pointer">
             <Award className="w-4 h-4" />
             Solo mostrar Top Rated
           </Label>

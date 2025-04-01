@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import type { Database } from "@/integrations/supabase/types";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -20,25 +20,35 @@ export function useAppsFiltering(
 ) {
   const [apps, setApps] = useState<AppWithMatches[]>([]);
   const [filteredApps, setFilteredApps] = useState<AppWithMatches[]>([]);
+  const [loading, setLoading] = useState(true);
 
+  // Fetch apps once when the component mounts
   useEffect(() => {
     const fetchApps = async () => {
-      const { data, error } = await supabase
-        .from('companies')
-        .select('*')
-        .order('created_at', { ascending: false });
+      setLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from('companies')
+          .select('*')
+          .order('created_at', { ascending: false });
 
-      if (error) {
-        console.error('Error fetching apps:', error);
-        return;
+        if (error) {
+          console.error('Error fetching apps:', error);
+          return;
+        }
+
+        setApps(data || []);
+      } catch (err) {
+        console.error('Error in fetchApps:', err);
+      } finally {
+        setLoading(false);
       }
-
-      setApps(data || []);
     };
 
     fetchApps();
   }, []);
 
+  // Apply filters whenever filter criteria change
   useEffect(() => {
     if (!apps || apps.length === 0) return;
     
@@ -61,7 +71,11 @@ export function useAppsFiltering(
       matchingFeaturesCount: selectedFeatures.filter(feature => 
         app.features?.includes(feature)
       ).length,
-      totalSelectedFeatures: selectedFeatures.length
+      totalSelectedFeatures: selectedFeatures.length,
+      score: (selectedFeatures.filter(feature => 
+        app.features?.includes(feature)
+      ).length / selectedFeatures.length) * 100,
+      hasMatches: selectedFeatures.some(feature => app.features?.includes(feature))
     }));
 
     filtered = appsWithMatchingCount;
@@ -111,5 +125,5 @@ export function useAppsFiltering(
     setFilteredApps(filtered);
   }, [apps, selectedFeatures, searchQuery, showTopRated, selectedAvailability]);
 
-  return { filteredApps };
+  return { filteredApps, loading };
 }

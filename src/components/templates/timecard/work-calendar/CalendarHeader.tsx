@@ -5,6 +5,7 @@ import { es } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Download, FileText, ChevronLeft, ChevronRight } from "lucide-react";
+import { toast } from "sonner";
 
 interface CalendarHeaderProps {
   currentDate: Date;
@@ -20,7 +21,13 @@ export default function CalendarHeader({
   downloadAsCSV 
 }: CalendarHeaderProps) {
   const handleDownloadCSV = () => {
-    downloadAsCSV();
+    try {
+      downloadAsCSV();
+      toast.success("Calendario descargado correctamente");
+    } catch (error) {
+      console.error("Error al descargar CSV:", error);
+      toast.error("Error al descargar el calendario");
+    }
   };
 
   return (
