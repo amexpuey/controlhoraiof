@@ -6,6 +6,8 @@ export interface HoursCalculatorFormValues {
   extraHolidays: number;
   workdaysPerWeek: number;
   hoursPerDay: number;
+  year: number;
+  month: number;
 }
 
 export interface Holiday {

@@ -11,6 +11,11 @@ export function useHoursCalculator() {
   const [holidayName, setHolidayName] = useState("");
   const [isCalculated, setIsCalculated] = useState(false);
 
+  // Get current date for defaults
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth() + 1; // JavaScript months are 0-indexed
+
   const form = useForm<HoursCalculatorFormValues>({
     defaultValues: {
       regularHours: 1782, // Valor por defecto para España
@@ -18,7 +23,9 @@ export function useHoursCalculator() {
       vacationType: "business",
       extraHolidays: 0,
       workdaysPerWeek: 5,
-      hoursPerDay: 8
+      hoursPerDay: 8,
+      year: currentYear,
+      month: currentMonth
     }
   });
 
