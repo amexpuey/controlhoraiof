@@ -16,7 +16,7 @@ export default function ComplianceKit() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0F172A] to-[#1E293B] text-gray-100">
+    <div className="min-h-screen bg-white text-gray-800">
       <AppHeader />
       
       <main className="container max-w-7xl mx-auto px-4 py-8">

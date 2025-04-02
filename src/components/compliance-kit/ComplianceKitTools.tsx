@@ -72,13 +72,28 @@ export default function ComplianceKitTools() {
     }
   ];
 
+  const splitTitle = (title: string) => {
+    const words = title.split(' ');
+    if (words.length <= 2) return title;
+    
+    const firstLine = words.slice(0, 1).join(' ');
+    const secondLine = words.slice(1).join(' ');
+    
+    return (
+      <>
+        <span className="block">{firstLine}</span>
+        <span className="block">{secondLine}</span>
+      </>
+    );
+  };
+
   return (
     <section id="compliance-tools" className="py-8">
       <div className="mb-8 text-center">
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3">
           Herramientas Interactivas
         </h2>
-        <p className="text-gray-200 max-w-2xl mx-auto">
+        <p className="text-gray-600 max-w-2xl mx-auto">
           Todas nuestras herramientas son gratuitas, sin necesidad de registro y diseñadas para ayudarte a cumplir con la normativa laboral de forma sencilla.
         </p>
       </div>
@@ -92,37 +107,39 @@ export default function ComplianceKitTools() {
               onClick={() => setActiveTab(tool.id)}
               className={`flex flex-col items-center justify-center p-4 rounded-lg transition-all ${
                 activeTab === tool.id 
-                  ? "bg-blue-600 text-white" 
-                  : "bg-white text-gray-700 hover:bg-gray-100"
+                  ? "bg-blue-100 text-blue-800" 
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
               <div className={`p-3 rounded-full mb-2 ${
-                activeTab === tool.id ? "bg-blue-700" : "bg-blue-50"
+                activeTab === tool.id ? "bg-blue-200" : "bg-white"
               }`}>
                 {React.createElement(tool.icon, { 
-                  className: `w-6 h-6 ${activeTab === tool.id ? "text-white" : "text-blue-600"}`
+                  className: `w-6 h-6 ${activeTab === tool.id ? "text-blue-700" : "text-gray-700"}`
                 })}
               </div>
-              <span className="text-center font-medium text-sm">{tool.title}</span>
+              <span className="text-center font-medium text-sm leading-tight">
+                {splitTitle(tool.title)}
+              </span>
             </button>
           ))}
         </div>
 
         {/* Active Tab Content */}
-        <div className="bg-gray-800/40 p-6 rounded-lg border border-gray-700 shadow-xl">
+        <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
           {tools.map((tool) => (
             activeTab === tool.id && (
               <div key={tool.id}>
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="bg-blue-900/50 p-3 rounded-full">
-                    {React.createElement(tool.icon, { className: "h-8 w-8 text-blue-400" })}
+                  <div className="bg-blue-100 p-3 rounded-full">
+                    {React.createElement(tool.icon, { className: "h-8 w-8 text-blue-700" })}
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-white">{tool.title}</h3>
-                    <p className="text-gray-200">{tool.description}</p>
+                    <h3 className="text-xl font-bold text-gray-800">{tool.title}</h3>
+                    <p className="text-gray-600">{tool.description}</p>
                   </div>
                 </div>
-                <div className="border-t border-gray-700 pt-6">
+                <div className="border-t border-gray-200 pt-6">
                   {React.createElement(tool.component)}
                 </div>
               </div>
@@ -133,24 +150,24 @@ export default function ComplianceKitTools() {
 
       {/* Learning Modules Section (visible when aprendizaje is active) */}
       {activeTab === "aprendizaje" && (
-        <div className="mt-8 bg-gray-800/40 p-6 rounded-lg border border-gray-700 shadow-xl">
-          <h3 className="text-xl font-bold text-blue-400 mb-4">Módulos de Aprendizaje Interactivo</h3>
-          <p className="text-gray-200 mb-6">
+        <div className="mt-8 bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+          <h3 className="text-xl font-bold text-blue-700 mb-4">Módulos de Aprendizaje Interactivo</h3>
+          <p className="text-gray-600 mb-6">
             Descubre todo lo que necesitas saber sobre el control horario a través de estos módulos interactivos
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Module 1 */}
-            <div className="bg-gray-700/50 rounded-lg overflow-hidden border border-gray-600">
+            <div className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
               <div className="p-5">
-                <div className="bg-blue-900/30 p-2 rounded-full w-10 h-10 flex items-center justify-center mb-3">
-                  <FileText className="h-5 w-5 text-blue-400" />
+                <div className="bg-blue-100 p-2 rounded-full w-10 h-10 flex items-center justify-center mb-3">
+                  <FileText className="h-5 w-5 text-blue-700" />
                 </div>
-                <h4 className="text-white font-medium mb-2">¿Qué es el control horario?</h4>
-                <p className="text-gray-300 text-sm mb-4">
+                <h4 className="text-gray-800 font-medium mb-2">¿Qué es el control horario?</h4>
+                <p className="text-gray-600 text-sm mb-4">
                   Aprende todo lo relativo a la normativa de control horario y cómo afecta a tu empresa.
                 </p>
-                <a href="#" className="text-blue-400 flex items-center text-sm hover:underline">
+                <a href="#" className="text-blue-600 flex items-center text-sm hover:underline">
                   Acceder
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -160,16 +177,16 @@ export default function ComplianceKitTools() {
             </div>
             
             {/* Module 2 */}
-            <div className="bg-gray-700/50 rounded-lg overflow-hidden border border-gray-600">
+            <div className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
               <div className="p-5">
-                <div className="bg-blue-900/30 p-2 rounded-full w-10 h-10 flex items-center justify-center mb-3">
-                  <CheckCircle className="h-5 w-5 text-blue-400" />
+                <div className="bg-blue-100 p-2 rounded-full w-10 h-10 flex items-center justify-center mb-3">
+                  <CheckCircle className="h-5 w-5 text-blue-700" />
                 </div>
-                <h4 className="text-white font-medium mb-2">¿Es obligatorio para tu empresa?</h4>
-                <p className="text-gray-300 text-sm mb-4">
+                <h4 className="text-gray-800 font-medium mb-2">¿Es obligatorio para tu empresa?</h4>
+                <p className="text-gray-600 text-sm mb-4">
                   Descubre si tu empresa está obligada a implementar un sistema de fichaje.
                 </p>
-                <a href="#" className="text-blue-400 flex items-center text-sm hover:underline">
+                <a href="#" className="text-blue-600 flex items-center text-sm hover:underline">
                   Acceder
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -179,16 +196,16 @@ export default function ComplianceKitTools() {
             </div>
             
             {/* Module 3 */}
-            <div className="bg-gray-700/50 rounded-lg overflow-hidden border border-gray-600">
+            <div className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
               <div className="p-5">
-                <div className="bg-blue-900/30 p-2 rounded-full w-10 h-10 flex items-center justify-center mb-3">
-                  <BookOpen className="h-5 w-5 text-blue-400" />
+                <div className="bg-blue-100 p-2 rounded-full w-10 h-10 flex items-center justify-center mb-3">
+                  <BookOpen className="h-5 w-5 text-blue-700" />
                 </div>
-                <h4 className="text-white font-medium mb-2">Cómo implementar un sistema de fichajes</h4>
-                <p className="text-gray-300 text-sm mb-4">
+                <h4 className="text-gray-800 font-medium mb-2">Cómo implementar un sistema de fichajes</h4>
+                <p className="text-gray-600 text-sm mb-4">
                   Conoce las diferentes opciones y encuentra la mejor para tu empresa.
                 </p>
-                <a href="#" className="text-blue-400 flex items-center text-sm hover:underline">
+                <a href="#" className="text-blue-600 flex items-center text-sm hover:underline">
                   Acceder
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
