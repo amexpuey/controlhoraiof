@@ -1,5 +1,5 @@
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ToolsDropdown } from "../ui/ToolsDropdown";
 import { Menu } from "lucide-react";
 import { Button } from "../ui/button";
@@ -10,6 +10,8 @@ import { MobileMenu } from "./MobileMenu";
 export function AppHeader() {
   const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+  const isKitLegal = location.pathname === "/kit-legal";
 
   return (
     <div className="h-16 bg-gradient-to-r from-gray-800 to-gray-900 border-b flex items-center justify-between px-4 md:px-6 shadow-md z-10 relative">
@@ -47,7 +49,9 @@ export function AppHeader() {
           </Link>
           <Link 
             to="/kit-legal" 
-            className="text-sm font-medium text-white hover:text-gray-200 transition-colors"
+            className={`text-sm font-medium ${isKitLegal 
+              ? "bg-blue-600 text-white" 
+              : "text-white hover:text-gray-200"} transition-colors px-3 py-1.5 rounded-md`}
           >
             Kit Legal
           </Link>
