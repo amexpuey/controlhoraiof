@@ -1,24 +1,16 @@
 
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
+  BookOpen, 
   CheckCircle, 
-  ListChecks, 
-  FileText, 
-  BookOpen,
-  AlertTriangle, 
-  Home,
-  Settings,
-  Users,
-  Clock,
-  HelpCircle
+  Play,
+  Home
 } from "lucide-react";
-import ComplianceKitHeader from "@/components/compliance-kit/ComplianceKitHeader";
+import LearningSidebar from "@/components/learning/sidebar/LearningSidebar";
 import ComplianceKitTools from "@/components/compliance-kit/ComplianceKitTools";
-import ComplianceKitFAQ from "@/components/compliance-kit/ComplianceKitFAQ";
 import ComplianceKitBenefits from "@/components/compliance-kit/ComplianceKitBenefits";
+import ComplianceKitFAQ from "@/components/compliance-kit/ComplianceKitFAQ";
 import ComplianceChecker from "@/components/blog/ComplianceChecker";
 import ComplianceChecklist from "@/components/compliance-kit/tools/ComplianceChecklist";
 import LegalRiskSimulator from "@/components/compliance-kit/tools/LegalRiskSimulator";
@@ -31,9 +23,7 @@ export default function ComplianceKit() {
   const [learningProgress, setLearningProgress] = useState(0);
   const [activeTab, setActiveTab] = useState(section || "inicio");
   
-  console.log("ComplianceKit - Section param:", section);
-  
-  // Determinar qué contenido mostrar basado en la sección
+  // Calculate overall learning progress when component mounts
   useEffect(() => {
     document.title = "INWOUT - Kit Legal | Control Horario Electrónico";
     
@@ -64,13 +54,6 @@ export default function ComplianceKit() {
   const navigateToSection = (sectionId: string) => {
     navigate(`/kit-legal/${sectionId}`);
   };
-
-  // Navigation menu items
-  const navItems = [
-    { id: "inicio", label: "Inicio", icon: Home },
-    { id: "herramientas", label: "Herramientas", icon: CheckCircle },
-    { id: "configuracion-inwout", label: "Configurar INWOUT", icon: Settings }
-  ];
 
   // Define quick action steps with status
   const onboardingSteps = [
@@ -136,7 +119,7 @@ export default function ComplianceKit() {
                 </p>
                 <button 
                   onClick={() => navigateToSection("verificador")}
-                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+                  className="bg-[#0BC8C1] text-white px-4 py-2 rounded hover:bg-[#0AB1AB] transition-colors"
                 >
                   Verificar cumplimiento
                 </button>
@@ -184,83 +167,30 @@ export default function ComplianceKit() {
   // Mostrar contenido específico si estamos en una sección específica
   if (section && section !== "inicio" && section !== "herramientas" && section !== "configuracion-inwout") {
     return (
-      <div className="min-h-screen bg-white text-gray-800">
+      <div className="min-h-screen bg-[#f8f9fa] text-gray-800">
         <div className="flex">
           {/* Sidebar */}
-          <div className="w-64 bg-blue-800 text-white min-h-screen fixed left-0 top-0">
-            <div className="p-6">
-              <div className="text-2xl font-bold mb-8">INWOUT Kit</div>
-              
-              {/* Navigation Menu */}
-              <nav className="space-y-1">
-                {navItems.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => navigateToSection(item.id)}
-                    className={`flex items-center w-full p-3 rounded-lg transition-colors ${
-                      activeTab === item.id 
-                        ? "bg-blue-700 text-white" 
-                        : "text-blue-100 hover:bg-blue-700/50"
-                    }`}
-                  >
-                    <item.icon className="h-5 w-5 mr-3" />
-                    <span>{item.label}</span>
-                  </button>
-                ))}
-              </nav>
-              
-              {/* Learning Progress Section */}
-              <div className="mt-8 border-t border-blue-700 pt-6">
-                <h3 className="text-lg font-medium mb-3">Progreso de aprendizaje</h3>
-                <Progress value={learningProgress} className="h-2 bg-blue-900" />
-                <div className="mt-2 text-sm text-blue-200">
-                  {learningProgress}% completado
-                </div>
-                
-                <div className="mt-4 space-y-2">
-                  <div 
-                    onClick={() => navigateToModule("que-es-control-horario")}
-                    className="flex items-center p-2 rounded hover:bg-blue-700/50 cursor-pointer"
-                  >
-                    {learningProgress >= 33 ? (
-                      <CheckCircle className="h-4 w-4 text-green-400 mr-2" />
-                    ) : (
-                      <Clock className="h-4 w-4 text-blue-300 mr-2" />
-                    )}
-                    <span className="text-sm">Qué es el control horario</span>
-                  </div>
-                  
-                  <div 
-                    onClick={() => navigateToModule("es-obligatorio")}
-                    className="flex items-center p-2 rounded hover:bg-blue-700/50 cursor-pointer"
-                  >
-                    {learningProgress >= 66 ? (
-                      <CheckCircle className="h-4 w-4 text-green-400 mr-2" />
-                    ) : (
-                      <Clock className="h-4 w-4 text-blue-300 mr-2" />
-                    )}
-                    <span className="text-sm">¿Es obligatorio?</span>
-                  </div>
-                  
-                  <div 
-                    onClick={() => navigateToModule("como-implementar")}
-                    className="flex items-center p-2 rounded hover:bg-blue-700/50 cursor-pointer"
-                  >
-                    {learningProgress >= 100 ? (
-                      <CheckCircle className="h-4 w-4 text-green-400 mr-2" />
-                    ) : (
-                      <Clock className="h-4 w-4 text-blue-300 mr-2" />
-                    )}
-                    <span className="text-sm">Cómo implementarlo</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <LearningSidebar 
+            learningProgress={learningProgress} 
+            activeModuleId={null}
+          />
           
           {/* Main content */}
           <div className="ml-64 flex-1">
-            <main className="container max-w-6xl mx-auto px-8 py-8">
+            <header className="bg-white p-4 border-b border-gray-200 flex justify-between items-center">
+              <a href="/kit-legal" className="text-gray-600 hover:text-gray-900 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                Volver al Kit Legal
+              </a>
+              <div className="flex items-center gap-4">
+                <span className="text-gray-600">Horas hoy: 0h 0m</span>
+                <button className="bg-[#0BC8C1] hover:bg-[#0AB1AB] text-white px-4 py-2 rounded-md">
+                  Entrada
+                </button>
+              </div>
+            </header>
+            
+            <main className="container max-w-5xl mx-auto px-8 py-8">
               {renderSectionContent()}
             </main>
           </div>
@@ -271,82 +201,29 @@ export default function ComplianceKit() {
 
   // Contenido estándar del Kit Legal
   return (
-    <div className="min-h-screen bg-white text-gray-800">
+    <div className="min-h-screen bg-[#f8f9fa] text-gray-800">
       <div className="flex">
         {/* Sidebar */}
-        <div className="w-64 bg-blue-800 text-white min-h-screen fixed left-0 top-0">
-          <div className="p-6">
-            <div className="text-2xl font-bold mb-8">INWOUT Kit</div>
-            
-            {/* Navigation Menu */}
-            <nav className="space-y-1">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => setActiveTab(item.id)}
-                  className={`flex items-center w-full p-3 rounded-lg transition-colors ${
-                    activeTab === item.id 
-                      ? "bg-blue-700 text-white" 
-                      : "text-blue-100 hover:bg-blue-700/50"
-                  }`}
-                >
-                  <item.icon className="h-5 w-5 mr-3" />
-                  <span>{item.label}</span>
-                </button>
-              ))}
-            </nav>
-            
-            {/* Learning Progress Section */}
-            <div className="mt-8 border-t border-blue-700 pt-6">
-              <h3 className="text-lg font-medium mb-3">Progreso de aprendizaje</h3>
-              <Progress value={learningProgress} className="h-2 bg-blue-900" />
-              <div className="mt-2 text-sm text-blue-200">
-                {learningProgress}% completado
-              </div>
-              
-              <div className="mt-4 space-y-2">
-                <div 
-                  onClick={() => navigateToModule("que-es-control-horario")}
-                  className="flex items-center p-2 rounded hover:bg-blue-700/50 cursor-pointer"
-                >
-                  {learningProgress >= 33 ? (
-                    <CheckCircle className="h-4 w-4 text-green-400 mr-2" />
-                  ) : (
-                    <Clock className="h-4 w-4 text-blue-300 mr-2" />
-                  )}
-                  <span className="text-sm">Qué es el control horario</span>
-                </div>
-                
-                <div 
-                  onClick={() => navigateToModule("es-obligatorio")}
-                  className="flex items-center p-2 rounded hover:bg-blue-700/50 cursor-pointer"
-                >
-                  {learningProgress >= 66 ? (
-                    <CheckCircle className="h-4 w-4 text-green-400 mr-2" />
-                  ) : (
-                    <Clock className="h-4 w-4 text-blue-300 mr-2" />
-                  )}
-                  <span className="text-sm">¿Es obligatorio?</span>
-                </div>
-                
-                <div 
-                  onClick={() => navigateToModule("como-implementar")}
-                  className="flex items-center p-2 rounded hover:bg-blue-700/50 cursor-pointer"
-                >
-                  {learningProgress >= 100 ? (
-                    <CheckCircle className="h-4 w-4 text-green-400 mr-2" />
-                  ) : (
-                    <Clock className="h-4 w-4 text-blue-300 mr-2" />
-                  )}
-                  <span className="text-sm">Cómo implementarlo</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <LearningSidebar 
+          learningProgress={learningProgress} 
+          activeModuleId={null}
+        />
         
         {/* Main content */}
         <div className="ml-64 flex-1">
+          <header className="bg-white p-4 border-b border-gray-200 flex justify-between items-center">
+            <div className="text-gray-600 flex items-center">
+              <Home className="h-4 w-4 mr-2" />
+              Kit Legal INWOUT
+            </div>
+            <div className="flex items-center gap-4">
+              <span className="text-gray-600">Horas hoy: 0h 0m</span>
+              <button className="bg-[#0BC8C1] hover:bg-[#0AB1AB] text-white px-4 py-2 rounded-md">
+                Entrada
+              </button>
+            </div>
+          </header>
+          
           <main className="container max-w-6xl mx-auto px-8 py-8">
             {activeTab === "inicio" && (
               <>
@@ -402,7 +279,12 @@ export default function ComplianceKit() {
                     <h3 className="text-lg font-semibold text-blue-800">Progreso de aprendizaje</h3>
                     <span className="text-sm font-medium text-blue-600">{learningProgress}% completado</span>
                   </div>
-                  <Progress value={learningProgress} className="h-2 bg-blue-100" />
+                  <div className="h-2 w-full bg-gray-300 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-[#0BC8C1]" 
+                      style={{ width: `${learningProgress}%` }}
+                    ></div>
+                  </div>
                   <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div 
                       onClick={() => navigateToModule("que-es-control-horario")}
@@ -437,43 +319,6 @@ export default function ComplianceKit() {
                   </div>
                 </div>
                 
-                {/* Testimonials */}
-                <div className="my-12">
-                  <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-                    Lo que dicen nuestros clientes
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-                      <div className="flex items-center mb-4">
-                        <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mr-4">
-                          <Users className="h-6 w-6 text-blue-600" />
-                        </div>
-                        <div>
-                          <h4 className="font-semibold">María López</h4>
-                          <p className="text-sm text-gray-500">Directora RRHH, Tecnomed</p>
-                        </div>
-                      </div>
-                      <p className="text-gray-600 italic">
-                        "Con INWOUT y su Kit Legal, pasamos de tener problemas de cumplimiento a estar totalmente preparados para cualquier inspección. La formación y las herramientas son excelentes."
-                      </p>
-                    </div>
-                    <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-                      <div className="flex items-center mb-4">
-                        <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mr-4">
-                          <Users className="h-6 w-6 text-blue-600" />
-                        </div>
-                        <div>
-                          <h4 className="font-semibold">Carlos Rodríguez</h4>
-                          <p className="text-sm text-gray-500">CEO, Distribuciones Rápidas</p>
-                        </div>
-                      </div>
-                      <p className="text-gray-600 italic">
-                        "Increíble la diferencia que ha supuesto para nuestra empresa. Antes gastábamos horas persiguiendo a los empleados para que ficharan, ahora todo es automático."
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                
                 <ComplianceKitBenefits />
               </>
             )}
@@ -483,246 +328,7 @@ export default function ComplianceKit() {
                 <h1 className="text-3xl font-bold text-gray-800 mb-6">
                   Herramientas de Cumplimiento Legal
                 </h1>
-                
-                <Tabs defaultValue="verificador" className="w-full">
-                  <TabsList className="grid grid-cols-6 mb-8">
-                    <TabsTrigger 
-                      value="verificador" 
-                      className="flex items-center gap-2"
-                      onClick={() => navigateToSection("verificador")}
-                    >
-                      <CheckCircle className="h-4 w-4" />
-                      <span>Verificador</span>
-                    </TabsTrigger>
-                    <TabsTrigger 
-                      value="checklist" 
-                      className="flex items-center gap-2"
-                      onClick={() => navigateToSection("checklist")}
-                    >
-                      <ListChecks className="h-4 w-4" />
-                      <span>Checklist</span>
-                    </TabsTrigger>
-                    <TabsTrigger 
-                      value="aprendizaje" 
-                      className="flex items-center gap-2"
-                      onClick={() => navigateToModule("que-es-control-horario")}
-                    >
-                      <BookOpen className="h-4 w-4" />
-                      <span>Aprendizaje</span>
-                    </TabsTrigger>
-                    <TabsTrigger 
-                      value="plantillas" 
-                      className="flex items-center gap-2"
-                      onClick={() => navigateToSection("plantillas")}
-                    >
-                      <FileText className="h-4 w-4" />
-                      <span>Plantillas</span>
-                    </TabsTrigger>
-                    <TabsTrigger 
-                      value="simulador" 
-                      className="flex items-center gap-2"
-                      onClick={() => navigateToSection("simulador")}
-                    >
-                      <AlertTriangle className="h-4 w-4" />
-                      <span>Simulador</span>
-                    </TabsTrigger>
-                    <TabsTrigger 
-                      value="ayuda" 
-                      className="flex items-center gap-2"
-                      onClick={() => navigate("/kit-legal/ayuda/admin")}
-                    >
-                      <HelpCircle className="h-4 w-4" />
-                      <span>Centro de Ayuda</span>
-                    </TabsTrigger>
-                  </TabsList>
-                  
-                  <TabsContent value="verificador" className="bg-white p-6 rounded-lg border border-gray-200">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="bg-blue-100 p-3 rounded-full">
-                        <CheckCircle className="h-8 w-8 text-blue-700" />
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-gray-800">Verificador de Cumplimiento</h3>
-                        <p className="text-gray-600">Evalúa el nivel de cumplimiento de tu empresa en materia laboral</p>
-                      </div>
-                    </div>
-                    <div className="border-t border-gray-200 pt-6">
-                      <button 
-                        onClick={() => navigateToSection("verificador")}
-                        className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-                      >
-                        Ir al Verificador de Cumplimiento
-                      </button>
-                    </div>
-                  </TabsContent>
-                  
-                  <TabsContent value="checklist" className="bg-white p-6 rounded-lg border border-gray-200">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="bg-blue-100 p-3 rounded-full">
-                        <ListChecks className="h-8 w-8 text-blue-700" />
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-gray-800">Checklist Interactivo</h3>
-                        <p className="text-gray-600">Obten una lista personalizada de obligaciones legales según tu sector y tamaño</p>
-                      </div>
-                    </div>
-                    <div className="border-t border-gray-200 pt-6">
-                      <button 
-                        onClick={() => navigateToSection("checklist")}
-                        className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-                      >
-                        Ir al Checklist Interactivo
-                      </button>
-                    </div>
-                  </TabsContent>
-                  
-                  <TabsContent value="aprendizaje" className="bg-white p-6 rounded-lg border border-gray-200">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="bg-blue-100 p-3 rounded-full">
-                        <BookOpen className="h-8 w-8 text-blue-700" />
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-gray-800">Módulos de Aprendizaje</h3>
-                        <p className="text-gray-600">Aprende conceptos clave sobre normativas laborales en formato micro-lecciones</p>
-                      </div>
-                    </div>
-                    <div className="border-t border-gray-200 pt-6">
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div 
-                          onClick={() => navigateToModule("que-es-control-horario")}
-                          className="bg-white shadow rounded-lg overflow-hidden border border-gray-200 cursor-pointer hover:shadow-md transition-all"
-                        >
-                          <div className="bg-blue-50 p-4 border-b border-gray-200">
-                            <h4 className="font-semibold text-blue-800">¿Qué es el control horario?</h4>
-                          </div>
-                          <div className="p-4">
-                            <p className="text-sm text-gray-600 mb-4">
-                              Aprende todo lo relativo a la normativa de control horario y cómo afecta a tu empresa.
-                            </p>
-                            <div className="flex justify-between items-center">
-                              <span className="text-sm text-blue-600 font-medium">Duración: 10 min</span>
-                              {learningProgress >= 33 ? (
-                                <span className="text-sm text-green-600 font-medium flex items-center">
-                                  <CheckCircle className="h-4 w-4 mr-1" /> Completado
-                                </span>
-                              ) : (
-                                <span className="text-sm text-blue-600 font-medium">Empezar →</span>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div 
-                          onClick={() => navigateToModule("es-obligatorio")}
-                          className="bg-white shadow rounded-lg overflow-hidden border border-gray-200 cursor-pointer hover:shadow-md transition-all"
-                        >
-                          <div className="bg-blue-50 p-4 border-b border-gray-200">
-                            <h4 className="font-semibold text-blue-800">¿Es obligatorio para tu empresa?</h4>
-                          </div>
-                          <div className="p-4">
-                            <p className="text-sm text-gray-600 mb-4">
-                              Descubre si tu empresa está obligada a implementar un sistema de fichaje.
-                            </p>
-                            <div className="flex justify-between items-center">
-                              <span className="text-sm text-blue-600 font-medium">Duración: 8 min</span>
-                              {learningProgress >= 66 ? (
-                                <span className="text-sm text-green-600 font-medium flex items-center">
-                                  <CheckCircle className="h-4 w-4 mr-1" /> Completado
-                                </span>
-                              ) : (
-                                <span className="text-sm text-blue-600 font-medium">Empezar →</span>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div 
-                          onClick={() => navigateToModule("como-implementar")}
-                          className="bg-white shadow rounded-lg overflow-hidden border border-gray-200 cursor-pointer hover:shadow-md transition-all"
-                        >
-                          <div className="bg-blue-50 p-4 border-b border-gray-200">
-                            <h4 className="font-semibold text-blue-800">¿Cómo implementar un sistema de fichajes?</h4>
-                          </div>
-                          <div className="p-4">
-                            <p className="text-sm text-gray-600 mb-4">
-                              Conoce las diferentes opciones y encuentra la mejor para tu empresa.
-                            </p>
-                            <div className="flex justify-between items-center">
-                              <span className="text-sm text-blue-600 font-medium">Duración: 12 min</span>
-                              {learningProgress >= 100 ? (
-                                <span className="text-sm text-green-600 font-medium flex items-center">
-                                  <CheckCircle className="h-4 w-4 mr-1" /> Completado
-                                </span>
-                              ) : (
-                                <span className="text-sm text-blue-600 font-medium">Empezar →</span>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </TabsContent>
-                  
-                  <TabsContent value="plantillas" className="bg-white p-6 rounded-lg border border-gray-200">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="bg-blue-100 p-3 rounded-full">
-                        <FileText className="h-8 w-8 text-blue-700" />
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-gray-800">Plantillas Interactivas</h3>
-                        <p className="text-gray-600">Completa y descarga documentos esenciales para el cumplimiento normativo</p>
-                      </div>
-                    </div>
-                    <div className="border-t border-gray-200 pt-6">
-                      <button 
-                        onClick={() => navigateToSection("plantillas")}
-                        className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-                      >
-                        Ir a Plantillas Interactivas
-                      </button>
-                    </div>
-                  </TabsContent>
-                  
-                  <TabsContent value="simulador" className="bg-white p-6 rounded-lg border border-gray-200">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="bg-blue-100 p-3 rounded-full">
-                        <AlertTriangle className="h-8 w-8 text-blue-700" />
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-gray-800">Simulador de Riesgo Legal</h3>
-                        <p className="text-gray-600">Calcula el posible impacto de incumplir la normativa laboral</p>
-                      </div>
-                    </div>
-                    <div className="border-t border-gray-200 pt-6">
-                      <button 
-                        onClick={() => navigateToSection("simulador")}
-                        className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-                      >
-                        Ir al Simulador de Riesgo
-                      </button>
-                    </div>
-                  </TabsContent>
-                  
-                  <TabsContent value="ayuda" className="bg-white p-6 rounded-lg border border-gray-200">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="bg-blue-100 p-3 rounded-full">
-                        <HelpCircle className="h-8 w-8 text-blue-700" />
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-gray-800">Centro de Ayuda</h3>
-                        <p className="text-gray-600">Guías y manuales para configurar correctamente tus fichajes</p>
-                      </div>
-                    </div>
-                    <div className="border-t border-gray-200 pt-6">
-                      <button 
-                        onClick={() => navigate("/kit-legal/ayuda/admin")}
-                        className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-                      >
-                        Ir al Centro de Ayuda
-                      </button>
-                    </div>
-                  </TabsContent>
-                </Tabs>
+                <ComplianceKitTools />
               </>
             )}
           </main>
