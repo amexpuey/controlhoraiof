@@ -5,32 +5,35 @@ import { Tool } from "../types";
 interface ToolContentProps {
   activeTab: string;
   tools: Tool[];
-  isStandalone: boolean;
+  isStandalone?: boolean;
 }
 
-export default function ToolContent({ activeTab, tools, isStandalone }: ToolContentProps) {
+const ToolContent: React.FC<ToolContentProps> = ({ 
+  activeTab, 
+  tools,
+  isStandalone = false
+}) => {
+  // Find the active tool
+  const activeTool = tools.find(tool => tool.id === activeTab);
+  
+  console.log("ToolContent - activeTab:", activeTab);
+  console.log("ToolContent - activeTool:", activeTool);
+  console.log("ToolContent - isStandalone:", isStandalone);
+  console.log("ToolContent - tools:", tools.map(t => t.id));
+
+  if (!activeTool) {
+    console.error("No active tool found for tab:", activeTab);
+    return null;
+  }
+
+  // Dynamic component rendering - the ToolComponent is the React component from the active tool
+  const ToolComponent = activeTool.component;
+
   return (
-    <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-      {tools.map((tool) => (
-        activeTab === tool.id && (
-          <div key={tool.id}>
-            <div className="flex items-center gap-4 mb-6">
-              <div className="bg-blue-100 p-3 rounded-full">
-                {React.createElement(tool.icon, { className: "h-8 w-8 text-blue-700" })}
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-gray-800">{tool.title}</h3>
-                <p className="text-gray-600">{tool.description}</p>
-              </div>
-            </div>
-            <div className="border-t border-gray-200 pt-6">
-              {React.createElement(tool.component, {
-                isStandalone: isStandalone
-              })}
-            </div>
-          </div>
-        )
-      ))}
+    <div className="bg-white rounded-lg shadow-sm border p-6">
+      <ToolComponent isStandalone={isStandalone} />
     </div>
   );
-}
+};
+
+export default ToolContent;

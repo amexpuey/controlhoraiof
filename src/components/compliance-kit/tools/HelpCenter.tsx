@@ -75,6 +75,7 @@ export default function HelpCenter({ isStandalone = false }: HelpCenterProps) {
   ];
 
   const handleNavigate = (url: string) => {
+    console.log("Navigating to:", url);
     navigate(url);
   };
 

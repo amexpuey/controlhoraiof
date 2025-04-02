@@ -100,6 +100,7 @@ export default function ComplianceKitTools({ hideAppComparison = false }: Compli
   };
 
   const handleTabChange = (tabId: string) => {
+    console.log("Tab change to:", tabId);
     if (tabId === "aprendizaje") {
       handleLearningModuleClick();
     } else {
@@ -108,6 +109,9 @@ export default function ComplianceKitTools({ hideAppComparison = false }: Compli
   };
 
   const isStandalonePage = window.location.pathname.startsWith('/kit-legal');
+  console.log("isStandalonePage:", isStandalonePage);
+  console.log("Current path:", window.location.pathname);
+  console.log("Active tab:", activeTab);
 
   return (
     <section id="compliance-tools" className="py-8">
