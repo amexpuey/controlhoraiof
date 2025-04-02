@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
@@ -15,14 +16,22 @@ import LearningModules from "@/components/learning/LearningModules";
 import ComplianceTemplates from "@/components/compliance-kit/tools/ComplianceTemplates";
 import AppComparison from "@/components/compliance-kit/tools/AppComparison";
 
-type ToolComponentType = React.ComponentType<any>;
+// Define unique prop types for each component
+interface ComplianceCheckerProps {
+  onClose?: () => void;
+}
 
-interface Tool {
+interface LearningModulesProps {
+  initialModule?: string;
+}
+
+// Generic tool interface that can accommodate different component props
+interface Tool<T = any> {
   id: string;
   title: string;
-  icon: React.ComponentType;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   description: string;
-  component: ToolComponentType;
+  component: React.ComponentType<T>;
 }
 
 export default function ComplianceKitTools() {
@@ -97,7 +106,8 @@ export default function ComplianceKitTools() {
               value={tool.id}
               className="flex flex-col items-center gap-1 py-3 px-3 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
             >
-              <tool.icon className="h-5 w-5" />
+              {/* Use createElement to properly pass props to icon component */}
+              {React.createElement(tool.icon, { className: "h-5 w-5" })}
               <span className="text-xs md:text-sm text-center font-medium">{tool.title}</span>
             </TabsTrigger>
           ))}
@@ -109,7 +119,8 @@ export default function ComplianceKitTools() {
               <div className="mb-6">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="bg-blue-900/50 p-3 rounded-full">
-                    <tool.icon className="h-8 w-8 text-blue-400" />
+                    {/* Use createElement to properly pass props to icon component */}
+                    {React.createElement(tool.icon, { className: "h-8 w-8 text-blue-400" })}
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-white">{tool.title}</h3>
