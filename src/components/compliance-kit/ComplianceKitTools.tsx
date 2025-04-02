@@ -99,28 +99,36 @@ export default function ComplianceKitTools() {
         onValueChange={setActiveTab}
         className="w-full"
       >
-        <TabsList className="grid grid-cols-3 md:grid-cols-6 mb-8 bg-gray-800/60 p-1.5 rounded-lg">
+        <TabsList className="grid grid-cols-3 md:grid-cols-6 mb-8 bg-gray-100 p-1.5 rounded-lg">
           {tools.map((tool) => (
             <TabsTrigger 
               key={tool.id} 
               value={tool.id}
-              className="flex flex-col items-center justify-center gap-2 py-2 px-1 h-28 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-colors"
+              className="flex flex-col items-center justify-center gap-2 py-2 px-1 h-28 text-gray-800 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-colors"
             >
               {/* Use createElement to properly pass props to icon component */}
               {React.createElement(tool.icon, { className: "h-7 w-7 mb-1" })}
               <div className="text-sm text-center font-medium leading-tight w-full px-1">
-                {tool.title.split(' ').length > 1 
-                  ? tool.title.split(' ').map((word, i, arr) => 
-                      i === 0 || i === 1 ? (
-                        <span key={i} className="block">
-                          {word}{i === 0 && arr.length > 2 ? '' : i === 1 && arr.length > 3 ? '' : i < arr.length - 1 ? ' ' : ''}
-                          {i === 0 && arr.length > 2 ? ' ' + arr[1] : ''}
-                          {i === 1 && arr.length > 3 ? ' ' + arr[2] : ''}
-                        </span>
-                      ) : null
-                    )
-                  : tool.title
-                }
+                {(() => {
+                  const words = tool.title.split(' ');
+                  if (words.length <= 2) {
+                    return tool.title;
+                  } else if (words.length === 3) {
+                    return (
+                      <>
+                        <span className="block">{words[0]} {words[1]}</span>
+                        <span className="block">{words[2]}</span>
+                      </>
+                    );
+                  } else {
+                    return (
+                      <>
+                        <span className="block">{words[0]} {words[1]}</span>
+                        <span className="block">{words[2]} {words.slice(3).join(' ')}</span>
+                      </>
+                    );
+                  }
+                })()}
               </div>
             </TabsTrigger>
           ))}
