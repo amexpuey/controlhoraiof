@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Home, Play, Icon } from "lucide-react";
+import { ArrowRight, Home, Play, Info, Check } from "lucide-react";
 
 interface ModuleContentProps {
   title: string;
@@ -25,6 +25,31 @@ export default function ModuleContent({
   isLastModule
 }: ModuleContentProps) {
   const [showVideo, setShowVideo] = useState(false);
+  const [showTips, setShowTips] = useState(false);
+  const [currentStep, setCurrentStep] = useState(0);
+  
+  const stepTips = [
+    {
+      title: "Bienvenido al módulo",
+      content: "En este tutorial aprenderás todo lo necesario sobre este tema. Navega por los pasos para completar el aprendizaje."
+    },
+    {
+      title: "Explora el contenido",
+      content: "Lee el material y visualiza el video explicativo para entender mejor los conceptos."
+    },
+    {
+      title: "Completa las actividades",
+      content: "Realiza los ejercicios prácticos para asegurar la comprensión del tema."
+    }
+  ];
+  
+  const nextTip = () => {
+    if (currentStep < stepTips.length - 1) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      setShowTips(false);
+    }
+  };
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
@@ -45,6 +70,27 @@ export default function ModuleContent({
       </div>
       
       <div className="p-6">
+        <div className="flex justify-between mb-4">
+          {!showVideo && videoUrl && (
+            <Button 
+              className="flex items-center gap-2 bg-[#0BC8C1] hover:bg-[#0AB1AB]"
+              onClick={() => setShowVideo(true)}
+            >
+              <Play className="h-4 w-4" />
+              Ver video explicativo
+            </Button>
+          )}
+          
+          <Button
+            variant="outline"
+            className="flex items-center gap-2 ml-auto"
+            onClick={() => setShowTips(true)}
+          >
+            <Info className="h-4 w-4" />
+            Mostrar guía interactiva
+          </Button>
+        </div>
+        
         {showVideo && videoUrl ? (
           <div className="mb-8">
             <h2 className="text-xl font-semibold mb-4">Video explicativo</h2>
@@ -58,15 +104,45 @@ export default function ModuleContent({
               ></iframe>
             </div>
           </div>
-        ) : (
-          <div className="mb-4 flex justify-center">
-            <Button 
-              className="flex items-center gap-2 bg-[#0BC8C1] hover:bg-[#0AB1AB]"
-              onClick={() => setShowVideo(true)}
-            >
-              <Play className="h-4 w-4" />
-              Ver video explicativo
-            </Button>
+        ) : null}
+        
+        {/* Interactive Tips Modal */}
+        {showTips && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-lg shadow-lg max-w-md w-full">
+              <div className="bg-[#0BC8C1] text-white p-4 rounded-t-lg">
+                <h3 className="text-lg font-medium">{stepTips[currentStep].title}</h3>
+              </div>
+              <div className="p-6">
+                <p className="text-gray-700 mb-6">{stepTips[currentStep].content}</p>
+                <div className="flex justify-between items-center">
+                  <div className="flex space-x-1">
+                    {stepTips.map((_, index) => (
+                      <div 
+                        key={index}
+                        className={`w-2 h-2 rounded-full ${
+                          index === currentStep ? "bg-[#0BC8C1]" : "bg-gray-300"
+                        }`}
+                      ></div>
+                    ))}
+                  </div>
+                  <div className="flex space-x-2">
+                    <Button 
+                      variant="outline"
+                      onClick={() => setShowTips(false)}
+                    >
+                      Cerrar
+                    </Button>
+                    <Button 
+                      className="bg-[#0BC8C1] hover:bg-[#0AB1AB]"
+                      onClick={nextTip}
+                    >
+                      {currentStep < stepTips.length - 1 ? "Siguiente" : "Finalizar"}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
         
@@ -79,6 +155,7 @@ export default function ModuleContent({
             variant="outline" 
             onClick={() => window.location.href = '/kit-legal'}
           >
+            <Home className="h-4 w-4 mr-2" />
             Volver al Kit Legal
           </Button>
           
@@ -89,7 +166,7 @@ export default function ModuleContent({
             {isLastModule ? (
               <>
                 Finalizar y volver al Kit
-                <Home className="h-4 w-4" />
+                <Check className="h-4 w-4" />
               </>
             ) : (
               <>
