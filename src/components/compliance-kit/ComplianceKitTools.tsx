@@ -1,6 +1,5 @@
 
-import React from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import React, { useState } from "react";
 import { 
   CheckCircle, 
   ListChecks, 
@@ -16,26 +15,17 @@ import LearningModules from "@/components/learning/LearningModules";
 import ComplianceTemplates from "@/components/compliance-kit/tools/ComplianceTemplates";
 import AppComparison from "@/components/compliance-kit/tools/AppComparison";
 
-// Define unique prop types for each component
-interface ComplianceCheckerProps {
-  onClose?: () => void;
-}
-
-interface LearningModulesProps {
-  initialModule?: string;
-}
-
-// Generic tool interface that can accommodate different component props
-interface Tool<T = any> {
+// Tool interface
+interface Tool {
   id: string;
   title: string;
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  icon: React.ElementType;
   description: string;
-  component: React.ComponentType<T>;
+  component: React.ComponentType<any>;
 }
 
 export default function ComplianceKitTools() {
-  const [activeTab, setActiveTab] = React.useState("verificador");
+  const [activeTab, setActiveTab] = useState("verificador");
 
   const tools: Tool[] = [
     {
@@ -88,74 +78,127 @@ export default function ComplianceKitTools() {
         <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
           Herramientas Interactivas
         </h2>
-        <p className="text-gray-300 max-w-2xl mx-auto">
+        <p className="text-gray-200 max-w-2xl mx-auto">
           Todas nuestras herramientas son gratuitas, sin necesidad de registro y diseñadas para ayudarte a cumplir con la normativa laboral de forma sencilla.
         </p>
       </div>
 
-      <Tabs 
-        defaultValue="verificador" 
-        value={activeTab}
-        onValueChange={setActiveTab}
-        className="w-full"
-      >
-        <TabsList className="grid grid-cols-3 md:grid-cols-6 mb-8 bg-gray-100 p-1.5 rounded-lg">
+      {/* Modern Tab Navigation */}
+      <div className="flex flex-col space-y-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
           {tools.map((tool) => (
-            <TabsTrigger 
-              key={tool.id} 
-              value={tool.id}
-              className="flex flex-col items-center justify-center gap-2 py-2 px-1 h-28 text-gray-800 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-colors"
+            <button
+              key={tool.id}
+              onClick={() => setActiveTab(tool.id)}
+              className={`flex flex-col items-center justify-center p-4 rounded-lg transition-all ${
+                activeTab === tool.id 
+                  ? "bg-blue-600 text-white" 
+                  : "bg-white text-gray-700 hover:bg-gray-100"
+              }`}
             >
-              {/* Use createElement to properly pass props to icon component */}
-              {React.createElement(tool.icon, { className: "h-7 w-7 mb-1" })}
-              <div className="text-sm text-center font-medium leading-tight w-full px-1">
-                {(() => {
-                  const words = tool.title.split(' ');
-                  if (words.length <= 2) {
-                    return tool.title;
-                  } else if (words.length === 3) {
-                    return (
-                      <>
-                        <span className="block">{words[0]} {words[1]}</span>
-                        <span className="block">{words[2]}</span>
-                      </>
-                    );
-                  } else {
-                    return (
-                      <>
-                        <span className="block">{words[0]} {words[1]}</span>
-                        <span className="block">{words[2]} {words.slice(3).join(' ')}</span>
-                      </>
-                    );
-                  }
-                })()}
+              <div className={`p-3 rounded-full mb-2 ${
+                activeTab === tool.id ? "bg-blue-700" : "bg-blue-50"
+              }`}>
+                {React.createElement(tool.icon, { 
+                  className: `w-6 h-6 ${activeTab === tool.id ? "text-white" : "text-blue-600"}`
+                })}
               </div>
-            </TabsTrigger>
+              <span className="text-center font-medium text-sm">{tool.title}</span>
+            </button>
           ))}
-        </TabsList>
+        </div>
 
+        {/* Active Tab Content */}
         <div className="bg-gray-800/40 p-6 rounded-lg border border-gray-700 shadow-xl">
           {tools.map((tool) => (
-            <TabsContent key={tool.id} value={tool.id} className="mt-0 focus:outline-none">
-              <div className="mb-6">
-                <div className="flex items-center gap-4 mb-4">
+            activeTab === tool.id && (
+              <div key={tool.id}>
+                <div className="flex items-center gap-4 mb-6">
                   <div className="bg-blue-900/50 p-3 rounded-full">
-                    {/* Use createElement to properly pass props to icon component */}
                     {React.createElement(tool.icon, { className: "h-8 w-8 text-blue-400" })}
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-white">{tool.title}</h3>
-                    <p className="text-gray-300">{tool.description}</p>
+                    <p className="text-gray-200">{tool.description}</p>
                   </div>
                 </div>
-                <div className="border-t border-gray-700 pt-4">
+                <div className="border-t border-gray-700 pt-6">
                   {React.createElement(tool.component)}
                 </div>
               </div>
-            </TabsContent>
+            )
           ))}
         </div>
-      </Tabs>
+      </div>
+
+      {/* Learning Modules Section (visible when aprendizaje is active) */}
+      {activeTab === "aprendizaje" && (
+        <div className="mt-8 bg-gray-800/40 p-6 rounded-lg border border-gray-700 shadow-xl">
+          <h3 className="text-xl font-bold text-blue-400 mb-4">Módulos de Aprendizaje Interactivo</h3>
+          <p className="text-gray-200 mb-6">
+            Descubre todo lo que necesitas saber sobre el control horario a través de estos módulos interactivos
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Module 1 */}
+            <div className="bg-gray-700/50 rounded-lg overflow-hidden border border-gray-600">
+              <div className="p-5">
+                <div className="bg-blue-900/30 p-2 rounded-full w-10 h-10 flex items-center justify-center mb-3">
+                  <FileText className="h-5 w-5 text-blue-400" />
+                </div>
+                <h4 className="text-white font-medium mb-2">¿Qué es el control horario?</h4>
+                <p className="text-gray-300 text-sm mb-4">
+                  Aprende todo lo relativo a la normativa de control horario y cómo afecta a tu empresa.
+                </p>
+                <a href="#" className="text-blue-400 flex items-center text-sm hover:underline">
+                  Acceder
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+            
+            {/* Module 2 */}
+            <div className="bg-gray-700/50 rounded-lg overflow-hidden border border-gray-600">
+              <div className="p-5">
+                <div className="bg-blue-900/30 p-2 rounded-full w-10 h-10 flex items-center justify-center mb-3">
+                  <CheckCircle className="h-5 w-5 text-blue-400" />
+                </div>
+                <h4 className="text-white font-medium mb-2">¿Es obligatorio para tu empresa?</h4>
+                <p className="text-gray-300 text-sm mb-4">
+                  Descubre si tu empresa está obligada a implementar un sistema de fichaje.
+                </p>
+                <a href="#" className="text-blue-400 flex items-center text-sm hover:underline">
+                  Acceder
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+            
+            {/* Module 3 */}
+            <div className="bg-gray-700/50 rounded-lg overflow-hidden border border-gray-600">
+              <div className="p-5">
+                <div className="bg-blue-900/30 p-2 rounded-full w-10 h-10 flex items-center justify-center mb-3">
+                  <BookOpen className="h-5 w-5 text-blue-400" />
+                </div>
+                <h4 className="text-white font-medium mb-2">Cómo implementar un sistema de fichajes</h4>
+                <p className="text-gray-300 text-sm mb-4">
+                  Conoce las diferentes opciones y encuentra la mejor para tu empresa.
+                </p>
+                <a href="#" className="text-blue-400 flex items-center text-sm hover:underline">
+                  Acceder
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
