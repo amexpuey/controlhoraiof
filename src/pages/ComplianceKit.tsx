@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Progress } from "@/components/ui/progress";
@@ -675,4 +676,58 @@ export default function ComplianceKit() {
                     <div className="border-t border-gray-200 pt-6">
                       <button 
                         onClick={() => navigateToSection("plantillas")}
-                        className="bg-blue-600 text-white px-6 py-3 rounded-lg hover
+                        className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                      >
+                        Ir a Plantillas Interactivas
+                      </button>
+                    </div>
+                  </TabsContent>
+                  
+                  <TabsContent value="simulador" className="bg-white p-6 rounded-lg border border-gray-200">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="bg-blue-100 p-3 rounded-full">
+                        <AlertTriangle className="h-8 w-8 text-blue-700" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-800">Simulador de Riesgo Legal</h3>
+                        <p className="text-gray-600">Calcula el posible impacto de incumplir la normativa laboral</p>
+                      </div>
+                    </div>
+                    <div className="border-t border-gray-200 pt-6">
+                      <button 
+                        onClick={() => navigateToSection("simulador")}
+                        className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                      >
+                        Ir al Simulador de Riesgo
+                      </button>
+                    </div>
+                  </TabsContent>
+                  
+                  <TabsContent value="ayuda" className="bg-white p-6 rounded-lg border border-gray-200">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="bg-blue-100 p-3 rounded-full">
+                        <HelpCircle className="h-8 w-8 text-blue-700" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-800">Centro de Ayuda</h3>
+                        <p className="text-gray-600">Guías y manuales para configurar correctamente tus fichajes</p>
+                      </div>
+                    </div>
+                    <div className="border-t border-gray-200 pt-6">
+                      <button 
+                        onClick={() => navigate("/kit-legal/ayuda/admin")}
+                        className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                      >
+                        Ir al Centro de Ayuda
+                      </button>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </>
+            )}
+          </main>
+        </div>
+      </div>
+    </div>
+  );
+}
