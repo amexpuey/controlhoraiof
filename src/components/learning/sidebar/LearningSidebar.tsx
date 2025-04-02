@@ -3,11 +3,6 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { 
   User, 
-  FileText, 
-  Calendar, 
-  Clock, 
-  Briefcase, 
-  BarChart, 
   Home, 
   Settings,
   LogOut,
@@ -16,9 +11,11 @@ import {
   ChevronUp,
   HelpCircle,
   BookOpen,
-  Play,
+  FileText,
+  ListChecks,
   AlertTriangle,
-  ListChecks
+  Clock,
+  BarChart
 } from "lucide-react";
 
 interface LearningSidebarProps {
@@ -54,9 +51,9 @@ export default function LearningSidebar({ learningProgress, activeModuleId }: Le
       <div className="p-6">
         <div className="flex items-center mb-8">
           <img 
-            src="/lovable-uploads/ffc4e9e3-d03e-4242-9967-6906e57f4da9.png" 
+            src="/lovable-uploads/097bacff-123a-439c-8891-97ea5c2ff34a.png" 
             alt="INWOUT Logo" 
-            className="h-10" 
+            className="h-8" 
           />
         </div>
         
@@ -309,4 +306,3 @@ export default function LearningSidebar({ learningProgress, activeModuleId }: Le
     </div>
   );
 }
-
