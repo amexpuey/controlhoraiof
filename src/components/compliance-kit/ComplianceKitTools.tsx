@@ -99,23 +99,23 @@ export default function ComplianceKitTools() {
         onValueChange={setActiveTab}
         className="w-full"
       >
-        <TabsList className="grid grid-cols-3 md:grid-cols-6 mb-8 bg-gray-800/60">
+        <TabsList className="grid grid-cols-3 md:grid-cols-6 mb-8 bg-gray-800/60 p-1 rounded-lg">
           {tools.map((tool) => (
             <TabsTrigger 
               key={tool.id} 
               value={tool.id}
-              className="flex flex-col items-center gap-1 py-3 px-3 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+              className="flex flex-col items-center gap-1.5 py-3 px-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-colors"
             >
               {/* Use createElement to properly pass props to icon component */}
               {React.createElement(tool.icon, { className: "h-5 w-5" })}
-              <span className="text-xs md:text-sm text-center font-medium">{tool.title}</span>
+              <span className="text-xs md:text-sm text-center font-medium whitespace-nowrap">{tool.title}</span>
             </TabsTrigger>
           ))}
         </TabsList>
 
         <div className="bg-gray-800/40 p-6 rounded-lg border border-gray-700 shadow-xl">
           {tools.map((tool) => (
-            <TabsContent key={tool.id} value={tool.id} className="mt-0">
+            <TabsContent key={tool.id} value={tool.id} className="mt-0 focus:outline-none">
               <div className="mb-6">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="bg-blue-900/50 p-3 rounded-full">

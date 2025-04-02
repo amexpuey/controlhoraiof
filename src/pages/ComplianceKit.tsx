@@ -10,6 +10,11 @@ import { DashboardAdBanners } from "@/components/dashboard/DashboardAdBanners";
 import AdBanner from "@/components/ads/AdBanner";
 
 export default function ComplianceKit() {
+  // Set document title when component mounts
+  React.useEffect(() => {
+    document.title = "Kit Legal - Control Horario Electrónico";
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100">
       <AppHeader />
