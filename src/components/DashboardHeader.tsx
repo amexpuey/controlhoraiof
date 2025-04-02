@@ -1,5 +1,5 @@
 
-import { Search, Info, ArrowDown, Menu } from "lucide-react";
+import { Search, ArrowDown, Menu } from "lucide-react";
 import { Input } from "./ui/input";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
@@ -69,12 +69,6 @@ export default function DashboardHeader({
         ) : (
           <div className="flex items-center gap-4">
             <ToolsDropdown />
-            <Link 
-              to="/plantillas" 
-              className="text-sm font-medium text-white hover:text-gray-200 transition-colors"
-            >
-              Plantillas
-            </Link>
             <Link 
               to="/blog" 
               className="text-sm font-medium text-white hover:text-gray-200 transition-colors"

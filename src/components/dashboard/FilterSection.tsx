@@ -24,8 +24,17 @@ export function FilterSection({
                           showTopRated || 
                           selectedAvailability.length > 0;
 
+  console.log("FilterSection render with:", {
+    selectedFeatures,
+    selectedTypes,
+    showTopRated,
+    selectedAvailability,
+    hasActiveFilters,
+    autoOpenFeatures
+  });
+
   return (
-    <div className="bg-white p-6 rounded-lg shadow-sm mb-8">
+    <div className="bg-white p-6 rounded-lg shadow-sm mb-8 filter-section">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold flex items-center">
           <Filter className="h-5 w-5 mr-2 text-gray-600" />
@@ -36,7 +45,10 @@ export function FilterSection({
           <Button 
             variant="outline" 
             size="sm" 
-            onClick={onClearAllFilters}
+            onClick={() => {
+              console.log("Clear all filters clicked");
+              if (onClearAllFilters) onClearAllFilters();
+            }}
             className="flex items-center gap-1 text-sm cursor-pointer"
             type="button"
           >
@@ -51,7 +63,10 @@ export function FilterSection({
         <FeaturesFilter
           features={featureOptions}
           selectedFeatures={selectedFeatures}
-          onFeatureToggle={onFeatureToggle}
+          onFeatureToggle={(featureId) => {
+            console.log("Feature toggle clicked:", featureId);
+            if (onFeatureToggle) onFeatureToggle(featureId);
+          }}
           autoOpenFeatures={autoOpenFeatures}
         />
 
@@ -59,13 +74,19 @@ export function FilterSection({
         <AvailabilityFilter
           options={availabilityOptions}
           selectedOptions={selectedAvailability}
-          onToggle={onAvailabilityToggle}
+          onToggle={(option) => {
+            console.log("Availability toggle clicked:", option);
+            if (onAvailabilityToggle) onAvailabilityToggle(option);
+          }}
         />
 
         {/* Top Rated Filter */}
         <TopRatedFilter
           checked={showTopRated}
-          onToggle={onTopRatedToggle}
+          onToggle={() => {
+            console.log("Top rated toggle clicked, current:", showTopRated);
+            if (onTopRatedToggle) onTopRatedToggle();
+          }}
         />
       </div>
     </div>

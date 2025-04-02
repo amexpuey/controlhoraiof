@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Button } from "./button";
-import { Book, CheckCircle, ChevronDown, FileText, Shield } from "lucide-react";
+import { Book, ChevronDown, FileText, Shield, CheckCircle } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
