@@ -14,7 +14,7 @@ import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
 
 // Define which routes should hide the footer
-const routesWithoutFooter = ["/compliance-checker"];
+const routesWithoutFooter = ["/compliance-checker", "/kit-legal"];
 
 // Move router configuration outside component to prevent recreation
 const router = createBrowserRouter([

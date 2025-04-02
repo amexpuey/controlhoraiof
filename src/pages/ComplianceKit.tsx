@@ -1,7 +1,6 @@
 
 import React from "react";
 import { AppHeader } from "@/components/layout/AppHeader";
-import { Footer } from "@/components/Footer";
 import ComplianceKitHeader from "@/components/compliance-kit/ComplianceKitHeader";
 import ComplianceKitTools from "@/components/compliance-kit/ComplianceKitTools";
 import ComplianceKitFAQ from "@/components/compliance-kit/ComplianceKitFAQ";
@@ -41,8 +40,6 @@ export default function ComplianceKit() {
         
         <DashboardAdBanners position="bottom" />
       </main>
-      
-      <Footer />
     </div>
   );
 }
