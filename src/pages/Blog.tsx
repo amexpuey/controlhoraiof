@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import AdBanner from "@/components/ads/AdBanner";
@@ -8,26 +9,22 @@ import FeaturedPost, { BlogPost } from "@/components/blog/FeaturedPost";
 import BlogPostsGrid from "@/components/blog/BlogPostsGrid";
 import InteractiveToolsSection from "@/components/blog/InteractiveToolsSection";
 import { mockBlogPosts } from "@/data/mockBlogPosts";
-import { 
-  Pagination, 
-  PaginationContent, 
-  PaginationItem, 
-  PaginationLink, 
-  PaginationNext, 
-  PaginationPrevious 
-} from "@/components/ui/pagination";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Loader2 } from "lucide-react";
 
-// Number of posts to show per page (excluding the featured post)
-const POSTS_PER_PAGE = 9; // Changed from 6 to 9 to show 10 articles total (1 featured + 9 grid)
+// Number of posts to load each time
+const POSTS_PER_PAGE = 9;
 
 export default function Blog() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [activeCategory, setActiveCategory] = useState("all");
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
   const isMobile = useIsMobile();
+  const observer = useRef<IntersectionObserver | null>(null);
   
+  // Fetch initial posts
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -39,7 +36,8 @@ export default function Blog() {
           .from('blog_posts')
           .select('*')
           .not('published_at', 'is', null)
-          .order('published_at', { ascending: false });
+          .order('published_at', { ascending: false })
+          .limit(POSTS_PER_PAGE + 1); // +1 to check if there are more posts
         
         console.log("Supabase query response:", { data, error });
           
@@ -61,16 +59,22 @@ export default function Blog() {
             } as BlogPost;
           });
           
-          setPosts(transformedPosts);
+          // Check if there are more posts
+          setHasMore(transformedPosts.length > POSTS_PER_PAGE);
+          
+          // Store only the posts we want to display now
+          setPosts(transformedPosts.slice(0, POSTS_PER_PAGE));
         } else {
           console.error('Error or no data from Supabase:', error);
           console.log('Falling back to mock data');
-          setPosts(mockBlogPosts);
+          setPosts(mockBlogPosts.slice(0, POSTS_PER_PAGE));
+          setHasMore(mockBlogPosts.length > POSTS_PER_PAGE);
         }
       } catch (error) {
         console.error('Exception fetching blog posts:', error);
         console.log('Falling back to mock data due to exception');
-        setPosts(mockBlogPosts);
+        setPosts(mockBlogPosts.slice(0, POSTS_PER_PAGE));
+        setHasMore(mockBlogPosts.length > POSTS_PER_PAGE);
       } finally {
         setLoading(false);
       }
@@ -79,27 +83,156 @@ export default function Blog() {
     fetchPosts();
   }, []);
   
-  // Reset to first page when category changes
+  // Reset when category changes
   useEffect(() => {
-    setCurrentPage(1);
+    const fetchFilteredPosts = async () => {
+      try {
+        setLoading(true);
+        console.log(`Fetching ${activeCategory} posts from Supabase...`);
+        
+        let query = supabase
+          .from('blog_posts')
+          .select('*')
+          .not('published_at', 'is', null)
+          .order('published_at', { ascending: false })
+          .limit(POSTS_PER_PAGE + 1);
+        
+        if (activeCategory !== "all") {
+          query = query.eq('category', activeCategory);
+        }
+        
+        const { data, error } = await query;
+        
+        console.log("Filtered Supabase query response:", { data, error });
+          
+        if (!error && data && data.length > 0) {
+          console.log(`Fetched ${data.length} filtered blog posts from Supabase`);
+          
+          const transformedPosts = data.map(post => {
+            let relatedApps = post.related_apps;
+            if (!Array.isArray(relatedApps)) {
+              relatedApps = relatedApps ? [relatedApps] : [];
+            }
+            
+            return {
+              ...post,
+              id: post.id.toString(),
+              related_apps: relatedApps
+            } as BlogPost;
+          });
+          
+          setHasMore(transformedPosts.length > POSTS_PER_PAGE);
+          setPosts(transformedPosts.slice(0, POSTS_PER_PAGE));
+        } else {
+          console.error('Error or no filtered data from Supabase:', error);
+          console.log('Falling back to filtered mock data');
+          const filteredMockPosts = activeCategory === "all" 
+            ? mockBlogPosts 
+            : mockBlogPosts.filter(post => post.category === activeCategory);
+          
+          setPosts(filteredMockPosts.slice(0, POSTS_PER_PAGE));
+          setHasMore(filteredMockPosts.length > POSTS_PER_PAGE);
+        }
+      } catch (error) {
+        console.error('Exception fetching filtered blog posts:', error);
+        console.log('Falling back to filtered mock data due to exception');
+        const filteredMockPosts = activeCategory === "all" 
+          ? mockBlogPosts 
+          : mockBlogPosts.filter(post => post.category === activeCategory);
+        
+        setPosts(filteredMockPosts.slice(0, POSTS_PER_PAGE));
+        setHasMore(filteredMockPosts.length > POSTS_PER_PAGE);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchFilteredPosts();
   }, [activeCategory]);
+
+  // Function to load more posts
+  const loadMorePosts = useCallback(async () => {
+    if (!hasMore || loadingMore) return;
+    
+    try {
+      setLoadingMore(true);
+      console.log("Loading more posts...");
+      
+      let query = supabase
+        .from('blog_posts')
+        .select('*')
+        .not('published_at', 'is', null)
+        .order('published_at', { ascending: false })
+        .gt('published_at', posts[posts.length - 1].published_at) // Load posts older than the last one
+        .limit(POSTS_PER_PAGE + 1);
+      
+      if (activeCategory !== "all") {
+        query = query.eq('category', activeCategory);
+      }
+      
+      const { data, error } = await query;
+      
+      if (!error && data && data.length > 0) {
+        console.log(`Loaded ${data.length} more posts`);
+        
+        const newPosts = data.map(post => {
+          let relatedApps = post.related_apps;
+          if (!Array.isArray(relatedApps)) {
+            relatedApps = relatedApps ? [relatedApps] : [];
+          }
+          
+          return {
+            ...post,
+            id: post.id.toString(),
+            related_apps: relatedApps
+          } as BlogPost;
+        });
+        
+        setHasMore(newPosts.length > POSTS_PER_PAGE);
+        setPosts(prevPosts => [...prevPosts, ...newPosts.slice(0, POSTS_PER_PAGE)]);
+      } else {
+        console.error('Error or no more data from Supabase:', error);
+        console.log('No more posts to load or falling back to mock data');
+        
+        // If using mock data or no more posts
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error('Exception loading more posts:', error);
+      setHasMore(false);
+    } finally {
+      setLoadingMore(false);
+    }
+  }, [posts, activeCategory, hasMore, loadingMore]);
   
+  // Setup the intersection observer for infinite scroll
+  const lastPostElementRef = useCallback((node: HTMLDivElement | null) => {
+    if (loading || loadingMore) return;
+    
+    // Disconnect previous observer
+    if (observer.current) {
+      observer.current.disconnect();
+    }
+    
+    // Create new observer
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasMore) {
+        loadMorePosts();
+      }
+    }, { rootMargin: '100px' });
+    
+    // Observe the last post element
+    if (node) {
+      observer.current.observe(node);
+    }
+  }, [loading, loadingMore, hasMore, loadMorePosts]);
+
+  // Create filtered posts based on active category
   const filteredPosts = activeCategory === "all" 
     ? posts 
     : posts.filter(post => post.category === activeCategory);
     
-  // Calculate pagination
-  const totalPages = Math.ceil((filteredPosts.length - 1) / POSTS_PER_PAGE);
-  const startIndex = (currentPage - 1) * POSTS_PER_PAGE + 1; // +1 because first post is featured
-  const endIndex = Math.min(startIndex + POSTS_PER_PAGE - 1, filteredPosts.length);
-  
-  const currentPosts = filteredPosts.length > 0 
-    ? (currentPage === 1 
-        ? [filteredPosts[0], ...filteredPosts.slice(1, POSTS_PER_PAGE + 1)] 
-        : filteredPosts.slice(startIndex, endIndex + 1))
-    : [];
-    
-  if (loading) {
+  if (loading && posts.length === 0) {
     return (
       <BlogLayout>
         <div className="min-h-screen flex items-center justify-center">
@@ -154,49 +287,50 @@ export default function Blog() {
           
           {availableCategories.map((category) => (
             <TabsContent key={category} value={category} className="space-y-8">
-              {filteredPosts.length > 0 && currentPage === 1 && (
-                <FeaturedPost post={filteredPosts[0]} />
+              {filteredPosts.length > 0 && (
+                <>
+                  {/* Featured post (first post) */}
+                  <FeaturedPost post={filteredPosts[0]} />
+                  
+                  {/* Remaining posts grid */}
+                  {filteredPosts.length > 1 && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                      {filteredPosts.slice(1).map((post, index) => {
+                        // Check if this is the last post in the array
+                        const isLastElement = index === filteredPosts.slice(1).length - 1;
+                        
+                        // If it's the last element, add the ref for intersection observer
+                        return isLastElement ? (
+                          <div key={post.id} ref={lastPostElementRef}>
+                            <BlogPostCard post={post} />
+                          </div>
+                        ) : (
+                          <BlogPostCard key={post.id} post={post} />
+                        );
+                      })}
+                    </div>
+                  )}
+                  
+                  {/* Loading indicator for infinite scroll */}
+                  {loadingMore && (
+                    <div className="flex justify-center py-6">
+                      <Loader2 className="w-8 h-8 text-yellow-600 animate-spin" />
+                    </div>
+                  )}
+                  
+                  {/* End of posts message */}
+                  {!hasMore && filteredPosts.length > 0 && (
+                    <div className="text-center py-6 text-gray-500">
+                      No hay más artículos para mostrar
+                    </div>
+                  )}
+                </>
               )}
               
-              {currentPosts.length > (currentPage === 1 ? 1 : 0) && (
-                <BlogPostsGrid posts={currentPage === 1 ? currentPosts.slice(1) : currentPosts} />
-              )}
-              
-              {/* Pagination */}
-              {totalPages > 1 && (
-                <Pagination className="mt-8">
-                  <PaginationContent>
-                    {currentPage > 1 && (
-                      <PaginationItem>
-                        <PaginationPrevious 
-                          onClick={() => setCurrentPage(current => Math.max(current - 1, 1))} 
-                          className="cursor-pointer"
-                        />
-                      </PaginationItem>
-                    )}
-                    
-                    {[...Array(totalPages)].map((_, i) => (
-                      <PaginationItem key={i}>
-                        <PaginationLink 
-                          isActive={currentPage === i + 1}
-                          onClick={() => setCurrentPage(i + 1)}
-                          className="cursor-pointer"
-                        >
-                          {i + 1}
-                        </PaginationLink>
-                      </PaginationItem>
-                    ))}
-                    
-                    {currentPage < totalPages && (
-                      <PaginationItem>
-                        <PaginationNext 
-                          onClick={() => setCurrentPage(current => Math.min(current + 1, totalPages))}
-                          className="cursor-pointer" 
-                        />
-                      </PaginationItem>
-                    )}
-                  </PaginationContent>
-                </Pagination>
+              {filteredPosts.length === 0 && !loading && (
+                <div className="text-center py-12">
+                  <p className="text-lg text-gray-500">No hay artículos en esta categoría</p>
+                </div>
               )}
             </TabsContent>
           ))}
