@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -5,9 +6,10 @@ import {
   Dialog, 
   DialogContent
 } from "@/components/ui/dialog";
-import { CheckCircle, Calculator, Book, ChevronRight } from "lucide-react";
+import { CheckCircle, Book, Shield } from "lucide-react";
 import ComplianceChecker from "./ComplianceChecker";
 import LearningModules from "../learning/LearningModules";
+import { Link } from "react-router-dom";
 
 export default function InteractiveToolsSection() {
   const [showComplianceDialog, setShowComplianceDialog] = useState(false);
@@ -48,29 +50,29 @@ export default function InteractiveToolsSection() {
             </CardContent>
           </Card>
 
-          {/* Calculadora */}
+          {/* Kit Legal */}
           <Card className="overflow-hidden">
             <CardContent className="p-0">
               <div className="bg-blue-50 p-4 border-b border-blue-100">
                 <div className="flex items-center mb-2">
-                  <Calculator className="h-6 w-6 text-blue-600 mr-2" />
+                  <Shield className="h-6 w-6 text-blue-600 mr-2" />
                   <h3 className="text-lg font-semibold text-blue-800">
-                    Calculadora de Ahorro
+                    Kit Legal
                   </h3>
                 </div>
                 <p className="text-sm text-gray-600">
-                  Calcula el ahorro con control horario
+                  Recursos normativos para tu empresa
                 </p>
               </div>
               <div className="p-4">
                 <p className="text-sm text-gray-600 mb-4">
-                  ¡Próximamente! Podrás calcular cuánto te costará implementar una solución de control horario en base al número de empleados y funcionalidades.
+                  Accede a recursos, plantillas y herramientas para cumplir con la normativa laboral de control horario en España.
                 </p>
                 <Button 
-                  className="bg-gray-400 hover:bg-gray-500 cursor-not-allowed w-full"
-                  disabled={true}
+                  className="bg-blue-500 hover:bg-blue-600 w-full"
+                  asChild
                 >
-                  Próximamente
+                  <Link to="/kit-legal">Acceder al Kit Legal</Link>
                 </Button>
               </div>
             </CardContent>

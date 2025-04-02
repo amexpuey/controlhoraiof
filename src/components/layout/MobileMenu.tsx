@@ -4,13 +4,14 @@ import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { 
   Home, 
-  FileText, 
   BookOpen, 
   LayoutGrid, 
-  LogOut, 
-  Shield,
+  X, 
   User,
-  X 
+  Shield,
+  FileText,
+  CheckCircle,
+  Book
 } from "lucide-react";
 
 interface MobileMenuProps {
@@ -34,6 +35,19 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       label: 'Blog',
       href: '/blog',
       icon: BookOpen
+    }
+  ];
+  
+  const toolsItems = [
+    {
+      label: 'Verificador de cumplimiento',
+      href: '/compliance-checker',
+      icon: CheckCircle
+    },
+    {
+      label: 'Módulos de aprendizaje',
+      href: '/learning',
+      icon: Book
     },
     {
       label: 'Plantillas',
@@ -68,6 +82,25 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     onClick={onClose}
                   >
                     <item.icon className="h-5 w-5 text-gray-500" />
+                    <span>{item.label}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            
+            <div className="px-4 py-2 border-t">
+              <h3 className="font-medium text-sm text-gray-500 mb-1">Herramientas</h3>
+            </div>
+            
+            <ul className="py-2">
+              {toolsItems.map((item, index) => (
+                <li key={index}>
+                  <Link
+                    to={item.href}
+                    className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 transition-colors"
+                    onClick={onClose}
+                  >
+                    <item.icon className="h-5 w-5 text-blue-500" />
                     <span>{item.label}</span>
                   </Link>
                 </li>

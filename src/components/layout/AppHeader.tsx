@@ -11,7 +11,6 @@ export function AppHeader() {
   const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
-  const isKitLegal = location.pathname === "/kit-legal";
 
   return (
     <div className="h-16 bg-gradient-to-r from-gray-800 to-gray-900 border-b flex items-center justify-between px-4 md:px-6 shadow-md z-10 relative">
@@ -36,24 +35,10 @@ export function AppHeader() {
         <div className="flex items-center gap-4">
           <ToolsDropdown />
           <Link 
-            to="/plantillas" 
-            className="text-sm font-medium text-white hover:text-gray-200 transition-colors"
-          >
-            Plantillas
-          </Link>
-          <Link 
             to="/blog" 
             className="text-sm font-medium text-white hover:text-gray-200 transition-colors"
           >
             Blog
-          </Link>
-          <Link 
-            to="/kit-legal" 
-            className={`text-sm font-medium ${isKitLegal 
-              ? "bg-blue-600 text-white" 
-              : "text-white hover:text-gray-200"} transition-colors px-3 py-1.5 rounded-md`}
-          >
-            Kit Legal
           </Link>
           <Link 
             to="/" 

@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Button } from "./button";
-import { Book, Calculator, CheckCircle, ChevronDown } from "lucide-react";
+import { Book, CheckCircle, ChevronDown, FileText, Shield } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,6 +11,7 @@ import {
 import { Dialog, DialogContent } from "./dialog";
 import ComplianceChecker from "@/components/blog/ComplianceChecker";
 import LearningModules from "@/components/learning/LearningModules";
+import { Link } from "react-router-dom";
 
 export function ToolsDropdown() {
   const [showComplianceDialog, setShowComplianceDialog] = useState(false);
@@ -43,13 +44,6 @@ export function ToolsDropdown() {
               <p className="text-xs text-gray-500">Comprueba tu normativa laboral</p>
             </div>
           </DropdownMenuItem>
-          <DropdownMenuItem className="flex items-center gap-2 py-2 cursor-pointer opacity-75">
-            <Calculator className="h-5 w-5 text-blue-600" />
-            <div>
-              <p className="font-medium">Calculadora de ahorro</p>
-              <p className="text-xs text-gray-500">Próximamente</p>
-            </div>
-          </DropdownMenuItem>
           <DropdownMenuItem
             className="flex items-center gap-2 py-2 cursor-pointer"
             onClick={() => {
@@ -62,6 +56,30 @@ export function ToolsDropdown() {
               <p className="font-medium">Módulos de aprendizaje</p>
               <p className="text-xs text-gray-500">Todo sobre control horario</p>
             </div>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="flex items-center gap-2 py-2 cursor-pointer"
+            asChild
+          >
+            <Link to="/plantillas">
+              <FileText className="h-5 w-5 text-blue-600" />
+              <div>
+                <p className="font-medium">Plantillas</p>
+                <p className="text-xs text-gray-500">Documentos y plantillas</p>
+              </div>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="flex items-center gap-2 py-2 cursor-pointer"
+            asChild
+          >
+            <Link to="/kit-legal">
+              <Shield className="h-5 w-5 text-blue-600" />
+              <div>
+                <p className="font-medium">Kit Legal</p>
+                <p className="text-xs text-gray-500">Recursos normativos</p>
+              </div>
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

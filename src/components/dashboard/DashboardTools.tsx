@@ -2,10 +2,11 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Calculator, Book } from "lucide-react";
+import { CheckCircle, Book, Shield } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import ComplianceChecker from "@/components/blog/ComplianceChecker";
 import LearningModules from "@/components/learning/LearningModules";
+import { Link } from "react-router-dom";
 
 interface DashboardToolsProps {
   onFeatureSelect?: (features: string[]) => void;
@@ -56,27 +57,27 @@ export default function DashboardTools({ onFeatureSelect }: DashboardToolsProps)
             </CardContent>
           </Card>
 
-          {/* Calculadora */}
+          {/* Kit Legal */}
           <Card className="overflow-hidden">
             <CardHeader className="bg-blue-50">
               <CardTitle className="flex items-center text-lg">
-                <Calculator className="mr-2 h-5 w-5 text-blue-600" />
-                Calculadora de ahorro
+                <Shield className="mr-2 h-5 w-5 text-blue-600" />
+                Kit Legal
               </CardTitle>
               <CardDescription>
-                Calcula cuánto puedes ahorrar con una app de control horario
+                Recursos normativos para tu empresa
               </CardDescription>
             </CardHeader>
             <CardContent className="p-0">
               <div className="p-4">
                 <p className="text-sm text-left text-gray-600 mb-4">
-                  Estima cuánto tiempo y dinero puedes ahorrar con una solución de control horario
+                  Accede a recursos, plantillas y herramientas para cumplir con la normativa laboral
                 </p>
                 <Button 
-                  className="bg-gray-400 hover:bg-gray-500 cursor-not-allowed"
-                  disabled={true}
+                  className="bg-blue-500 hover:bg-blue-600"
+                  asChild
                 >
-                  Próximamente
+                  <Link to="/kit-legal">Acceder al Kit Legal</Link>
                 </Button>
               </div>
             </CardContent>

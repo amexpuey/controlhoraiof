@@ -40,22 +40,10 @@ export default function BlogLayout({ children }: BlogLayoutProps) {
           <div className="flex items-center gap-4">
             <ToolsDropdown />
             <Link 
-              to="/plantillas" 
-              className="text-sm font-medium text-white hover:text-gray-200 transition-colors"
-            >
-              Plantillas
-            </Link>
-            <Link 
               to="/blog" 
               className="text-sm font-medium text-white hover:text-gray-200 transition-colors"
             >
               Blog
-            </Link>
-            <Link 
-              to="/kit-legal" 
-              className="text-sm font-medium text-white hover:text-gray-200 transition-colors"
-            >
-              Kit Legal
             </Link>
             <Link 
               to="/" 
