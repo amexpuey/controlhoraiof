@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
@@ -16,10 +15,20 @@ import LearningModules from "@/components/learning/LearningModules";
 import ComplianceTemplates from "@/components/compliance-kit/tools/ComplianceTemplates";
 import AppComparison from "@/components/compliance-kit/tools/AppComparison";
 
+type ToolComponentType = React.ComponentType<any>;
+
+interface Tool {
+  id: string;
+  title: string;
+  icon: React.ComponentType;
+  description: string;
+  component: ToolComponentType;
+}
+
 export default function ComplianceKitTools() {
   const [activeTab, setActiveTab] = React.useState("verificador");
 
-  const tools = [
+  const tools: Tool[] = [
     {
       id: "verificador",
       title: "Verificador de Cumplimiento",
