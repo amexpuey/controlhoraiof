@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { 
   CheckCircle, 
@@ -5,7 +6,8 @@ import {
   FileText, 
   BookOpen,
   AlertTriangle, 
-  BarChart2
+  BarChart2,
+  HelpCircle
 } from "lucide-react";
 import ComplianceChecker from "@/components/blog/ComplianceChecker";
 import ComplianceChecklist from "@/components/compliance-kit/tools/ComplianceChecklist";
@@ -13,6 +15,7 @@ import LegalRiskSimulator from "@/components/compliance-kit/tools/LegalRiskSimul
 import LearningModules from "@/components/learning/LearningModules";
 import ComplianceTemplates from "@/components/compliance-kit/tools/ComplianceTemplates";
 import AppComparison from "@/components/compliance-kit/tools/AppComparison";
+import HelpCenter from "@/components/compliance-kit/tools/HelpCenter";
 import { useNavigate } from "react-router-dom";
 import ToolTabs from "./tools/ToolTabs";
 import ToolContent from "./tools/ToolContent";
@@ -63,6 +66,13 @@ export default function ComplianceKitTools({ hideAppComparison = false }: Compli
       icon: AlertTriangle,
       description: "Calcula las posibles sanciones y consecuencias de no cumplir con la normativa",
       component: LegalRiskSimulator
+    },
+    {
+      id: "ayuda",
+      title: "Centro de Ayuda",
+      icon: HelpCircle,
+      description: "Manuales y guías para administradores y usuarios de INWOUT",
+      component: HelpCenter
     }
   ];
   

@@ -20,7 +20,20 @@ const routesWithoutFooter = [
   "/kit-legal",
   "/kit-legal/modulo/que-es-control-horario",
   "/kit-legal/modulo/es-obligatorio",
-  "/kit-legal/modulo/como-implementar"
+  "/kit-legal/modulo/como-implementar",
+  "/kit-legal/modulo-fichajes",
+  "/kit-legal/define-horarios",
+  "/kit-legal/bienvenida-equipo",
+  "/kit-legal/comunicacion-equipo",
+  "/kit-legal/automatiza-con-geofence",
+  "/kit-legal/ayuda/admin",
+  "/kit-legal/ayuda/app",
+  "/kit-legal/ayuda/web",
+  "/kit-legal/verificador",
+  "/kit-legal/checklist",
+  "/kit-legal/simulador",
+  "/kit-legal/plantillas",
+  "/kit-legal/normativa"
 ];
 
 // Move router configuration outside component to prevent recreation
@@ -68,6 +81,58 @@ const router = createBrowserRouter([
   {
     path: "/kit-legal/modulo/:moduleId",
     element: <LearningModulePage />,
+  },
+  {
+    path: "/kit-legal/modulo-fichajes",
+    element: <ComplianceKit />,
+  },
+  {
+    path: "/kit-legal/define-horarios",
+    element: <ComplianceKit />,
+  },
+  {
+    path: "/kit-legal/bienvenida-equipo",
+    element: <ComplianceKit />,
+  },
+  {
+    path: "/kit-legal/comunicacion-equipo",
+    element: <ComplianceKit />,
+  },
+  {
+    path: "/kit-legal/automatiza-con-geofence",
+    element: <ComplianceKit />,
+  },
+  {
+    path: "/kit-legal/ayuda/admin",
+    element: <ComplianceKit />,
+  },
+  {
+    path: "/kit-legal/ayuda/app",
+    element: <ComplianceKit />,
+  },
+  {
+    path: "/kit-legal/ayuda/web",
+    element: <ComplianceKit />,
+  },
+  {
+    path: "/kit-legal/verificador",
+    element: <ComplianceKit />,
+  },
+  {
+    path: "/kit-legal/checklist",
+    element: <ComplianceKit />,
+  },
+  {
+    path: "/kit-legal/simulador",
+    element: <ComplianceKit />,
+  },
+  {
+    path: "/kit-legal/plantillas",
+    element: <ComplianceKit />,
+  },
+  {
+    path: "/kit-legal/normativa",
+    element: <ComplianceKit />,
   },
   {
     path: "*",

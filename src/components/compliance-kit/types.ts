@@ -1,5 +1,5 @@
 
-import { CheckCircle, ListChecks, FileText, BookOpen, AlertTriangle, BarChart2 } from "lucide-react";
+import { CheckCircle, ListChecks, FileText, BookOpen, AlertTriangle, BarChart2, HelpCircle } from "lucide-react";
 
 // Tool interface
 export interface Tool {
@@ -8,4 +8,5 @@ export interface Tool {
   icon: React.ElementType;
   description: string;
   component: React.ComponentType<any>;
+  url?: string; // URL opcional para redireccionamiento externo o navegación interna
 }
