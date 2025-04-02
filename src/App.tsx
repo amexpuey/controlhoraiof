@@ -10,11 +10,18 @@ import ComplianceCheckerPage from "@/pages/ComplianceCheckerPage";
 import Templates from "@/pages/Templates";
 import TalentGuidePage from "@/pages/TalentGuidePage";
 import ComplianceKit from "@/pages/ComplianceKit";
+import LearningModulePage from "@/pages/LearningModulePage";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
 
 // Define which routes should hide the footer
-const routesWithoutFooter = ["/compliance-checker", "/kit-legal"];
+const routesWithoutFooter = [
+  "/compliance-checker", 
+  "/kit-legal",
+  "/kit-legal/modulo/que-es-control-horario",
+  "/kit-legal/modulo/es-obligatorio",
+  "/kit-legal/modulo/como-implementar"
+];
 
 // Move router configuration outside component to prevent recreation
 const router = createBrowserRouter([
@@ -57,6 +64,10 @@ const router = createBrowserRouter([
   {
     path: "/kit-legal",
     element: <ComplianceKit />,
+  },
+  {
+    path: "/kit-legal/modulo/:moduleId",
+    element: <LearningModulePage />,
   },
   {
     path: "*",

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { 
   CheckCircle, 
@@ -14,6 +13,7 @@ import LegalRiskSimulator from "@/components/compliance-kit/tools/LegalRiskSimul
 import LearningModules from "@/components/learning/LearningModules";
 import ComplianceTemplates from "@/components/compliance-kit/tools/ComplianceTemplates";
 import AppComparison from "@/components/compliance-kit/tools/AppComparison";
+import { useNavigate } from "react-router-dom";
 
 // Tool interface
 interface Tool {
@@ -24,10 +24,16 @@ interface Tool {
   component: React.ComponentType<any>;
 }
 
-export default function ComplianceKitTools() {
-  const [activeTab, setActiveTab] = useState("verificador");
+interface ComplianceKitToolsProps {
+  hideAppComparison?: boolean;
+}
 
-  const tools: Tool[] = [
+export default function ComplianceKitTools({ hideAppComparison = false }: ComplianceKitToolsProps) {
+  const [activeTab, setActiveTab] = useState("verificador");
+  const navigate = useNavigate();
+
+  // Base tools array
+  let tools: Tool[] = [
     {
       id: "verificador",
       title: "Verificador de Cumplimiento",
@@ -62,15 +68,19 @@ export default function ComplianceKitTools() {
       icon: AlertTriangle,
       description: "Calcula las posibles sanciones y consecuencias de no cumplir con la normativa",
       component: LegalRiskSimulator
-    },
-    {
+    }
+  ];
+  
+  // Add app comparison tool if not hidden
+  if (!hideAppComparison) {
+    tools.push({
       id: "comparador",
       title: "Comparador de Apps",
       icon: BarChart2,
       description: "Encuentra la solución de control horario que mejor se adapta a tu empresa",
       component: AppComparison
-    }
-  ];
+    });
+  }
 
   const splitTitle = (title: string) => {
     const words = title.split(' ');
@@ -85,6 +95,18 @@ export default function ComplianceKitTools() {
         <span className="block">{secondLine}</span>
       </>
     );
+  };
+  
+  // Handle learning module click - navigate to standalone page instead of showing modal
+  const handleLearningModuleClick = () => {
+    const isStandalonePage = window.location.pathname.startsWith('/kit-legal');
+    
+    if (isStandalonePage) {
+      navigate('/kit-legal/modulo/que-es-control-horario');
+    } else {
+      // For controlhorarioelectronico.com, keep the modal behavior
+      setActiveTab("aprendizaje");
+    }
   };
 
   return (
@@ -104,7 +126,13 @@ export default function ComplianceKitTools() {
           {tools.map((tool) => (
             <button
               key={tool.id}
-              onClick={() => setActiveTab(tool.id)}
+              onClick={() => {
+                if (tool.id === "aprendizaje") {
+                  handleLearningModuleClick();
+                } else {
+                  setActiveTab(tool.id);
+                }
+              }}
               className={`flex flex-col items-center justify-center p-4 rounded-lg transition-all ${
                 activeTab === tool.id 
                   ? "bg-blue-100 text-blue-800" 
@@ -140,7 +168,9 @@ export default function ComplianceKitTools() {
                   </div>
                 </div>
                 <div className="border-t border-gray-200 pt-6">
-                  {React.createElement(tool.component)}
+                  {React.createElement(tool.component, {
+                    isStandalone: window.location.pathname.startsWith('/kit-legal')
+                  })}
                 </div>
               </div>
             )
@@ -149,7 +179,7 @@ export default function ComplianceKitTools() {
       </div>
 
       {/* Learning Modules Section (visible when aprendizaje is active) */}
-      {activeTab === "aprendizaje" && (
+      {activeTab === "aprendizaje" && !window.location.pathname.startsWith('/kit-legal') && (
         <div className="mt-8 bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
           <h3 className="text-xl font-bold text-blue-700 mb-4">Módulos de Aprendizaje Interactivo</h3>
           <p className="text-gray-600 mb-6">
