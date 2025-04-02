@@ -101,10 +101,25 @@ export default function ComplianceKitTools({ hideAppComparison = false }: Compli
 
   const handleTabChange = (tabId: string) => {
     console.log("Tab change to:", tabId);
-    if (tabId === "aprendizaje") {
-      handleLearningModuleClick();
+    
+    // Si estamos en /kit-legal, vamos a usar rutas en lugar de tabs
+    const isStandalonePage = window.location.pathname.startsWith('/kit-legal');
+    
+    if (isStandalonePage) {
+      if (tabId === "aprendizaje") {
+        navigate('/kit-legal/modulo/que-es-control-horario');
+      } else if (tabId === "ayuda") {
+        navigate('/kit-legal/ayuda/admin');
+      } else {
+        navigate(`/kit-legal/${tabId}`);
+      }
     } else {
-      setActiveTab(tabId);
+      // Para el comportamiento clásico (controlhorarioelectronico.com)
+      if (tabId === "aprendizaje") {
+        handleLearningModuleClick();
+      } else {
+        setActiveTab(tabId);
+      }
     }
   };
 

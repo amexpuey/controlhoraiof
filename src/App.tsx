@@ -11,6 +11,7 @@ import Templates from "@/pages/Templates";
 import TalentGuidePage from "@/pages/TalentGuidePage";
 import ComplianceKit from "@/pages/ComplianceKit";
 import LearningModulePage from "@/pages/LearningModulePage";
+import HelpCenterPage from "@/pages/HelpCenterPage";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -83,55 +84,11 @@ const router = createBrowserRouter([
     element: <LearningModulePage />,
   },
   {
-    path: "/kit-legal/modulo-fichajes",
-    element: <ComplianceKit />,
+    path: "/kit-legal/ayuda/:section",
+    element: <HelpCenterPage />,
   },
   {
-    path: "/kit-legal/define-horarios",
-    element: <ComplianceKit />,
-  },
-  {
-    path: "/kit-legal/bienvenida-equipo",
-    element: <ComplianceKit />,
-  },
-  {
-    path: "/kit-legal/comunicacion-equipo",
-    element: <ComplianceKit />,
-  },
-  {
-    path: "/kit-legal/automatiza-con-geofence",
-    element: <ComplianceKit />,
-  },
-  {
-    path: "/kit-legal/ayuda/admin",
-    element: <ComplianceKit />,
-  },
-  {
-    path: "/kit-legal/ayuda/app",
-    element: <ComplianceKit />,
-  },
-  {
-    path: "/kit-legal/ayuda/web",
-    element: <ComplianceKit />,
-  },
-  {
-    path: "/kit-legal/verificador",
-    element: <ComplianceKit />,
-  },
-  {
-    path: "/kit-legal/checklist",
-    element: <ComplianceKit />,
-  },
-  {
-    path: "/kit-legal/simulador",
-    element: <ComplianceKit />,
-  },
-  {
-    path: "/kit-legal/plantillas",
-    element: <ComplianceKit />,
-  },
-  {
-    path: "/kit-legal/normativa",
+    path: "/kit-legal/:section",
     element: <ComplianceKit />,
   },
   {
