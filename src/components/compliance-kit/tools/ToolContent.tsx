@@ -31,7 +31,7 @@ const ToolContent: React.FC<ToolContentProps> = ({
 
   return (
     <div className="bg-white rounded-lg shadow-sm border p-6">
-      <ToolComponent isStandalone={isStandalone} />
+      <ToolComponent />
     </div>
   );
 };

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Progress } from "@/components/ui/progress";
@@ -12,7 +11,8 @@ import {
   Home,
   Settings,
   Users,
-  Clock
+  Clock,
+  HelpCircle
 } from "lucide-react";
 import ComplianceKitHeader from "@/components/compliance-kit/ComplianceKitHeader";
 import ComplianceKitTools from "@/components/compliance-kit/ComplianceKitTools";
@@ -85,11 +85,11 @@ export default function ComplianceKit() {
       case "verificador":
         return <ComplianceChecker />;
       case "checklist":
-        return <ComplianceChecklist isStandalone={true} />;
+        return <ComplianceChecklist />;
       case "simulador":
-        return <LegalRiskSimulator isStandalone={true} />;
+        return <LegalRiskSimulator />;
       case "plantillas":
-        return <ComplianceTemplates isStandalone={true} />;
+        return <ComplianceTemplates />;
       case "normativa":
         return (
           <div className="bg-white p-6 rounded-lg border border-gray-200">
@@ -675,131 +675,4 @@ export default function ComplianceKit() {
                     <div className="border-t border-gray-200 pt-6">
                       <button 
                         onClick={() => navigateToSection("plantillas")}
-                        className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-                      >
-                        Ir a Plantillas Interactivas
-                      </button>
-                    </div>
-                  </TabsContent>
-                  
-                  <TabsContent value="simulador" className="bg-white p-6 rounded-lg border border-gray-200">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="bg-blue-100 p-3 rounded-full">
-                        <AlertTriangle className="h-8 w-8 text-blue-700" />
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-gray-800">Simulador de Riesgos</h3>
-                        <p className="text-gray-600">Calcula las posibles sanciones y consecuencias de no cumplir con la normativa</p>
-                      </div>
-                    </div>
-                    <div className="border-t border-gray-200 pt-6">
-                      <button 
-                        onClick={() => navigateToSection("simulador")}
-                        className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-                      >
-                        Ir al Simulador de Riesgos
-                      </button>
-                    </div>
-                  </TabsContent>
-                  
-                  <TabsContent value="ayuda" className="bg-white p-6 rounded-lg border border-gray-200">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="bg-blue-100 p-3 rounded-full">
-                        <HelpCircle className="h-8 w-8 text-blue-700" />
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-gray-800">Centro de Ayuda</h3>
-                        <p className="text-gray-600">Manuales y guías para administradores y usuarios de INWOUT</p>
-                      </div>
-                    </div>
-                    <div className="border-t border-gray-200 pt-6">
-                      <button 
-                        onClick={() => navigate("/kit-legal/ayuda/admin")}
-                        className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-                      >
-                        Ir al Centro de Ayuda
-                      </button>
-                    </div>
-                  </TabsContent>
-                </Tabs>
-                
-                <ComplianceKitFAQ />
-              </>
-            )}
-            
-            {activeTab === "configuracion-inwout" && (
-              <>
-                <h1 className="text-3xl font-bold text-gray-800 mb-6">
-                  Configuración de INWOUT
-                </h1>
-                
-                <div className="bg-blue-50 p-6 rounded-lg border border-blue-100 mb-8">
-                  <h2 className="text-xl font-semibold text-blue-800 mb-4">
-                    Configura tu cuenta en unos sencillos pasos
-                  </h2>
-                  <p className="text-gray-600 mb-6">
-                    Para sacar el máximo partido a INWOUT, completa estos pasos de configuración.
-                    Cada paso te ayudará a adaptar la herramienta a las necesidades específicas de tu empresa.
-                  </p>
-                  
-                  <div className="space-y-4">
-                    {onboardingSteps.map((step, index) => (
-                      <a 
-                        key={step.id}
-                        href={step.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-start p-4 bg-white rounded-lg border border-blue-200 hover:border-blue-400 transition-colors"
-                      >
-                        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-600 mr-4 flex-shrink-0">
-                          <span className="font-semibold">{step.id}</span>
-                        </div>
-                        <div>
-                          <h3 className="font-medium text-blue-800 mb-1">{step.title}</h3>
-                          <p className="text-sm text-gray-600">
-                            {index === 0 && "Establece los horarios de trabajo para cada departamento o equipo."}
-                            {index === 1 && "Invita a tus compañeros a unirse a INWOUT para empezar a registrar su jornada."}
-                            {index === 2 && "Crea canales de comunicación para mantener a todos informados y conectados."}
-                            {index === 3 && "Configura ubicaciones de trabajo para automatizar los fichajes por geolocalización."}
-                          </p>
-                          <div className="mt-2">
-                            <span className="text-blue-600 text-sm font-medium">Configurar ahora →</span>
-                          </div>
-                        </div>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-                
-                <div className="bg-white p-6 rounded-lg border border-gray-200 mb-8">
-                  <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                    Recursos adicionales
-                  </h2>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <a 
-                      href="/kit-legal/ayuda/admin"
-                      className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-                    >
-                      <BookOpen className="h-5 w-5 text-blue-600 mr-3" />
-                      <span>Centro de ayuda</span>
-                    </a>
-                    <a 
-                      href="https://www.inwout.com/contacto"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-                    >
-                      <Users className="h-5 w-5 text-blue-600 mr-3" />
-                      <span>Contactar con soporte</span>
-                    </a>
-                  </div>
-                </div>
-              </>
-            )}
-          </main>
-        </div>
-      </div>
-    </div>
-  );
-}
+                        className="bg-blue-600 text-white px-6 py-3 rounded-lg hover
