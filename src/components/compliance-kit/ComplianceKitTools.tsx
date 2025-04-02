@@ -14,15 +14,10 @@ import LearningModules from "@/components/learning/LearningModules";
 import ComplianceTemplates from "@/components/compliance-kit/tools/ComplianceTemplates";
 import AppComparison from "@/components/compliance-kit/tools/AppComparison";
 import { useNavigate } from "react-router-dom";
-
-// Tool interface
-interface Tool {
-  id: string;
-  title: string;
-  icon: React.ElementType;
-  description: string;
-  component: React.ComponentType<any>;
-}
+import ToolTabs from "./tools/ToolTabs";
+import ToolContent from "./tools/ToolContent";
+import LearningModulesSection from "./tools/LearningModulesSection";
+import { Tool } from "./types";
 
 interface ComplianceKitToolsProps {
   hideAppComparison?: boolean;
@@ -81,21 +76,6 @@ export default function ComplianceKitTools({ hideAppComparison = false }: Compli
       component: AppComparison
     });
   }
-
-  const splitTitle = (title: string) => {
-    const words = title.split(' ');
-    if (words.length <= 2) return title;
-    
-    const firstLine = words.slice(0, 1).join(' ');
-    const secondLine = words.slice(1).join(' ');
-    
-    return (
-      <>
-        <span className="block">{firstLine}</span>
-        <span className="block">{secondLine}</span>
-      </>
-    );
-  };
   
   // Handle learning module click - navigate to standalone page instead of showing modal
   const handleLearningModuleClick = () => {
@@ -108,6 +88,16 @@ export default function ComplianceKitTools({ hideAppComparison = false }: Compli
       setActiveTab("aprendizaje");
     }
   };
+
+  const handleTabChange = (tabId: string) => {
+    if (tabId === "aprendizaje") {
+      handleLearningModuleClick();
+    } else {
+      setActiveTab(tabId);
+    }
+  };
+
+  const isStandalonePage = window.location.pathname.startsWith('/kit-legal');
 
   return (
     <section id="compliance-tools" className="py-8">
@@ -122,130 +112,25 @@ export default function ComplianceKitTools({ hideAppComparison = false }: Compli
 
       {/* Modern Tab Navigation */}
       <div className="flex flex-col space-y-6">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
-          {tools.map((tool) => (
-            <button
-              key={tool.id}
-              onClick={() => {
-                if (tool.id === "aprendizaje") {
-                  handleLearningModuleClick();
-                } else {
-                  setActiveTab(tool.id);
-                }
-              }}
-              className={`flex flex-col items-center justify-center p-4 rounded-lg transition-all ${
-                activeTab === tool.id 
-                  ? "bg-blue-100 text-blue-800" 
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              <div className={`p-3 rounded-full mb-2 ${
-                activeTab === tool.id ? "bg-blue-200" : "bg-white"
-              }`}>
-                {React.createElement(tool.icon, { 
-                  className: `w-6 h-6 ${activeTab === tool.id ? "text-blue-700" : "text-gray-700"}`
-                })}
-              </div>
-              <span className="text-center font-medium text-sm leading-tight">
-                {splitTitle(tool.title)}
-              </span>
-            </button>
-          ))}
-        </div>
+        <ToolTabs 
+          tools={tools} 
+          activeTab={activeTab} 
+          onTabChange={handleTabChange} 
+        />
 
         {/* Active Tab Content */}
-        <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-          {tools.map((tool) => (
-            activeTab === tool.id && (
-              <div key={tool.id}>
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="bg-blue-100 p-3 rounded-full">
-                    {React.createElement(tool.icon, { className: "h-8 w-8 text-blue-700" })}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-800">{tool.title}</h3>
-                    <p className="text-gray-600">{tool.description}</p>
-                  </div>
-                </div>
-                <div className="border-t border-gray-200 pt-6">
-                  {React.createElement(tool.component, {
-                    isStandalone: window.location.pathname.startsWith('/kit-legal')
-                  })}
-                </div>
-              </div>
-            )
-          ))}
-        </div>
+        <ToolContent 
+          activeTab={activeTab} 
+          tools={tools} 
+          isStandalone={isStandalonePage}
+        />
       </div>
 
       {/* Learning Modules Section (visible when aprendizaje is active) */}
-      {activeTab === "aprendizaje" && !window.location.pathname.startsWith('/kit-legal') && (
-        <div className="mt-8 bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-          <h3 className="text-xl font-bold text-blue-700 mb-4">Módulos de Aprendizaje Interactivo</h3>
-          <p className="text-gray-600 mb-6">
-            Descubre todo lo que necesitas saber sobre el control horario a través de estos módulos interactivos
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Module 1 */}
-            <div className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
-              <div className="p-5">
-                <div className="bg-blue-100 p-2 rounded-full w-10 h-10 flex items-center justify-center mb-3">
-                  <FileText className="h-5 w-5 text-blue-700" />
-                </div>
-                <h4 className="text-gray-800 font-medium mb-2">¿Qué es el control horario?</h4>
-                <p className="text-gray-600 text-sm mb-4">
-                  Aprende todo lo relativo a la normativa de control horario y cómo afecta a tu empresa.
-                </p>
-                <a href="#" className="text-blue-600 flex items-center text-sm hover:underline">
-                  Acceder
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-            
-            {/* Module 2 */}
-            <div className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
-              <div className="p-5">
-                <div className="bg-blue-100 p-2 rounded-full w-10 h-10 flex items-center justify-center mb-3">
-                  <CheckCircle className="h-5 w-5 text-blue-700" />
-                </div>
-                <h4 className="text-gray-800 font-medium mb-2">¿Es obligatorio para tu empresa?</h4>
-                <p className="text-gray-600 text-sm mb-4">
-                  Descubre si tu empresa está obligada a implementar un sistema de fichaje.
-                </p>
-                <a href="#" className="text-blue-600 flex items-center text-sm hover:underline">
-                  Acceder
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-            
-            {/* Module 3 */}
-            <div className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
-              <div className="p-5">
-                <div className="bg-blue-100 p-2 rounded-full w-10 h-10 flex items-center justify-center mb-3">
-                  <BookOpen className="h-5 w-5 text-blue-700" />
-                </div>
-                <h4 className="text-gray-800 font-medium mb-2">Cómo implementar un sistema de fichajes</h4>
-                <p className="text-gray-600 text-sm mb-4">
-                  Conoce las diferentes opciones y encuentra la mejor para tu empresa.
-                </p>
-                <a href="#" className="text-blue-600 flex items-center text-sm hover:underline">
-                  Acceder
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <LearningModulesSection 
+        visible={activeTab === "aprendizaje"} 
+        isStandalonePage={isStandalonePage}
+      />
     </section>
   );
 }
