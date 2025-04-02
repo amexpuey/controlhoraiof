@@ -13,12 +13,15 @@ export function useBlogPosts(activeCategory: string) {
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const observer = useRef<IntersectionObserver | null>(null);
+  const [lastFetchedPostDate, setLastFetchedPostDate] = useState<string | null>(null);
   
   // Initial fetch of posts
   useEffect(() => {
     const fetchFilteredPosts = async () => {
       try {
         setLoading(true);
+        setPosts([]);
+        setLastFetchedPostDate(null);
         console.log(`Fetching ${activeCategory} posts from Supabase...`);
         
         let query = supabase
@@ -53,7 +56,12 @@ export function useBlogPosts(activeCategory: string) {
           });
           
           setHasMore(transformedPosts.length > POSTS_PER_PAGE);
-          setPosts(transformedPosts.slice(0, POSTS_PER_PAGE));
+          const postsToShow = transformedPosts.slice(0, POSTS_PER_PAGE);
+          setPosts(postsToShow);
+          
+          if (postsToShow.length > 0) {
+            setLastFetchedPostDate(postsToShow[postsToShow.length - 1].published_at);
+          }
         } else {
           console.error('Error or no filtered data from Supabase:', error);
           console.log('Falling back to filtered mock data');
@@ -63,6 +71,10 @@ export function useBlogPosts(activeCategory: string) {
           
           setPosts(filteredMockPosts.slice(0, POSTS_PER_PAGE));
           setHasMore(filteredMockPosts.length > POSTS_PER_PAGE);
+          
+          if (filteredMockPosts.length > 0) {
+            setLastFetchedPostDate(filteredMockPosts[POSTS_PER_PAGE - 1].published_at);
+          }
         }
       } catch (error) {
         console.error('Exception fetching filtered blog posts:', error);
@@ -73,6 +85,10 @@ export function useBlogPosts(activeCategory: string) {
         
         setPosts(filteredMockPosts.slice(0, POSTS_PER_PAGE));
         setHasMore(filteredMockPosts.length > POSTS_PER_PAGE);
+        
+        if (filteredMockPosts.length > 0) {
+          setLastFetchedPostDate(filteredMockPosts[POSTS_PER_PAGE - 1].published_at);
+        }
       } finally {
         setLoading(false);
       }
@@ -83,18 +99,19 @@ export function useBlogPosts(activeCategory: string) {
 
   // Function to load more posts
   const loadMorePosts = useCallback(async () => {
-    if (!hasMore || loadingMore) return;
+    if (!hasMore || loadingMore || !lastFetchedPostDate) return;
     
     try {
       setLoadingMore(true);
       console.log("Loading more posts...");
+      console.log("Last fetched post date:", lastFetchedPostDate);
       
       let query = supabase
         .from('blog_posts')
         .select('*')
         .not('published_at', 'is', null)
         .order('published_at', { ascending: false })
-        .gt('published_at', posts[posts.length - 1].published_at)
+        .lt('published_at', lastFetchedPostDate) // Use less than instead of greater than
         .limit(POSTS_PER_PAGE + 1);
       
       if (activeCategory !== "all") {
@@ -120,11 +137,22 @@ export function useBlogPosts(activeCategory: string) {
         });
         
         setHasMore(newPosts.length > POSTS_PER_PAGE);
-        setPosts(prevPosts => [...prevPosts, ...newPosts.slice(0, POSTS_PER_PAGE)]);
+        const postsToAdd = newPosts.slice(0, POSTS_PER_PAGE);
+        
+        // Check for duplicates before adding new posts
+        const existingIds = new Set(posts.map(post => post.id));
+        const uniqueNewPosts = postsToAdd.filter(post => !existingIds.has(post.id));
+        
+        if (uniqueNewPosts.length > 0) {
+          setPosts(prevPosts => [...prevPosts, ...uniqueNewPosts]);
+          setLastFetchedPostDate(uniqueNewPosts[uniqueNewPosts.length - 1].published_at);
+        } else {
+          console.log("No new unique posts found");
+          setHasMore(false);
+        }
       } else {
         console.error('Error or no more data from Supabase:', error);
         console.log('No more posts to load or falling back to mock data');
-        
         setHasMore(false);
       }
     } catch (error) {
@@ -133,7 +161,7 @@ export function useBlogPosts(activeCategory: string) {
     } finally {
       setLoadingMore(false);
     }
-  }, [posts, activeCategory, hasMore, loadingMore]);
+  }, [posts, activeCategory, hasMore, loadingMore, lastFetchedPostDate]);
   
   // Last post element ref for infinite scrolling
   const lastPostElementRef = useCallback((node: HTMLDivElement | null) => {
