@@ -83,7 +83,12 @@ export default function LearningSidebar({ learningProgress, activeModuleId }: Le
         {/* Learning Progress Section */}
         <div className="mt-8 border-t border-gray-700 pt-6">
           <h3 className="text-md font-medium mb-3">Progreso de aprendizaje</h3>
-          <Progress value={learningProgress} className="h-2 bg-gray-700" indicatorClassName="bg-[#0BC8C1]" />
+          <div className="h-2 w-full bg-gray-700 rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-[#0BC8C1]" 
+              style={{ width: `${learningProgress}%` }}
+            ></div>
+          </div>
           <div className="mt-2 text-sm text-gray-300">
             {learningProgress}% completado
           </div>
