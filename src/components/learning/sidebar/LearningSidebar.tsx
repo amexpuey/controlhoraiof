@@ -47,7 +47,7 @@ export default function LearningSidebar({ learningProgress, activeModuleId }: Le
   };
 
   return (
-    <div className="w-64 bg-[#222A39] text-white min-h-screen fixed left-0 top-0 overflow-y-auto">
+    <div className="w-64 bg-[#2a3040] text-white min-h-screen fixed left-0 top-0 overflow-y-auto">
       <div className="p-6">
         <div className="flex items-center mb-8">
           <img 
@@ -64,8 +64,8 @@ export default function LearningSidebar({ learningProgress, activeModuleId }: Le
             onClick={() => navigate('/kit-legal')}
             className={`flex items-center py-2 px-3 rounded-md transition-colors cursor-pointer ${
               isActive('/kit-legal') 
-                ? "bg-[#2d3748] text-white" 
-                : "text-gray-300 hover:bg-[#2d3748] hover:text-white"
+                ? "bg-[#222A39] text-white" 
+                : "text-gray-300 hover:bg-[#222A39] hover:text-white"
             }`}
           >
             <Home className="h-5 w-5 mr-3" />
@@ -76,7 +76,9 @@ export default function LearningSidebar({ learningProgress, activeModuleId }: Le
           <div className="space-y-1">
             <div 
               onClick={() => toggleSection('learning')}
-              className="flex items-center justify-between py-2 px-3 text-gray-300 hover:bg-[#2d3748] hover:text-white rounded-md transition-colors cursor-pointer"
+              className={`flex items-center justify-between py-2 px-3 text-gray-300 hover:bg-[#222A39] hover:text-white rounded-md transition-colors cursor-pointer ${
+                expandedSections.learning ? "bg-[#222A39]" : ""
+              }`}
             >
               <div className="flex items-center">
                 <BookOpen className="h-5 w-5 mr-3" />
@@ -95,8 +97,8 @@ export default function LearningSidebar({ learningProgress, activeModuleId }: Le
                   onClick={() => navigate('/kit-legal/modulo/que-es-control-horario')}
                   className={`flex items-center py-2 px-3 rounded-md transition-colors cursor-pointer ${
                     activeModuleId === 'que-es-control-horario'
-                      ? "bg-[#2d3748] text-white" 
-                      : "text-gray-300 hover:bg-[#2d3748] hover:text-white"
+                      ? "bg-[#222A39] text-white" 
+                      : "text-gray-300 hover:bg-[#222A39] hover:text-white"
                   }`}
                 >
                   {learningProgress >= 33 ? (
@@ -111,8 +113,8 @@ export default function LearningSidebar({ learningProgress, activeModuleId }: Le
                   onClick={() => navigate('/kit-legal/modulo/es-obligatorio')}
                   className={`flex items-center py-2 px-3 rounded-md transition-colors cursor-pointer ${
                     activeModuleId === 'es-obligatorio'
-                      ? "bg-[#2d3748] text-white" 
-                      : "text-gray-300 hover:bg-[#2d3748] hover:text-white"
+                      ? "bg-[#222A39] text-white" 
+                      : "text-gray-300 hover:bg-[#222A39] hover:text-white"
                   }`}
                 >
                   {learningProgress >= 66 ? (
@@ -127,8 +129,8 @@ export default function LearningSidebar({ learningProgress, activeModuleId }: Le
                   onClick={() => navigate('/kit-legal/modulo/como-implementar')}
                   className={`flex items-center py-2 px-3 rounded-md transition-colors cursor-pointer ${
                     activeModuleId === 'como-implementar'
-                      ? "bg-[#2d3748] text-white" 
-                      : "text-gray-300 hover:bg-[#2d3748] hover:text-white"
+                      ? "bg-[#222A39] text-white" 
+                      : "text-gray-300 hover:bg-[#222A39] hover:text-white"
                   }`}
                 >
                   {learningProgress >= 100 ? (
@@ -146,7 +148,9 @@ export default function LearningSidebar({ learningProgress, activeModuleId }: Le
           <div className="space-y-1">
             <div 
               onClick={() => toggleSection('tools')}
-              className="flex items-center justify-between py-2 px-3 text-gray-300 hover:bg-[#2d3748] hover:text-white rounded-md transition-colors cursor-pointer"
+              className={`flex items-center justify-between py-2 px-3 text-gray-300 hover:bg-[#222A39] hover:text-white rounded-md transition-colors cursor-pointer ${
+                expandedSections.tools ? "bg-[#222A39]" : ""
+              }`}
             >
               <div className="flex items-center">
                 <Settings className="h-5 w-5 mr-3" />
@@ -165,8 +169,8 @@ export default function LearningSidebar({ learningProgress, activeModuleId }: Le
                   onClick={() => navigate('/kit-legal/verificador')}
                   className={`flex items-center py-2 px-3 rounded-md transition-colors cursor-pointer ${
                     isActive('/kit-legal/verificador')
-                      ? "bg-[#2d3748] text-white" 
-                      : "text-gray-300 hover:bg-[#2d3748] hover:text-white"
+                      ? "bg-[#222A39] text-white" 
+                      : "text-gray-300 hover:bg-[#222A39] hover:text-white"
                   }`}
                 >
                   <CheckCircle className="h-4 w-4 text-gray-400 mr-2" />
@@ -177,8 +181,8 @@ export default function LearningSidebar({ learningProgress, activeModuleId }: Le
                   onClick={() => navigate('/kit-legal/checklist')}
                   className={`flex items-center py-2 px-3 rounded-md transition-colors cursor-pointer ${
                     isActive('/kit-legal/checklist')
-                      ? "bg-[#2d3748] text-white" 
-                      : "text-gray-300 hover:bg-[#2d3748] hover:text-white"
+                      ? "bg-[#222A39] text-white" 
+                      : "text-gray-300 hover:bg-[#222A39] hover:text-white"
                   }`}
                 >
                   <ListChecks className="h-4 w-4 text-gray-400 mr-2" />
@@ -189,8 +193,8 @@ export default function LearningSidebar({ learningProgress, activeModuleId }: Le
                   onClick={() => navigate('/kit-legal/plantillas')}
                   className={`flex items-center py-2 px-3 rounded-md transition-colors cursor-pointer ${
                     isActive('/kit-legal/plantillas')
-                      ? "bg-[#2d3748] text-white" 
-                      : "text-gray-300 hover:bg-[#2d3748] hover:text-white"
+                      ? "bg-[#222A39] text-white" 
+                      : "text-gray-300 hover:bg-[#222A39] hover:text-white"
                   }`}
                 >
                   <FileText className="h-4 w-4 text-gray-400 mr-2" />
@@ -201,8 +205,8 @@ export default function LearningSidebar({ learningProgress, activeModuleId }: Le
                   onClick={() => navigate('/kit-legal/simulador')}
                   className={`flex items-center py-2 px-3 rounded-md transition-colors cursor-pointer ${
                     isActive('/kit-legal/simulador')
-                      ? "bg-[#2d3748] text-white" 
-                      : "text-gray-300 hover:bg-[#2d3748] hover:text-white"
+                      ? "bg-[#222A39] text-white" 
+                      : "text-gray-300 hover:bg-[#222A39] hover:text-white"
                   }`}
                 >
                   <AlertTriangle className="h-4 w-4 text-gray-400 mr-2" />
@@ -213,8 +217,8 @@ export default function LearningSidebar({ learningProgress, activeModuleId }: Le
                   onClick={() => navigate('/kit-legal/ayuda/admin')}
                   className={`flex items-center py-2 px-3 rounded-md transition-colors cursor-pointer ${
                     isActive('/kit-legal/ayuda/admin')
-                      ? "bg-[#2d3748] text-white" 
-                      : "text-gray-300 hover:bg-[#2d3748] hover:text-white"
+                      ? "bg-[#222A39] text-white" 
+                      : "text-gray-300 hover:bg-[#222A39] hover:text-white"
                   }`}
                 >
                   <HelpCircle className="h-4 w-4 text-gray-400 mr-2" />
@@ -228,7 +232,9 @@ export default function LearningSidebar({ learningProgress, activeModuleId }: Le
           <div className="space-y-1">
             <div 
               onClick={() => toggleSection('account')}
-              className="flex items-center justify-between py-2 px-3 text-gray-300 hover:bg-[#2d3748] hover:text-white rounded-md transition-colors cursor-pointer"
+              className={`flex items-center justify-between py-2 px-3 text-gray-300 hover:bg-[#222A39] hover:text-white rounded-md transition-colors cursor-pointer ${
+                expandedSections.account ? "bg-[#222A39]" : ""
+              }`}
             >
               <div className="flex items-center">
                 <User className="h-5 w-5 mr-3" />
@@ -247,7 +253,7 @@ export default function LearningSidebar({ learningProgress, activeModuleId }: Le
                   href="https://app.inwout.com/login" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center py-2 px-3 text-gray-300 hover:bg-[#2d3748] hover:text-white rounded-md transition-colors"
+                  className="flex items-center py-2 px-3 text-gray-300 hover:bg-[#222A39] hover:text-white rounded-md transition-colors"
                 >
                   <Clock className="h-4 w-4 text-gray-400 mr-2" />
                   <span className="text-sm">Acceder a Fichajes</span>
@@ -257,7 +263,7 @@ export default function LearningSidebar({ learningProgress, activeModuleId }: Le
                   href="https://app.inwout.com/settings" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center py-2 px-3 text-gray-300 hover:bg-[#2d3748] hover:text-white rounded-md transition-colors"
+                  className="flex items-center py-2 px-3 text-gray-300 hover:bg-[#222A39] hover:text-white rounded-md transition-colors"
                 >
                   <Settings className="h-4 w-4 text-gray-400 mr-2" />
                   <span className="text-sm">Configuración</span>
@@ -267,7 +273,7 @@ export default function LearningSidebar({ learningProgress, activeModuleId }: Le
                   href="https://app.inwout.com/reports" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center py-2 px-3 text-gray-300 hover:bg-[#2d3748] hover:text-white rounded-md transition-colors"
+                  className="flex items-center py-2 px-3 text-gray-300 hover:bg-[#222A39] hover:text-white rounded-md transition-colors"
                 >
                   <BarChart className="h-4 w-4 text-gray-400 mr-2" />
                   <span className="text-sm">Informes</span>
@@ -296,7 +302,7 @@ export default function LearningSidebar({ learningProgress, activeModuleId }: Le
             href="https://app.inwout.com/logout"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center w-full py-2 px-3 text-gray-300 hover:bg-[#2d3748] hover:text-white rounded-md transition-colors"
+            className="flex items-center w-full py-2 px-3 text-gray-300 hover:bg-[#222A39] hover:text-white rounded-md transition-colors"
           >
             <LogOut className="h-5 w-5 mr-3" />
             <span>Cerrar sesión</span>
