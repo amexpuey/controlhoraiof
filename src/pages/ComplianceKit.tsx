@@ -41,8 +41,6 @@ export default function ComplianceKit() {
         
         <DashboardAdBanners position="bottom" />
       </main>
-      
-      {/* Footer is rendered in App.tsx */}
     </div>
   );
 }

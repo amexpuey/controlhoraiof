@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -98,4 +99,26 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Improve contrast for text on dark backgrounds */
+.bg-gray-800, .bg-gray-900, [class*="bg-gray-800"], [class*="bg-gray-900"] {
+  --tw-text-opacity: 1;
+  color: rgba(229, 231, 235, var(--tw-text-opacity));
+}
+
+.text-gray-300 {
+  --tw-text-opacity: 1;
+  color: rgba(229, 231, 235, var(--tw-text-opacity));
+}
+
+.text-gray-400 {
+  --tw-text-opacity: 1;
+  color: rgba(209, 213, 219, var(--tw-text-opacity));
+}
+
+/* Improve readability in dark sections */
+[class*="bg-gray-800"] p, [class*="bg-gray-900"] p {
+  --tw-text-opacity: 1;
+  color: rgba(229, 231, 235, var(--tw-text-opacity));
 }
