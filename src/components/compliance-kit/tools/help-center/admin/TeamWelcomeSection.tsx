@@ -3,7 +3,7 @@ import React from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, UserPlus, Users, Mail, Shield } from "lucide-react";
+import { ExternalLink, UserPlus, Users, Mail, Shield, FileText } from "lucide-react";
 
 export default function TeamWelcomeSection() {
   return (
@@ -68,7 +68,7 @@ export default function TeamWelcomeSection() {
                         rel="noopener noreferrer"
                         className="text-green-700 flex items-center hover:underline font-medium"
                       >
-                        <FileSpreadsheet className="w-4 h-4 mr-1" /> Descargar plantilla "Rellenar Empleados"
+                        <FileText className="w-4 h-4 mr-1" /> Descargar plantilla "Rellenar Empleados"
                       </a>
                     </div>
                     <div className="mt-3 text-sm text-gray-500">
