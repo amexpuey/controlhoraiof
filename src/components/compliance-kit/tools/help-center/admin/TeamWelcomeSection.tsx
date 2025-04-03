@@ -125,16 +125,16 @@ export default function TeamWelcomeSection() {
               <div className="sticky top-4">
                 <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm bg-white">
                   <div className="p-3 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
-                    <h4 className="font-medium text-gray-700">Panel de gestión de equipo</h4>
+                    <h4 className="font-medium text-gray-700">Panel de importación de empleados</h4>
                   </div>
                   <div className="p-3">
                     <img 
-                      src="/lovable-uploads/ba53c58c-1385-4d44-85fe-bcaca97175b4.png" 
-                      alt="Gestión de equipo en INWOUT" 
+                      src="/lovable-uploads/acb228f6-cfc6-4e2f-a631-584c0fefe7aa.png" 
+                      alt="Importación masiva de empleados en INWOUT" 
                       className="w-full rounded"
                     />
                     <p className="text-xs text-gray-500 mt-2 text-center">
-                      Panel de gestión de usuarios y roles en la plataforma INWOUT
+                      Importador de Empleados en Bulk (Importación Masiva de Empleados)
                     </p>
                   </div>
                 </div>
@@ -146,3 +146,4 @@ export default function TeamWelcomeSection() {
     </Accordion>
   );
 }
+
