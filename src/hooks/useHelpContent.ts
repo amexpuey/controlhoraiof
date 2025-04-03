@@ -59,11 +59,30 @@ export const useHelpContent = (category: string) => {
         } else if (data) {
           // Process the data safely
           const processedData = data.map(step => {
-            return {
-              ...step,
-              // Safely handle items property which might not exist
-              items: Array.isArray(step.items) ? step.items : []
-            } as HelpStep;
+            // Create a new object with the expected HelpStep structure
+            const helpStep: HelpStep = {
+              id: step.id,
+              title: step.title,
+              description: step.description,
+              video_url: step.video_url,
+              pdf_url: step.pdf_url,
+              step_order: step.step_order,
+              category: step.category,
+              visible: step.visible,
+              estimated_time: step.estimated_time,
+              slug: step.slug,
+              created_at: step.created_at,
+              updated_at: step.updated_at
+            };
+            
+            // Handle the items field specifically
+            if (step.items && Array.isArray(step.items)) {
+              helpStep.items = step.items;
+            } else {
+              helpStep.items = [];
+            }
+            
+            return helpStep;
           });
           
           setHelpSteps(processedData);

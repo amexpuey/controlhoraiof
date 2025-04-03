@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertTriangle, BookOpen, CheckCircle, FileText, HelpCircle, ListChecks, Settings, Smartphone, Users, Download, Play, Link, MapPin, Bell, Calendar, ExternalLink } from "lucide-react";
@@ -87,7 +86,6 @@ export default function HelpCenter({ isStandalone = false, activeSection = "admi
     navigate(url);
   };
 
-  // Contenido específico basado en la sección activa
   const renderSectionContent = () => {
     if (isStandalone) {
       switch (activeSection) {
@@ -103,7 +101,6 @@ export default function HelpCenter({ isStandalone = false, activeSection = "admi
                 </p>
               </div>
 
-              {/* Pasos iniciales para registro y verificación */}
               <div className="mb-8 bg-blue-50 p-6 rounded-lg border border-blue-100">
                 <h3 className="text-xl font-semibold text-gray-800 mb-4">Primeros pasos</h3>
                 
@@ -119,7 +116,7 @@ export default function HelpCenter({ isStandalone = false, activeSection = "admi
                       </p>
                       <Button 
                         className="bg-blue-600 hover:bg-blue-700"
-                        onClick={() => window.open("https://app.inwout.com/login", "_blank")}
+                        onClick={() => window.open("https://app.inwout.com/register", "_blank")}
                       >
                         Registrarse
                         <ExternalLink className="w-4 h-4 ml-2" />
@@ -353,7 +350,6 @@ export default function HelpCenter({ isStandalone = false, activeSection = "admi
       }
     }
     
-    // Contenido estándar para cuando no es standalone
     return (
       <div className="space-y-8">
         <section>
