@@ -1,22 +1,11 @@
-
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertTriangle, BookOpen, CheckCircle, FileText, HelpCircle, ListChecks, Settings, Smartphone, Users, Download, Play, Link, MapPin, Bell, Calendar, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Checkbox } from "@/components/ui/checkbox";
-import { supabase } from "@/integrations/supabase/client";
-
-interface HelpStep {
-  id: string;
-  title: string;
-  description: string;
-  video_url?: string;
-  step_order: number;
-  category: string;
-  items?: string[];
-}
+import { useHelpContent } from "@/hooks/useHelpContent";
+import HelpStepItems from "./HelpStepItems";
 
 interface HelpCenterProps {
   isStandalone?: boolean;
@@ -25,54 +14,10 @@ interface HelpCenterProps {
 
 export default function HelpCenter({ isStandalone = false, activeSection = "admin" }: HelpCenterProps) {
   const navigate = useNavigate();
-  const [helpSteps, setHelpSteps] = useState<HelpStep[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [welcomeVideo, setWelcomeVideo] = useState<string | null>(null);
+  const { helpSteps, welcomeVideo, isLoading, error } = useHelpContent(activeSection);
   
   console.log("HelpCenter - isStandalone:", isStandalone);
   console.log("HelpCenter - activeSection:", activeSection);
-
-  useEffect(() => {
-    const fetchHelpSteps = async () => {
-      try {
-        setIsLoading(true);
-        
-        // Fetch the welcome video
-        const { data: welcomeData, error: welcomeError } = await supabase
-          .from('help_steps')
-          .select('*')
-          .eq('id', '8cc75e5c-30a4-4eea-b2fe-889d6e9f947a')
-          .single();
-        
-        if (welcomeError) {
-          console.error("Error fetching welcome video:", welcomeError);
-        } else if (welcomeData && welcomeData.video_url) {
-          setWelcomeVideo(welcomeData.video_url);
-        }
-        
-        // Fetch admin steps if on admin section
-        if (activeSection === 'admin') {
-          const { data, error } = await supabase
-            .from('help_steps')
-            .select('*')
-            .eq('category', 'admin')
-            .order('step_order', { ascending: true });
-            
-          if (error) {
-            console.error("Error fetching help steps:", error);
-          } else if (data) {
-            setHelpSteps(data);
-          }
-        }
-      } catch (error) {
-        console.error("Error in fetchHelpSteps:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    fetchHelpSteps();
-  }, [activeSection]);
 
   const manuals = [
     {
@@ -217,53 +162,7 @@ export default function HelpCenter({ isStandalone = false, activeSection = "admi
                           </div>
                         </AccordionTrigger>
                         <AccordionContent className="p-4 pt-2 border-t border-gray-100">
-                          <div className="mb-4">
-                            {section.items && section.items.length > 0 && (
-                              <div className="mb-3">
-                                <div className="text-md font-medium mb-2">Acciones</div>
-                                <div className="space-y-2">
-                                  {section.items.map((item, i) => (
-                                    <div key={i} className="flex items-center space-x-2">
-                                      <Checkbox id={`${section.id}-item-${i}`} />
-                                      <label
-                                        htmlFor={`${section.id}-item-${i}`}
-                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                      >
-                                        {item}
-                                      </label>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-                            {section.video_url && (
-                              <div className="mt-4">
-                                <div className="flex items-center text-md font-medium mb-2">
-                                  <Play className="w-4 h-4 mr-1" />
-                                  <span>Tutorial en vídeo</span>
-                                </div>
-                                <div className="aspect-video w-full rounded-md overflow-hidden bg-gray-100">
-                                  <iframe 
-                                    className="w-full h-full"
-                                    src={section.video_url} 
-                                    title={`Tutorial - ${section.title}`}
-                                    frameBorder="0" 
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                    allowFullScreen
-                                  ></iframe>
-                                </div>
-                              </div>
-                            )}
-                            <div className="mt-4 pt-4 border-t border-gray-100">
-                              <Button 
-                                className="bg-[#0BC8C1] hover:bg-[#0AB1AB] w-full"
-                                onClick={() => window.open("https://app.inwout.com/login", "_blank")}
-                              >
-                                Configurar esta sección en app.inwout.com
-                                <ExternalLink className="w-4 h-4 ml-2" />
-                              </Button>
-                            </div>
-                          </div>
+                          <HelpStepItems step={section} />
                         </AccordionContent>
                       </AccordionItem>
                     ))
