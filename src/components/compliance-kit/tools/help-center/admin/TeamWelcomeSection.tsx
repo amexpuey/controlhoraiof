@@ -36,7 +36,7 @@ export default function TeamWelcomeSection() {
                       Invitación por email
                     </h4>
                     <ol className="list-decimal list-inside space-y-2 text-gray-700">
-                      <li>Ve a <strong className="text-purple-700">Configuración &gt; Equipo</strong> en el panel de administración</li>
+                      <li>Ve a <strong className="text-purple-700">Usuarios</strong> en el menú lateral izquierdo</li>
                       <li>Haz clic en <strong>+ Añadir usuario</strong> en la esquina superior derecha</li>
                       <li>Introduce el correo electrónico, nombre, apellidos y departamento del empleado</li>
                       <li>Selecciona un <strong>rol</strong> (trabajador o manager) y asigna un <strong>horario</strong></li>
@@ -55,12 +55,22 @@ export default function TeamWelcomeSection() {
                       Para empresas con muchos empleados, es recomendable utilizar la importación mediante Excel:
                     </p>
                     <ol className="list-decimal list-inside space-y-2 text-gray-700">
-                      <li>Ve a <strong className="text-green-700">Configuración &gt; Equipo</strong> y selecciona <strong>Importar</strong></li>
-                      <li>Descarga la plantilla de Excel y rellénala con los datos de tus empleados</li>
+                      <li>Ve a <strong className="text-green-700">Usuarios</strong> y haz clic en <strong>Importar Excel</strong></li>
+                      <li>Descarga la plantilla "Rellenar Empleados" desde el enlace proporcionado</li>
                       <li>En la columna "rol", usa <strong>W</strong> para trabajadores y <strong>M</strong> para managers</li>
                       <li>Sube el archivo y verifica la correcta asignación de columnas</li>
                       <li>Elimina la fila de encabezados antes de finalizar la importación</li>
                     </ol>
+                    <div className="mt-3">
+                      <a 
+                        href="https://docs.google.com/spreadsheets/d/1_JewhrBgVJTEYzeF1AS2cxn_m7MxHNTV/edit?usp=sharing&ouid=103999337277921296480&rtpof=true&sd=true" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-green-700 flex items-center hover:underline font-medium"
+                      >
+                        <FileSpreadsheet className="w-4 h-4 mr-1" /> Descargar plantilla "Rellenar Empleados"
+                      </a>
+                    </div>
                     <div className="mt-3 text-sm text-gray-500">
                       <span className="font-medium text-green-700">Nota:</span> Asegúrate de que los nombres de los 
                       horarios en el Excel coincidan exactamente con los configurados en la plataforma.
@@ -114,7 +124,7 @@ export default function TeamWelcomeSection() {
               
               <Button 
                 className="bg-[#0BC8C1] hover:bg-[#0AB1AB] w-full"
-                onClick={() => window.open("https://app.inwout.com/settings/team/", "_blank")}
+                onClick={() => window.open("https://app.inwout.com/users", "_blank")}
               >
                 Gestionar mi equipo en app.inwout.com
                 <ExternalLink className="w-4 h-4 ml-2" />
@@ -122,7 +132,7 @@ export default function TeamWelcomeSection() {
             </div>
             
             <div className="lg:w-2/5 flex-shrink-0">
-              <div className="sticky top-4">
+              <div className="sticky top-4 space-y-4">
                 <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm bg-white">
                   <div className="p-3 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
                     <h4 className="font-medium text-gray-700">Panel de importación de empleados</h4>
@@ -138,6 +148,27 @@ export default function TeamWelcomeSection() {
                     </p>
                   </div>
                 </div>
+                
+                <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm bg-white">
+                  <div className="p-3 bg-gray-50 border-b border-gray-200">
+                    <h4 className="font-medium text-gray-700">Email de activación de cuenta</h4>
+                  </div>
+                  <div className="p-3">
+                    <img 
+                      src="/lovable-uploads/539e2a1d-63e4-42da-a69a-814cb6de8dd0.png" 
+                      alt="Email de bienvenida y activación de cuenta INWOUT" 
+                      className="w-full rounded border border-gray-200"
+                    />
+                    <p className="text-sm text-gray-700 mt-3">
+                      Una vez se ha enviado la invitación, los empleados recibirán un email como este para:
+                    </p>
+                    <ul className="list-disc list-inside text-sm text-gray-700 mt-2">
+                      <li>Activar su cuenta a través del enlace proporcionado</li>
+                      <li>Crear su propia contraseña de acceso</li>
+                      <li>Descargar la aplicación móvil desde App Store o Google Play</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -146,4 +177,3 @@ export default function TeamWelcomeSection() {
     </Accordion>
   );
 }
-
