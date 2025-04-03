@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertTriangle, BookOpen, CheckCircle, FileText, HelpCircle, ListChecks, Settings, Smartphone, Users, Download, Play, Link, MapPin, Bell, Calendar, ExternalLink } from "lucide-react";
@@ -149,19 +150,20 @@ export default function HelpCenter({ isStandalone = false, activeSection = "admi
                 </div>
               </div>
 
-              {welcomeVideo && (
-                <div className="mb-8">
-                  <div className="aspect-video w-full rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+              <div className="mb-8">
+                <div className="w-full rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+                  <div style={{ padding:"56.31% 0 0 0", position:"relative" }}>
                     <iframe 
-                      src={welcomeVideo}
-                      title="Tutorial INWOUT para administradores" 
-                      className="w-full h-full"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
+                      src="https://player.vimeo.com/video/1072074433?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+                      frameBorder="0" 
+                      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" 
+                      style={{ position:"absolute", top:0, left:0, width:"100%", height:"100%" }} 
+                      title="Accede a INWOUT para configurar tu cuenta">
+                    </iframe>
                   </div>
+                  <script src="https://player.vimeo.com/api/player.js"></script>
                 </div>
-              )}
+              </div>
 
               <div className="mb-4 flex justify-between items-center">
                 <h3 className="text-xl font-semibold text-gray-800">Secciones de configuración</h3>
