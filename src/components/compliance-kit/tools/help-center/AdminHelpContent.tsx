@@ -4,7 +4,6 @@ import { HelpStep } from "@/hooks/useHelpContent";
 
 // Import refactored components
 import IntroSection from "./admin/IntroSection";
-import VideoTutorial from "./admin/VideoTutorial";
 import ScheduleConfigSection from "./admin/ScheduleConfigSection";
 import TeamWelcomeSection from "./admin/TeamWelcomeSection";
 import HelpStepsAccordion from "./admin/HelpStepsAccordion";
@@ -22,9 +21,6 @@ export default function AdminHelpContent({ helpSteps, isLoading, error }: AdminH
     <div className="space-y-8">
       {/* Introduction Section */}
       <IntroSection />
-
-      {/* Video Tutorial Section */}
-      <VideoTutorial />
 
       {/* Schedule Configuration Section */}
       <ScheduleConfigSection />
