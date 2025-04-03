@@ -6,6 +6,7 @@ import { HelpStep } from "@/hooks/useHelpContent";
 import IntroSection from "./admin/IntroSection";
 import VideoTutorial from "./admin/VideoTutorial";
 import ScheduleConfigSection from "./admin/ScheduleConfigSection";
+import TeamWelcomeSection from "./admin/TeamWelcomeSection";
 import HelpStepsAccordion from "./admin/HelpStepsAccordion";
 import HeaderActionsSection from "./admin/HeaderActionsSection";
 import ActionSupportSection from "./admin/ActionSupportSection";
@@ -27,6 +28,9 @@ export default function AdminHelpContent({ helpSteps, isLoading, error }: AdminH
 
       {/* Schedule Configuration Section */}
       <ScheduleConfigSection />
+
+      {/* Team Welcome Section */}
+      <TeamWelcomeSection />
 
       {/* Header with Actions */}
       <HeaderActionsSection />
