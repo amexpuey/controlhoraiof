@@ -20,7 +20,7 @@ export default function IntroSection() {
         <AccordionItem value="intro-welcome" className="border border-gray-200 rounded-lg overflow-hidden">
           <AccordionTrigger className="px-4 py-3 bg-white hover:bg-gray-50">
             <div className="flex items-center space-x-3">
-              <div className="bg-blue-100 p-2 rounded-full h-10 w-10 flex items-center justify-center">
+              <div className="bg-blue-100 rounded-full h-10 w-10 flex items-center justify-center">
                 <span className="text-lg font-bold text-blue-700">1</span>
               </div>
               <div className="text-left">
