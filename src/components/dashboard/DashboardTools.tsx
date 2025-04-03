@@ -2,11 +2,10 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Book, Shield } from "lucide-react";
+import { CheckCircle, Book } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import ComplianceChecker from "@/components/blog/ComplianceChecker";
 import LearningModules from "@/components/learning/LearningModules";
-import { Link } from "react-router-dom";
 
 interface DashboardToolsProps {
   onFeatureSelect?: (features: string[]) => void;
@@ -30,7 +29,7 @@ export default function DashboardTools({ onFeatureSelect }: DashboardToolsProps)
         <h2 className="text-2xl font-bold text-blue-800 mb-6">
           Herramientas Interactivas
         </h2>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 gap-6">
           {/* Verificador de cumplimiento */}
           <Card className="overflow-hidden">
             <CardHeader className="bg-blue-50">
@@ -52,32 +51,6 @@ export default function DashboardTools({ onFeatureSelect }: DashboardToolsProps)
                   onClick={handleComplianceCheckerClick}
                 >
                   Comprobar ahora
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Kit Legal */}
-          <Card className="overflow-hidden">
-            <CardHeader className="bg-blue-50">
-              <CardTitle className="flex items-center text-lg">
-                <Shield className="mr-2 h-5 w-5 text-blue-600" />
-                Kit Legal
-              </CardTitle>
-              <CardDescription>
-                Recursos normativos para tu empresa
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="p-0">
-              <div className="p-4">
-                <p className="text-sm text-left text-gray-600 mb-4">
-                  Accede a recursos, plantillas y herramientas para cumplir con la normativa laboral
-                </p>
-                <Button 
-                  className="bg-blue-500 hover:bg-blue-600"
-                  asChild
-                >
-                  <Link to="/kit-legal">Acceder al Kit Legal</Link>
                 </Button>
               </div>
             </CardContent>

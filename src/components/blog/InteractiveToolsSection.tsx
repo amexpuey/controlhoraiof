@@ -6,10 +6,9 @@ import {
   Dialog, 
   DialogContent
 } from "@/components/ui/dialog";
-import { CheckCircle, Book, Shield } from "lucide-react";
+import { CheckCircle, Book } from "lucide-react";
 import ComplianceChecker from "./ComplianceChecker";
 import LearningModules from "../learning/LearningModules";
-import { Link } from "react-router-dom";
 
 export default function InteractiveToolsSection() {
   const [showComplianceDialog, setShowComplianceDialog] = useState(false);
@@ -21,7 +20,7 @@ export default function InteractiveToolsSection() {
         <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
           Herramientas Interactivas
         </h2>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 gap-6">
           {/* Verificador de cumplimiento */}
           <Card className="overflow-hidden">
             <CardContent className="p-0">
@@ -45,34 +44,6 @@ export default function InteractiveToolsSection() {
                   onClick={() => setShowComplianceDialog(true)}
                 >
                   Verificar cumplimiento
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Kit Legal */}
-          <Card className="overflow-hidden">
-            <CardContent className="p-0">
-              <div className="bg-blue-50 p-4 border-b border-blue-100">
-                <div className="flex items-center mb-2">
-                  <Shield className="h-6 w-6 text-blue-600 mr-2" />
-                  <h3 className="text-lg font-semibold text-blue-800">
-                    Kit Legal
-                  </h3>
-                </div>
-                <p className="text-sm text-gray-600">
-                  Recursos normativos para tu empresa
-                </p>
-              </div>
-              <div className="p-4">
-                <p className="text-sm text-gray-600 mb-4">
-                  Accede a recursos, plantillas y herramientas para cumplir con la normativa laboral de control horario en España.
-                </p>
-                <Button 
-                  className="bg-blue-500 hover:bg-blue-600 w-full"
-                  asChild
-                >
-                  <Link to="/kit-legal">Acceder al Kit Legal</Link>
                 </Button>
               </div>
             </CardContent>

@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Button } from "./button";
-import { Book, ChevronDown, FileText, Shield, CheckCircle } from "lucide-react";
+import { Book, ChevronDown, FileText, CheckCircle } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -66,18 +66,6 @@ export function ToolsDropdown() {
               <div>
                 <p className="font-medium">Plantillas</p>
                 <p className="text-xs text-gray-500">Documentos y plantillas</p>
-              </div>
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="flex items-center gap-2 py-2 cursor-pointer"
-            asChild
-          >
-            <Link to="/kit-legal">
-              <Shield className="h-5 w-5 text-blue-600" />
-              <div>
-                <p className="font-medium">Kit Legal</p>
-                <p className="text-xs text-gray-500">Recursos normativos</p>
               </div>
             </Link>
           </DropdownMenuItem>

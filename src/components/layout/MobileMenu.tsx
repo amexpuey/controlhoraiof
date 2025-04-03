@@ -8,7 +8,6 @@ import {
   LayoutGrid, 
   X, 
   User,
-  Shield,
   FileText,
   CheckCircle,
   Book
@@ -53,11 +52,6 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       label: 'Plantillas',
       href: '/plantillas',
       icon: FileText
-    },
-    {
-      label: 'Kit Legal',
-      href: '/kit-legal',
-      icon: Shield
     }
   ];
   
