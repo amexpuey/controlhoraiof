@@ -6,6 +6,7 @@ import HeaderSection from "./web/HeaderSection";
 import AccessCard from "./web/AccessCard";
 import CheckInManagementCard from "./web/CheckInManagementCard";
 import EmployeePortalCard from "./web/EmployeePortalCard";
+import UserImportCard from "./web/UserImportCard";
 
 export default function WebHelpContent() {
   return (
@@ -15,6 +16,7 @@ export default function WebHelpContent() {
         <AccessCard />
         <CheckInManagementCard />
         <EmployeePortalCard />
+        <UserImportCard />
       </div>
     </div>
   );
