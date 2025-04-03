@@ -20,7 +20,7 @@ export default function IntroSection() {
         <AccordionItem value="intro-welcome" className="border border-gray-200 rounded-lg overflow-hidden">
           <AccordionTrigger className="px-4 py-3 bg-white hover:bg-gray-50">
             <div className="flex items-center space-x-3">
-              <div className="bg-blue-100 p-2 rounded-full">
+              <div className="bg-blue-100 p-2 rounded-full h-10 w-10 flex items-center justify-center">
                 <span className="text-lg font-bold text-blue-700">1</span>
               </div>
               <div className="text-left">
@@ -33,7 +33,7 @@ export default function IntroSection() {
             <div className="bg-blue-50 p-6 rounded-lg border border-blue-100">
               <div className="space-y-6">
                 <div className="flex gap-4 items-start">
-                  <div className="bg-blue-100 text-blue-700 rounded-full p-2 h-10 w-10 flex items-center justify-center flex-shrink-0 mt-1">
+                  <div className="bg-blue-100 text-blue-700 rounded-full h-10 w-10 flex items-center justify-center flex-shrink-0 mt-1">
                     <span className="text-lg font-bold">1</span>
                   </div>
                   <div>
@@ -52,7 +52,7 @@ export default function IntroSection() {
                 </div>
                 
                 <div className="flex gap-4 items-start">
-                  <div className="bg-blue-100 text-blue-700 rounded-full p-2 h-10 w-10 flex items-center justify-center flex-shrink-0 mt-1">
+                  <div className="bg-blue-100 text-blue-700 rounded-full h-10 w-10 flex items-center justify-center flex-shrink-0 mt-1">
                     <span className="text-lg font-bold">2</span>
                   </div>
                   <div>
