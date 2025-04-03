@@ -76,7 +76,7 @@ export const useHelpContent = (category: string) => {
             };
             
             // Handle the items field specifically
-            if (step.items && Array.isArray(step.items)) {
+            if (typeof step === 'object' && step !== null && 'items' in step && Array.isArray(step.items)) {
               helpStep.items = step.items;
             } else {
               helpStep.items = [];
