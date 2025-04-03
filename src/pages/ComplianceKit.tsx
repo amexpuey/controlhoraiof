@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 // Layout components
 import KitLegalLayout from "@/components/compliance-kit/layout/KitLegalLayout";
 import SectionHeader from "@/components/compliance-kit/navigation/SectionHeader";
+import LearningSidebar from "@/components/learning/sidebar/LearningSidebar"; // Added missing import
 
 // Main sections
 import KitLegalDashboard from "@/components/compliance-kit/dashboard/KitLegalDashboard";
