@@ -201,6 +201,16 @@ export default function HelpCenter({ isStandalone = false, activeSection = "admi
                 </p>
               </div>
 
+              <div className="mb-8">
+                <div className="rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+                  <img 
+                    src="/public/lovable-uploads/856aa11b-7db5-4318-928c-b81b1127a2c4.png" 
+                    alt="Tutorial INWOUT para administradores" 
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+              </div>
+
               <div className="mb-4 flex justify-between items-center">
                 <h3 className="text-xl font-semibold text-gray-800">Vista general de secciones</h3>
                 <div className="flex gap-3">
