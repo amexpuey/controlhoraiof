@@ -74,14 +74,6 @@ export default function IntroSection() {
                   </div>
                 </div>
               </div>
-              
-              <div className="mt-6 border rounded-lg overflow-hidden">
-                <img 
-                  src="/lovable-uploads/55cd70b3-c008-4d2f-8295-6e8e8c2b4592.png" 
-                  alt="Primeros pasos para registrarse en INWOUT" 
-                  className="w-full"
-                />
-              </div>
             </div>
           </AccordionContent>
         </AccordionItem>
