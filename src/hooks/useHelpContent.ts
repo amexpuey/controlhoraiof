@@ -57,13 +57,13 @@ export const useHelpContent = (category: string) => {
           setError("No se pudieron cargar los datos. Por favor, inténtalo de nuevo más tarde.");
           toast.error("Error al cargar el contenido de ayuda");
         } else if (data) {
-          // Parse items from metadata if necessary
+          // Process the data safely
           const processedData = data.map(step => {
-            // If there are items that need to be converted from JSON string, do it here
             return {
               ...step,
-              items: step.items || []
-            };
+              // Safely handle items property which might not exist
+              items: Array.isArray(step.items) ? step.items : []
+            } as HelpStep;
           });
           
           setHelpSteps(processedData);
