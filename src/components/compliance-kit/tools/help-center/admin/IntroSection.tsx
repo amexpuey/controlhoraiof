@@ -3,7 +3,6 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import VideoTutorial from "./VideoTutorial";
 
 export default function IntroSection() {
   return (
@@ -74,8 +73,6 @@ export default function IntroSection() {
                     </div>
                   </div>
                 </div>
-                
-                <VideoTutorial />
               </div>
             </div>
           </AccordionContent>
