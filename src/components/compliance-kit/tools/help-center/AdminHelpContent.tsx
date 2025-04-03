@@ -232,7 +232,7 @@ export default function AdminHelpContent({ helpSteps, isLoading, error }: AdminH
                 
                 <Button 
                   className="bg-[#0BC8C1] hover:bg-[#0AB1AB] w-full"
-                  onClick={() => window.open("https://app.inwout.com/settings/schedules", "_blank")}
+                  onClick={() => window.open("https://app.inwout.com/settings/timetables/", "_blank")}
                 >
                   Configurar horarios en app.inwout.com
                   <ExternalLink className="w-4 h-4 ml-2" />
