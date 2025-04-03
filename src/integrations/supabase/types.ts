@@ -291,6 +291,51 @@ export type Database = {
         }
         Relationships: []
       }
+      help_steps: {
+        Row: {
+          category: string | null
+          created_at: string | null
+          description: string | null
+          estimated_time: string | null
+          id: string
+          pdf_url: string | null
+          slug: string | null
+          step_order: number | null
+          title: string
+          updated_at: string | null
+          video_url: string | null
+          visible: boolean | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          estimated_time?: string | null
+          id?: string
+          pdf_url?: string | null
+          slug?: string | null
+          step_order?: number | null
+          title: string
+          updated_at?: string | null
+          video_url?: string | null
+          visible?: boolean | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          estimated_time?: string | null
+          id?: string
+          pdf_url?: string | null
+          slug?: string | null
+          step_order?: number | null
+          title?: string
+          updated_at?: string | null
+          video_url?: string | null
+          visible?: boolean | null
+        }
+        Relationships: []
+      }
       hyperlinker_inwout: {
         Row: {
           content: string | null

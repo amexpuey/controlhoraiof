@@ -57,18 +57,6 @@ export function ToolsDropdown() {
               <p className="text-xs text-gray-500">Todo sobre control horario</p>
             </div>
           </DropdownMenuItem>
-          <DropdownMenuItem
-            className="flex items-center gap-2 py-2 cursor-pointer"
-            asChild
-          >
-            <Link to="/plantillas">
-              <FileText className="h-5 w-5 text-blue-600" />
-              <div>
-                <p className="font-medium">Plantillas</p>
-                <p className="text-xs text-gray-500">Documentos y plantillas</p>
-              </div>
-            </Link>
-          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 

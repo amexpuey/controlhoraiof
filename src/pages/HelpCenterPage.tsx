@@ -81,7 +81,7 @@ export default function HelpCenterPage() {
           <main className="container max-w-7xl mx-auto px-8 py-8">
             <div className="mb-8">
               <h1 className="text-3xl font-bold text-gray-800 mb-3">
-                Centro de Ayuda y Manuales
+                Centro de Ayuda
               </h1>
               <p className="text-xl text-gray-600">
                 Todo lo que necesitas saber para configurar y usar INWOUT correctamente
@@ -126,9 +126,9 @@ export default function HelpCenterPage() {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-gray-800">
-                      {section === "admin" && "Manual para administradores"}
-                      {section === "app" && "Manual para usuarios - App móvil"}
-                      {section === "web" && "Manual para usuarios - Portal web"}
+                      {section === "admin" && "Guía para administradores"}
+                      {section === "app" && "Guía para usuarios - App móvil"}
+                      {section === "web" && "Guía para usuarios - Portal web"}
                       {!section && "Centro de ayuda INWOUT"}
                     </h3>
                     <p className="text-gray-600">

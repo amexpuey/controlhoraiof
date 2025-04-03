@@ -47,11 +47,6 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       label: 'Módulos de aprendizaje',
       href: '/learning',
       icon: Book
-    },
-    {
-      label: 'Plantillas',
-      href: '/plantillas',
-      icon: FileText
     }
   ];
   

@@ -1,11 +1,22 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertTriangle, BookOpen, CheckCircle, FileText, HelpCircle, ListChecks, Settings, Smartphone, Users, Download, Play, Link, MapPin, Bell, Calendar, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
+import { supabase } from "@/integrations/supabase/client";
+
+interface HelpStep {
+  id: string;
+  title: string;
+  description: string;
+  video_url?: string;
+  step_order: number;
+  category: string;
+  items?: string[];
+}
 
 interface HelpCenterProps {
   isStandalone?: boolean;
@@ -14,8 +25,54 @@ interface HelpCenterProps {
 
 export default function HelpCenter({ isStandalone = false, activeSection = "admin" }: HelpCenterProps) {
   const navigate = useNavigate();
+  const [helpSteps, setHelpSteps] = useState<HelpStep[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [welcomeVideo, setWelcomeVideo] = useState<string | null>(null);
+  
   console.log("HelpCenter - isStandalone:", isStandalone);
   console.log("HelpCenter - activeSection:", activeSection);
+
+  useEffect(() => {
+    const fetchHelpSteps = async () => {
+      try {
+        setIsLoading(true);
+        
+        // Fetch the welcome video
+        const { data: welcomeData, error: welcomeError } = await supabase
+          .from('help_steps')
+          .select('*')
+          .eq('id', '8cc75e5c-30a4-4eea-b2fe-889d6e9f947a')
+          .single();
+        
+        if (welcomeError) {
+          console.error("Error fetching welcome video:", welcomeError);
+        } else if (welcomeData && welcomeData.video_url) {
+          setWelcomeVideo(welcomeData.video_url);
+        }
+        
+        // Fetch admin steps if on admin section
+        if (activeSection === 'admin') {
+          const { data, error } = await supabase
+            .from('help_steps')
+            .select('*')
+            .eq('category', 'admin')
+            .order('step_order', { ascending: true });
+            
+          if (error) {
+            console.error("Error fetching help steps:", error);
+          } else if (data) {
+            setHelpSteps(data);
+          }
+        }
+      } catch (error) {
+        console.error("Error in fetchHelpSteps:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchHelpSteps();
+  }, [activeSection]);
 
   const manuals = [
     {
@@ -84,107 +141,6 @@ export default function HelpCenter({ isStandalone = false, activeSection = "admi
     navigate(url);
   };
 
-  const adminSections = [
-    {
-      id: "primeros-pasos",
-      title: "Primeros pasos con INWOUT",
-      description: "Configura la cuenta y los ajustes básicos para empezar",
-      icon: Settings,
-      items: [
-        "Iniciar sesión como administrador",
-        "Configurar horario laboral de la empresa",
-        "Definir centros de trabajo",
-        "Configurar días festivos"
-      ],
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-    },
-    {
-      id: "gestion-empleados",
-      title: "Gestión de empleados",
-      description: "Añadir, editar y gestionar cuentas de usuario",
-      icon: Users,
-      items: [
-        "Añadir nuevos empleados",
-        "Importación masiva desde Excel (CSV)",
-        "Gestión de perfiles y permisos",
-        "Asignación de horarios por departamento"
-      ],
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-    },
-    {
-      id: "permisos-jerarquia",
-      title: "Tipos de permisos y jerarquía de departamentos",
-      description: "Gestiona permisos y estructura organizativa",
-      icon: Users,
-      items: [
-        "Crear y asignar permisos personalizados",
-        "Configurar límites y requisitos",
-        "Establecer jerarquía entre departamentos"
-      ],
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-    },
-    {
-      id: "automatizacion-fichaje",
-      title: "Automatización y métodos de fichaje",
-      description: "Configura diferentes métodos de control horario",
-      icon: MapPin,
-      items: [
-        "Activar Geolocalización y Geofence",
-        "Crear keypads (teclado numérico)",
-        "Configurar el fichaje vía app, web y dispositivos"
-      ],
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-    },
-    {
-      id: "alertas-notificaciones",
-      title: "Alertas, notificaciones y check-out automático",
-      description: "Configura el sistema de avisos y automatizaciones",
-      icon: Bell,
-      items: [
-        "Definir rangos obligatorios y recibir alertas push",
-        "Activar el check-out automático al finalizar la jornada",
-        "Configurar recordatorios por mail a empleados y managers"
-      ],
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-    },
-    {
-      id: "gestion-fichajes",
-      title: "Gestión de fichajes",
-      description: "Administra los registros horarios de tu equipo",
-      icon: FileText,
-      items: [
-        "Añadir, editar y eliminar registros",
-        "Cargar fichajes por Excel",
-        "Exportar informes mensuales de horas trabajadas, vacaciones y permisos"
-      ],
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-    },
-    {
-      id: "calendario-laboral",
-      title: "Exportar Calendario Laboral",
-      description: "Genera y comparte el calendario de tu empresa",
-      icon: Calendar,
-      items: [
-        "Exportación por año completo a .xls",
-        "Visualización por colores según tipo de permiso"
-      ],
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-    },
-    {
-      id: "recursos-enlaces",
-      title: "Recursos y enlaces importantes",
-      description: "Accesos rápidos a herramientas y recursos",
-      icon: Link,
-      items: [
-        "Acceso directo a INWOUT Cloud",
-        "Recuperación de contraseña",
-        "Enlaces a la app iOS / Android",
-        "Tutoriales y vídeos para cada paso"
-      ],
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-    }
-  ];
-
   // Contenido específico basado en la sección activa
   const renderSectionContent = () => {
     if (isStandalone) {
@@ -193,26 +149,30 @@ export default function HelpCenter({ isStandalone = false, activeSection = "admi
           return (
             <div className="space-y-8">
               <div className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-800 mb-4">Centro de Ayuda y Manual de Configuración</h2>
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">Guía de Configuración para Administradores</h2>
                 <p className="text-gray-600">
-                  Bienvenido al <strong>Centro de Ayuda y Manual para Administradores</strong> de INWOUT. 
+                  Bienvenido a la <strong>Guía de Configuración INWOUT</strong>. 
                   Aquí aprenderás paso a paso cómo configurar correctamente tu plataforma, automatizar el control 
                   horario y garantizar el cumplimiento legal desde el primer día.
                 </p>
               </div>
 
-              <div className="mb-8">
-                <div className="rounded-lg overflow-hidden border border-gray-200 shadow-sm">
-                  <img 
-                    src="/public/lovable-uploads/856aa11b-7db5-4318-928c-b81b1127a2c4.png" 
-                    alt="Tutorial INWOUT para administradores" 
-                    className="w-full h-auto object-cover"
-                  />
+              {welcomeVideo && (
+                <div className="mb-8">
+                  <div className="aspect-video w-full rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+                    <iframe 
+                      src={welcomeVideo}
+                      title="Tutorial INWOUT para administradores" 
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className="mb-4 flex justify-between items-center">
-                <h3 className="text-xl font-semibold text-gray-800">Vista general de secciones</h3>
+                <h3 className="text-xl font-semibold text-gray-800">Secciones de configuración</h3>
                 <div className="flex gap-3">
                   <Button variant="outline" className="flex items-center gap-2">
                     <Download className="w-4 h-4" />
@@ -229,68 +189,90 @@ export default function HelpCenter({ isStandalone = false, activeSection = "admi
               </div>
 
               <Accordion type="single" collapsible className="w-full space-y-4">
-                {adminSections.map((section, index) => (
-                  <AccordionItem key={section.id} value={section.id} className="border border-gray-200 rounded-lg overflow-hidden">
-                    <AccordionTrigger className="px-4 py-3 bg-white hover:bg-gray-50">
-                      <div className="flex items-center space-x-3">
-                        <div className="bg-[#0BC8C1]/10 p-2 rounded-full">
-                          <section.icon className="h-5 w-5 text-[#0BC8C1]" />
-                        </div>
-                        <div className="text-left">
-                          <div className="font-medium text-lg">{index + 1}. {section.title}</div>
-                          <div className="text-sm text-gray-500">{section.description}</div>
-                        </div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="p-4 pt-2 border-t border-gray-100">
-                      <div className="mb-4">
-                        <div className="mb-3">
-                          <div className="text-md font-medium mb-2">Acciones</div>
-                          <div className="space-y-2">
-                            {section.items.map((item, i) => (
-                              <div key={i} className="flex items-center space-x-2">
-                                <Checkbox id={`${section.id}-item-${i}`} />
-                                <label
-                                  htmlFor={`${section.id}-item-${i}`}
-                                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                >
-                                  {item}
-                                </label>
+                {isLoading ? (
+                  <div className="py-8 text-center">
+                    <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#0BC8C1] border-r-transparent"></div>
+                    <p className="mt-2 text-gray-600">Cargando contenido...</p>
+                  </div>
+                ) : (
+                  helpSteps.length > 0 ? (
+                    helpSteps.map((section, index) => (
+                      <AccordionItem key={section.id} value={section.id} className="border border-gray-200 rounded-lg overflow-hidden">
+                        <AccordionTrigger className="px-4 py-3 bg-white hover:bg-gray-50">
+                          <div className="flex items-center space-x-3">
+                            <div className="bg-[#0BC8C1]/10 p-2 rounded-full">
+                              {section.step_order === 1 && <Settings className="h-5 w-5 text-[#0BC8C1]" />}
+                              {section.step_order === 2 && <Users className="h-5 w-5 text-[#0BC8C1]" />}
+                              {section.step_order === 3 && <ListChecks className="h-5 w-5 text-[#0BC8C1]" />}
+                              {section.step_order === 4 && <MapPin className="h-5 w-5 text-[#0BC8C1]" />}
+                              {section.step_order === 5 && <Bell className="h-5 w-5 text-[#0BC8C1]" />}
+                              {section.step_order === 6 && <FileText className="h-5 w-5 text-[#0BC8C1]" />}
+                              {section.step_order === 7 && <Calendar className="h-5 w-5 text-[#0BC8C1]" />}
+                              {section.step_order === 8 && <Link className="h-5 w-5 text-[#0BC8C1]" />}
+                            </div>
+                            <div className="text-left">
+                              <div className="font-medium text-lg">{index + 1}. {section.title}</div>
+                              <div className="text-sm text-gray-500">{section.description}</div>
+                            </div>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="p-4 pt-2 border-t border-gray-100">
+                          <div className="mb-4">
+                            {section.items && section.items.length > 0 && (
+                              <div className="mb-3">
+                                <div className="text-md font-medium mb-2">Acciones</div>
+                                <div className="space-y-2">
+                                  {section.items.map((item, i) => (
+                                    <div key={i} className="flex items-center space-x-2">
+                                      <Checkbox id={`${section.id}-item-${i}`} />
+                                      <label
+                                        htmlFor={`${section.id}-item-${i}`}
+                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                      >
+                                        {item}
+                                      </label>
+                                    </div>
+                                  ))}
+                                </div>
                               </div>
-                            ))}
-                          </div>
-                        </div>
-                        {section.videoUrl && (
-                          <div className="mt-4">
-                            <div className="flex items-center text-md font-medium mb-2">
-                              <Play className="w-4 h-4 mr-1" />
-                              <span>Tutorial en vídeo</span>
+                            )}
+                            {section.video_url && (
+                              <div className="mt-4">
+                                <div className="flex items-center text-md font-medium mb-2">
+                                  <Play className="w-4 h-4 mr-1" />
+                                  <span>Tutorial en vídeo</span>
+                                </div>
+                                <div className="aspect-video w-full rounded-md overflow-hidden bg-gray-100">
+                                  <iframe 
+                                    className="w-full h-full"
+                                    src={section.video_url} 
+                                    title={`Tutorial - ${section.title}`}
+                                    frameBorder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowFullScreen
+                                  ></iframe>
+                                </div>
+                              </div>
+                            )}
+                            <div className="mt-4 pt-4 border-t border-gray-100">
+                              <Button 
+                                className="bg-[#0BC8C1] hover:bg-[#0AB1AB] w-full"
+                                onClick={() => window.open("https://app.inwout.com/login", "_blank")}
+                              >
+                                Configurar esta sección en app.inwout.com
+                                <ExternalLink className="w-4 h-4 ml-2" />
+                              </Button>
                             </div>
-                            <div className="aspect-video w-full rounded-md overflow-hidden bg-gray-100">
-                              <iframe 
-                                className="w-full h-full"
-                                src={section.videoUrl} 
-                                title={`Tutorial - ${section.title}`}
-                                frameBorder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowFullScreen
-                              ></iframe>
-                            </div>
                           </div>
-                        )}
-                        <div className="mt-4 pt-4 border-t border-gray-100">
-                          <Button 
-                            className="bg-[#0BC8C1] hover:bg-[#0AB1AB] w-full"
-                            onClick={() => window.open("https://app.inwout.com/login", "_blank")}
-                          >
-                            Configurar esta sección en app.inwout.com
-                            <ExternalLink className="w-4 h-4 ml-2" />
-                          </Button>
-                        </div>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
+                        </AccordionContent>
+                      </AccordionItem>
+                    ))
+                  ) : (
+                    <div className="py-8 text-center">
+                      <p className="text-gray-600">No hay contenido disponible en este momento.</p>
+                    </div>
+                  )
+                )}
               </Accordion>
 
               <div className="mt-10 bg-blue-50 p-6 rounded-lg border border-blue-100">
@@ -316,7 +298,7 @@ export default function HelpCenter({ isStandalone = false, activeSection = "admi
         case "app":
           return (
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-gray-800">Manual para usuarios - App móvil</h2>
+              <h2 className="text-xl font-semibold text-gray-800">Guía para usuarios - App móvil</h2>
               <div className="grid grid-cols-1 gap-6">
                 <Card className="border border-gray-200">
                   <CardHeader>
@@ -368,7 +350,7 @@ export default function HelpCenter({ isStandalone = false, activeSection = "admi
         case "web":
           return (
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-gray-800">Manual para usuarios - Portal web</h2>
+              <h2 className="text-xl font-semibold text-gray-800">Guía para usuarios - Portal web</h2>
               <div className="grid grid-cols-1 gap-6">
                 <Card className="border border-gray-200">
                   <CardHeader>
@@ -426,7 +408,7 @@ export default function HelpCenter({ isStandalone = false, activeSection = "admi
     return (
       <div className="space-y-8">
         <section>
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">Centro de Ayuda y Manuales</h3>
+          <h3 className="text-xl font-semibold text-gray-800 mb-4">Manuales de Configuración y Uso</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {manuals.map((manual) => (
               <Card key={manual.id} className="border border-gray-200 hover:border-[#0BC8C1] hover:shadow-md transition-all">
