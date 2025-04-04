@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import { formatSpecialArticleBySlug } from "./articleFormatters";
 import { cn } from "@/lib/utils";
@@ -25,6 +25,22 @@ interface CodeProps {
 export default function ArticleFormatter({ slug, content }: ArticleFormatterProps) {
   // Try to get specially formatted content for specific articles
   const formattedContent = formatSpecialArticleBySlug(slug, content);
+  
+  // Load TikTok embed script
+  useEffect(() => {
+    // Check if script already exists to avoid duplicates
+    if (!document.querySelector('script[src="https://www.tiktok.com/embed.js"]')) {
+      const script = document.createElement('script');
+      script.src = "https://www.tiktok.com/embed.js";
+      script.async = true;
+      document.body.appendChild(script);
+      
+      return () => {
+        // Clean up script when component unmounts
+        document.body.removeChild(script);
+      };
+    }
+  }, []);
   
   // If we have specially formatted content, render it directly
   if (formattedContent) {
@@ -128,30 +144,29 @@ export default function ArticleFormatter({ slug, content }: ArticleFormatterProp
           {title}
         </h1>
       )}
+      
+      {/* TikTok Embed at the top of the article */}
+      <div className="my-8 flex justify-center">
+        <blockquote 
+          className="tiktok-embed rounded-xl overflow-hidden shadow-lg" 
+          cite="https://www.tiktok.com/@fichar_en_el_laburo/video/7472360181838482710" 
+          data-video-id="7472360181838482710"
+          style={{ maxWidth: "605px", minWidth: "325px" }}
+        >
+          <section>
+            <a target="_blank" href="https://www.tiktok.com/@fichar_en_el_laburo/video/7472360181838482710">
+              {/* TikTok embed placeholder */}
+            </a>
+          </section>
+        </blockquote>
+      </div>
+      
       <ReactMarkdown 
         className={cn("prose prose-lg md:prose-xl max-w-none prose-headings:font-bold prose-headings:text-gray-800 prose-p:mb-6 prose-p:leading-relaxed prose-li:mb-2")}
         rehypePlugins={[rehypeRaw]}
         components={{
           h2: ({ node, ...props }) => (
-            <>
-              {/* TikTok Embed above h2 elements */}
-              <div className="my-8 flex justify-center">
-                <blockquote 
-                  className="tiktok-embed rounded-xl overflow-hidden shadow-lg" 
-                  cite="https://www.tiktok.com/@fichar_en_el_laburo/video/7472360181838482710" 
-                  data-video-id="7472360181838482710"
-                  style={{ maxWidth: "605px", minWidth: "325px" }}
-                >
-                  <section>
-                    <a target="_blank" href="https://www.tiktok.com/@fichar_en_el_laburo/video/7472360181838482710">
-                      {/* TikTok embed placeholder */}
-                    </a>
-                  </section>
-                </blockquote>
-                <script async src="https://www.tiktok.com/embed.js"></script>
-              </div>
-              <h2 className="text-3xl font-bold mt-10 mb-6 text-gray-800 border-b pb-2" {...props} />
-            </>
+            <h2 className="text-3xl font-bold mt-10 mb-6 text-gray-800 border-b pb-2" {...props} />
           ),
           h3: ({ node, ...props }) => (
             <h3 className="text-2xl font-bold mt-8 mb-4 text-gray-700" {...props} />
