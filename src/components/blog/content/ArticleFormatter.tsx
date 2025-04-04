@@ -133,7 +133,25 @@ export default function ArticleFormatter({ slug, content }: ArticleFormatterProp
         rehypePlugins={[rehypeRaw]}
         components={{
           h2: ({ node, ...props }) => (
-            <h2 className="text-3xl font-bold mt-10 mb-6 text-gray-800 border-b pb-2" {...props} />
+            <>
+              {/* TikTok Embed above h2 elements */}
+              <div className="my-8 flex justify-center">
+                <blockquote 
+                  className="tiktok-embed rounded-xl overflow-hidden shadow-lg" 
+                  cite="https://www.tiktok.com/@fichar_en_el_laburo/video/7472360181838482710" 
+                  data-video-id="7472360181838482710"
+                  style={{ maxWidth: "605px", minWidth: "325px" }}
+                >
+                  <section>
+                    <a target="_blank" href="https://www.tiktok.com/@fichar_en_el_laburo/video/7472360181838482710">
+                      {/* TikTok embed placeholder */}
+                    </a>
+                  </section>
+                </blockquote>
+                <script async src="https://www.tiktok.com/embed.js"></script>
+              </div>
+              <h2 className="text-3xl font-bold mt-10 mb-6 text-gray-800 border-b pb-2" {...props} />
+            </>
           ),
           h3: ({ node, ...props }) => (
             <h3 className="text-2xl font-bold mt-8 mb-4 text-gray-700" {...props} />

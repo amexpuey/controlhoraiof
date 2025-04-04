@@ -291,6 +291,27 @@ export type Database = {
         }
         Relationships: []
       }
+      estatuto_embeddings: {
+        Row: {
+          content: string
+          embedding: string
+          id: string
+          metadata: Json | null
+        }
+        Insert: {
+          content: string
+          embedding: string
+          id?: string
+          metadata?: Json | null
+        }
+        Update: {
+          content?: string
+          embedding?: string
+          id?: string
+          metadata?: Json | null
+        }
+        Relationships: []
+      }
       help_steps: {
         Row: {
           category: string | null
