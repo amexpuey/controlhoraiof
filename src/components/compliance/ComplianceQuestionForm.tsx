@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowLeft, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { complianceQuestions, questionBlocks } from "./complianceData";
+import { ProgressBar } from "@/components/blog/compliance-checker/ProgressBar";
 
 interface FormValues {
   [key: string]: "si" | "no";
@@ -21,7 +22,6 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
   const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [answeredQuestions, setAnsweredQuestions] = useState<string[]>([]);
   const [completedBlocks, setCompletedBlocks] = useState<string[]>([]);
 
   const form = useForm<FormValues>({
@@ -33,14 +33,15 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
   const currentQuestion = questionsInCurrentBlock[currentQuestionIndex];
   
   const totalQuestions = complianceQuestions.length;
-  const answeredCount = answeredQuestions.length;
+  
+  // Calculate progress based on form values instead of separate state
+  const formValues = form.getValues();
+  const answeredCount = complianceQuestions.filter(q => 
+    formValues[q.id] !== undefined && formValues[q.id] !== form.formState.defaultValues?.[q.id]
+  ).length;
   const progress = (answeredCount / totalQuestions) * 100;
 
   const handleNext = () => {
-    if (!answeredQuestions.includes(currentQuestion.id)) {
-      setAnsweredQuestions([...answeredQuestions, currentQuestion.id]);
-    }
-    
     setIsTransitioning(true);
     
     setTimeout(() => {
@@ -110,12 +111,11 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
 
       <Form {...form}>
         <form className="space-y-6">
-          <div className="progress mb-6">
-            <div 
-              className="progress__bar" 
-              style={{ width: `${progress}%` }}
-            />
-          </div>
+          <ProgressBar 
+            progress={progress}
+            answeredCount={answeredCount}
+            totalQuestions={totalQuestions}
+          />
           
           <div className="glass card mb-6">
             <h3 className="font-semibold text-xl flex items-center gap-3 mb-2" style={{ color: 'var(--ink-900)' }}>
@@ -148,12 +148,7 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
                           name={currentQuestion.id}
                           value="si"
                           checked={field.value === 'si'}
-                          onChange={() => {
-                            field.onChange('si');
-                            if (!answeredQuestions.includes(currentQuestion.id)) {
-                              setAnsweredQuestions([...answeredQuestions, currentQuestion.id]);
-                            }
-                          }}
+                          onChange={() => field.onChange('si')}
                         />
                         <span className="font-medium">Sí</span>
                       </label>
@@ -163,12 +158,7 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
                           name={currentQuestion.id}
                           value="no"
                           checked={field.value === 'no'}
-                          onChange={() => {
-                            field.onChange('no');
-                            if (!answeredQuestions.includes(currentQuestion.id)) {
-                              setAnsweredQuestions([...answeredQuestions, currentQuestion.id]);
-                            }
-                          }}
+                          onChange={() => field.onChange('no')}
                         />
                         <span className="font-medium">No</span>
                       </label>
