@@ -23,9 +23,7 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [completedBlocks, setCompletedBlocks] = useState<string[]>([]);
-  const [answeredQuestions, setAnsweredQuestions] = useState<Set<string>>(
-    new Set(complianceQuestions.map(q => q.id)) // All questions start as "answered" with default "si"
-  );
+  const [answeredQuestions, setAnsweredQuestions] = useState<Set<string>>(new Set());
 
   const form = useForm<FormValues>({
     defaultValues: complianceQuestions.reduce((acc, q) => ({ ...acc, [q.id]: "si" }), {})
@@ -45,6 +43,11 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
   };
 
   const handleNext = () => {
+    // Auto-mark current question as answered if not already answered
+    if (!answeredQuestions.has(currentQuestion.id)) {
+      setAnsweredQuestions(prev => new Set([...prev, currentQuestion.id]));
+    }
+    
     setIsTransitioning(true);
     
     setTimeout(() => {
