@@ -53,13 +53,13 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
   const Icon = config.icon;
 
   return (
-    <div className={`py-6 ${isEmbedded ? "glass p-6 rounded-[var(--radius-lg)]" : "glass card-lg"}`}>
+    <div className={`py-6 ${isEmbedded ? "result p-6" : "result"}`}>
       {/* Success Icon and Title */}
       <div className="text-center mb-6">
         <div 
-          className="w-24 h-24 rounded-full mx-auto mb-6 flex items-center justify-center glass animate-fade-up"
+          className="w-24 h-24 rounded-full mx-auto mb-6 flex items-center justify-center animate-fade-up"
           style={{ 
-            background: `linear-gradient(135deg, ${config.iconColor}15, ${config.iconColor}08)`,
+            background: `linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.25))`,
             border: `2px solid ${config.borderColor}`
           }}
         >
@@ -77,30 +77,25 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
 
       {/* Animated Score Display */}
       <div className="text-center mb-8">
-        <div className="glass card p-6 mb-4">
+        <div className="panel mb-4">
           <div className="mb-3">
             <span className="text-sm font-medium" style={{ color: 'var(--ink-700)' }}>
               Puntuación de cumplimiento
             </span>
           </div>
-          <div className="flex items-center justify-center gap-2">
-            <span 
-              className="text-5xl md:text-6xl font-bold animate-count-up" 
-              style={{ color: config.iconColor }}
-            >
-              {Math.round(animatedScore)}
+          <div className="score">
+            <span className="animate-count-up">
+              {Math.round(animatedScore)}%
             </span>
-            <span className="text-2xl font-semibold" style={{ color: 'var(--ink-400)' }}>%</span>
           </div>
         </div>
       </div>
 
-      <div className="glass card-lg mb-6">
+      <div className="panel mb-6">
         {results.level === "compliant" ? (
           <div className="text-center">
-            <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" 
-                 style={{ background: 'var(--g-brand)' }}>
-              <CheckCircle className="w-8 h-8" style={{ color: 'var(--ink-900)' }} />
+            <div className="icon mb-4">
+              <CheckCircle className="w-8 h-8" style={{ color: 'var(--success)' }} />
             </div>
             <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--success)' }}>
               ¡Enhorabuena! Tu empresa está en regla
@@ -129,31 +124,24 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
                 </h4>
                 <div className="space-y-3">
                   {results.violations.map((violation, index) => (
-                    <div key={index} className="glass card">
-                      <div className="flex items-start gap-3">
-                        <div 
-                          className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
-                          style={{ 
-                            backgroundColor: violation.riskLevel === 'muy grave' ? 'var(--danger)' : 'var(--warning)' 
+                    <div key={index} className="severity" data-level={violation.riskLevel === 'muy grave' ? 'high' : 'low'}>
+                      <div className="dot"></div>
+                      <div className="flex-1">
+                        <p className="font-medium mb-1" style={{ color: 'var(--ink-900)' }}>
+                          {violation.question}
+                        </p>
+                        <p className="text-sm" style={{ color: 'var(--ink-700)' }}>
+                          <span className="font-medium">Posible sanción:</span> {violation.sanction}
+                        </p>
+                        <span 
+                          className="inline-block mt-1 px-2 py-1 rounded-full text-xs font-medium"
+                          style={{
+                            backgroundColor: violation.riskLevel === 'muy grave' ? 'var(--danger)' : 'var(--warning)',
+                            color: 'white'
                           }}
-                        />
-                        <div className="flex-1">
-                          <p className="font-medium mb-1" style={{ color: 'var(--ink-900)' }}>
-                            {violation.question}
-                          </p>
-                          <p className="text-sm" style={{ color: 'var(--ink-700)' }}>
-                            <span className="font-medium">Posible sanción:</span> {violation.sanction}
-                          </p>
-                          <span 
-                            className="inline-block mt-1 px-2 py-1 rounded-full text-xs font-medium"
-                            style={{
-                              backgroundColor: violation.riskLevel === 'muy grave' ? 'var(--danger)' : 'var(--warning)',
-                              color: 'white'
-                            }}
-                          >
-                            Riesgo {violation.riskLevel}
-                          </span>
-                        </div>
+                        >
+                          Riesgo {violation.riskLevel}
+                        </span>
                       </div>
                     </div>
                   ))}

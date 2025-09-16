@@ -7,41 +7,40 @@ interface HeroSectionProps {
 export function HeroSection({ onStartTest }: HeroSectionProps) {
   return (
     <div className="container">
-      {/* Mock Safari Browser Bar */}
-      <div className="glass mb-8 p-4 rounded-[20px] border-2 border-white/40">
-        <div className="flex items-center gap-2 mb-3">
+      {/* Hero Shell with Glass Effect */}
+      <div className="hero-shell">
+        {/* Mock Safari Browser Bar */}
+        <div className="hero-url">
           <div className="flex gap-1.5">
             <div className="w-3 h-3 rounded-full bg-red-400"></div>
             <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
             <div className="w-3 h-3 rounded-full bg-green-400"></div>
           </div>
-          <div className="glass px-4 py-2 rounded-full flex-1 mx-4">
-            <div className="text-sm" style={{ color: 'var(--ink-700)' }}>
-              🔒 inwout.com/verificador-cumplimiento-horario
-            </div>
+          <div className="text-sm ml-4">
+            🔒 inwout.com/verificador-cumplimiento-horario
           </div>
         </div>
         
         <div className="text-center py-8">
           <h1 className="hero-title font-bold" style={{ color: 'var(--ink-900)' }}>
-            Verificador de Cumplimiento Normativo 
-            <span style={{ color: 'var(--ink-900)' }}>Control Horario</span>
+            Verificador de Cumplimiento Normativo{' '}
+            <span className="break">Control Horario</span>
           </h1>
           
           <p className="hero-sub mb-8 max-w-2xl mx-auto">
-            Comprueba si tu empresa cumple con la normativa laboral de registro horario en España y evita posibles sanciones de hasta 187.515€.
+            Comprueba si tu empresa cumple con la normativa de registro horario en España y evita sanciones de hasta 187.515€.
           </p>
           
           <div className="flex flex-wrap justify-center gap-3 mb-8">
-            <div className="badge glass animate-fade-up">
+            <div className="badge animate-fade-up">
               <CheckCircle className="w-4 h-4" style={{ color: 'var(--success)' }} />
-              <span className="text-sm font-medium" style={{ color: 'var(--ink-900)' }}>
+              <span className="text-sm font-medium">
                 Gratis y sin registros
               </span>
             </div>
-            <div className="badge glass animate-fade-up" style={{ animationDelay: '0.1s' }}>
+            <div className="badge animate-fade-up" style={{ animationDelay: '0.1s' }}>
               <CheckCircle className="w-4 h-4" style={{ color: 'var(--success)' }} />
-              <span className="text-sm font-medium" style={{ color: 'var(--ink-900)' }}>
+              <span className="text-sm font-medium">
                 Evita multas
               </span>
             </div>
@@ -55,8 +54,8 @@ export function HeroSection({ onStartTest }: HeroSectionProps) {
             Calcular mi riesgo ahora
           </button>
           
-          <p className="text-sm" style={{ color: 'var(--ink-400)' }}>
-            Gratis, online y sin datos · resultado en &lt; 1 minuto
+          <p className="text-sm" style={{ color: 'var(--ink-500)' }}>
+            Resultado en &lt; 1 minuto · Online y sin datos
           </p>
         </div>
       </div>

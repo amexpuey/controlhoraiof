@@ -36,25 +36,19 @@ export function HowItWorksSection() {
         </p>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="steps">
         {steps.map((step) => {
           const Icon = step.icon;
           return (
-            <div 
-              key={step.number}
-              className="glass card-lg text-center step-card cursor-pointer"
-            >
+            <div key={step.number} className="step">
               <div className="mb-4">
-                <div 
-                  className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center glass"
-                  style={{ background: `linear-gradient(135deg, ${step.color}20, ${step.color}10)` }}
-                >
+                <div className="icon">
                   <Icon className="w-8 h-8" style={{ color: step.color }} />
                 </div>
                 <div 
                   className="inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold mb-2"
                   style={{ 
-                    background: 'var(--g-brand)',
+                    background: 'linear-gradient(180deg, #CFF5E9 0%, #A4E8D7 100%)',
                     color: 'var(--ink-900)'
                   }}
                 >
@@ -62,7 +56,7 @@ export function HowItWorksSection() {
                 </div>
               </div>
               
-              <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--ink-900)' }}>
+              <h3 className="text-xl font-bold mb-3">
                 Paso {step.number} · {step.title}
               </h3>
               
