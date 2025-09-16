@@ -59,18 +59,18 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
         <div 
           className="w-24 h-24 rounded-full mx-auto mb-6 flex items-center justify-center animate-fade-up"
           style={{ 
-            background: `linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.25))`,
+            background: `linear-gradient(135deg, rgba(87, 191, 173, 0.2), rgba(87, 191, 173, 0.1))`,
             border: `2px solid ${config.borderColor}`
           }}
         >
           <Icon className="w-12 h-12" style={{ color: config.iconColor }} />
         </div>
         
-        <h2 className="text-2xl md:text-3xl font-bold mb-2" style={{ color: 'var(--ink-900)' }}>
+        <h2 className="text-2xl md:text-3xl font-bold mb-2" style={{ color: 'var(--text-strong)' }}>
           {config.title}
         </h2>
         
-        <p className="text-lg mb-6" style={{ color: 'var(--ink-700)' }}>
+        <p className="text-lg mb-6" style={{ color: 'var(--text)' }}>
           {config.subtitle}
         </p>
       </div>
@@ -79,7 +79,7 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
       <div className="text-center mb-8">
         <div className="panel mb-4">
           <div className="mb-3">
-            <span className="text-sm font-medium" style={{ color: 'var(--ink-700)' }}>
+            <span className="text-sm font-medium" style={{ color: 'var(--text)' }}>
               Puntuación de cumplimiento
             </span>
           </div>
@@ -100,26 +100,26 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
             <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--success)' }}>
               ¡Enhorabuena! Tu empresa está en regla
             </h3>
-            <p style={{ color: 'var(--ink-700)' }} className="leading-relaxed">
+            <p style={{ color: 'var(--text)' }} className="leading-relaxed">
               Tu sistema de control horario cumple con los requisitos del Real Decreto-ley 8/2019. 
               Mantén estas buenas prácticas para evitar problemas legales futuros.
             </p>
           </div>
         ) : (
           <>
-            <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--ink-900)' }}>
+            <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-strong)' }}>
               {results.level === "medium-risk" 
                 ? "Tu empresa podría enfrentar sanciones" 
                 : "¡Atención! Alto riesgo de multas significativas"}
             </h3>
-            <p className="mb-6 leading-relaxed" style={{ color: 'var(--ink-700)' }}>
+            <p className="mb-6 leading-relaxed" style={{ color: 'var(--text)' }}>
               {results.level === "medium-risk" 
                 ? "Revisa tus prácticas laborales relacionadas con el registro horario para evitar posibles sanciones." 
                 : "Es urgente tomar medidas correctivas inmediatas para evitar sanciones muy graves."}
             </p>
             {results.violations.length > 0 && (
               <div className="space-y-4">
-                <h4 className="font-semibold text-lg" style={{ color: 'var(--ink-900)' }}>
+                <h4 className="font-semibold text-lg" style={{ color: 'var(--text-strong)' }}>
                   Incumplimientos detectados:
                 </h4>
                 <div className="space-y-3">
@@ -127,10 +127,10 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
                     <div key={index} className="severity" data-level={violation.riskLevel === 'muy grave' ? 'high' : 'low'}>
                       <div className="dot"></div>
                       <div className="flex-1">
-                        <p className="font-medium mb-1" style={{ color: 'var(--ink-900)' }}>
+                        <p className="font-medium mb-1" style={{ color: 'var(--text-strong)' }}>
                           {violation.question}
                         </p>
-                        <p className="text-sm" style={{ color: 'var(--ink-700)' }}>
+                        <p className="text-sm" style={{ color: 'var(--text)' }}>
                           <span className="font-medium">Posible sanción:</span> {violation.sanction}
                         </p>
                         <span 
@@ -170,6 +170,19 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
             <ExternalLink className="h-4 w-4" />
           </a>
         )}
+      </div>
+
+      {/* Mobile Sticky CTA */}
+      <div className="md:hidden fixed inset-x-0 bottom-0 z-50 p-4">
+        <a 
+          href="https://inwout.com/demo-online" 
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full py-4 rounded-full bg-gradient-to-r from-[#57BFAD] to-[#5fd1c3] shadow-[0_10px_30px_rgba(4,43,39,.18)] text-[color:var(--text-strong)] font-semibold flex items-center justify-center gap-2"
+        >
+          <span>Solicitar demo de INWOUT</span>
+          <ExternalLink className="w-5 h-5" />
+        </a>
       </div>
     </div>
   );

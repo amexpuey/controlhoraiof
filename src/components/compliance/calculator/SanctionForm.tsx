@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
+import { Calculator } from "lucide-react";
 import { SanctionFormFields } from "./SanctionFormFields";
 import { SanctionResults } from "./SanctionResults";
 import { 
@@ -67,6 +68,7 @@ export function SanctionForm() {
     <>
       <Form {...calculatorForm}>
         <form 
+          id="sanction-calculator-form"
           onSubmit={calculatorForm.handleSubmit(calculateSanctions)} 
           className="space-y-6"
         >
@@ -78,21 +80,33 @@ export function SanctionForm() {
         </form>
       </Form>
       
+      {/* Mobile Sticky CTA */}
+      <div className="md:hidden fixed inset-x-0 bottom-0 z-50 p-4">
+        <button 
+          type="submit"
+          form="sanction-calculator-form"
+          className="w-full py-4 rounded-full bg-gradient-to-r from-[#57BFAD] to-[#5fd1c3] shadow-[0_10px_30px_rgba(4,43,39,.18)] text-[color:var(--text-strong)] font-semibold flex items-center justify-center gap-2"
+        >
+          <Calculator className="w-5 h-5" />
+          Calcular posibles sanciones
+        </button>
+      </div>
+      
       {estimatedSanctions && (
         <div className="glass card-lg mt-6">
-          <h4 className="font-semibold text-xl mb-4" style={{ color: 'var(--ink-900)' }}>
+          <h4 className="font-semibold text-xl mb-4" style={{ color: 'var(--text-strong)' }}>
             Estimación de sanciones:
           </h4>
           <div className="text-center mb-4">
             <div className="text-3xl font-bold mb-2" style={{ color: 'var(--danger)' }}>
               {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(estimatedSanctions.minEstimate)} - {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(estimatedSanctions.maxEstimate)}
             </div>
-            <p style={{ color: 'var(--ink-700)' }}>
+            <p style={{ color: 'var(--text)' }}>
               Para {calculatorForm.getValues().employees} {calculatorForm.getValues().employees === 1 ? 'empleado' : 'empleados'} con {calculatorForm.getValues().duration} {calculatorForm.getValues().duration === 1 ? 'mes' : 'meses'} de incumplimiento.
             </p>
           </div>
           
-          <p className="text-xs italic text-center" style={{ color: 'var(--ink-400)' }}>
+          <p className="text-xs italic text-center" style={{ color: 'var(--muted)' }}>
             Esta es una estimación orientativa. Te mostramos cómo arreglarlo paso a paso.
           </p>
         </div>
