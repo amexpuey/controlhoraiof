@@ -25,28 +25,34 @@ export function SanctionCalculatorTabs() {
       </div>
       
       <Tabs defaultValue="calculator" className="w-full" onValueChange={setActiveTab}>
-        <TabsList className="inline-flex p-1 rounded-full border border-white/30 bg-white/10 backdrop-blur-xl mb-6">
+        <TabsList className="inline-flex p-1 rounded-full border border-white/30 bg-white/10 backdrop-blur-xl mb-6 shadow-lg">
           <TabsTrigger 
             value="calculator"
-            className={`px-4 py-2 rounded-full transition-all ${
+            className={`px-6 py-3 rounded-full transition-all duration-300 ease-in-out relative overflow-hidden ${
               activeTab === 'calculator' 
-                ? 'bg-white/16 border border-white/30 text-[color:var(--text-strong)] font-semibold' 
-                : 'text-[color:var(--text)] hover:bg-white/12'
+                ? 'bg-gradient-to-r from-[#57BFAD] to-[#5fd1c3] text-white font-semibold shadow-[0_0_20px_rgba(87,191,173,0.4)] transform scale-105' 
+                : 'text-[color:var(--text)] hover:bg-white/12 hover:scale-102 hover:shadow-md'
             }`}
             onClick={() => setActiveTab('calculator')}
           >
-            Calculadora
+            <span className="relative z-10">Calculadora</span>
+            {activeTab === 'calculator' && (
+              <div className="absolute inset-0 bg-gradient-to-r from-[#57BFAD] to-[#5fd1c3] animate-pulse opacity-20 rounded-full"></div>
+            )}
           </TabsTrigger>
           <TabsTrigger 
             value="info"
-            className={`px-4 py-2 rounded-full transition-all ${
+            className={`px-6 py-3 rounded-full transition-all duration-300 ease-in-out relative overflow-hidden ${
               activeTab === 'info' 
-                ? 'bg-white/16 border border-white/30 text-[color:var(--text-strong)] font-semibold' 
-                : 'text-[color:var(--text)] hover:bg-white/12'
+                ? 'bg-gradient-to-r from-[#57BFAD] to-[#5fd1c3] text-white font-semibold shadow-[0_0_20px_rgba(87,191,173,0.4)] transform scale-105' 
+                : 'text-[color:var(--text)] hover:bg-white/12 hover:scale-102 hover:shadow-md'
             }`}
             onClick={() => setActiveTab('info')}
           >
-            Información legal
+            <span className="relative z-10">Información legal</span>
+            {activeTab === 'info' && (
+              <div className="absolute inset-0 bg-gradient-to-r from-[#57BFAD] to-[#5fd1c3] animate-pulse opacity-20 rounded-full"></div>
+            )}
           </TabsTrigger>
         </TabsList>
         

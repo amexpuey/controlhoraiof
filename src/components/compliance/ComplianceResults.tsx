@@ -57,13 +57,14 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
       {/* Success Icon and Title */}
       <div className="text-center mb-6">
         <div 
-          className="w-24 h-24 rounded-full mx-auto mb-6 flex items-center justify-center animate-fade-up"
+          className="w-24 h-24 rounded-full mx-auto mb-6 flex items-center justify-center animate-bounce"
           style={{ 
-            background: `linear-gradient(135deg, rgba(87, 191, 173, 0.2), rgba(87, 191, 173, 0.1))`,
-            border: `2px solid ${config.borderColor}`
+            background: `linear-gradient(135deg, ${config.bgColor}, rgba(87, 191, 173, 0.1))`,
+            border: `2px solid ${config.borderColor}`,
+            boxShadow: `0 0 30px ${config.borderColor}`
           }}
         >
-          <Icon className="w-12 h-12" style={{ color: config.iconColor }} />
+          <Icon className="w-12 h-12 animate-pulse" style={{ color: config.iconColor }} />
         </div>
         
         <h2 className="text-2xl md:text-3xl font-bold mb-2" style={{ color: 'var(--text-strong)' }}>
@@ -173,17 +174,19 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
       </div>
 
       {/* Mobile Sticky CTA */}
-      <div className="md:hidden fixed inset-x-0 bottom-0 z-50 p-4">
-        <a 
-          href="https://inwout.com/demo-online" 
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full py-4 rounded-full bg-gradient-to-r from-[#57BFAD] to-[#5fd1c3] shadow-[0_10px_30px_rgba(4,43,39,.18)] text-[color:var(--text-strong)] font-semibold flex items-center justify-center gap-2"
-        >
-          <span>Solicitar demo de INWOUT</span>
-          <ExternalLink className="w-5 h-5" />
-        </a>
-      </div>
+      {!isEmbedded && (
+        <div className="md:hidden fixed inset-x-0 bottom-0 z-50 p-4 animate-fade-in">
+          <a 
+            href="https://inwout.com/demo-online" 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full py-4 rounded-full bg-gradient-to-r from-[#57BFAD] to-[#5fd1c3] shadow-[0_10px_30px_rgba(4,43,39,.18),0_0_20px_rgba(87,191,173,0.3)] text-white font-bold flex items-center justify-center gap-2 transform hover:scale-105 transition-all duration-300 animate-pulse"
+          >
+            <span>🚀 Evita multas con INWOUT</span>
+            <ExternalLink className="w-5 h-5" />
+          </a>
+        </div>
+      )}
     </div>
   );
 }
