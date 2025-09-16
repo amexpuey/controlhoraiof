@@ -167,7 +167,7 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
             rel="noopener noreferrer"
             className="btn btn-primary w-full sm:w-auto"
           >
-            <span>Solicitar demo de INWOUT</span>
+            <span>Evita multas con INWOUT</span>
             <ExternalLink className="h-4 w-4" />
           </a>
         )}
