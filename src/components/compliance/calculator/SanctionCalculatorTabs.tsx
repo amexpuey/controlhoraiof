@@ -25,34 +25,28 @@ export function SanctionCalculatorTabs() {
       </div>
       
       <Tabs defaultValue="calculator" className="w-full" onValueChange={setActiveTab}>
-        <TabsList className="inline-flex p-1 rounded-full border border-white/30 bg-white/10 backdrop-blur-xl mb-6 shadow-lg">
+        <TabsList className="grid grid-cols-2 gap-2 p-0 bg-transparent mb-6 h-auto">
           <TabsTrigger 
             value="calculator"
-            className={`px-6 py-3 rounded-full transition-all duration-300 ease-in-out relative overflow-hidden ${
+            className={`px-4 py-3 rounded-full transition-all duration-200 ease-[cubic-bezier(.2,.8,.2,1)] text-center border backdrop-blur-[10px] font-semibold ${
               activeTab === 'calculator' 
-                ? 'bg-gradient-to-r from-[#57BFAD] to-[#5fd1c3] text-white font-semibold shadow-[0_0_20px_rgba(87,191,173,0.4)] transform scale-105' 
-                : 'text-[color:var(--text)] hover:bg-white/12 hover:scale-102 hover:shadow-md'
+                ? 'bg-gradient-to-b from-white/22 to-white/12 text-[color:var(--text-strong)] border-white/60 shadow-[0_8px_24px_rgba(0,0,0,0.16),0_0_0_1px_rgba(255,255,255,0.6)_inset]' 
+                : 'bg-white/14 text-[color:var(--text)] border-white/55 hover:bg-white/18'
             }`}
             onClick={() => setActiveTab('calculator')}
           >
-            <span className="relative z-10">Calculadora</span>
-            {activeTab === 'calculator' && (
-              <div className="absolute inset-0 bg-gradient-to-r from-[#57BFAD] to-[#5fd1c3] animate-pulse opacity-20 rounded-full"></div>
-            )}
+            Calculadora
           </TabsTrigger>
           <TabsTrigger 
             value="info"
-            className={`px-6 py-3 rounded-full transition-all duration-300 ease-in-out relative overflow-hidden ${
+            className={`px-4 py-3 rounded-full transition-all duration-200 ease-[cubic-bezier(.2,.8,.2,1)] text-center border backdrop-blur-[10px] font-semibold ${
               activeTab === 'info' 
-                ? 'bg-gradient-to-r from-[#57BFAD] to-[#5fd1c3] text-white font-semibold shadow-[0_0_20px_rgba(87,191,173,0.4)] transform scale-105' 
-                : 'text-[color:var(--text)] hover:bg-white/12 hover:scale-102 hover:shadow-md'
+                ? 'bg-gradient-to-b from-white/22 to-white/12 text-[color:var(--text-strong)] border-white/60 shadow-[0_8px_24px_rgba(0,0,0,0.16),0_0_0_1px_rgba(255,255,255,0.6)_inset]' 
+                : 'bg-white/14 text-[color:var(--text)] border-white/55 hover:bg-white/18'
             }`}
             onClick={() => setActiveTab('info')}
           >
-            <span className="relative z-10">Información legal</span>
-            {activeTab === 'info' && (
-              <div className="absolute inset-0 bg-gradient-to-r from-[#57BFAD] to-[#5fd1c3] animate-pulse opacity-20 rounded-full"></div>
-            )}
+            Información legal
           </TabsTrigger>
         </TabsList>
         

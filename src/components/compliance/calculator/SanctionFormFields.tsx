@@ -19,8 +19,10 @@ export function SanctionFormFields({ control }: SanctionFormFieldsProps) {
         name="employees"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="flex items-center gap-2">
-              <Users className="h-4 w-4 text-blue-600" />
+            <FormLabel className="flex items-center gap-3 text-[color:var(--text-strong)] font-medium mb-2">
+              <div className="p-2 rounded-full bg-white/14 border border-white/55">
+                <Users className="h-4 w-4 text-[#36AF9A]" />
+              </div>
               Número de empleados con riesgo de sanción para la empresa
             </FormLabel>
             <FormControl>
@@ -41,8 +43,10 @@ export function SanctionFormFields({ control }: SanctionFormFieldsProps) {
         name="duration"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-blue-600" />
+            <FormLabel className="flex items-center gap-3 text-[color:var(--text-strong)] font-medium mb-2">
+              <div className="p-2 rounded-full bg-white/14 border border-white/55">
+                <Calendar className="h-4 w-4 text-[#36AF9A]" />
+              </div>
               Duración del incumplimiento (meses)
             </FormLabel>
             <FormControl>
@@ -62,7 +66,7 @@ export function SanctionFormFields({ control }: SanctionFormFieldsProps) {
         control={control}
         name="reincidence"
         render={({ field }) => (
-          <FormItem className="flex flex-row items-start space-x-2 space-y-0 mt-2">
+          <FormItem className="flex flex-row items-start space-x-3 space-y-0 p-4 rounded-2xl bg-white/10 border border-white/30 backdrop-blur-[10px]">
             <FormControl>
               <Checkbox
                 checked={field.value}
@@ -70,10 +74,10 @@ export function SanctionFormFields({ control }: SanctionFormFieldsProps) {
               />
             </FormControl>
             <div className="space-y-1 leading-none">
-              <FormLabel className="text-sm font-normal cursor-pointer">
+              <FormLabel className="text-sm font-medium cursor-pointer text-[color:var(--text-strong)]">
                 Aplicar agravante por reincidencia
               </FormLabel>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-[color:var(--muted)] leading-relaxed">
                 Se aplica cuando ha habido sanciones previas por infracciones similares
               </p>
             </div>
@@ -86,9 +90,11 @@ export function SanctionFormFields({ control }: SanctionFormFieldsProps) {
         name="infractions"
         render={() => (
           <FormItem>
-            <div className="mb-2">
-              <FormLabel className="flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4 text-blue-600" />
+            <div className="mb-4">
+              <FormLabel className="flex items-center gap-3 text-[color:var(--text-strong)] font-medium mb-3">
+                <div className="p-2 rounded-full bg-white/14 border border-white/55">
+                  <AlertTriangle className="h-4 w-4 text-[#F4B957]" />
+                </div>
                 Tipos de incumplimiento
               </FormLabel>
             </div>
@@ -102,7 +108,7 @@ export function SanctionFormFields({ control }: SanctionFormFieldsProps) {
                     return (
                       <FormItem
                         key={item.id}
-                        className="flex flex-row items-start space-x-2 space-y-0"
+                        className="flex flex-row items-start space-x-3 space-y-0 p-4 rounded-2xl bg-white/10 border border-white/30 backdrop-blur-[10px] hover:bg-white/14 transition-colors duration-200"
                       >
                         <FormControl>
                           <Checkbox
@@ -118,9 +124,13 @@ export function SanctionFormFields({ control }: SanctionFormFieldsProps) {
                             }}
                           />
                         </FormControl>
-                        <FormLabel className="text-sm font-normal cursor-pointer">
+                        <FormLabel className="text-sm font-medium cursor-pointer text-[color:var(--text-strong)] leading-relaxed">
                           {item.label}
-                          <span className={`ml-1 text-xs ${getRiskColor(item.level)}`}>
+                          <span className={`ml-2 text-xs font-semibold px-2 py-1 rounded-full ${
+                            item.level === 'leve' ? 'bg-[#F4B957]/20 text-[#F4B957]' :
+                            item.level === 'grave' ? 'bg-orange-500/20 text-orange-500' :
+                            'bg-red-500/20 text-red-500'
+                          }`}>
                             ({item.level})
                           </span>
                         </FormLabel>
