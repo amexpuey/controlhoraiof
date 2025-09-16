@@ -5,3 +5,13 @@
 
 [build.environment]
   NETLIFY_USE_BUN = "true"
+
+[[headers]]
+  for = "/compliance-checker"
+  [headers.values]
+    Content-Security-Policy = "frame-ancestors https://www.inwout.com https://*.inwout.com https://inwout.com;"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "frame-ancestors https://www.inwout.com https://*.inwout.com https://inwout.com;"
