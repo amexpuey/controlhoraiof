@@ -90,30 +90,39 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
   };
 
   return (
-    <div className={`py-6 ${isEmbedded ? "bg-white p-4 rounded-lg shadow-sm" : ""}`}>
+    <div className={`py-6 ${isEmbedded ? "glass p-6 rounded-[var(--radius-lg)]" : ""}`}>
       <div className="flex items-center mb-6">
-        <CheckCircle className="text-blue-600 h-7 w-7 mr-3" />
+        <div 
+          className="w-10 h-10 rounded-full mr-4 flex items-center justify-center"
+          style={{ background: 'var(--g-brand)' }}
+        >
+          <CheckCircle className="h-6 w-6" style={{ color: 'var(--ink-900)' }} />
+        </div>
         <div>
-          <h2 className="text-2xl font-bold text-gray-800">Verificador de cumplimiento</h2>
-          <p className="text-gray-600">Comprueba si cumples con la normativa laboral</p>
+          <h2 className="text-2xl font-bold" style={{ color: 'var(--ink-900)' }}>
+            Verificador de cumplimiento
+          </h2>
+          <p style={{ color: 'var(--ink-700)' }}>
+            Comprueba si cumples con la normativa laboral
+          </p>
         </div>
       </div>
 
       <Form {...form}>
         <form className="space-y-6">
-          <div className="w-full bg-gray-200 rounded-full h-1.5 mb-4">
+          <div className="progress mb-6">
             <div 
-              className="bg-blue-600 h-1.5 rounded-full transition-all duration-500 ease-in-out" 
+              className="progress__bar" 
               style={{ width: `${progress}%` }}
             />
           </div>
           
-          <div className="mb-4">
-            <h3 className="font-semibold text-lg flex items-center gap-2 mb-1">
-              <span>{questionBlocks[currentBlockIndex].emoji}</span> 
+          <div className="glass card mb-6">
+            <h3 className="font-semibold text-xl flex items-center gap-3 mb-2" style={{ color: 'var(--ink-900)' }}>
+              <span className="text-2xl">{questionBlocks[currentBlockIndex].emoji}</span> 
               {questionBlocks[currentBlockIndex].title}
             </h3>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm" style={{ color: 'var(--ink-400)' }}>
               Pregunta {currentQuestionIndex + 1} de {questionsInCurrentBlock.length}
             </p>
           </div>
@@ -127,60 +136,76 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
               control={form.control}
               name={currentQuestion.id}
               render={({ field }) => (
-                <FormItem className="bg-white p-5 rounded-lg shadow-sm space-y-4 border">
-                  <FormLabel className="text-base font-medium text-gray-800">{currentQuestion.question}</FormLabel>
+                <FormItem className="glass card-lg space-y-6">
+                  <FormLabel className="text-lg font-medium leading-relaxed" style={{ color: 'var(--ink-900)' }}>
+                    {currentQuestion.question}
+                  </FormLabel>
                   <FormControl>
-                    <RadioGroup
-                      onValueChange={(value) => {
-                        field.onChange(value);
-                        if (!answeredQuestions.includes(currentQuestion.id)) {
-                          setAnsweredQuestions([...answeredQuestions, currentQuestion.id]);
-                        }
-                      }}
-                      value={field.value}
-                      className="flex space-x-6"
-                    >
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="si" id={`${currentQuestion.id}-si`} />
-                        <FormLabel htmlFor={`${currentQuestion.id}-si`} className="cursor-pointer">Sí</FormLabel>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="no" id={`${currentQuestion.id}-no`} />
-                        <FormLabel htmlFor={`${currentQuestion.id}-no`} className="cursor-pointer">No</FormLabel>
-                      </div>
-                    </RadioGroup>
+                    <div className="choice">
+                      <label className={`pill ${field.value === 'si' ? 'is-active' : ''}`}>
+                        <input
+                          type="radio"
+                          name={currentQuestion.id}
+                          value="si"
+                          checked={field.value === 'si'}
+                          onChange={() => {
+                            field.onChange('si');
+                            if (!answeredQuestions.includes(currentQuestion.id)) {
+                              setAnsweredQuestions([...answeredQuestions, currentQuestion.id]);
+                            }
+                          }}
+                        />
+                        <span className="font-medium">Sí</span>
+                      </label>
+                      <label className={`pill ${field.value === 'no' ? 'is-active' : ''}`}>
+                        <input
+                          type="radio"
+                          name={currentQuestion.id}
+                          value="no"
+                          checked={field.value === 'no'}
+                          onChange={() => {
+                            field.onChange('no');
+                            if (!answeredQuestions.includes(currentQuestion.id)) {
+                              setAnsweredQuestions([...answeredQuestions, currentQuestion.id]);
+                            }
+                          }}
+                        />
+                        <span className="font-medium">No</span>
+                      </label>
+                    </div>
                   </FormControl>
                 </FormItem>
               )}
             />
           </div>
           
-          <div className="flex justify-between pt-4">
-            <Button 
-              type="button" 
-              variant="outline" 
-              onClick={handlePrevious}
-              disabled={currentBlockIndex === 0 && currentQuestionIndex === 0}
-              className="flex items-center gap-1"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Anterior
-            </Button>
-            
-            <Button 
-              type="button" 
-              onClick={handleNext}
-              className="bg-blue-500 hover:bg-blue-600 flex items-center gap-1"
-            >
-              {isLastQuestionAndBlock() ? (
-                'Finalizar Test'
-              ) : (
-                <>
-                  Siguiente
-                  <ArrowRight className="h-4 w-4" />
-                </>
-              )}
-            </Button>
+          <div className="sticky-actions">
+            <div className="flex justify-between">
+              <button 
+                type="button" 
+                onClick={handlePrevious}
+                disabled={currentBlockIndex === 0 && currentQuestionIndex === 0}
+                className="btn btn-ghost"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Anterior
+              </button>
+              
+              <button 
+                type="button" 
+                onClick={handleNext}
+                className="btn btn-primary"
+              >
+                {isLastQuestionAndBlock() ? (
+                  'Finalizar Test'
+                ) : (
+                  <>
+                    Siguiente
+                    <ArrowRight className="h-4 w-4" />
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </form>
       </Form>

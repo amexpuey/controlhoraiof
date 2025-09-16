@@ -1,16 +1,18 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import StandaloneComplianceChecker from "@/components/compliance/StandaloneComplianceChecker";
+import { HeroSection } from "@/components/compliance/HeroSection";
+import { HowItWorksSection } from "@/components/compliance/HowItWorksSection";
+import { FinalCTASection } from "@/components/compliance/FinalCTASection";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown, CheckCircle, Clock, AlertTriangle, HelpCircle, FileText, Users, Calculator } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ChevronDown, HelpCircle } from "lucide-react";
 
 export default function ComplianceCheckerPage() {
   const [searchParams] = useSearchParams();
   const isEmbedded = searchParams.get("embed") === "true";
-  const [showInstructions, setShowInstructions] = useState(false);
+  const [showTest, setShowTest] = useState(false);
+  const testRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     // Set body styles for embedded mode
@@ -24,6 +26,7 @@ export default function ComplianceCheckerPage() {
       if (footer) {
         footer.style.display = 'none';
       }
+      setShowTest(true); // Show test directly in embedded mode
     }
     
     return () => {
@@ -40,112 +43,98 @@ export default function ComplianceCheckerPage() {
     };
   }, [isEmbedded]);
 
+  const handleStartTest = () => {
+    setShowTest(true);
+    // Smooth scroll to test section
+    setTimeout(() => {
+      testRef.current?.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }, 100);
+  };
+
+  if (isEmbedded) {
+    return (
+      <div className="min-h-screen">
+        <StandaloneComplianceChecker isEmbedded={isEmbedded} />
+      </div>
+    );
+  }
+
   return (
-    <div className={`${isEmbedded ? "" : "p-6 max-w-4xl mx-auto"}`}>
-      {!isEmbedded && (
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">Verificador de Cumplimiento Normativo</h1>
-          <p className="text-gray-600 mb-6">
-            Comprueba si tu empresa cumple con la normativa laboral de registro horario en España y evita posibles sanciones.
-          </p>
-          
-          <Collapsible 
-            open={showInstructions} 
-            onOpenChange={setShowInstructions}
-            className="border rounded-lg bg-blue-50 p-4 mb-6"
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <HelpCircle className="h-5 w-5 text-blue-600" />
-                <h3 className="text-lg font-medium text-blue-800">¿Cómo funciona el verificador?</h3>
-              </div>
-              <CollapsibleTrigger asChild>
-                <Button variant="ghost" size="sm" className="w-9 p-0">
-                  <ChevronDown className="h-4 w-4 text-blue-600" />
-                  <span className="sr-only">Toggle</span>
-                </Button>
-              </CollapsibleTrigger>
-            </div>
-            
-            <CollapsibleContent className="mt-4 space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-white rounded-lg p-4 border border-blue-100 shadow-sm">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="bg-blue-100 p-2 rounded-full">
-                      <Clock className="h-5 w-5 text-blue-600" />
-                    </div>
-                    <h4 className="font-medium">Paso 1</h4>
-                  </div>
-                  <p className="text-sm text-gray-600">
-                    Responde a las preguntas sobre cómo gestiona tu empresa el registro de jornada y otros aspectos laborales.
-                  </p>
-                </div>
-                
-                <div className="bg-white rounded-lg p-4 border border-blue-100 shadow-sm">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="bg-blue-100 p-2 rounded-full">
-                      <AlertTriangle className="h-5 w-5 text-blue-600" />
-                    </div>
-                    <h4 className="font-medium">Paso 2</h4>
-                  </div>
-                  <p className="text-sm text-gray-600">
-                    Recibe un análisis personalizado de los posibles riesgos e incumplimientos normativos que podría tener tu empresa.
-                  </p>
-                </div>
-                
-                <div className="bg-white rounded-lg p-4 border border-blue-100 shadow-sm">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="bg-blue-100 p-2 rounded-full">
-                      <Calculator className="h-5 w-5 text-blue-600" />
-                    </div>
-                    <h4 className="font-medium">Paso 3</h4>
-                  </div>
-                  <p className="text-sm text-gray-600">
-                    Utiliza la calculadora interactiva para estimar posibles sanciones según el tamaño de tu empresa y tipo de incumplimiento.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="bg-white p-4 rounded-lg border border-blue-100">
-                <h4 className="font-medium mb-2 text-blue-800">Preguntas frecuentes:</h4>
-                <Accordion type="single" collapsible className="w-full">
-                  <AccordionItem value="item-1">
-                    <AccordionTrigger className="text-sm">¿Qué sanciones puede recibir mi empresa por no cumplir con el registro horario?</AccordionTrigger>
-                    <AccordionContent className="text-sm">
-                      Las sanciones por incumplir la normativa de registro horario pueden ir desde los 625€ hasta los 6.250€ para infracciones graves. 
-                      En casos muy graves, las multas pueden alcanzar los 187.515€. El importe final depende del tamaño de la empresa, 
-                      duración del incumplimiento y si ha habido reincidencia.
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="item-2">
-                    <AccordionTrigger className="text-sm">¿Es obligatorio el registro horario para todas las empresas?</AccordionTrigger>
-                    <AccordionContent className="text-sm">
-                      Sí, desde la entrada en vigor del Real Decreto-ley 8/2019, todas las empresas en España están obligadas a llevar un registro diario 
-                      de la jornada de trabajo de todos sus empleados, independientemente del tamaño de la empresa o del sector.
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="item-3">
-                    <AccordionTrigger className="text-sm">¿Qué información debe incluir el registro horario?</AccordionTrigger>
-                    <AccordionContent className="text-sm">
-                      El registro debe incluir, como mínimo, la hora de inicio y finalización de la jornada laboral de cada trabajador. 
-                      También es recomendable registrar los descansos y pausas no computables como tiempo de trabajo efectivo.
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="item-4">
-                    <AccordionTrigger className="text-sm">¿Existen casos reales de sanciones por incumplimiento?</AccordionTrigger>
-                    <AccordionContent className="text-sm">
-                      Sí, la Inspección de Trabajo ha impuesto numerosas sanciones. Por ejemplo, un restaurante con 5 empleados fue multado con 
-                      700€ por no registrar la jornada durante 2 meses. Una empresa de servicios con 15 empleados recibió una multa de 3.000€ 
-                      por no comunicar los registros a los representantes de los trabajadores.
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+    <div className="min-h-screen pb-12">
+      {/* Hero Section */}
+      <HeroSection onStartTest={handleStartTest} />
+      
+      {/* How It Works */}
+      <HowItWorksSection />
+      
+      {/* Test Section */}
+      {showTest && (
+        <div ref={testRef} className="container">
+          <StandaloneComplianceChecker isEmbedded={false} />
         </div>
       )}
-      <StandaloneComplianceChecker isEmbedded={isEmbedded} />
+      
+      {/* FAQs Section */}
+      <div className="container mb-12">
+        <div className="glass card-lg">
+          <div className="flex items-center gap-3 mb-6">
+            <HelpCircle className="h-6 w-6" style={{ color: 'var(--brand-teal)' }} />
+            <h3 className="text-2xl font-bold" style={{ color: 'var(--ink-900)' }}>
+              Preguntas frecuentes
+            </h3>
+          </div>
+          
+          <Accordion type="single" collapsible className="w-full faq">
+            <AccordionItem value="item-1" className="glass mb-3 rounded-[var(--radius-md)] border-0">
+              <AccordionTrigger className="px-5 py-4 text-left font-medium hover:no-underline" style={{ color: 'var(--ink-900)' }}>
+                ¿Qué sanciones puede recibir mi empresa por no cumplir con el registro horario?
+              </AccordionTrigger>
+              <AccordionContent className="px-5 pb-4 text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
+                Las sanciones van desde 625€ hasta 6.250€ para infracciones graves, llegando hasta 187.515€ en casos muy graves. 
+                El importe depende del tamaño de la empresa, duración del incumplimiento y reincidencia. <strong>Un ejemplo real:</strong> Una empresa 
+                de logística con 20 empleados recibió una multa de 4.500€ por no llevar registro horario durante 3 meses.
+              </AccordionContent>
+            </AccordionItem>
+            
+            <AccordionItem value="item-2" className="glass mb-3 rounded-[var(--radius-md)] border-0">
+              <AccordionTrigger className="px-5 py-4 text-left font-medium hover:no-underline" style={{ color: 'var(--ink-900)' }}>
+                ¿Es obligatorio el registro horario para todas las empresas?
+              </AccordionTrigger>
+              <AccordionContent className="px-5 pb-4 text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
+                Sí, desde el Real Decreto-ley 8/2019, <strong>todas las empresas</strong> deben llevar un registro diario de la jornada 
+                de todos sus empleados, sin excepción por tamaño o sector. Esto incluye autónomos con empleados.
+              </AccordionContent>
+            </AccordionItem>
+            
+            <AccordionItem value="item-3" className="glass mb-3 rounded-[var(--radius-md)] border-0">
+              <AccordionTrigger className="px-5 py-4 text-left font-medium hover:no-underline" style={{ color: 'var(--ink-900)' }}>
+                ¿Qué información debe incluir el registro horario?
+              </AccordionTrigger>
+              <AccordionContent className="px-5 pb-4 text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
+                Mínimo: hora de inicio y fin de jornada. <strong>Recomendado:</strong> descansos, pausas no computables, 
+                horas extra y ausencias. Los registros deben conservarse durante 4 años y estar disponibles para la Inspección.
+              </AccordionContent>
+            </AccordionItem>
+            
+            <AccordionItem value="item-4" className="glass rounded-[var(--radius-md)] border-0">
+              <AccordionTrigger className="px-5 py-4 text-left font-medium hover:no-underline" style={{ color: 'var(--ink-900)' }}>
+                ¿Existen casos reales de sanciones por incumplimiento?
+              </AccordionTrigger>
+              <AccordionContent className="px-5 pb-4 text-sm leading-relaxed" style={{ color: 'var(--ink-700)' }}>
+                <strong>Casos reales:</strong> Restaurante (5 empleados) multado con 700€ por 2 meses sin registro. 
+                Empresa de servicios (15 empleados) sancionada con 3.000€ por no comunicar registros a representantes. 
+                Consultoría (8 empleados) multada con 1.200€ por registros incompletos.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+      </div>
+      
+      {/* Final CTA */}
+      {!showTest && <FinalCTASection onStartTest={handleStartTest} />}
     </div>
   );
 }
