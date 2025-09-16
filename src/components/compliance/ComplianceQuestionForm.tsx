@@ -23,10 +23,12 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [completedBlocks, setCompletedBlocks] = useState<string[]>([]);
-  const [answeredQuestions, setAnsweredQuestions] = useState<Set<string>>(new Set());
+  const [answeredQuestions, setAnsweredQuestions] = useState<Set<string>>(
+    new Set(complianceQuestions.map(q => q.id)) // All questions start as "answered" with default "si"
+  );
 
   const form = useForm<FormValues>({
-    defaultValues: complianceQuestions.reduce((acc, q) => ({ ...acc, [q.id]: undefined }), {})
+    defaultValues: complianceQuestions.reduce((acc, q) => ({ ...acc, [q.id]: "si" }), {})
   });
 
   const currentBlockId = questionBlocks[currentBlockIndex]?.id;
