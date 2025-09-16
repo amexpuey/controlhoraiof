@@ -15,6 +15,12 @@ export default function ComplianceCheckerPage() {
   const testRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
+    // Height management script for iframe
+    function postHeight() {
+      const h = document.documentElement.scrollHeight;
+      parent.postMessage({ type: 'INWOUT_IFRAME_HEIGHT', height: h }, '*');
+    }
+    
     // Set body styles for embedded mode
     if (isEmbedded) {
       document.body.style.background = "transparent";
@@ -27,6 +33,13 @@ export default function ComplianceCheckerPage() {
         footer.style.display = 'none';
       }
       setShowTest(true); // Show test directly in embedded mode
+      
+      // Add height management listeners for embedded mode
+      window.addEventListener('load', postHeight);
+      window.addEventListener('resize', postHeight);
+      
+      // Post height immediately
+      postHeight();
     }
     
     return () => {
@@ -39,6 +52,12 @@ export default function ComplianceCheckerPage() {
       const footer = document.querySelector('footer');
       if (footer) {
         footer.style.display = '';
+      }
+      
+      // Remove height management listeners
+      if (isEmbedded) {
+        window.removeEventListener('load', postHeight);
+        window.removeEventListener('resize', postHeight);
       }
     };
   }, [isEmbedded]);
