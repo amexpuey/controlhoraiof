@@ -25,7 +25,7 @@ export function SanctionCalculatorTabs() {
       </div>
       
       <Tabs defaultValue="calculator" className="w-full" onValueChange={setActiveTab}>
-        <div className="inline-flex p-1 rounded-full border border-white/30 bg-white/10 backdrop-blur-xl mb-6">
+        <TabsList className="inline-flex p-1 rounded-full border border-white/30 bg-white/10 backdrop-blur-xl mb-6">
           <TabsTrigger 
             value="calculator"
             className={`px-4 py-2 rounded-full transition-all ${
@@ -48,7 +48,7 @@ export function SanctionCalculatorTabs() {
           >
             Información legal
           </TabsTrigger>
-        </div>
+        </TabsList>
         
         <TabsContent value="calculator" className="pt-0">
           <SanctionForm />
