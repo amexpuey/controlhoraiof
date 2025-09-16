@@ -28,9 +28,27 @@ export function SanctionCalculatorTabs() {
       </div>
       
       <Tabs defaultValue="calculator" className="w-full" onValueChange={setActiveTab}>
-        <TabsList className="glass grid w-full grid-cols-2 p-1 mb-6">
-          <TabsTrigger value="calculator" className="glass-dark">Calculadora</TabsTrigger>
-          <TabsTrigger value="info" className="glass-dark">Información legal</TabsTrigger>
+        <TabsList className="glass grid w-full grid-cols-2 p-1 mb-6 h-12">
+          <TabsTrigger 
+            value="calculator" 
+            className="glass-dark font-medium text-sm h-10 rounded-lg transition-all"
+            style={{ 
+              backgroundColor: activeTab === 'calculator' ? 'var(--g-brand)' : 'transparent',
+              color: activeTab === 'calculator' ? 'var(--ink-900)' : 'var(--ink-700)'
+            }}
+          >
+            Calculadora
+          </TabsTrigger>
+          <TabsTrigger 
+            value="info" 
+            className="glass-dark font-medium text-sm h-10 rounded-lg transition-all"
+            style={{ 
+              backgroundColor: activeTab === 'info' ? 'var(--g-brand)' : 'transparent',
+              color: activeTab === 'info' ? 'var(--ink-900)' : 'var(--ink-700)'
+            }}
+          >
+            Información legal
+          </TabsTrigger>
         </TabsList>
         
         <TabsContent value="calculator" className="pt-0">

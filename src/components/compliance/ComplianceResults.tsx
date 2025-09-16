@@ -1,7 +1,8 @@
 
 import { Button } from "@/components/ui/button";
-import { ExternalLink, CheckCircle, AlertTriangle, AlertCircle } from "lucide-react";
+import { ExternalLink, CheckCircle, AlertTriangle, AlertCircle, Shield } from "lucide-react";
 import { SanctionCalculator } from "./SanctionCalculator";
+import { useAnimatedCounter } from "@/hooks/useAnimatedCounter";
 
 interface ComplianceResultsProps {
   results: {
@@ -14,77 +15,83 @@ interface ComplianceResultsProps {
 }
 
 export function ComplianceResults({ results, resetForm, isEmbedded = false }: ComplianceResultsProps) {
+  const { currentValue: animatedScore } = useAnimatedCounter(results.complianceScore);
+
+  const getLevelConfig = () => {
+    switch (results.level) {
+      case "compliant":
+        return {
+          title: "¡Excelente! Cumples con la normativa",
+          subtitle: "Tu empresa está alineada con las regulaciones laborales",
+          icon: Shield,
+          iconColor: "var(--success)",
+          bgColor: "rgba(32, 201, 151, 0.1)",
+          borderColor: "rgba(32, 201, 151, 0.3)"
+        };
+      case "medium-risk":
+        return {
+          title: "Riesgo Medio Detectado",
+          subtitle: "Posibles sanciones leves o graves",
+          icon: AlertTriangle,
+          iconColor: "var(--warning)",
+          bgColor: "rgba(245, 159, 0, 0.1)",
+          borderColor: "rgba(245, 159, 0, 0.3)"
+        };
+      case "high-risk":
+        return {
+          title: "¡Atención! Alto Riesgo",
+          subtitle: "Posibles sanciones muy graves",
+          icon: AlertCircle,
+          iconColor: "var(--danger)",
+          bgColor: "rgba(224, 49, 49, 0.1)",
+          borderColor: "rgba(224, 49, 49, 0.3)"
+        };
+    }
+  };
+
+  const config = getLevelConfig();
+  const Icon = config.icon;
+
   return (
     <div className={`py-6 ${isEmbedded ? "glass p-6 rounded-[var(--radius-lg)]" : "glass card-lg"}`}>
-      <div className={`mb-4 flex items-center gap-3 ${
-        results.level === "compliant" ? "" : 
-        results.level === "medium-risk" ? "" : 
-        ""
-      }`}>
-        {results.level === "compliant" && (
-          <>
-            <div 
-              className="w-12 h-12 rounded-full flex items-center justify-center"
-              style={{ backgroundColor: 'var(--success)' }}
-            >
-              <CheckCircle className="h-7 w-7 text-white" />
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold" style={{ color: 'var(--success)' }}>
-                Cumples con la normativa
-              </h2>
-              <p style={{ color: 'var(--ink-700)' }}>
-                Tu empresa está protegida legalmente
-              </p>
-            </div>
-          </>
-        )}
-        {results.level === "medium-risk" && (
-          <>
-            <div 
-              className="w-12 h-12 rounded-full flex items-center justify-center"
-              style={{ backgroundColor: 'var(--warning)' }}
-            >
-              <AlertTriangle className="h-7 w-7 text-white" />
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold" style={{ color: 'var(--warning)' }}>
-                Riesgo Medio
-              </h2>
-              <p style={{ color: 'var(--ink-700)' }}>
-                Posibles sanciones leves o graves
-              </p>
-            </div>
-          </>
-        )}
-        {results.level === "high-risk" && (
-          <>
-            <div 
-              className="w-12 h-12 rounded-full flex items-center justify-center"
-              style={{ backgroundColor: 'var(--danger)' }}
-            >
-              <AlertCircle className="h-7 w-7 text-white" />
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold" style={{ color: 'var(--danger)' }}>
-                Alto Riesgo
-              </h2>
-              <p style={{ color: 'var(--ink-700)' }}>
-                Posibles sanciones muy graves
-              </p>
-            </div>
-          </>
-        )}
+      {/* Success Icon and Title */}
+      <div className="text-center mb-6">
+        <div 
+          className="w-24 h-24 rounded-full mx-auto mb-6 flex items-center justify-center glass animate-fade-up"
+          style={{ 
+            background: `linear-gradient(135deg, ${config.iconColor}15, ${config.iconColor}08)`,
+            border: `2px solid ${config.borderColor}`
+          }}
+        >
+          <Icon className="w-12 h-12" style={{ color: config.iconColor }} />
+        </div>
+        
+        <h2 className="text-2xl md:text-3xl font-bold mb-2" style={{ color: 'var(--ink-900)' }}>
+          {config.title}
+        </h2>
+        
+        <p className="text-lg mb-6" style={{ color: 'var(--ink-700)' }}>
+          {config.subtitle}
+        </p>
       </div>
-      
-      <div className="glass card mb-6">
-        <div className="text-center">
-          <div className="text-3xl font-bold mb-2" style={{ color: 'var(--ink-900)' }}>
-            {Math.round(results.complianceScore)}%
+
+      {/* Animated Score Display */}
+      <div className="text-center mb-8">
+        <div className="glass card p-6 mb-4">
+          <div className="mb-3">
+            <span className="text-sm font-medium" style={{ color: 'var(--ink-700)' }}>
+              Puntuación de cumplimiento
+            </span>
           </div>
-          <p style={{ color: 'var(--ink-700)' }}>
-            Puntuación de cumplimiento
-          </p>
+          <div className="flex items-center justify-center gap-2">
+            <span 
+              className="text-5xl md:text-6xl font-bold animate-count-up" 
+              style={{ color: config.iconColor }}
+            >
+              {Math.round(animatedScore)}
+            </span>
+            <span className="text-2xl font-semibold" style={{ color: 'var(--ink-400)' }}>%</span>
+          </div>
         </div>
       </div>
 

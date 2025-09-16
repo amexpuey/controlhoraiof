@@ -25,7 +25,7 @@ export function FinalCTASection({ onStartTest }: FinalCTASectionProps) {
         
         <button 
           onClick={onStartTest}
-          className="btn btn-primary mb-4 text-lg font-semibold"
+          className="btn btn-primary btn-full mb-4 text-lg font-semibold"
         >
           Comenzar verificación gratuita
           <ArrowRight className="w-5 h-5" />

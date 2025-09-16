@@ -42,7 +42,7 @@ export function HowItWorksSection() {
           return (
             <div 
               key={step.number}
-              className="glass card-lg text-center transition-all duration-200 hover:scale-105 cursor-pointer"
+              className="glass card-lg text-center step-card cursor-pointer"
             >
               <div className="mb-4">
                 <div 

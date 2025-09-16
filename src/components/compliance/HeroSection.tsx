@@ -24,11 +24,8 @@ export function HeroSection({ onStartTest }: HeroSectionProps) {
         
         <div className="text-center py-8">
           <h1 className="hero-title font-bold" style={{ color: 'var(--ink-900)' }}>
-            Verificador de Cumplimiento Normativo
-            <br />
-            <span style={{ background: 'var(--g-brand)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-              Control Horario
-            </span>
+            Verificador de Cumplimiento Normativo 
+            <span style={{ color: 'var(--ink-900)' }}>Control Horario</span>
           </h1>
           
           <p className="hero-sub mb-8 max-w-2xl mx-auto">
@@ -36,13 +33,13 @@ export function HeroSection({ onStartTest }: HeroSectionProps) {
           </p>
           
           <div className="flex flex-wrap justify-center gap-3 mb-8">
-            <div className="badge glass">
+            <div className="badge glass animate-fade-up">
               <CheckCircle className="w-4 h-4" style={{ color: 'var(--success)' }} />
               <span className="text-sm font-medium" style={{ color: 'var(--ink-900)' }}>
                 Gratis y sin registros
               </span>
             </div>
-            <div className="badge glass">
+            <div className="badge glass animate-fade-up" style={{ animationDelay: '0.1s' }}>
               <CheckCircle className="w-4 h-4" style={{ color: 'var(--success)' }} />
               <span className="text-sm font-medium" style={{ color: 'var(--ink-900)' }}>
                 Evita multas
@@ -52,7 +49,7 @@ export function HeroSection({ onStartTest }: HeroSectionProps) {
           
           <button 
             onClick={onStartTest}
-            className="btn btn-primary btn-breathing mb-4 text-lg font-semibold"
+            className="btn btn-primary btn-breathing btn-full mb-4 text-lg font-semibold"
           >
             <Calculator className="w-6 h-6" />
             Calcular mi riesgo ahora
