@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
@@ -24,45 +23,6 @@ export interface EstimatedSanctions {
   selectedInfractions: typeof sanctionTypes;
   reincidenceApplied: boolean;
 }
-
-export function SanctionForm() {
-  const [estimatedSanctions, setEstimatedSanctions] = useState<EstimatedSanctions | null>(null);
-  
-  const calculatorForm = useForm<CalculatorFormValues>({
-    defaultValues: {
-      employees: 1,
-      duration: 2,
-      infractions: ["no_registro"],
-      reincidence: false
-    }
-  });
-
-  const calculateSanctions = (data: CalculatorFormValues) => {
-    const { employees, duration, infractions, reincidence } = data;
-    
-    const companyMultiplier = getCompanySizeMultiplier(employees);
-    const durationMultiplier = getDurationMultiplier(duration);
-    const reincidenceMultiplier = reincidence ? 1.5 : 1;
-    
-    const selectedInfractionTypes = sanctionTypes.filter(type => 
-      infractions.includes(type.id)
-    );
-    
-    const minEstimate = selectedInfractionTypes.reduce((total, infraction) => {
-      return total + (infraction.baseAmount * companyMultiplier * durationMultiplier * reincidenceMultiplier);
-    }, 0);
-    
-    const maxEstimate = selectedInfractionTypes.reduce((total, infraction) => {
-      return total + (infraction.maxAmount * companyMultiplier * durationMultiplier * reincidenceMultiplier);
-    }, 0);
-    
-    setEstimatedSanctions({
-      minEstimate: Math.round(minEstimate),
-      maxEstimate: Math.round(maxEstimate),
-      selectedInfractions: selectedInfractionTypes,
-      reincidenceApplied: reincidence
-    });
-  };
 
 export function SanctionForm() {
   const [estimatedSanctions, setEstimatedSanctions] = useState<EstimatedSanctions | null>(null);
@@ -139,5 +99,4 @@ export function SanctionForm() {
       )}
     </>
   );
-}
 }
