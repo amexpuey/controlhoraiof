@@ -23,9 +23,10 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [completedBlocks, setCompletedBlocks] = useState<string[]>([]);
+  const [answeredQuestions, setAnsweredQuestions] = useState<Set<string>>(new Set());
 
   const form = useForm<FormValues>({
-    defaultValues: complianceQuestions.reduce((acc, q) => ({ ...acc, [q.id]: "si" }), {})
+    defaultValues: complianceQuestions.reduce((acc, q) => ({ ...acc, [q.id]: undefined }), {})
   });
 
   const currentBlockId = questionBlocks[currentBlockIndex]?.id;
@@ -33,13 +34,13 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
   const currentQuestion = questionsInCurrentBlock[currentQuestionIndex];
   
   const totalQuestions = complianceQuestions.length;
-  
-  // Calculate progress based on form values instead of separate state
-  const formValues = form.getValues();
-  const answeredCount = complianceQuestions.filter(q => 
-    formValues[q.id] !== undefined && formValues[q.id] !== form.formState.defaultValues?.[q.id]
-  ).length;
+  const answeredCount = answeredQuestions.size;
   const progress = (answeredCount / totalQuestions) * 100;
+
+  const handleAnswerChange = (questionId: string, value: "si" | "no") => {
+    form.setValue(questionId, value);
+    setAnsweredQuestions(prev => new Set([...prev, questionId]));
+  };
 
   const handleNext = () => {
     setIsTransitioning(true);
@@ -148,7 +149,7 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
                           name={currentQuestion.id}
                           value="si"
                           checked={field.value === 'si'}
-                          onChange={() => field.onChange('si')}
+                          onChange={() => handleAnswerChange(currentQuestion.id, 'si')}
                         />
                         <span className="font-medium">Sí</span>
                       </label>
@@ -158,7 +159,7 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
                           name={currentQuestion.id}
                           value="no"
                           checked={field.value === 'no'}
-                          onChange={() => field.onChange('no')}
+                          onChange={() => handleAnswerChange(currentQuestion.id, 'no')}
                         />
                         <span className="font-medium">No</span>
                       </label>
