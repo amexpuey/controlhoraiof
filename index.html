@@ -14,5 +14,36 @@
     <div id="root"></div>
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+(function () {
+  function postHeight() {
+    var h = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.offsetHeight,
+      document.body.clientHeight,
+      document.documentElement.clientHeight
+    );
+    parent.postMessage({ source: 'INWOUT', type: 'HEIGHT', height: h }, '*');
+  }
+
+  // Envío inicial + en resize
+  window.addEventListener('load', postHeight);
+  window.addEventListener('resize', postHeight);
+
+  // Reenvía altura cuando cambie el DOM (SPAs, acordeones, tabs, etc.)
+  var mo = new MutationObserver(function () { postHeight(); });
+  mo.observe(document.documentElement, { childList: true, subtree: true, attributes: true });
+
+  // Si el padre "pide" la altura, respóndele
+  window.addEventListener('message', function (e) {
+    if (e.data && e.data.type === 'PING_HEIGHT') postHeight();
+  });
+
+  // Fallback: varios ticks tras la carga (por animaciones/efectos diferidos)
+  var i = 0, t = setInterval(function(){ postHeight(); if (++i > 10) clearInterval(t); }, 400);
+})();
+    </script>
   </body>
 </html>
