@@ -32,9 +32,25 @@ export function HeroSection({ onStartTest }: HeroSectionProps) {
             Calcular mi riesgo ahora →
           </button>
 
-          <p className="text-sm mb-6" style={{ color: 'var(--dark-muted)' }}>
+          <p className="text-sm mb-8" style={{ color: 'var(--dark-muted)' }}>
             Resultado en menos de 1 minuto
           </p>
+
+          {/* Mini Stats */}
+          <div className="hero-stats">
+            <div className="hero-stat">
+              <span className="hero-stat-num">7.500€</span>
+              <span className="hero-stat-label">Sanción máxima por infracción</span>
+            </div>
+            <div className="hero-stat">
+              <span className="hero-stat-num">12.000€</span>
+              <span className="hero-stat-label">Condena judicial media por trabajador</span>
+            </div>
+            <div className="hero-stat">
+              <span className="hero-stat-num">20,2M€</span>
+              <span className="hero-stat-label">En multas impuestas solo en 2024</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
