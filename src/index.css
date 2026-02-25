@@ -841,8 +841,8 @@
     .tools-grid { grid-template-columns: 1fr; }
   }
   .tool-card {
-    background: #0D1E35;
-    border: 1px solid rgba(255,255,255,0.10);
+    background: var(--white);
+    border: 1px solid var(--border);
     border-radius: 20px;
     padding: 32px;
     height: 100%;
