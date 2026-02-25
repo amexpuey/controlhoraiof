@@ -17,31 +17,29 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   const { currentValue: animatedCount } = useAnimatedCounter(answeredCount, 400, 150);
 
   return (
-    <div className="glass card mb-6 !bg-glass-bg/60">
+    <div className="card mb-6" style={{ background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)' }}>
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-gradient-to-r from-teal to-lime animate-pulse"></div>
-          <span className="text-sm font-medium text-ink-700">
+          <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--green)' }}></div>
+          <span className="text-sm font-medium" style={{ color: 'var(--text)' }}>
             Progreso del cuestionario
           </span>
         </div>
-        <div className="text-sm font-semibold text-ink-900">
+        <div className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
           {animatedCount} de {totalQuestions}
         </div>
       </div>
       
       <div className="relative">
-        <div className="w-full h-3 bg-glass-bg rounded-full border border-glass-stroke/50 overflow-hidden">
+        <div className="progress">
           <div 
-            className="h-full bg-gradient-to-r from-teal to-lime rounded-full transition-all duration-700 ease-out shadow-sm relative"
+            className="progress__bar"
             style={{ width: `${animatedProgress}%` }}
-          >
-            <div className="absolute inset-0 bg-white/20 rounded-full animate-pulse"></div>
-          </div>
+          />
         </div>
         
         <div className="flex justify-end mt-2">
-          <span className="text-xs font-medium text-ink-600">
+          <span className="text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>
             {Math.round(animatedProgress)}% completado
           </span>
         </div>
