@@ -23,9 +23,8 @@ export function HeroSection({ onStartTest }: HeroSectionProps) {
               </span>
             </div>
 
-            <h1 className="hero-title font-bold">
-              ¿Tu empresa cumple con{' '}
-              <span className="break">el registro horario?</span>
+            <h1 className="hero-title font-bold" style={{ color: '#ffffff' }}>
+              ¿Tu empresa cumple con el registro horario?
             </h1>
 
             <p className="hero-sub mb-8 max-w-2xl mx-auto">

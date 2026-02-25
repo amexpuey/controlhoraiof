@@ -35,7 +35,7 @@ export function HowItWorksSection() {
       <div className="stats-grid">
         {stats.map((stat, index) => (
           <div key={index} className="stat-card animate-fade-up" style={{ animationDelay: `${index * 0.1}s` }}>
-            <div className="stat-number">{stat.number}</div>
+            <div className="stat-number" style={{ color: '#ffffff' }}>{stat.number}</div>
             <div className="stat-label">{stat.label}</div>
           </div>
         ))}
