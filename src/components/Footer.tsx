@@ -55,10 +55,10 @@ export function Footer() {
           <div className="flex flex-col items-center md:items-start space-y-4">
             <img
               src="/lovable-uploads/c2b90205-f41e-4c0d-bf34-bb7a5bba9103.png"
-              alt="Control Horario Logo"
+              alt="Fichajes Empresas Logo"
               className="w-16 h-16"
             />
-            <h3 className="font-semibold text-lg">Control Horario Electrónico</h3>
+            <h3 className="font-semibold text-lg">Fichajes Empresas .es</h3>
             <p className="text-gray-300 text-sm max-w-md">
               Encuentra tu app de registro horario de forma fácil y rápida. El directorio más completo para empresas de todos los tamaños.
             </p>
@@ -147,7 +147,7 @@ export function Footer() {
         <div className="mt-8 pt-4 border-t border-gray-700 flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="flex items-center space-x-2 text-sm text-gray-400">
             <Copyright className="h-4 w-4" />
-            <span>Control Horario Electronico 2025</span>
+            <span>Fichajes Empresas .es 2025</span>
           </div>
           <div className="flex items-center space-x-4 text-sm text-gray-400">
             <span>Desarrollado con ♥ en España</span>

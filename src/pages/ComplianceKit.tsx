@@ -29,7 +29,7 @@ export default function ComplianceKit() {
   const [activeTab, setActiveTab] = useState(section || "inicio");
   
   useEffect(() => {
-    document.title = "INWOUT - Kit Legal | Control Horario Electrónico";
+    document.title = "INWOUT - Kit Legal | Fichajes Empresas .es";
     
     // Update activeTab based on URL section
     if (section) {

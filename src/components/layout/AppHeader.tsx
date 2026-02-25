@@ -15,7 +15,7 @@ export function AppHeader() {
   return (
     <div className="h-16 bg-gradient-to-r from-gray-800 to-gray-900 border-b flex items-center justify-between px-4 md:px-6 shadow-md z-10 relative">
       <Link to="/" className="text-lg md:text-xl font-semibold text-white hover:text-gray-200 transition-colors truncate max-w-[180px] md:max-w-none">
-        Control Horario Electrónico
+        Fichajes Empresas .es
       </Link>
       
       {isMobile ? (

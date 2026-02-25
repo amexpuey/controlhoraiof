@@ -13,7 +13,7 @@ export default function HelpCenterPage() {
   const [learningProgress, setLearningProgress] = React.useState(0);
   
   useEffect(() => {
-    document.title = "INWOUT - Centro de Ayuda | Control Horario Electrónico";
+    document.title = "INWOUT - Centro de Ayuda | Fichajes Empresas .es";
     
     // Validate that section is valid
     if (!["admin", "app", "web"].includes(section || "")) {

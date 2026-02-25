@@ -50,7 +50,7 @@ export default function DashboardHeader({
       {/* Top Header with dark gradient background and white text */}
       <div className="h-16 bg-gradient-to-r from-gray-800 to-gray-900 border-b flex items-center justify-between px-4 md:px-6 shadow-md">
         <Link to="/" className="text-lg md:text-xl font-semibold text-white hover:text-gray-200 transition-colors">
-          Control Horario Electrónico
+          Fichajes Empresas .es
         </Link>
         
         {isMobile ? (
