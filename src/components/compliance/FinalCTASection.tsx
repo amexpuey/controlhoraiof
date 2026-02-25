@@ -1,4 +1,4 @@
-import { ArrowRight, Shield } from "lucide-react";
+import { Shield } from "lucide-react";
 
 interface FinalCTASectionProps {
   onStartTest: () => void;
@@ -16,11 +16,11 @@ export function FinalCTASection({ onStartTest }: FinalCTASectionProps) {
             </div>
 
             <h3>
-              Haz la prueba en 1 minuto y evita sanciones de hasta 7.500€ por infracción
+              Evita una sanción de hasta 7.500€
             </h3>
 
             <p className="mx-auto" style={{ maxWidth: '44ch' }}>
-              No arriesgues tu empresa. Verifica tu cumplimiento según el RD 8/2019.
+              Comprueba ahora si tu empresa cumple con el RD 8/2019.
             </p>
           </div>
 
@@ -28,13 +28,8 @@ export function FinalCTASection({ onStartTest }: FinalCTASectionProps) {
             onClick={onStartTest}
             className="btn btn-green btn-lg"
           >
-            Comenzar verificación gratuita
-            <ArrowRight className="w-5 h-5" />
+            Comenzar verificación gratuita →
           </button>
-
-          <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-            Gratis, online y sin datos personales
-          </p>
         </div>
       </div>
     </div>
