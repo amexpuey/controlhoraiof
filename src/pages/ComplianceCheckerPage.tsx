@@ -51,7 +51,7 @@ export default function ComplianceCheckerPage() {
   return (
     <div className="compliance-theme min-h-screen pb-12">
       <HeroSection onStartTest={handleStartTest} />
-      <HowItWorksSection />
+      
 
       {showTest && (
         <div ref={testRef} className="container">
