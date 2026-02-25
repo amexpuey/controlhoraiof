@@ -26,7 +26,7 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
           iconColor: "var(--teal)",
           bgColor: "var(--teal-glow)",
           borderColor: "rgba(15,184,159,.3)",
-          ctaText: "Mantén el cumplimiento automático con INWOUT",
+          ctaText: "Ver demo en directo — sin registro",
         };
       case "medium-risk":
         return {
@@ -36,7 +36,7 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
           iconColor: "var(--amber)",
           bgColor: "rgba(217,119,6,.12)",
           borderColor: "rgba(217,119,6,.3)",
-          ctaText: "Soluciónalo con INWOUT — Prueba gratis 14 días",
+          ctaText: "Ver demo en directo — sin registro",
         };
       case "high-risk":
         return {
@@ -46,7 +46,7 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
           iconColor: "var(--danger)",
           bgColor: "rgba(239,68,68,.12)",
           borderColor: "rgba(239,68,68,.3)",
-          ctaText: "Soluciónalo con INWOUT — Prueba gratis 14 días",
+          ctaText: "Ver demo en directo — sin registro",
         };
     }
   };
@@ -155,7 +155,7 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
       {/* INWOUT support text */}
       {results.level !== "compliant" && (
         <p className="text-sm text-center mb-4" style={{ color: 'var(--text-secondary)' }}>
-          INWOUT implementa registro horario válido según RD 8/2019 en menos de 1 hora.
+          Descubre cómo INWOUT implementa el registro horario válido en menos de 1 hora.
         </p>
       )}
 
@@ -167,7 +167,7 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
           Volver a realizar el test
         </button>
         <a
-          href="https://app.inwout.com"
+          href="https://inwout.com/demo-online"
           target="_blank"
           rel="noopener noreferrer"
           className="btn btn-primary w-full sm:w-auto"
@@ -181,13 +181,13 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
       <div className="md:hidden fixed inset-x-0 bottom-0 z-50 p-4"
            style={{ background: 'linear-gradient(180deg, transparent, rgba(255,255,255,.95))' }}>
         <a
-          href="https://app.inwout.com"
+          href="https://inwout.com/demo-online"
           target="_blank"
           rel="noopener noreferrer"
           className="btn btn-primary w-full"
           style={{ height: '56px', fontSize: '16px' }}
         >
-          <span>Soluciónalo con INWOUT</span>
+          <span>Ver demo en directo</span>
           <ExternalLink className="w-5 h-5" />
         </a>
       </div>
