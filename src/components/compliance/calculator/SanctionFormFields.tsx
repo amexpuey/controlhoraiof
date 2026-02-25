@@ -1,9 +1,10 @@
 
-import { Control } from "react-hook-form";
+import { useState } from "react";
+import { Control, useWatch } from "react-hook-form";
 import { FormField, FormItem, FormLabel, FormControl } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Users, Calendar, AlertTriangle } from "lucide-react";
+import { Users, Calendar, AlertTriangle, ChevronDown } from "lucide-react";
 import { CalculatorFormValues } from "./SanctionForm";
 import { sanctionTypes, getRiskColor } from "../complianceData";
 
@@ -12,6 +13,14 @@ interface SanctionFormFieldsProps {
 }
 
 export function SanctionFormFields({ control }: SanctionFormFieldsProps) {
+  const [infractionsOpen, setInfractionsOpen] = useState(false);
+  const [reincidenceOpen, setReincidenceOpen] = useState(false);
+
+  const infractions = useWatch({ control, name: "infractions" });
+  const reincidence = useWatch({ control, name: "reincidence" });
+
+  const selectedCount = infractions?.length || 0;
+
   return (
     <>
       <FormField
@@ -61,53 +70,39 @@ export function SanctionFormFields({ control }: SanctionFormFieldsProps) {
           </FormItem>
         )}
       />
-      
-      <FormField
-        control={control}
-        name="reincidence"
-        render={({ field }) => (
-          <FormItem className="flex flex-row items-start space-x-3 space-y-0 p-4 rounded-2xl bg-white/10 border border-white/30 backdrop-blur-[10px]">
-            <FormControl>
-              <Checkbox
-                checked={field.value}
-                onCheckedChange={field.onChange}
-              />
-            </FormControl>
-            <div className="space-y-1 leading-none">
-              <FormLabel className="text-sm font-medium cursor-pointer text-[color:var(--text-strong)]">
-                Aplicar agravante por reincidencia
-              </FormLabel>
-              <p className="text-xs text-[color:var(--muted)] leading-relaxed">
-                Se aplica cuando ha habido sanciones previas por infracciones similares
-              </p>
-            </div>
-          </FormItem>
-        )}
-      />
-      
+
+      {/* Collapsible: Tipos de incumplimiento */}
       <FormField
         control={control}
         name="infractions"
         render={() => (
           <FormItem>
-            <div className="mb-4">
-              <FormLabel className="flex items-center gap-3 text-[color:var(--text-strong)] font-medium mb-3">
+            <button
+              type="button"
+              onClick={() => setInfractionsOpen(!infractionsOpen)}
+              className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/10 border border-white/30 backdrop-blur-[10px] cursor-pointer transition-colors duration-200 hover:bg-white/14"
+            >
+              <span className="flex items-center gap-3 text-[color:var(--text-strong)] font-medium text-sm">
                 <div className="p-2 rounded-full bg-white/14 border border-white/55">
                   <AlertTriangle className="h-4 w-4 text-[#F4B957]" />
                 </div>
                 Tipos de incumplimiento
-              </FormLabel>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-              {sanctionTypes.map((item) => (
-                <FormField
-                  key={item.id}
-                  control={control}
-                  name="infractions"
-                  render={({ field }) => {
-                    return (
+                {!infractionsOpen && selectedCount > 0 && (
+                  <span className="text-xs text-[color:var(--muted)]">· {selectedCount} seleccionado{selectedCount !== 1 ? 's' : ''}</span>
+                )}
+              </span>
+              <ChevronDown className={`h-4 w-4 text-[color:var(--muted)] transition-transform duration-200 ${infractionsOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            {infractionsOpen && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-3">
+                {sanctionTypes.map((item) => (
+                  <FormField
+                    key={item.id}
+                    control={control}
+                    name="infractions"
+                    render={({ field }) => (
                       <FormItem
-                        key={item.id}
                         className="flex flex-row items-start space-x-3 space-y-0 p-4 rounded-2xl bg-white/10 border border-white/30 backdrop-blur-[10px] hover:bg-white/14 transition-colors duration-200"
                       >
                         <FormControl>
@@ -116,11 +111,7 @@ export function SanctionFormFields({ control }: SanctionFormFieldsProps) {
                             onCheckedChange={(checked) => {
                               return checked
                                 ? field.onChange([...field.value, item.id])
-                                : field.onChange(
-                                    field.value?.filter(
-                                      (value) => value !== item.id
-                                    )
-                                  )
+                                : field.onChange(field.value?.filter((value) => value !== item.id))
                             }}
                           />
                         </FormControl>
@@ -135,14 +126,58 @@ export function SanctionFormFields({ control }: SanctionFormFieldsProps) {
                           </span>
                         </FormLabel>
                       </FormItem>
-                    )
-                  }}
-                />
-              ))}
-            </div>
+                    )}
+                  />
+                ))}
+              </div>
+            )}
           </FormItem>
         )}
       />
+
+      {/* Collapsible: Agravante por reincidencia */}
+      <div>
+        <button
+          type="button"
+          onClick={() => setReincidenceOpen(!reincidenceOpen)}
+          className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/10 border border-white/30 backdrop-blur-[10px] cursor-pointer transition-colors duration-200 hover:bg-white/14"
+        >
+          <span className="flex items-center gap-2 text-sm font-medium text-[color:var(--text-strong)]">
+            Agravante por reincidencia
+            {!reincidenceOpen && reincidence && (
+              <span className="text-xs text-[#F4B957]">· Activado</span>
+            )}
+          </span>
+          <ChevronDown className={`h-4 w-4 text-[color:var(--muted)] transition-transform duration-200 ${reincidenceOpen ? 'rotate-180' : ''}`} />
+        </button>
+
+        {reincidenceOpen && (
+          <div className="mt-3">
+            <FormField
+              control={control}
+              name="reincidence"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 p-4 rounded-2xl bg-white/10 border border-white/30 backdrop-blur-[10px]">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel className="text-sm font-medium cursor-pointer text-[color:var(--text-strong)]">
+                      Aplicar agravante por reincidencia
+                    </FormLabel>
+                    <p className="text-xs text-[color:var(--muted)] leading-relaxed">
+                      Se aplica cuando ha habido sanciones previas por infracciones similares
+                    </p>
+                  </div>
+                </FormItem>
+              )}
+            />
+          </div>
+        )}
+      </div>
     </>
   );
 }
