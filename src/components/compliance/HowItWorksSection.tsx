@@ -1,47 +1,41 @@
-import { Clock, BarChart3, Calculator } from "lucide-react";
+import { MessageSquare, BarChart3, Shield } from "lucide-react";
 
 const steps = [
   {
-    icon: Clock,
-    title: "Paso 1 · Responde",
-    description: "Contesta 12 preguntas sobre tu control horario actual"
+    num: "01",
+    icon: MessageSquare,
+    title: "Responde",
+    description: "5 preguntas sobre tu sistema actual de registro horario"
   },
   {
+    num: "02",
     icon: BarChart3,
-    title: "Paso 2 · Análisis", 
-    description: "Analizamos tu cumplimiento normativo al instante"
+    title: "Análisis",
+    description: "Evaluamos tu riesgo real según normativa española vigente"
   },
   {
-    icon: Calculator,
-    title: "Paso 3 · Calcula sanciones",
-    description: "Te mostramos el riesgo económico y cómo evitarlo"
+    num: "03",
+    icon: Shield,
+    title: "Resultado",
+    description: "Sabrás exactamente qué riesgo tienes y cómo solucionarlo"
   }
 ];
 
 export function HowItWorksSection() {
   return (
-    <div className="container mb-12">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--text-strong)' }}>
-          ¿Cómo funciona?
-        </h2>
-        <p className="hero-sub" style={{ color: 'var(--text)' }}>
-          Tres pasos simples para verificar el cumplimiento de tu empresa
-        </p>
-      </div>
-      
-      <div className="steps">
-        {steps.map((step, index) => (
-          <div key={index} className="step">
-            <div className="icon">
-              <step.icon className="h-6 w-6" style={{ color: 'var(--brand)' }} />
+    <div className="cc-container cc-section">
+      <h2 className="cc-h2">¿Cómo funciona?</h2>
+      <p className="cc-sub-center">Tres pasos simples para verificar el cumplimiento de tu empresa</p>
+
+      <div className="cc-steps">
+        {steps.map((step) => (
+          <div key={step.num} className="cc-step-card">
+            <span className="cc-step-num">{step.num}</span>
+            <div className="cc-step-icon">
+              <step.icon className="w-5 h-5" />
             </div>
-            <h3 className="font-bold text-lg mb-2" style={{ color: 'var(--text-strong)' }}>
-              {step.title}
-            </h3>
-            <p className="text-sm leading-relaxed" style={{ color: 'var(--text)' }}>
-              {step.description}
-            </p>
+            <h3 className="cc-step-title">Paso {step.num} · {step.title}</h3>
+            <p className="cc-step-desc">{step.description}</p>
           </div>
         ))}
       </div>
