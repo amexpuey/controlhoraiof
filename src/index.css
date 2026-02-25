@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap');
+/* Font loaded via index.html link tag */
 
 @tailwind base;
 @tailwind components;
@@ -28,7 +28,7 @@
     --border-light: #EDF2F7;
     --yellow: #F5A623;
     --yellow-bg: #FFF8E6;
-    --font: 'DM Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font: 'Inter', sans-serif;
     --radius: 16px;
     --radius-sm: 12px;
     --radius-xs: 8px;
@@ -105,7 +105,7 @@
 @layer base {
   * {
     box-sizing: border-box;
-    font-family: var(--font);
+    font-family: 'Inter', sans-serif !important;
   }
 
   html {
@@ -116,14 +116,14 @@
   }
 
   h1, h2, h3, h4, h5, h6, .stat-number, .step-number {
-    font-family: 'Syne', sans-serif !important;
+    font-family: 'Inter', sans-serif !important;
     font-weight: 800;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.04em;
     color: var(--text);
   }
 
   body {
-    font-family: var(--font);
+    font-family: 'Inter', sans-serif;
     color: var(--text);
     background: var(--white);
     margin: 0;
@@ -153,7 +153,7 @@
     justify-content: center;
     padding: 10px 18px;
     border-radius: var(--radius-xs);
-    font-family: var(--font);
+    font-family: 'Inter', sans-serif;
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
@@ -449,7 +449,7 @@
     transition: all .3s var(--ease);
   }
   .result-card:hover { transform: translateY(-3px); border-color: var(--green); box-shadow: 0 10px 36px -8px rgba(15,184,159,.10); }
-  .result-num { font-family: 'Syne', sans-serif !important; font-size: clamp(28px, 4vw, 40px); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 8px; }
+  .result-num { font-family: 'Inter', sans-serif !important; font-size: clamp(28px, 4vw, 40px); font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
   .result-num.red { color: var(--danger); }
   .result-num.dark { color: var(--dark); }
   .result-num.green { color: var(--green); }
@@ -494,7 +494,7 @@
   .testimonial:hover { transform: translateY(-2px); border-color: var(--green); box-shadow: 0 10px 36px -8px rgba(15,184,159,.08); }
   .testimonial-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
   .testimonial-title { font-size: 14px; font-weight: 700; color: var(--text) !important; }
-  .testimonial blockquote { font-size: 14px; color: var(--text-secondary) !important; line-height: 1.65; margin-bottom: 16px; font-style: normal; font-family: var(--font) !important; quotes: none !important; border: none !important; padding: 0 !important; background: none !important; }
+  .testimonial blockquote { font-size: 14px; color: var(--text-secondary) !important; line-height: 1.65; margin-bottom: 16px; font-style: normal; font-family: 'Inter', sans-serif !important; quotes: none !important; border: none !important; padding: 0 !important; background: none !important; }
   .testimonial-author { display: flex; align-items: center; gap: 10px; padding-top: 14px; border-top: 1px solid var(--border-light); }
   .author-avatar { width: 36px; height: 36px; border-radius: 10px; background: var(--surface-alt); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: var(--green) !important; }
   .author-info .name { font-size: 13px; font-weight: 600; color: var(--text) !important; }
@@ -510,7 +510,7 @@
   }
   .step-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,.08); }
   .step-num {
-    font-family: 'Syne', sans-serif !important;
+    font-family: 'Inter', sans-serif !important;
     font-size: 24px;
     font-weight: 800;
     color: var(--green);
@@ -570,7 +570,7 @@
     max-width: 26ch;
     margin: 0 auto;
     color: var(--dark) !important;
-    font-family: var(--font) !important;
+    font-family: 'Inter', sans-serif !important;
     font-style: normal !important;
     quotes: none !important;
     border: none !important;
@@ -685,7 +685,7 @@
 
   /* ===== HERO TITLE (legacy) ===== */
   .hero-title {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: clamp(28px, 5.4vw, 44px);
     line-height: 1.15;
     margin: 0 0 var(--space-3);
@@ -848,7 +848,7 @@
   font-weight: 700;
   text-align: center;
   padding: 10px 16px;
-  font-family: var(--font);
+  font-family: 'Inter', sans-serif;
   line-height: 1.4;
 }
 
@@ -862,7 +862,7 @@
   font-size: clamp(28px, 6vw, 46px);
   color: var(--green);
   font-weight: 800;
-  font-family: 'Syne', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 /* Result / Calculator / FAQ blocks (compliance — light) */
