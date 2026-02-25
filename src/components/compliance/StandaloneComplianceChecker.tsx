@@ -59,10 +59,6 @@ export default function StandaloneComplianceChecker({ isEmbedded = false }: Stan
 
   return (
     <div>
-      <div className="tools-section-header">
-        <h2>Herramientas gratuitas</h2>
-        <p>Sin registro. Sin datos personales. Resultado inmediato.</p>
-      </div>
       <div className="tools-grid">
         <div className="tool-card">{mainContent}</div>
         {showCalculator && <div className="tool-card"><SanctionCalculator /></div>}
