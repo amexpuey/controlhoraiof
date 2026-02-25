@@ -24,7 +24,7 @@ const steps = [
 const stats = [
   { number: "7.500€", label: "Sanción máxima por infracción" },
   { number: "12.000€", label: "Condena judicial media por trabajador" },
-  { number: "1.869", label: "Empresas sancionadas en 2024" }
+  { number: "20,2M€", label: "En multas impuestas solo en 2024" }
 ];
 
 export function HowItWorksSection() {
