@@ -2,8 +2,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowLeft, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { complianceQuestions, questionBlocks } from "./complianceData";
@@ -32,7 +30,7 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
   const currentBlockId = questionBlocks[currentBlockIndex]?.id;
   const questionsInCurrentBlock = complianceQuestions.filter(q => q.block === currentBlockId);
   const currentQuestion = questionsInCurrentBlock[currentQuestionIndex];
-  
+
   const totalQuestions = complianceQuestions.length;
   const answeredCount = answeredQuestions.size;
   const progress = (answeredCount / totalQuestions) * 100;
@@ -43,13 +41,12 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
   };
 
   const handleNext = () => {
-    // Auto-mark current question as answered if not already answered
     if (!answeredQuestions.has(currentQuestion.id)) {
       setAnsweredQuestions(prev => new Set([...prev, currentQuestion.id]));
     }
-    
+
     setIsTransitioning(true);
-    
+
     setTimeout(() => {
       if (currentQuestionIndex < questionsInCurrentBlock.length - 1) {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -57,7 +54,7 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
         if (!completedBlocks.includes(currentBlockId)) {
           setCompletedBlocks([...completedBlocks, currentBlockId]);
         }
-        
+
         if (currentBlockIndex < questionBlocks.length - 1) {
           setCurrentBlockIndex(currentBlockIndex + 1);
           setCurrentQuestionIndex(0);
@@ -66,14 +63,14 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
           return;
         }
       }
-      
+
       setIsTransitioning(false);
     }, 300);
   };
 
   const handlePrevious = () => {
     setIsTransitioning(true);
-    
+
     setTimeout(() => {
       if (currentQuestionIndex > 0) {
         setCurrentQuestionIndex(currentQuestionIndex - 1);
@@ -84,14 +81,14 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
         );
         setCurrentQuestionIndex(prevBlockQuestions.length - 1);
       }
-      
+
       setIsTransitioning(false);
     }, 300);
   };
 
   const isLastQuestionAndBlock = () => {
     return (
-      currentBlockIndex === questionBlocks.length - 1 && 
+      currentBlockIndex === questionBlocks.length - 1 &&
       currentQuestionIndex === questionsInCurrentBlock.length - 1
     );
   };
@@ -99,40 +96,40 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
   return (
     <div className={`py-6 ${isEmbedded ? "glass p-6 rounded-[var(--radius-lg)]" : ""}`}>
       <div className="flex items-center mb-6">
-        <div 
+        <div
           className="w-10 h-10 rounded-full mr-4 flex items-center justify-center"
-          style={{ background: 'var(--g-brand)' }}
+          style={{ background: 'var(--teal-glow)', border: '1px solid rgba(15,184,159,.25)' }}
         >
-          <CheckCircle className="h-6 w-6" style={{ color: 'var(--ink-900)' }} />
+          <CheckCircle className="h-6 w-6" style={{ color: 'var(--teal)' }} />
         </div>
         <div>
-          <h2 className="text-2xl font-bold" style={{ color: 'var(--ink-900)' }}>
+          <h2 className="text-2xl font-bold" style={{ color: '#ffffff' }}>
             Verificador de cumplimiento
           </h2>
-          <p style={{ color: 'var(--ink-700)' }}>
-            Comprueba si cumples con la normativa laboral
+          <p style={{ color: 'var(--muted-text)' }}>
+            Comprueba si cumples con la normativa vigente
           </p>
         </div>
       </div>
 
       <Form {...form}>
         <form className="space-y-6">
-          <ProgressBar 
+          <ProgressBar
             progress={progress}
             answeredCount={answeredCount}
             totalQuestions={totalQuestions}
           />
-          
+
           <div className="glass card mb-6">
-            <h3 className="font-semibold text-xl flex items-center gap-3 mb-2" style={{ color: 'var(--ink-900)' }}>
-              <span className="text-2xl">{questionBlocks[currentBlockIndex].emoji}</span> 
+            <h3 className="font-semibold text-xl flex items-center gap-3 mb-2" style={{ color: '#ffffff' }}>
+              <span className="text-2xl">{questionBlocks[currentBlockIndex].emoji}</span>
               {questionBlocks[currentBlockIndex].title}
             </h3>
-            <p className="text-sm" style={{ color: 'var(--ink-400)' }}>
+            <p className="text-sm" style={{ color: 'var(--muted-text)' }}>
               Pregunta {currentQuestionIndex + 1} de {questionsInCurrentBlock.length}
             </p>
           </div>
-          
+
           <div className={cn(
             "transition-all duration-300",
             isTransitioning ? "opacity-0 transform translate-x-4" : "opacity-100 transform translate-x-0"
@@ -143,7 +140,7 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
               name={currentQuestion.id}
               render={({ field }) => (
                 <FormItem className="glass card-lg space-y-6">
-                  <FormLabel className="text-lg font-medium leading-relaxed" style={{ color: 'var(--ink-900)' }}>
+                  <FormLabel className="text-lg font-medium leading-relaxed" style={{ color: '#ffffff' }}>
                     {currentQuestion.question}
                   </FormLabel>
                   <FormControl>
@@ -174,11 +171,11 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
               )}
             />
           </div>
-          
+
           <div className="sticky-actions">
             <div className="flex justify-between">
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={handlePrevious}
                 disabled={currentBlockIndex === 0 && currentQuestionIndex === 0}
                 className="btn btn-ghost"
@@ -186,9 +183,9 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
                 <ArrowLeft className="h-4 w-4" />
                 Anterior
               </button>
-              
-              <button 
-                type="button" 
+
+              <button
+                type="button"
                 onClick={handleNext}
                 className="btn btn-primary"
               >
