@@ -134,8 +134,14 @@
     min-height: 100vh;
   }
 
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+
   body {
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'DM Sans', sans-serif;
     color: var(--text-strong);
     background: transparent;
     margin: 0;
@@ -189,6 +195,7 @@
   }
 
   .btn {
+    font-family: 'DM Sans', sans-serif;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -252,11 +259,12 @@
   }
 
   .hero-title {
+    font-family: 'Syne', sans-serif;
     font-size: clamp(28px, 5.4vw, 44px);
     line-height: 1.15;
     margin: 0 0 var(--space-3);
     font-weight: 800;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.03em;
     word-break: normal;
     overflow-wrap: break-word;
   }
