@@ -68,11 +68,11 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
           <Icon className="w-10 h-10" style={{ color: config.iconColor }} />
         </div>
 
-        <h2 className="text-2xl md:text-3xl font-bold mb-2" style={{ color: '#ffffff' }}>
+        <h2 className="text-2xl md:text-3xl font-bold mb-2" style={{ color: 'var(--text)' }}>
           {config.title}
         </h2>
 
-        <p className="text-lg mb-6" style={{ color: 'var(--muted-text)' }}>
+        <p className="text-lg mb-6" style={{ color: 'var(--text-secondary)' }}>
           {config.subtitle}
         </p>
       </div>
@@ -81,7 +81,7 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
       <div className="text-center mb-8">
         <div className="panel mb-4">
           <div className="mb-3">
-            <span className="text-sm font-medium" style={{ color: 'var(--muted-text)' }}>
+            <span className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
               Puntuación de cumplimiento
             </span>
           </div>
@@ -96,30 +96,30 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
       <div className="panel mb-6">
         {results.level === "compliant" ? (
           <div className="text-center">
-            <CheckCircle className="w-8 h-8 mx-auto mb-4" style={{ color: 'var(--teal)' }} />
-            <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--teal)' }}>
+            <CheckCircle className="w-8 h-8 mx-auto mb-4" style={{ color: 'var(--green)' }} />
+            <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--green)' }}>
               Tu empresa está en regla
             </h3>
-            <p style={{ color: 'var(--muted-text)' }} className="leading-relaxed">
+            <p style={{ color: 'var(--text-secondary)' }} className="leading-relaxed">
               Tu sistema de control horario cumple con los requisitos del Real Decreto-ley 8/2019.
               Mantén estas buenas prácticas para evitar problemas legales futuros.
             </p>
           </div>
         ) : (
           <>
-            <h3 className="text-xl font-bold mb-4" style={{ color: '#ffffff' }}>
+            <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text)' }}>
               {results.level === "medium-risk"
                 ? "Tu empresa podría enfrentar sanciones"
                 : "Alto riesgo de multas significativas"}
             </h3>
-            <p className="mb-6 leading-relaxed" style={{ color: 'var(--muted-text)' }}>
+            <p className="mb-6 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               {results.level === "medium-risk"
                 ? "Revisa tus prácticas laborales relacionadas con el registro horario para evitar posibles sanciones."
                 : "Es urgente tomar medidas correctivas inmediatas para evitar sanciones muy graves."}
             </p>
             {results.violations.length > 0 && (
               <div className="space-y-4">
-                <h4 className="font-semibold text-lg" style={{ color: '#ffffff' }}>
+                <h4 className="font-semibold text-lg" style={{ color: 'var(--text)' }}>
                   Incumplimientos detectados:
                 </h4>
                 <div className="space-y-3">
@@ -127,10 +127,10 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
                     <div key={index} className="severity" data-level={violation.riskLevel === 'muy grave' ? 'high' : 'low'}>
                       <div className="dot"></div>
                       <div className="flex-1">
-                        <p className="font-medium mb-1" style={{ color: '#ffffff' }}>
+                        <p className="font-medium mb-1" style={{ color: 'var(--text)' }}>
                           {violation.question}
                         </p>
-                        <p className="text-sm" style={{ color: 'var(--muted-text)' }}>
+                        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                           <span className="font-medium">Posible sanción:</span> {violation.sanction}
                         </p>
                         <span
@@ -154,7 +154,7 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
 
       {/* INWOUT support text */}
       {results.level !== "compliant" && (
-        <p className="text-sm text-center mb-4" style={{ color: 'var(--muted-text)' }}>
+        <p className="text-sm text-center mb-4" style={{ color: 'var(--text-secondary)' }}>
           INWOUT implementa registro horario válido según RD 8/2019 en menos de 1 hora.
         </p>
       )}
@@ -179,7 +179,7 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
 
       {/* Mobile Sticky CTA */}
       <div className="md:hidden fixed inset-x-0 bottom-0 z-50 p-4"
-           style={{ background: 'linear-gradient(180deg, transparent, rgba(7,17,31,.95))' }}>
+           style={{ background: 'linear-gradient(180deg, transparent, rgba(255,255,255,.95))' }}>
         <a
           href="https://app.inwout.com"
           target="_blank"

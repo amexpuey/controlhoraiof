@@ -30,42 +30,42 @@ const stats = [
 
 export function HowItWorksSection() {
   return (
-    <div className="container mb-12">
-      {/* Stats Grid */}
-      <div className="stats-grid">
-        {stats.map((stat, index) => (
-          <div key={index} className="stat-card animate-fade-up" style={{ animationDelay: `${index * 0.1}s` }}>
-            <div className="stat-number" style={{ color: '#ffffff' }}>{stat.number}</div>
-            <div className="stat-label">{stat.label}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* How It Works */}
-      <div className="text-center mb-8">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: '#ffffff' }}>
-          ¿Cómo funciona?
-        </h2>
-        <p className="hero-sub">
-          Tres pasos para verificar el cumplimiento de tu empresa
-        </p>
-      </div>
-
-      <div className="steps">
-        {steps.map((step, index) => (
-          <div key={index} className="step">
-            <div className="icon">
-              <step.icon className="h-6 w-6" style={{ color: 'var(--teal)' }} />
+    <div className="s-light">
+      <div className="container">
+        {/* Stats Grid */}
+        <div className="results-grid" style={{ marginBottom: '48px' }}>
+          {stats.map((stat, index) => (
+            <div key={index} className="result-card animate-fade-up" style={{ animationDelay: `${index * 0.1}s` }}>
+              <div className="result-num dark">{stat.number}</div>
+              <p>{stat.label}</p>
             </div>
-            <div className="step-number">{step.number}</div>
-            <h3 className="font-bold text-lg mb-2">
-              {step.title}
-            </h3>
-            <p className="text-sm leading-relaxed" style={{ color: 'var(--muted-text)' }}>
-              {step.description}
-            </p>
-          </div>
-        ))}
+          ))}
+        </div>
+
+        {/* How It Works */}
+        <div className="s-head s-center" style={{ marginBottom: '32px' }}>
+          <div className="s-label">Cómo funciona</div>
+          <h2>Verifica tu cumplimiento en 3 pasos</h2>
+          <p className="s-sub">Tres pasos para verificar el cumplimiento de tu empresa</p>
+        </div>
+
+        <div className="trio">
+          {steps.map((step, index) => (
+            <div key={index} className="tile">
+              <div className="w-12 h-12 rounded-full flex items-center justify-center mb-3"
+                   style={{ background: 'var(--green-bg)', border: '1px solid var(--green-light)' }}>
+                <step.icon className="h-6 w-6" style={{ color: 'var(--green)' }} />
+              </div>
+              <div className="step-num" style={{ color: 'var(--green)', marginBottom: '4px' }}>{step.number}</div>
+              <h4 className="font-bold text-lg mb-2">
+                {step.title}
+              </h4>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                {step.description}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

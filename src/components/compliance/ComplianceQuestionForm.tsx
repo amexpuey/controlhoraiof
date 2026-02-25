@@ -98,15 +98,15 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
       <div className="flex items-center mb-6">
         <div
           className="w-10 h-10 rounded-full mr-4 flex items-center justify-center"
-          style={{ background: 'var(--teal-glow)', border: '1px solid rgba(15,184,159,.25)' }}
+          style={{ background: 'var(--green-bg)', border: '1px solid var(--green-light)' }}
         >
-          <CheckCircle className="h-6 w-6" style={{ color: 'var(--teal)' }} />
+          <CheckCircle className="h-6 w-6" style={{ color: 'var(--green)' }} />
         </div>
         <div>
-          <h2 className="text-2xl font-bold" style={{ color: '#ffffff' }}>
+          <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>
             Verificador de cumplimiento
           </h2>
-          <p style={{ color: 'var(--muted-text)' }}>
+          <p style={{ color: 'var(--text-secondary)' }}>
             Comprueba si cumples con la normativa vigente
           </p>
         </div>
@@ -121,11 +121,11 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
           />
 
           <div className="glass card mb-6">
-            <h3 className="font-semibold text-xl flex items-center gap-3 mb-2" style={{ color: '#ffffff' }}>
+            <h3 className="font-semibold text-xl flex items-center gap-3 mb-2" style={{ color: 'var(--text)' }}>
               <span className="text-2xl">{questionBlocks[currentBlockIndex].emoji}</span>
               {questionBlocks[currentBlockIndex].title}
             </h3>
-            <p className="text-sm" style={{ color: 'var(--muted-text)' }}>
+            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
               Pregunta {currentQuestionIndex + 1} de {questionsInCurrentBlock.length}
             </p>
           </div>
@@ -140,7 +140,7 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
               name={currentQuestion.id}
               render={({ field }) => (
                 <FormItem className="glass card-lg space-y-6">
-                  <FormLabel className="text-lg font-medium leading-relaxed" style={{ color: '#ffffff' }}>
+                  <FormLabel className="text-lg font-medium leading-relaxed" style={{ color: 'var(--text)' }}>
                     {currentQuestion.question}
                   </FormLabel>
                   <FormControl>
