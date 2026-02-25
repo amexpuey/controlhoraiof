@@ -1,5 +1,4 @@
 
-import { Button } from "@/components/ui/button";
 import { ExternalLink, CheckCircle, AlertTriangle, AlertCircle, Shield } from "lucide-react";
 import { SanctionCalculator } from "./SanctionCalculator";
 import { useAnimatedCounter } from "@/hooks/useAnimatedCounter";
@@ -21,30 +20,33 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
     switch (results.level) {
       case "compliant":
         return {
-          title: "¡Excelente! Cumples con la normativa",
-          subtitle: "Tu empresa está alineada con las regulaciones laborales",
+          title: "Tu empresa cumple con la normativa",
+          subtitle: "Tu sistema de registro horario está alineado con el RD 8/2019",
           icon: Shield,
-          iconColor: "var(--success)",
-          bgColor: "rgba(32, 201, 151, 0.1)",
-          borderColor: "rgba(32, 201, 151, 0.3)"
+          iconColor: "var(--teal)",
+          bgColor: "var(--teal-glow)",
+          borderColor: "rgba(15,184,159,.3)",
+          ctaText: "Mantén el cumplimiento automático con INWOUT",
         };
       case "medium-risk":
         return {
-          title: "Riesgo Medio Detectado",
-          subtitle: "Posibles sanciones leves o graves",
+          title: "Riesgo medio detectado",
+          subtitle: "Tu empresa podría enfrentar sanciones leves o graves",
           icon: AlertTriangle,
-          iconColor: "var(--warning)",
-          bgColor: "rgba(245, 159, 0, 0.1)",
-          borderColor: "rgba(245, 159, 0, 0.3)"
+          iconColor: "var(--amber)",
+          bgColor: "rgba(217,119,6,.12)",
+          borderColor: "rgba(217,119,6,.3)",
+          ctaText: "Soluciónalo con INWOUT — Prueba gratis 14 días",
         };
       case "high-risk":
         return {
-          title: "¡Atención! Alto Riesgo",
-          subtitle: "Posibles sanciones muy graves",
+          title: "Alto riesgo de sanción",
+          subtitle: "Es urgente tomar medidas correctivas inmediatas",
           icon: AlertCircle,
           iconColor: "var(--danger)",
-          bgColor: "rgba(224, 49, 49, 0.1)",
-          borderColor: "rgba(224, 49, 49, 0.3)"
+          bgColor: "rgba(239,68,68,.12)",
+          borderColor: "rgba(239,68,68,.3)",
+          ctaText: "Soluciónalo con INWOUT — Prueba gratis 14 días",
         };
     }
   };
@@ -54,33 +56,32 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
 
   return (
     <div className={`py-6 ${isEmbedded ? "result p-6" : "result"}`}>
-      {/* Success Icon and Title */}
+      {/* Icon and Title */}
       <div className="text-center mb-6">
-        <div 
-          className="w-24 h-24 rounded-full mx-auto mb-6 flex items-center justify-center animate-bounce"
-          style={{ 
-            background: `linear-gradient(135deg, ${config.bgColor}, rgba(87, 191, 173, 0.1))`,
+        <div
+          className="w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center"
+          style={{
+            background: config.bgColor,
             border: `2px solid ${config.borderColor}`,
-            boxShadow: `0 0 30px ${config.borderColor}`
           }}
         >
-          <Icon className="w-12 h-12 animate-pulse" style={{ color: config.iconColor }} />
+          <Icon className="w-10 h-10" style={{ color: config.iconColor }} />
         </div>
-        
-        <h2 className="text-2xl md:text-3xl font-bold mb-2" style={{ color: 'var(--text-strong)' }}>
+
+        <h2 className="text-2xl md:text-3xl font-bold mb-2" style={{ color: '#ffffff' }}>
           {config.title}
         </h2>
-        
-        <p className="text-lg mb-6" style={{ color: 'var(--text)' }}>
+
+        <p className="text-lg mb-6" style={{ color: 'var(--muted-text)' }}>
           {config.subtitle}
         </p>
       </div>
 
-      {/* Animated Score Display */}
+      {/* Score */}
       <div className="text-center mb-8">
         <div className="panel mb-4">
           <div className="mb-3">
-            <span className="text-sm font-medium" style={{ color: 'var(--text)' }}>
+            <span className="text-sm font-medium" style={{ color: 'var(--muted-text)' }}>
               Puntuación de cumplimiento
             </span>
           </div>
@@ -95,32 +96,30 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
       <div className="panel mb-6">
         {results.level === "compliant" ? (
           <div className="text-center">
-            <div className="icon mb-4">
-              <CheckCircle className="w-8 h-8" style={{ color: 'var(--success)' }} />
-            </div>
-            <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--success)' }}>
-              ¡Enhorabuena! Tu empresa está en regla
+            <CheckCircle className="w-8 h-8 mx-auto mb-4" style={{ color: 'var(--teal)' }} />
+            <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--teal)' }}>
+              Tu empresa está en regla
             </h3>
-            <p style={{ color: 'var(--text)' }} className="leading-relaxed">
-              Tu sistema de control horario cumple con los requisitos del Real Decreto-ley 8/2019. 
+            <p style={{ color: 'var(--muted-text)' }} className="leading-relaxed">
+              Tu sistema de control horario cumple con los requisitos del Real Decreto-ley 8/2019.
               Mantén estas buenas prácticas para evitar problemas legales futuros.
             </p>
           </div>
         ) : (
           <>
-            <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-strong)' }}>
-              {results.level === "medium-risk" 
-                ? "Tu empresa podría enfrentar sanciones" 
-                : "¡Atención! Alto riesgo de multas significativas"}
+            <h3 className="text-xl font-bold mb-4" style={{ color: '#ffffff' }}>
+              {results.level === "medium-risk"
+                ? "Tu empresa podría enfrentar sanciones"
+                : "Alto riesgo de multas significativas"}
             </h3>
-            <p className="mb-6 leading-relaxed" style={{ color: 'var(--text)' }}>
-              {results.level === "medium-risk" 
-                ? "Revisa tus prácticas laborales relacionadas con el registro horario para evitar posibles sanciones." 
+            <p className="mb-6 leading-relaxed" style={{ color: 'var(--muted-text)' }}>
+              {results.level === "medium-risk"
+                ? "Revisa tus prácticas laborales relacionadas con el registro horario para evitar posibles sanciones."
                 : "Es urgente tomar medidas correctivas inmediatas para evitar sanciones muy graves."}
             </p>
             {results.violations.length > 0 && (
               <div className="space-y-4">
-                <h4 className="font-semibold text-lg" style={{ color: 'var(--text-strong)' }}>
+                <h4 className="font-semibold text-lg" style={{ color: '#ffffff' }}>
                   Incumplimientos detectados:
                 </h4>
                 <div className="space-y-3">
@@ -128,16 +127,16 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
                     <div key={index} className="severity" data-level={violation.riskLevel === 'muy grave' ? 'high' : 'low'}>
                       <div className="dot"></div>
                       <div className="flex-1">
-                        <p className="font-medium mb-1" style={{ color: 'var(--text-strong)' }}>
+                        <p className="font-medium mb-1" style={{ color: '#ffffff' }}>
                           {violation.question}
                         </p>
-                        <p className="text-sm" style={{ color: 'var(--text)' }}>
+                        <p className="text-sm" style={{ color: 'var(--muted-text)' }}>
                           <span className="font-medium">Posible sanción:</span> {violation.sanction}
                         </p>
-                        <span 
+                        <span
                           className="inline-block mt-1 px-2 py-1 rounded-full text-xs font-medium"
                           style={{
-                            backgroundColor: violation.riskLevel === 'muy grave' ? 'var(--danger)' : 'var(--warning)',
+                            backgroundColor: violation.riskLevel === 'muy grave' ? 'var(--danger)' : 'var(--amber)',
                             color: 'white'
                           }}
                         >
@@ -153,40 +152,45 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
         )}
       </div>
 
+      {/* INWOUT support text */}
+      {results.level !== "compliant" && (
+        <p className="text-sm text-center mb-4" style={{ color: 'var(--muted-text)' }}>
+          INWOUT implementa registro horario válido según RD 8/2019 en menos de 1 hora.
+        </p>
+      )}
+
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-        <button 
+        <button
           onClick={resetForm}
           className="btn btn-ghost w-full sm:w-auto"
         >
           Volver a realizar el test
         </button>
-        {!isEmbedded && (
-          <a 
-            href="https://inwout.com/demo-online" 
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-primary w-full sm:w-auto"
-          >
-            <span>Evita multas con INWOUT</span>
-            <ExternalLink className="h-4 w-4" />
-          </a>
-        )}
+        <a
+          href="https://app.inwout.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-primary w-full sm:w-auto"
+        >
+          <span>{config.ctaText}</span>
+          <ExternalLink className="h-4 w-4" />
+        </a>
       </div>
 
       {/* Mobile Sticky CTA */}
-      {!isEmbedded && (
-        <div className="md:hidden fixed inset-x-0 bottom-0 z-50 p-4 animate-fade-in">
-          <a 
-            href="https://inwout.com/demo-online" 
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full py-4 rounded-full bg-gradient-to-r from-[#57BFAD] to-[#5fd1c3] shadow-[0_10px_30px_rgba(4,43,39,.18),0_0_20px_rgba(87,191,173,0.3)] text-white font-bold flex items-center justify-center gap-2 transform hover:scale-105 transition-all duration-300 animate-pulse"
-          >
-            <span>🚀 Evita multas con INWOUT</span>
-            <ExternalLink className="w-5 h-5" />
-          </a>
-        </div>
-      )}
+      <div className="md:hidden fixed inset-x-0 bottom-0 z-50 p-4"
+           style={{ background: 'linear-gradient(180deg, transparent, rgba(7,17,31,.95))' }}>
+        <a
+          href="https://app.inwout.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-primary w-full"
+          style={{ height: '56px', fontSize: '16px' }}
+        >
+          <span>Soluciónalo con INWOUT</span>
+          <ExternalLink className="w-5 h-5" />
+        </a>
+      </div>
     </div>
   );
 }
