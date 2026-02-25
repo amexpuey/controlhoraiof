@@ -51,19 +51,22 @@ export default function StandaloneComplianceChecker({ isEmbedded = false }: Stan
     setResults(null);
   };
 
-  if (results) {
-    return (
-      <div className="space-y-6">
-        <ComplianceResults results={results} resetForm={resetForm} isEmbedded={isEmbedded} />
-        {showCalculator && <SanctionCalculator />}
-      </div>
-    );
-  }
+  const mainContent = results ? (
+    <ComplianceResults results={results} resetForm={resetForm} isEmbedded={isEmbedded} />
+  ) : (
+    <ComplianceQuestionForm onCompleted={onSubmit} isEmbedded={isEmbedded} />
+  );
 
   return (
-    <div className="space-y-6">
-      <ComplianceQuestionForm onCompleted={onSubmit} isEmbedded={isEmbedded} />
-      {showCalculator && <SanctionCalculator />}
+    <div>
+      <div className="tools-section-header">
+        <h2>Herramientas gratuitas</h2>
+        <p>Sin registro. Sin datos personales. Resultado inmediato.</p>
+      </div>
+      <div className="tools-grid">
+        <div className="tool-card">{mainContent}</div>
+        {showCalculator && <div className="tool-card"><SanctionCalculator /></div>}
+      </div>
     </div>
   );
 }
