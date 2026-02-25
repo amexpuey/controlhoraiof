@@ -817,7 +817,37 @@
     .reveal { opacity: 1; transform: none; }
   }
 
-  /* ===== COMPLIANCE FOOTER ===== */
+  /* ===== TOOLS GRID ===== */
+  .tools-section-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .tools-section-header h2 {
+    margin-bottom: 8px;
+  }
+  .tools-section-header p {
+    color: var(--text-secondary);
+    font-size: 15px;
+  }
+  .tools-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  @media (max-width: 768px) {
+    .tools-grid { grid-template-columns: 1fr; }
+  }
+  .tool-card {
+    background: #0D1E35;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 20px;
+    padding: 32px;
+    height: 100%;
+  }
+
   .compliance-footer {
     background: var(--dark);
     border-top: 1px solid rgba(255,255,255,.10);
