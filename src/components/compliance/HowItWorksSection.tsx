@@ -21,26 +21,10 @@ const steps = [
   }
 ];
 
-const stats = [
-  { number: "7.500€", label: "Sanción máxima por infracción" },
-  { number: "12.000€", label: "Condena judicial media por trabajador" },
-  { number: "20,2M€", label: "En multas impuestas solo en 2024" }
-];
-
 export function HowItWorksSection() {
   return (
     <div className="s-light">
       <div className="container">
-        {/* Stats Grid */}
-        <div className="results-grid" style={{ marginBottom: '48px' }}>
-          {stats.map((stat, index) => (
-            <div key={index} className="result-card animate-fade-up" style={{ animationDelay: `${index * 0.1}s` }}>
-              <div className="result-num dark">{stat.number}</div>
-              <p>{stat.label}</p>
-            </div>
-          ))}
-        </div>
-
         {/* How It Works */}
         <div className="s-head s-center" style={{ marginBottom: '32px' }}>
           <div className="s-label">Cómo funciona</div>
