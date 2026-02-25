@@ -11,7 +11,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 export default function ComplianceCheckerPage() {
   const [searchParams] = useSearchParams();
   const isEmbedded = searchParams.get("embed") === "true";
-  const [showTest, setShowTest] = useState(false);
+  const [showTest, setShowTest] = useState(true);
   const testRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

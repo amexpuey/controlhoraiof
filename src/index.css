@@ -846,6 +846,10 @@
     border-radius: 20px;
     padding: 32px;
     height: 100%;
+    transition: border-color 0.2s ease;
+  }
+  .tool-card:hover {
+    border-color: var(--green);
   }
 
   .compliance-footer {
