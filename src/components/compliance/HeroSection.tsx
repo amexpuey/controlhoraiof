@@ -1,4 +1,4 @@
-import { Calculator, ArrowRight } from "lucide-react";
+import { Calculator, CheckCircle } from "lucide-react";
 
 interface HeroSectionProps {
   onStartTest: () => void;
@@ -6,43 +6,58 @@ interface HeroSectionProps {
 
 export function HeroSection({ onStartTest }: HeroSectionProps) {
   return (
-    <div className="cc-container">
-      {/* Urgency Bar */}
-      <div className="cc-urgency-bar">
-        La Inspección de Trabajo impuso 20,2M€ en sanciones en 2024. ¿Sabes cuánto arriesga tu empresa?
-      </div>
-
-      {/* Hero */}
-      <div className="cc-hero">
-        {/* Regulatory tag */}
-        <div className="cc-reg-tag">
-          RD 8/2019 · Obligatorio para todas las empresas
+    <div className="container">
+      {/* Hero Shell with Glass Effect */}
+      <div className="hero-shell">
+        {/* Mock Safari Browser Bar */}
+        <div className="hero-url">
+          <div className="flex gap-1.5">
+            <div className="w-3 h-3 rounded-full bg-red-400"></div>
+            <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+            <div className="w-3 h-3 rounded-full bg-green-400"></div>
+          </div>
+          <div className="text-sm ml-4">
+            🔒 inwout.com/verificador-cumplimiento-horario
+          </div>
         </div>
-
-        <h1 className="cc-h1">
-          ¿Tu empresa cumple con el registro horario?
-        </h1>
-
-        <p className="cc-sub">
-          Responde 5 preguntas y descubre tu nivel de riesgo de sanción. Resultado inmediato. Sin registro.
-        </p>
-
-        <button
-          onClick={onStartTest}
-          className="cc-btn-cta"
-        >
-          <Calculator className="w-5 h-5" />
-          Calcular mi riesgo ahora
-          <ArrowRight className="w-5 h-5" />
-        </button>
-
-        <p className="cc-micro">
-          Resultado en &lt; 1 minuto · Online · Sin datos personales
-        </p>
-
-        <p className="cc-social-proof">
-          Más de 3.000 empresas han calculado su riesgo este año
-        </p>
+        
+        <div className="text-center py-8">
+          <h1 className="hero-title font-bold" style={{ color: 'var(--ink-900)' }}>
+            Verificador de Cumplimiento Normativo{' '}
+            <span className="break">Control Horario</span>
+          </h1>
+          
+          <p className="hero-sub mb-8 max-w-2xl mx-auto">
+            Comprueba si tu empresa cumple con la normativa de registro horario en España y evita sanciones de hasta 187.515€.
+          </p>
+          
+          <div className="flex flex-wrap justify-center gap-3 mb-8">
+            <div className="badge animate-fade-up">
+              <CheckCircle className="w-4 h-4" style={{ color: 'var(--success)' }} />
+              <span className="text-sm font-medium">
+                Gratis y sin registros
+              </span>
+            </div>
+            <div className="badge animate-fade-up" style={{ animationDelay: '0.1s' }}>
+              <CheckCircle className="w-4 h-4" style={{ color: 'var(--success)' }} />
+              <span className="text-sm font-medium">
+                Evita multas
+              </span>
+            </div>
+          </div>
+          
+          <button 
+            onClick={onStartTest}
+            className="btn btn-primary btn-breathing btn-full mb-4 text-lg font-semibold"
+          >
+            <Calculator className="w-6 h-6" />
+            Calcular mi riesgo ahora
+          </button>
+          
+          <p className="text-sm" style={{ color: 'var(--ink-500)' }}>
+            Resultado en &lt; 1 minuto · Online y sin datos
+          </p>
+        </div>
       </div>
     </div>
   );
