@@ -16,7 +16,7 @@ export default function ComplianceCheckerPage() {
 
   useEffect(() => {
     if (isEmbedded) {
-      document.body.style.background = "transparent";
+      document.body.style.background = "#ffffff";
       document.body.style.margin = "0";
       document.body.style.padding = "0";
       const footer = document.querySelector('footer');
@@ -42,7 +42,7 @@ export default function ComplianceCheckerPage() {
 
   if (isEmbedded) {
     return (
-      <div className="min-h-screen">
+      <div className="compliance-theme min-h-screen p-6" style={{ background: '#ffffff' }}>
         <StandaloneComplianceChecker isEmbedded={isEmbedded} />
       </div>
     );
