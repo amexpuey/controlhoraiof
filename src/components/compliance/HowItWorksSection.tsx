@@ -4,28 +4,26 @@ const steps = [
   {
     icon: ClipboardList,
     number: "01",
-    title: "Paso 1 · Responde",
-    description: "5 preguntas sobre tu sistema actual de registro horario"
+    title: "Responde",
+    description: "5 preguntas sobre tu sistema actual"
   },
   {
     icon: BarChart3,
     number: "02",
-    title: "Paso 2 · Análisis",
-    description: "Evaluamos tu riesgo real según normativa española vigente"
+    title: "Analizamos",
+    description: "Tu riesgo según normativa vigente"
   },
   {
     icon: ShieldCheck,
     number: "03",
-    title: "Paso 3 · Resultado",
-    description: "Sabrás exactamente qué riesgo tienes y cómo solucionarlo"
+    title: "Resultado",
+    description: "Qué riesgo tienes y cómo evitarlo"
   }
 ];
 
 const stats = [
-  { number: "20,2M€", label: "Sanciones ITSS en 2024" },
-  { number: "12.000€", label: "Condena judicial media por trabajador" },
-  { number: "90%", label: "Casos ganados por el trabajador sin registro" },
-  { number: "1.869", label: "Infracciones de control horario en 2024" }
+  { number: "7.500€", label: "Sanción máxima por infracción" },
+  { number: "12.000€", label: "Condena judicial media por trabajador" }
 ];
 
 export function HowItWorksSection() {
@@ -46,7 +44,6 @@ export function HowItWorksSection() {
         <div className="s-head s-center" style={{ marginBottom: '32px' }}>
           <div className="s-label">Cómo funciona</div>
           <h2>Verifica tu cumplimiento en 3 pasos</h2>
-          <p className="s-sub">Tres pasos para verificar el cumplimiento de tu empresa</p>
         </div>
 
         <div className="trio">
