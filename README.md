@@ -1,69 +1,48 @@
-# Welcome to your Lovable project
+# FichajesEmpresas.es
 
-## Project info
+> Anteriormente conocido como controlhorarioelectronico.com
 
-**URL**: https://lovable.dev/projects/fa3a1a28-3855-4b57-b9f1-d899ebb122a1
+## ¿Qué es?
 
-## How can I edit this code?
+FichajesEmpresas.es es un directorio web y hub de contenido SEO enfocado en el **control horario para empresas en España**. Su objetivo principal es captar tráfico orgánico cualificado relacionado con fichajes, registro de jornada y cumplimiento normativo laboral, y canalizarlo hacia [INWOUT](https://www.inwout.com), software de control horario.
 
-There are several ways of editing your application.
+### Funcionalidades principales
 
-**Use Lovable**
+- **Directorio de apps de fichaje**: Comparativa de las principales aplicaciones de control horario del mercado español, con filtros por funcionalidades, disponibilidad y valoraciones.
+- **Verificador de cumplimiento legal**: Herramienta interactiva que permite a las empresas comprobar si cumplen con la normativa de registro de jornada (RD-Ley 8/2019), con cálculo de posibles sanciones.
+- **Calculadora de sanciones**: Estimador del importe de multas según tipo de infracción, tamaño de empresa y duración del incumplimiento.
+- **Blog SEO**: Artículos optimizados sobre normativa laboral, control horario, horas extra y cumplimiento legal.
+- **Kit de cumplimiento legal**: Módulos de aprendizaje, checklists, plantillas y simulador de riesgo legal para empresas.
+- **Plantillas y herramientas**: Fichas horarias descargables, calculadora de horas trabajadas y guía de gestión del talento.
+- **Onboarding de captación**: Flujo de registro por email segmentado por tamaño de empresa y funcionalidades de interés.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/fa3a1a28-3855-4b57-b9f1-d899ebb122a1) and start prompting.
+## Stack tecnológico
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Frontend**: React 18 + TypeScript + Vite
+- **Estilos**: Tailwind CSS + shadcn/ui
+- **Routing**: React Router DOM v6
+- **Estado y datos**: TanStack React Query + Supabase (auth, base de datos, edge functions)
+- **Animaciones**: Framer Motion
+- **Despliegue**: Lovable Cloud / Netlify
 
-**Use your preferred IDE**
+## Estrategia SEO para INWOUT
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+El proyecto está diseñado como una **herramienta de posicionamiento orgánico** para INWOUT:
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. **Contenido transaccional**: El verificador de cumplimiento y la calculadora de sanciones atraen usuarios con intención de compra alta (empresas preocupadas por cumplir la ley).
+2. **Contenido informativo**: Blog y módulos de aprendizaje posicionan para keywords long-tail como "es obligatorio el control horario", "sanción por no fichar", etc.
+3. **Comparativas**: El directorio de apps posiciona para búsquedas comparativas ("mejor app fichaje empresa") donde INWOUT aparece destacada.
+4. **CTAs estratégicos**: Todos los flujos terminan sugiriendo INWOUT como solución, con enlaces directos a registro y demo.
+5. **Herramientas gratuitas**: Las plantillas y calculadoras generan backlinks naturales y tráfico recurrente.
+6. **Embeddable**: El verificador de cumplimiento puede embeberse en webs de terceros (`?embed=true`), ampliando el alcance de marca.
 
-Follow these steps:
+## Desarrollo local
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+git clone <URL_DEL_REPO>
+cd <NOMBRE_DEL_PROYECTO>
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/fa3a1a28-3855-4b57-b9f1-d899ebb122a1) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+Requiere Node.js 18+ y las variables de entorno de Supabase configuradas en `.env`.
