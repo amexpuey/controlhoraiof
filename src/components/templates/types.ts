@@ -10,7 +10,7 @@ export type TemplateCategory =
   | "Productividad"
   | "Documentos Legales";
 
-export type TemplateAction = "download" | "edit";
+export type TemplateAction = "download" | "edit" | "external";
 
 export interface TemplateData {
   id: string;
