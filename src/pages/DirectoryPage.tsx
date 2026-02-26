@@ -6,6 +6,7 @@ import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav';
 import { Input } from '@/components/ui/input';
 import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import { AppHeader } from '@/components/layout/AppHeader';
+import DashboardTools from '@/components/dashboard/DashboardTools';
 
 export default function DirectoryPage() {
   const [search, setSearch] = useState('');
@@ -52,9 +53,22 @@ export default function DirectoryPage() {
           <h1 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--dark-text)' }}>
             Directorio de <span className="accent">Control Horario</span>
           </h1>
-          <p className="lead max-w-2xl mx-auto mb-8">
+          <p className="lead max-w-2xl mx-auto mb-6">
             Compara {data?.total || '90+'} soluciones de fichaje y control horario para empresas en España
           </p>
+          <div className="max-w-2xl mx-auto">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5" style={{ color: 'var(--green)' }} />
+              <Input
+                type="text"
+                placeholder="Buscar por nombre, características, descripción..."
+                value={search}
+                onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+                className="pl-10 w-full bg-white/10 border-white/20 placeholder:text-white/40 focus:ring-[var(--green)]"
+                style={{ color: 'var(--dark-text)' }}
+              />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -64,18 +78,13 @@ export default function DirectoryPage() {
           { label: 'Directorio' },
         ]} />
 
+        {/* Tools */}
+        <div className="mt-8">
+          <DashboardTools />
+        </div>
+
         {/* Filters bar */}
         <div className="flex flex-col md:flex-row gap-3 mt-6 mb-6">
-          <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: 'var(--text-muted)' }} />
-            <Input
-              placeholder="Buscar solución..."
-              value={search}
-              onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-              className="pl-9"
-            />
-          </div>
-
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
