@@ -12,6 +12,9 @@ import TalentGuidePage from "@/pages/TalentGuidePage";
 import ComplianceKit from "@/pages/ComplianceKit";
 import LearningModulePage from "@/pages/LearningModulePage";
 import HelpCenterPage from "@/pages/HelpCenterPage";
+import DirectoryPage from "@/pages/DirectoryPage";
+import SolutionPage from "@/pages/SolutionPage";
+import VsComparisonPage from "@/pages/VsComparisonPage";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -46,6 +49,18 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
+  },
+  {
+    path: "/directorio",
+    element: <DirectoryPage />,
+  },
+  {
+    path: "/directorio/:slug",
+    element: <SolutionPage />,
+  },
+  {
+    path: "/comparar/:slugs",
+    element: <VsComparisonPage />,
   },
   {
     path: "/mejores-apps-control-horario/:slug",

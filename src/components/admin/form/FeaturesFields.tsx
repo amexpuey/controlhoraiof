@@ -8,8 +8,8 @@ import { X } from "lucide-react";
 type Company = Database['public']['Tables']['companies']['Row'];
 
 interface FeaturesFieldsProps {
-  formData: Omit<Company, 'id' | 'created_at' | 'updated_at'>;
-  setFormData: React.Dispatch<React.SetStateAction<Omit<Company, 'id' | 'created_at' | 'updated_at'>>>;
+  formData: Partial<Company>;
+  setFormData: React.Dispatch<React.SetStateAction<Partial<Company>>>;
   newFeature: string;
   setNewFeature: (value: string) => void;
 }

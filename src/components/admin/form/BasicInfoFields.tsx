@@ -7,8 +7,8 @@ import { Textarea } from "@/components/ui/textarea";
 type Company = Database['public']['Tables']['companies']['Row'];
 
 interface BasicInfoFieldsProps {
-  formData: Omit<Company, 'id' | 'created_at' | 'updated_at'>;
-  setFormData: React.Dispatch<React.SetStateAction<Omit<Company, 'id' | 'created_at' | 'updated_at'>>>;
+  formData: Partial<Company>;
+  setFormData: React.Dispatch<React.SetStateAction<Partial<Company>>>;
 }
 
 export default function BasicInfoFields({ formData, setFormData }: BasicInfoFieldsProps) {
