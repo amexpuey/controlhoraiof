@@ -1754,6 +1754,33 @@ export type Database = {
           },
         ]
       }
+      categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          icon: string | null
+          id: string
+          name: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name: string
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
       cold_calling_email_clicks: {
         Row: {
           campaign_id: string | null
@@ -2121,25 +2148,63 @@ export type Database = {
       }
       companies: {
         Row: {
+          company_size_target: string | null
           created_at: string | null
           description: string
           features: string[] | null
+          founded_year: number | null
           free_plan: string | null
           free_trial: string | null
+          free_trial_days: number | null
+          has_absence_management: boolean | null
+          has_ai: boolean | null
+          has_api: boolean | null
+          has_biometric: boolean | null
+          has_document_management: boolean | null
+          has_employee_portal: boolean | null
+          has_free_trial_bool: boolean | null
+          has_geofence: boolean | null
+          has_geolocation: boolean | null
+          has_mobile_app: boolean | null
+          has_payroll: boolean | null
+          has_performance_eval: boolean | null
+          has_project_management: boolean | null
+          has_recruitment: boolean | null
+          has_remote_work: boolean | null
+          has_reports: boolean | null
+          has_shift_management: boolean | null
+          has_time_tracking: boolean | null
+          has_training: boolean | null
+          has_whistleblower: boolean | null
           highlights: string[] | null
+          hq_country: string | null
           id: string
           img_url: string
+          is_free: boolean | null
+          is_premium: boolean | null
+          is_promoted: boolean | null
           is_top_rated: boolean
+          key_differentiator: string | null
           logo_url: string
+          long_description: string | null
+          meta_description: string | null
+          meta_title: string | null
+          min_price: number | null
           platforms: string[] | null
+          positioning_message: string | null
+          price_per_user_month: number | null
           pricing_billed_annually: boolean | null
           pricing_billing_period: string
           pricing_currency: string
           pricing_description: string | null
+          pricing_model: string | null
           pricing_per_user: boolean | null
           pricing_starting_price: number
+          rank: number | null
           rating: number | null
+          redirect_url: string | null
           slug: string
+          target_audience: string | null
           title: string
           type: string
           updated_at: string | null
@@ -2149,25 +2214,63 @@ export type Database = {
           votes: number | null
         }
         Insert: {
+          company_size_target?: string | null
           created_at?: string | null
           description?: string
           features?: string[] | null
+          founded_year?: number | null
           free_plan?: string | null
           free_trial?: string | null
+          free_trial_days?: number | null
+          has_absence_management?: boolean | null
+          has_ai?: boolean | null
+          has_api?: boolean | null
+          has_biometric?: boolean | null
+          has_document_management?: boolean | null
+          has_employee_portal?: boolean | null
+          has_free_trial_bool?: boolean | null
+          has_geofence?: boolean | null
+          has_geolocation?: boolean | null
+          has_mobile_app?: boolean | null
+          has_payroll?: boolean | null
+          has_performance_eval?: boolean | null
+          has_project_management?: boolean | null
+          has_recruitment?: boolean | null
+          has_remote_work?: boolean | null
+          has_reports?: boolean | null
+          has_shift_management?: boolean | null
+          has_time_tracking?: boolean | null
+          has_training?: boolean | null
+          has_whistleblower?: boolean | null
           highlights?: string[] | null
+          hq_country?: string | null
           id?: string
           img_url?: string
+          is_free?: boolean | null
+          is_premium?: boolean | null
+          is_promoted?: boolean | null
           is_top_rated?: boolean
+          key_differentiator?: string | null
           logo_url?: string
+          long_description?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          min_price?: number | null
           platforms?: string[] | null
+          positioning_message?: string | null
+          price_per_user_month?: number | null
           pricing_billed_annually?: boolean | null
           pricing_billing_period?: string
           pricing_currency?: string
           pricing_description?: string | null
+          pricing_model?: string | null
           pricing_per_user?: boolean | null
           pricing_starting_price?: number
+          rank?: number | null
           rating?: number | null
+          redirect_url?: string | null
           slug: string
+          target_audience?: string | null
           title?: string
           type?: string
           updated_at?: string | null
@@ -2177,25 +2280,63 @@ export type Database = {
           votes?: number | null
         }
         Update: {
+          company_size_target?: string | null
           created_at?: string | null
           description?: string
           features?: string[] | null
+          founded_year?: number | null
           free_plan?: string | null
           free_trial?: string | null
+          free_trial_days?: number | null
+          has_absence_management?: boolean | null
+          has_ai?: boolean | null
+          has_api?: boolean | null
+          has_biometric?: boolean | null
+          has_document_management?: boolean | null
+          has_employee_portal?: boolean | null
+          has_free_trial_bool?: boolean | null
+          has_geofence?: boolean | null
+          has_geolocation?: boolean | null
+          has_mobile_app?: boolean | null
+          has_payroll?: boolean | null
+          has_performance_eval?: boolean | null
+          has_project_management?: boolean | null
+          has_recruitment?: boolean | null
+          has_remote_work?: boolean | null
+          has_reports?: boolean | null
+          has_shift_management?: boolean | null
+          has_time_tracking?: boolean | null
+          has_training?: boolean | null
+          has_whistleblower?: boolean | null
           highlights?: string[] | null
+          hq_country?: string | null
           id?: string
           img_url?: string
+          is_free?: boolean | null
+          is_premium?: boolean | null
+          is_promoted?: boolean | null
           is_top_rated?: boolean
+          key_differentiator?: string | null
           logo_url?: string
+          long_description?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          min_price?: number | null
           platforms?: string[] | null
+          positioning_message?: string | null
+          price_per_user_month?: number | null
           pricing_billed_annually?: boolean | null
           pricing_billing_period?: string
           pricing_currency?: string
           pricing_description?: string | null
+          pricing_model?: string | null
           pricing_per_user?: boolean | null
           pricing_starting_price?: number
+          rank?: number | null
           rating?: number | null
+          redirect_url?: string | null
           slug?: string
+          target_audience?: string | null
           title?: string
           type?: string
           updated_at?: string | null
@@ -6778,6 +6919,36 @@ export type Database = {
         }
         Relationships: []
       }
+      sectors: {
+        Row: {
+          created_at: string
+          description: string | null
+          hero_image: string | null
+          id: string
+          name: string
+          relevant_regulations: string | null
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          hero_image?: string | null
+          id?: string
+          name: string
+          relevant_regulations?: string | null
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          hero_image?: string | null
+          id?: string
+          name?: string
+          relevant_regulations?: string | null
+          slug?: string
+        }
+        Relationships: []
+      }
       security_audit_log: {
         Row: {
           action: string
@@ -6948,6 +7119,69 @@ export type Database = {
           total_amount?: number
         }
         Relationships: []
+      }
+      solution_categories: {
+        Row: {
+          category_id: string
+          solution_id: string
+        }
+        Insert: {
+          category_id: string
+          solution_id: string
+        }
+        Update: {
+          category_id?: string
+          solution_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "solution_categories_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "solution_categories_solution_id_fkey"
+            columns: ["solution_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      solution_sectors: {
+        Row: {
+          relevance_score: number | null
+          sector_id: string
+          solution_id: string
+        }
+        Insert: {
+          relevance_score?: number | null
+          sector_id: string
+          solution_id: string
+        }
+        Update: {
+          relevance_score?: number | null
+          sector_id?: string
+          solution_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "solution_sectors_sector_id_fkey"
+            columns: ["sector_id"]
+            isOneToOne: false
+            referencedRelation: "sectors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "solution_sectors_solution_id_fkey"
+            columns: ["solution_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       update_config: {
         Row: {

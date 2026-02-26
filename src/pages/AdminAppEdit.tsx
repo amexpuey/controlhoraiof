@@ -5,11 +5,11 @@ import { useCompany, useUpdateCompany } from '../hooks/useCompanies';
 import { toast } from 'sonner';
 import { useImageUpload } from '../hooks/useImageUpload';
 import AppFormFields from '../components/admin/AppFormFields';
+import type { CompanyFormData } from '../types/company';
 import type { Database } from '../integrations/supabase/types';
-
 type Company = Database['public']['Tables']['companies']['Row'];
 
-const initialFormData: Omit<Company, 'id' | 'created_at' | 'updated_at'> = {
+const initialFormData: Partial<Company> = {
   title: '',
   url: '',
   description: '',
@@ -40,7 +40,7 @@ export default function AdminAppEdit() {
   const navigate = useNavigate();
   const { data: company, isLoading, error } = useCompany(id || '');
   const updateCompany = useUpdateCompany();
-  const [formData, setFormData] = useState(initialFormData);
+  const [formData, setFormData] = useState<CompanyFormData>(initialFormData);
   const [newFeature, setNewFeature] = useState('');
   const [newHighlight, setNewHighlight] = useState('');
   const [logoFile, setLogoFile] = useState<File | null>(null);

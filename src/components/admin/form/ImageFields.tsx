@@ -5,7 +5,7 @@ import type { Database } from '@/integrations/supabase/types';
 type Company = Database['public']['Tables']['companies']['Row'];
 
 interface ImageFieldsProps {
-  formData: Omit<Company, 'id' | 'created_at' | 'updated_at'>;
+  formData: Partial<Company>;
   setLogoFile: (file: File | null) => void;
   setBackgroundFile: (file: File | null) => void;
 }

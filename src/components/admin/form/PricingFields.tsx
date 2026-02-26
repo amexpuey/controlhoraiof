@@ -7,8 +7,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 type Company = Database['public']['Tables']['companies']['Row'];
 
 interface PricingFieldsProps {
-  formData: Omit<Company, 'id' | 'created_at' | 'updated_at'>;
-  setFormData: React.Dispatch<React.SetStateAction<Omit<Company, 'id' | 'created_at' | 'updated_at'>>>;
+  formData: Partial<Company>;
+  setFormData: React.Dispatch<React.SetStateAction<Partial<Company>>>;
 }
 
 export default function PricingFields({ formData, setFormData }: PricingFieldsProps) {
