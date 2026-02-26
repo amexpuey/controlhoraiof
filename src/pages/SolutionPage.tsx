@@ -8,8 +8,10 @@ import { SolutionCard } from '@/components/directory/SolutionCard';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ExternalLink, Globe, Star, MessageSquare } from 'lucide-react';
+import { ExternalLink, Globe, MessageSquare } from 'lucide-react';
 import { Footer } from '@/components/Footer';
+import { SolutionHero } from '@/components/solution/SolutionHero';
+import { SolutionSocialLinks } from '@/components/solution/SolutionSocialLinks';
 
 export default function SolutionPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -51,6 +53,10 @@ export default function SolutionPage() {
   };
 
   const sol = solution as Record<string, unknown>;
+  const social = (solution as any).social as Record<string, string> | null;
+  const screenshotUrl = (solution as any).screenshot_url as string | null;
+  const ogImage = (solution as any).og_image as string | null;
+  const heroImage = screenshotUrl || ogImage || solution.img_url;
 
   return (
     <div className="min-h-screen bg-background">
@@ -71,25 +77,25 @@ export default function SolutionPage() {
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main content */}
           <div className="lg:col-span-2 space-y-6">
+            {/* Screenshot hero */}
+            {heroImage && (
+              <div className="rounded-xl overflow-hidden border border-border">
+                <img
+                  src={heroImage}
+                  alt={`Captura de pantalla de ${solution.title}`}
+                  className="w-full h-auto object-cover"
+                  loading="lazy"
+                />
+              </div>
+            )}
+
             {/* Hero */}
-            <div className="flex items-start gap-4">
-              <div className="w-16 h-16 rounded-xl bg-muted flex items-center justify-center overflow-hidden shrink-0">
-                {solution.logo_url ? (
-                  <img src={solution.logo_url} alt={solution.title} className="w-full h-full object-contain" />
-                ) : (
-                  <span className="text-xl font-bold text-muted-foreground">{solution.title?.charAt(0)}</span>
-                )}
-              </div>
-              <div>
-                <h1 className="text-2xl md:text-3xl font-bold text-foreground">{solution.title}</h1>
-                <div className="flex flex-wrap items-center gap-2 mt-2">
-                  {solution.verified && <Badge variant="outline">Verificada</Badge>}
-                  {solution.is_top_rated && <Badge variant="secondary">Top Rated</Badge>}
-                  {solution.is_free && <Badge className="bg-green-100 text-green-800 border-green-200">Gratis</Badge>}
-                  {solution.is_promoted && <Badge>⭐ Recomendada</Badge>}
-                </div>
-              </div>
-            </div>
+            <SolutionHero solution={solution} />
+
+            {/* Social links */}
+            {social && Object.keys(social).length > 0 && (
+              <SolutionSocialLinks social={social} />
+            )}
 
             <p className="text-muted-foreground leading-relaxed">
               {solution.long_description || solution.description}
