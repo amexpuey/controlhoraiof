@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { ToolsDropdown } from "../ui/ToolsDropdown";
+
 import { Menu } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
@@ -45,7 +45,7 @@ export default function BlogLayout({ children }: BlogLayoutProps) {
           </>
         ) : (
           <div className="flex items-center gap-4">
-            <ToolsDropdown />
+            
             <Link
               to="/blog"
               className="text-sm font-medium transition-colors"
