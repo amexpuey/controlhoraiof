@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import DashboardHeader from "@/components/DashboardHeader";
-import { DashboardAdBanners } from "@/components/dashboard/DashboardAdBanners";
 import { DashboardOnboarding } from "@/components/dashboard/DashboardOnboarding";
 import { DashboardContent } from "@/components/dashboard/DashboardContent";
 import { useDashboardFeatures } from "@/hooks/useDashboardFeatures";
@@ -23,7 +22,6 @@ const Dashboard = () => {
   const location = useLocation();
   const navigate = useNavigate();
   
-  // For future use, if we want to re-enable onboarding
   const [enableOnboarding, setEnableOnboarding] = useState(false);
   const appsListRef = useRef<HTMLDivElement>(null);
 
@@ -38,7 +36,6 @@ const Dashboard = () => {
     checkToolSource();
   }, [location, navigate]);
 
-  // Scroll to the top of the apps list when transitioning from onboarding to apps
   useEffect(() => {
     if (showApps && appsListRef.current) {
       setTimeout(() => {
@@ -59,7 +56,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
+    <div className="min-h-screen" style={{ background: "var(--white)" }}>
       <DashboardHeader 
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -67,9 +64,6 @@ const Dashboard = () => {
       />
 
       <main className="container mx-auto px-4 pb-20">
-        <DashboardAdBanners position="top" />
-
-        {/* Only show onboarding if explicitly enabled and showApps is false */}
         {!showApps && enableOnboarding ? (
           <DashboardOnboarding
             onFeaturesSelect={handleFeatureSelect}
@@ -83,8 +77,6 @@ const Dashboard = () => {
             setSearchQuery={setSearchQuery}
           />
         )}
-
-        <DashboardAdBanners position="bottom" />
       </main>
     </div>
   );
