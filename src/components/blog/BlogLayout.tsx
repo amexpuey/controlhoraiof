@@ -27,7 +27,7 @@ export default function BlogLayout({ children }: BlogLayoutProps) {
           className="text-lg md:text-xl font-semibold transition-colors truncate max-w-[180px] md:max-w-none"
           style={{ color: "var(--dark-text)" }}
         >
-          Fichajes Empresas .es
+          FichajeEmpresas.es
         </Link>
 
         {isMobile ? (
