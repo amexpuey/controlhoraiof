@@ -1,54 +1,82 @@
 
 
-# Plan: Treure anuncis + Aplicar disseny INWOUT a tota la web
+## Pla: Injectar dades del scraping a les fitxes de solucions
 
-## 1. Eliminar TOTS els espais publicitaris
+### Situació actual
+- 98 empreses a la taula `companies`, 95 amb logos/imatges placeholder (`unicorn-cdn`, `ucarecdn`)
+- JSON amb 96 empreses amb dades reals: logos, screenshots i thumbnails ja pujats a Supabase Storage, descripcions actualitzades, features complets, social links, pricing, meta_title, og_image
+- La taula NO té columnes per: `screenshot_url`, `thumbnail_url`, `social` (jsonb), `og_image`, `scrape_status`, `scrape_date`
 
-### Fitxers a netejar (treure imports i ús d'AdBanner/SquareAdBanner):
-- `src/pages/Dashboard.tsx` — treure DashboardAdBanners (top + bottom)
-- `src/components/dashboard/DashboardContent.tsx` — treure sidebar AdBanner (300x600)
-- `src/pages/UserView.tsx` — treure els 5 AdBanners (top, 2x in-content, sidebar, bottom)
-- `src/components/blog/BlogPostSidebar.tsx` — treure 2x AdBanner sidebar
-- `src/components/ui/alert-dialog.tsx` — treure SquareAdBanner
-- `src/components/ui/dialog.tsx` — treure SquareAdBanner
-- `src/components/ui/sheet.tsx` — treure SquareAdBanner
-- `src/components/ui/drawer.tsx` — treure SquareAdBanner
+### Pas 1: Migració SQL - Afegir columnes noves
 
-### Fitxers que es poden eliminar:
-- `src/components/ads/AdBanner.tsx`
-- `src/components/ads/SquareAdBanner.tsx`
-- `src/components/dashboard/DashboardAdBanners.tsx`
-- `src/components/blog/BlogAdBanners.tsx`
+Afegir a `companies`:
+- `screenshot_url TEXT` (imatge principal 1200x630)
+- `thumbnail_url TEXT` (imatge 512x512)
+- `og_image TEXT`
+- `social JSONB DEFAULT '{}'`
+- `scrape_status TEXT`
+- `scrape_date DATE`
 
-## 2. Aplicar disseny INWOUT al Dashboard (header + hero)
+### Pas 2: Edge function `import-solutions` - Reescriure
 
-### `DashboardHeader.tsx`:
-- Header bar: `from-gray-800 to-gray-900` → `background: var(--dark)`
-- CTA button: `bg-yellow-100 text-gray-800` → `bg-[var(--green)] text-white`
-- Hero: `from-blue-50 to-white` → `background: radial-gradient(ellipse at 50% 120%, rgba(15,184,159,.12) 0%, transparent 60%), var(--dark)`
-- Title + subtitle: white/muted sobre fondo dark
-- Search icon: `text-blue-500` → `text-[var(--green)]`
-- CTA button: `bg-blue-600` → `bg-[var(--green)]`
-- Text "2025" → "2026"
+Reescriure l'edge function existent per acceptar el JSON complet via POST i fer upsert per slug:
 
-### `AppHeader.tsx` (layout general):
-- `from-gray-800 to-gray-900` → `background: var(--dark)`
-- CTA: `bg-yellow-100` → `bg-[var(--green)] text-white`
+**Mapping de camps:**
+- `logo_url` → `logo_url`
+- `screenshot_url` → `screenshot_url` (nou) + `img_url` (existent, per compatibilitat)
+- `thumbnail_url` → `thumbnail_url` (nou)
+- `description` → `description`
+- `all_features` → `features` (array)
+- `rank`, `is_free`, `is_top_rated`, `verified` → directes
+- `premium` → `is_premium`
+- `url` → `url` + `redirect_url`
+- `meta_title` → `meta_title`
+- `og_image` → `og_image`
+- `social` → `social` (jsonb)
+- `pricing.has_free_plan` → `free_plan` = 'yes'/'no'
+- `pricing.tiers[0].price` → `pricing_starting_price`, `min_price`
+- `all_features` → mapejar als camps `has_*` booleans (has_time_tracking, has_mobile_app, etc.)
+- `scrape_status`, `scrape_date` → directes
 
-## 3. Blog header — Treure "BLOG INWOUT"
+**Feature → Boolean mapping:**
+```
+"Control Horario" → has_time_tracking
+"Apps" → has_mobile_app
+"Geolocalización" → has_geolocation
+"Sistemas Biométricos" → has_biometric
+"Gestión de Ausencias" → has_absence_management
+"Gestión de Turnos" → has_shift_management
+"Reportes" → has_reports
+"Integraciones API" → has_api
+"Teletrabajo" → has_remote_work
+"AI" → has_ai
+"Portal del Empleado" → has_employee_portal
+"Nóminas" → has_payroll
+"Geofence" → has_geofence
+"Gestión de proyectos" → has_project_management
+"Gestión Documental" → has_document_management
+"Evaluación Desempeño" → has_performance_eval
+"Selección de Personal" → has_recruitment
+"Formación" → has_training
+"Canal de Denuncias" → has_whistleblower
+```
 
-### `BlogHeader.tsx`:
-- Canviar kicker "── BLOG INWOUT" → "── BLOG" o "── RECURSOS"
+### Pas 3: Executar la importació
 
-## 4. BlogPostSidebar — Colors INWOUT
+Copiar `companies.json` al projecte, cridar l'edge function amb les dades, i verificar que s'actualitzen les 96 empreses.
 
-- Verificador box: `bg-blue-50 border-blue-200` → `bg-[var(--green-bg)] border-[var(--green-light)]`
-- Title/text: `text-blue-800/700` → `color: var(--green-dark)`
-- Button: `bg-blue-500` → `bg-[var(--green)]`
-- Links "yellow-600" → `var(--green)`
-- Dialog title/desc: `text-blue-800/700` → brand colors
+### Pas 4: Actualitzar `SolutionPage.tsx` per mostrar les noves dades
 
-## 5. Dashboard page background
+- Mostrar `screenshot_url` com a imatge hero de la fitxa
+- Mostrar xarxes socials (`social` jsonb) amb icones
+- Mostrar `og_image` com a fallback d'imatge
 
-- `from-primary-50 to-white` → `background: var(--white)`
+### Resum de fitxers
+
+| Acció | Fitxer |
+|-------|--------|
+| Migració SQL | Afegir 6 columnes noves a `companies` |
+| Reescriure | `supabase/functions/import-solutions/index.ts` |
+| Editar | `src/pages/SolutionPage.tsx` (screenshot, social links) |
+| Editar | `src/components/directory/SolutionCard.tsx` (thumbnail) |
 
