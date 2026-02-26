@@ -907,12 +907,12 @@ export default function TalentGuide() {
                 
                 {/* Modified export button - removed the save functionality */}
                 <div className="flex justify-end mt-8">
-                  <Button
-                    className="bg-blue-600 hover:bg-blue-700 px-6" 
+                  <button
+                    className="btn btn-green btn-lg" 
                     onClick={handleExport}
                   >
-                    <Printer className="mr-2 h-4 w-4" /> Descargar en PDF
-                  </Button>
+                    <Printer className="mr-2 h-4 w-4" /> Generar y descargar PDF
+                  </button>
                 </div>
               </div>
             </TabsContent>
