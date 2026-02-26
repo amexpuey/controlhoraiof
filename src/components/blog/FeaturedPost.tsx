@@ -5,6 +5,17 @@ import { CalendarDays, ChevronRight } from "lucide-react";
 export type { BlogPost } from "@/types/blog";
 import type { BlogPost } from "@/types/blog";
 
+const categoryLabels: Record<string, string> = {
+  "control-horario": "Control Horario",
+  "normativa-legal": "Normativa",
+  "comparativas": "Comparativas",
+  "sectores": "Sectores",
+  "gestion-ausencias": "Ausencias",
+  "productividad": "Productividad",
+  "guias": "Guías",
+  "alternativas": "Alternativas",
+};
+
 interface FeaturedPostProps {
   post: BlogPost;
 }
@@ -36,7 +47,7 @@ export default function FeaturedPost({ post }: FeaturedPostProps) {
                 className="inline-flex items-center gap-1 text-sm font-semibold px-2.5 py-0.5 rounded-full"
                 style={{ background: "var(--green-bg)", color: "var(--green-dark)" }}
               >
-                {post.category}
+                {categoryLabels[post.category] || post.category}
               </span>
               {post.tags?.slice(0, 2).map((tag) => (
                 <span

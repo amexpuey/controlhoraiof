@@ -43,10 +43,12 @@ export default function BlogPostsContent({
           <FeaturedPost post={posts[0]} />
           
           {posts.length > 1 && (
-            <BlogPostsGrid 
-              posts={posts.slice(1)} 
-              lastPostRef={lastPostElementRef} 
-            />
+            <div className="mt-8">
+              <BlogPostsGrid 
+                posts={posts.slice(1)} 
+                lastPostRef={lastPostElementRef} 
+              />
+            </div>
           )}
           
           {loadingMore && (
