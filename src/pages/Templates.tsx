@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import TemplatesHeader from "@/components/templates/TemplatesHeader";
+
 import TemplatesGrid from "@/components/templates/TemplatesGrid";
 import TemplateFilters from "@/components/templates/TemplateFilters";
 import { TemplateCategory } from "@/components/templates/types";
