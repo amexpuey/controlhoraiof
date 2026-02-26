@@ -6,7 +6,7 @@ import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav';
 import { Input } from '@/components/ui/input';
 import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import { AppHeader } from '@/components/layout/AppHeader';
-import DashboardTools from '@/components/dashboard/DashboardTools';
+
 
 export default function DirectoryPage() {
   const [search, setSearch] = useState('');
@@ -78,10 +78,6 @@ export default function DirectoryPage() {
           { label: 'Directorio' },
         ]} />
 
-        {/* Tools */}
-        <div className="mt-8">
-          <DashboardTools />
-        </div>
 
         {/* Filters bar */}
         <div className="flex flex-col md:flex-row gap-3 mt-6 mb-6">

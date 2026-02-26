@@ -4,7 +4,7 @@ import BlogLayout from "@/components/blog/BlogLayout";
 import BlogHeader from "@/components/blog/BlogHeader";
 import BlogCategoryTabs from "@/components/blog/BlogCategoryTabs";
 import BlogPostsContent from "@/components/blog/BlogPostsContent";
-import InteractiveToolsSection from "@/components/blog/InteractiveToolsSection";
+
 import { useBlogPosts } from "@/hooks/useBlogPosts";
 
 export default function Blog() {
@@ -29,7 +29,7 @@ export default function Blog() {
           />
         </BlogCategoryTabs>
         
-        <InteractiveToolsSection />
+        
       </main>
     </BlogLayout>
   );
