@@ -15,6 +15,7 @@ import HelpCenterPage from "@/pages/HelpCenterPage";
 import DirectoryPage from "@/pages/DirectoryPage";
 import SolutionPage from "@/pages/SolutionPage";
 import VsComparisonPage from "@/pages/VsComparisonPage";
+import BlogCategoryPage from "@/pages/BlogCategoryPage";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
   {
     path: "/blog/:slug",
     element: <BlogPost />,
+  },
+  {
+    path: "/blog/categoria/:category",
+    element: <BlogCategoryPage />,
   },
   {
     path: "/compliance-checker",
