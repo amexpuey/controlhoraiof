@@ -59,9 +59,9 @@ export default function BlogPostPage() {
       <BlogLayout>
         <div className="container mx-auto px-4 py-12">
           <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 rounded w-1/3 mb-4" />
-            <div className="h-64 bg-gray-200 rounded mb-4" />
-            <div className="h-4 bg-gray-200 rounded w-1/2 mb-2" />
+            <div className="h-8 rounded w-1/3 mb-4" style={{ background: "var(--surface-alt)" }} />
+            <div className="h-64 rounded mb-4" style={{ background: "var(--surface-alt)" }} />
+            <div className="h-4 rounded w-1/2 mb-2" style={{ background: "var(--surface-alt)" }} />
           </div>
         </div>
       </BlogLayout>
@@ -95,7 +95,7 @@ export default function BlogPostPage() {
         />
 
         <div className="mb-4 mt-2">
-          <Link to="/blog" className="text-yellow-600 hover:text-yellow-700 flex items-center text-sm">
+          <Link to="/blog" className="flex items-center text-sm font-medium transition-colors hover:opacity-80" style={{ color: "var(--green)" }}>
             <ChevronLeft className="w-4 h-4 mr-1" /> Volver al blog
           </Link>
         </div>
