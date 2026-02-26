@@ -79,7 +79,7 @@ serve(async (req) => {
           url: c.url,
           redirect_url: c.url,
           description: c.description,
-          logo_url: c.logo_url || null,
+          logo_url: c.logo_url || '',
           img_url: c.screenshot_url || null,
           screenshot_url: c.screenshot_url || null,
           thumbnail_url: c.thumbnail_url || null,
