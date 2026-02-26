@@ -35,33 +35,33 @@ export function useBlogPosts(activeCategory: string) {
 
         const { data, error } = await query;
 
-        if (!error && data && data.length > 0) {
-          const transformedPosts = data.map(post => ({
-            ...post,
-            id: post.id.toString(),
-            related_apps: Array.isArray(post.related_apps) ? post.related_apps : post.related_apps ? [post.related_apps] : []
-          })) as BlogPost[];
+        // Combine DB posts with mock posts
+        const dbPosts = (!error && data && data.length > 0)
+          ? data.map(post => ({
+              ...post,
+              id: post.id.toString(),
+              related_apps: Array.isArray(post.related_apps) ? post.related_apps : post.related_apps ? [post.related_apps] : []
+            })) as BlogPost[]
+          : [];
 
-          setHasMore(transformedPosts.length > POSTS_PER_PAGE);
-          const postsToShow = transformedPosts.slice(0, POSTS_PER_PAGE);
-          setPosts(postsToShow);
+        const filteredMockPosts = activeCategory === "all"
+          ? mockBlogPosts
+          : mockBlogPosts.filter(post => post.category === activeCategory);
 
-          if (postsToShow.length > 0) {
-            setLastFetchedPostDate(postsToShow[postsToShow.length - 1].published_at);
-          }
-        } else {
-          const filteredMockPosts = activeCategory === "all"
-            ? mockBlogPosts
-            : mockBlogPosts.filter(post => post.category === activeCategory);
+        // Merge: DB posts first, then mock posts not already in DB (by slug)
+        const dbSlugs = new Set(dbPosts.map(p => p.slug));
+        const uniqueMockPosts = (filteredMockPosts as BlogPost[]).filter(p => !dbSlugs.has(p.slug));
+        const allPosts = [...dbPosts, ...uniqueMockPosts];
 
-          setPosts(filteredMockPosts.slice(0, POSTS_PER_PAGE) as BlogPost[]);
-          setHasMore(filteredMockPosts.length > POSTS_PER_PAGE);
-          if (filteredMockPosts.length > 0) {
-            setLastFetchedPostDate(filteredMockPosts[Math.min(POSTS_PER_PAGE - 1, filteredMockPosts.length - 1)].published_at);
-          }
+        setHasMore(allPosts.length > POSTS_PER_PAGE);
+        const postsToShow = allPosts.slice(0, POSTS_PER_PAGE);
+        setPosts(postsToShow);
+
+        if (postsToShow.length > 0) {
+          setLastFetchedPostDate(postsToShow[postsToShow.length - 1].published_at);
         }
-      } catch (error) {
-        console.error('Error fetching blog posts:', error);
+      } catch (err) {
+        console.error('Error fetching blog posts:', err);
         const filteredMockPosts = activeCategory === "all"
           ? mockBlogPosts
           : mockBlogPosts.filter(post => post.category === activeCategory);
@@ -136,9 +136,5 @@ export function useBlogPosts(activeCategory: string) {
     if (node) observer.current.observe(node);
   }, [loading, loadingMore, hasMore, loadMorePosts]);
 
-  const filteredPosts = activeCategory === "all"
-    ? posts
-    : posts.filter(post => post.category === activeCategory);
-
-  return { posts: filteredPosts, loading, loadingMore, hasMore, lastPostElementRef };
+  return { posts, loading, loadingMore, hasMore, lastPostElementRef };
 }
