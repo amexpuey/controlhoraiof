@@ -1,0 +1,1 @@
+UPDATE public.companies SET logo_url = '/lovable-uploads/inwout-superlogo.png' WHERE slug = 'inwout';
