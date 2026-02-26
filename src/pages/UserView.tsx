@@ -7,7 +7,6 @@ import { AboutSection } from "@/components/user-view/AboutSection";
 import { FeaturesSection } from "@/components/user-view/FeaturesSection";
 import { HighlightsSection } from "@/components/user-view/HighlightsSection";
 import { Sidebar } from "@/components/user-view/Sidebar";
-import AdBanner from "@/components/ads/AdBanner";
 
 export default function UserView() {
   const { slug } = useParams();
@@ -49,20 +48,21 @@ export default function UserView() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--white)" }}>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2" style={{ borderColor: "var(--green)" }}></div>
       </div>
     );
   }
 
   if (error || !company) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--white)" }}>
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">App not found</h1>
+          <h1 className="text-2xl font-bold mb-2" style={{ color: "var(--dark)" }}>App not found</h1>
           <button
             onClick={() => navigate("/dashboard")}
-            className="text-blue-600 hover:text-blue-800"
+            style={{ color: "var(--green)" }}
+            className="hover:underline"
           >
             Return to Dashboard
           </button>
@@ -72,62 +72,21 @@ export default function UserView() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen" style={{ background: "var(--white)" }}>
       <AppHeader company={company} />
-
-      {/* Top Ad Banner */}
-      <div className="container mx-auto px-4 mt-6 flex justify-center">
-        <AdBanner 
-          position="app-page"
-          adSize="728x90"
-        />
-      </div>
 
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
             <AboutSection company={company} />
-            
-            {/* In-content Ad */}
-            <div className="flex justify-center">
-              <AdBanner 
-                position="app-page"
-                adSize="300x250"
-              />
-            </div>
-            
             <FeaturesSection company={company} />
             <HighlightsSection company={company} />
-            
-            {/* Bottom Content Ad */}
-            <div className="flex justify-center">
-              <AdBanner 
-                position="app-page"
-                adSize="300x250"
-              />
-            </div>
           </div>
           
           <div className="space-y-6">
             <Sidebar company={company} />
-            
-            {/* Sidebar Ad */}
-            <div className="flex justify-center sticky top-4">
-              <AdBanner 
-                position="app-page"
-                adSize="300x600"
-              />
-            </div>
           </div>
         </div>
-      </div>
-      
-      {/* Bottom Ad Banner */}
-      <div className="container mx-auto px-4 mb-6 flex justify-center">
-        <AdBanner 
-          position="app-page"
-          adSize="728x90"
-        />
       </div>
     </div>
   );

@@ -13,8 +13,8 @@ export function AppHeader() {
   const location = useLocation();
 
   return (
-    <div className="h-16 bg-gradient-to-r from-gray-800 to-gray-900 border-b flex items-center justify-between px-4 md:px-6 shadow-md z-10 relative">
-      <Link to="/" className="text-lg md:text-xl font-semibold text-white hover:text-gray-200 transition-colors truncate max-w-[180px] md:max-w-none">
+    <div className="h-16 border-b flex items-center justify-between px-4 md:px-6 shadow-md z-10 relative" style={{ background: "var(--dark)" }}>
+      <Link to="/" className="text-lg md:text-xl font-semibold hover:opacity-80 transition-opacity truncate max-w-[180px] md:max-w-none" style={{ color: "var(--dark-text)" }}>
         Fichajes Empresas .es
       </Link>
       
@@ -36,13 +36,17 @@ export function AppHeader() {
           <ToolsDropdown />
           <Link 
             to="/blog" 
-            className="text-sm font-medium text-white hover:text-gray-200 transition-colors"
+            className="text-sm font-medium transition-colors"
+            style={{ color: "var(--dark-muted)" }}
+            onMouseEnter={e => (e.currentTarget.style.color = "var(--dark-text)")}
+            onMouseLeave={e => (e.currentTarget.style.color = "var(--dark-muted)")}
           >
             Blog
           </Link>
           <Link 
             to="/" 
-            className="flex items-center gap-1.5 text-sm font-medium bg-yellow-100 text-gray-800 hover:bg-yellow-200 px-3 py-1.5 rounded-md transition-colors"
+            className="flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-md transition-colors"
+            style={{ background: "var(--green)", color: "white" }}
           >
             <img
               src="/lovable-uploads/c2b90205-f41e-4c0d-bf34-bb7a5bba9103.png"

@@ -12,7 +12,7 @@ export default function BlogHeader() {
           className="text-xs font-semibold tracking-[.2em] uppercase mb-4"
           style={{ color: "var(--green)" }}
         >
-          ── BLOG INWOUT
+          ── RECURSOS
         </p>
         <h1
           className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4"

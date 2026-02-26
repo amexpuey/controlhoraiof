@@ -6,7 +6,7 @@ import AppsGrid from "@/components/AppsGrid";
 import { useAppsFiltering } from "./useAppsFiltering";
 import type { Database } from "@/integrations/supabase/types";
 import { Button } from "@/components/ui/button";
-import AdBanner from "@/components/ads/AdBanner";
+
 import { AlertCircle, Filter } from "lucide-react";
 import { toast } from "sonner";
 
@@ -185,15 +185,6 @@ export default function DashboardApps({
             onCompareToggle={handleCompareToggle}
           />
           
-          {/* Add an ad banner after each group except the last one */}
-          {groupIndex < appsGroups.length - 1 && (
-            <div className="flex justify-center">
-              <AdBanner
-                position="in-content"
-                adSize="970x250"
-              />
-            </div>
-          )}
         </div>
       ))}
 

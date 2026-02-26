@@ -4,7 +4,6 @@ import BlogLayout from "@/components/blog/BlogLayout";
 import BlogHeader from "@/components/blog/BlogHeader";
 import BlogCategoryTabs from "@/components/blog/BlogCategoryTabs";
 import BlogPostsContent from "@/components/blog/BlogPostsContent";
-import BlogAdBanners from "@/components/blog/BlogAdBanners";
 import InteractiveToolsSection from "@/components/blog/InteractiveToolsSection";
 import { useBlogPosts } from "@/hooks/useBlogPosts";
 
@@ -17,8 +16,6 @@ export default function Blog() {
       <BlogHeader />
       
       <main className="container mx-auto px-4 py-8">
-        <BlogAdBanners />
-        
         <BlogCategoryTabs
           activeCategory={activeCategory}
           setActiveCategory={setActiveCategory}
