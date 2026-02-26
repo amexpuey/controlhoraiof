@@ -24,8 +24,8 @@ export const templateData: TemplateData[] = [
   },
   {
     id: "kit-herramientas-ley",
-    title: "Kit de herramientas esenciales para cumplir con la Ley",
-    description: "Genera automáticamente la documentación legal necesaria para el registro horario.",
+    title: "Quickstart legal para registro horario",
+    description: "Genera automáticamente el comunicado legal, acuerdo con representantes y protocolo de registro horario.",
     imageSrc: "/lovable-uploads/d48380f9-f5c9-4f3f-8184-8ef27150846d.png",
     category: "Normativa Laboral",
     action: "external",
