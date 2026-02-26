@@ -1,57 +1,54 @@
 
 
-# Plan: Alinear el Blog al Look & Feel de INWOUT
+# Plan: Treure anuncis + Aplicar disseny INWOUT a tota la web
 
-## Problema Actual
+## 1. Eliminar TOTS els espais publicitaris
 
-El blog usa colores legacy (yellow-600, blue-50, gray-800) que no coinciden con INWOUT. El design system en `index.css` YA tiene los tokens de INWOUT (`--green: #0fb89f`, `--dark: #0A1628`), pero los componentes del blog no los usan.
+### Fitxers a netejar (treure imports i ús d'AdBanner/SquareAdBanner):
+- `src/pages/Dashboard.tsx` — treure DashboardAdBanners (top + bottom)
+- `src/components/dashboard/DashboardContent.tsx` — treure sidebar AdBanner (300x600)
+- `src/pages/UserView.tsx` — treure els 5 AdBanners (top, 2x in-content, sidebar, bottom)
+- `src/components/blog/BlogPostSidebar.tsx` — treure 2x AdBanner sidebar
+- `src/components/ui/alert-dialog.tsx` — treure SquareAdBanner
+- `src/components/ui/dialog.tsx` — treure SquareAdBanner
+- `src/components/ui/sheet.tsx` — treure SquareAdBanner
+- `src/components/ui/drawer.tsx` — treure SquareAdBanner
 
-## Cambios
+### Fitxers que es poden eliminar:
+- `src/components/ads/AdBanner.tsx`
+- `src/components/ads/SquareAdBanner.tsx`
+- `src/components/dashboard/DashboardAdBanners.tsx`
+- `src/components/blog/BlogAdBanners.tsx`
 
-### 1. BlogLayout — Fondo y Header
-- Cambiar `from-blue-50 to-white` → `bg-[var(--white)]`
-- Header: usar clases del design system (`bg-[var(--dark)]`) en lugar de `from-gray-800 to-gray-900`
-- CTA "Descubre las mejores apps": de `bg-yellow-100` → `bg-[var(--green)] text-white`
+## 2. Aplicar disseny INWOUT al Dashboard (header + hero)
 
-### 2. BlogHeader — Hero estilo INWOUT
-- Usar el patrón `.hero` del design system (fondo `--dark`, radial gradient verde)
-- Kicker con `.s-label` style: "── BLOG INWOUT"
-- Título con `.accent` (verde) en la keyword principal
-- Subtítulo con `--dark-muted`
+### `DashboardHeader.tsx`:
+- Header bar: `from-gray-800 to-gray-900` → `background: var(--dark)`
+- CTA button: `bg-yellow-100 text-gray-800` → `bg-[var(--green)] text-white`
+- Hero: `from-blue-50 to-white` → `background: radial-gradient(ellipse at 50% 120%, rgba(15,184,159,.12) 0%, transparent 60%), var(--dark)`
+- Title + subtitle: white/muted sobre fondo dark
+- Search icon: `text-blue-500` → `text-[var(--green)]`
+- CTA button: `bg-blue-600` → `bg-[var(--green)]`
+- Text "2025" → "2026"
 
-### 3. BlogCategoryTabs — Pills estilo INWOUT
-- Reemplazar shadcn `Tabs/TabsTrigger` por pills con dot verde (como en inwout.com/blog)
-- Estilo: border pill, dot colored cuando activo, fondo `--green-bg` cuando seleccionado
-- Eliminar categorías legacy
+### `AppHeader.tsx` (layout general):
+- `from-gray-800 to-gray-900` → `background: var(--dark)`
+- CTA: `bg-yellow-100` → `bg-[var(--green)] text-white`
 
-### 4. BlogPostCard — Colores INWOUT
-- Link "Leer más": de `text-yellow-600` → `text-[var(--green)]` con flecha
-- Category badge: de `text-yellow-700` → verde
-- Tags: chip style del design system
-- Card: usar `.feature-card` hover pattern (border-color green on hover)
+## 3. Blog header — Treure "BLOG INWOUT"
 
-### 5. FeaturedPost — CTA verde
-- Botón: de `bg-yellow-600` → `bg-[var(--green)]` con `color: var(--dark)`
-- Category badge: verde
-- Tags: chip style
+### `BlogHeader.tsx`:
+- Canviar kicker "── BLOG INWOUT" → "── BLOG" o "── RECURSOS"
 
-### 6. BlogPost page — Links y detalles
-- "Volver al blog": de `text-yellow-600` → `text-[var(--green)]`
-- Loading skeleton: usar `bg-[var(--surface-alt)]` en lugar de `bg-gray-200`
+## 4. BlogPostSidebar — Colors INWOUT
 
-### 7. BlogPostContent — Coherencia
-- Meta text: usar `var(--text-muted)` en lugar de hardcoded grays
+- Verificador box: `bg-blue-50 border-blue-200` → `bg-[var(--green-bg)] border-[var(--green-light)]`
+- Title/text: `text-blue-800/700` → `color: var(--green-dark)`
+- Button: `bg-blue-500` → `bg-[var(--green)]`
+- Links "yellow-600" → `var(--green)`
+- Dialog title/desc: `text-blue-800/700` → brand colors
 
-### 8. InwoutBlogCTA — Ya bien, pequeños ajustes
-- Ya usa los colores correctos (#0A1628, #0fb89f), mantener
+## 5. Dashboard page background
 
-## Archivos a editar
-
-1. `src/components/blog/BlogLayout.tsx`
-2. `src/components/blog/BlogHeader.tsx`
-3. `src/components/blog/BlogCategoryTabs.tsx`
-4. `src/components/blog/BlogPostCard.tsx`
-5. `src/components/blog/FeaturedPost.tsx`
-6. `src/pages/BlogPost.tsx`
-7. `src/components/blog/BlogPostContent.tsx`
+- `from-primary-50 to-white` → `background: var(--white)`
 
