@@ -21,10 +21,10 @@ export function useBlogPosts(activeCategory: string) {
         setPosts([]);
         setLastFetchedPostDate(null);
 
-        let query = supabase
-          .from('blog_posts')
+        let query = (supabase
+          .from('site_articles' as any)
           .select('*')
-          .eq('status', 'published')
+          .eq('status', 'published') as any)
           .not('published_at', 'is', null)
           .order('published_at', { ascending: false })
           .limit(POSTS_PER_PAGE + 1);
@@ -81,10 +81,10 @@ export function useBlogPosts(activeCategory: string) {
     try {
       setLoadingMore(true);
 
-      let query = supabase
-        .from('blog_posts')
+      let query = (supabase
+        .from('site_articles' as any)
         .select('*')
-        .eq('status', 'published')
+        .eq('status', 'published') as any)
         .not('published_at', 'is', null)
         .order('published_at', { ascending: false })
         .lt('published_at', lastFetchedPostDate)

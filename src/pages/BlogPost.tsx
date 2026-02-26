@@ -9,7 +9,6 @@ import BlogArticleRenderer from "@/components/blog/BlogArticleRenderer";
 import BlogPostSidebar from "@/components/blog/BlogPostSidebar";
 import BlogSEOHead from "@/components/blog/BlogSEOHead";
 import TableOfContents from "@/components/blog/TableOfContents";
-import InwoutBlogCTA from "@/components/blog/InwoutBlogCTA";
 import RelatedPosts from "@/components/blog/RelatedPosts";
 import { BreadcrumbNav } from "@/components/seo/BreadcrumbNav";
 import { Button } from "@/components/ui/button";
@@ -28,11 +27,11 @@ export default function BlogPostPage() {
     const fetchPost = async () => {
       try {
         setLoading(true);
-        const { data, error } = await supabase
-          .from("blog_posts")
+        const { data, error } = await (supabase
+          .from("site_articles" as any)
           .select("*")
           .eq("slug", slug)
-          .single();
+          .single() as any);
 
         if (!error && data) {
           setPost({ ...data, id: data.id.toString(), related_apps: data.related_apps || [] } as BlogPost);
@@ -127,13 +126,6 @@ export default function BlogPostPage() {
               <BlogPostContent post={post} />
             )}
 
-            {/* CTA footer */}
-            <InwoutBlogCTA
-              variant="footer"
-              ctaText={post.primary_cta_text || undefined}
-              ctaUrl={post.primary_cta_url || undefined}
-            />
-
             {/* Related Posts */}
             <RelatedPosts currentPost={post} />
           </div>
@@ -141,7 +133,6 @@ export default function BlogPostPage() {
           {/* Sidebar */}
           <div className="space-y-6">
             {!isMobile && hasHtmlContent && <TableOfContents contentHtml={post.content_html!} />}
-            <InwoutBlogCTA variant="sidebar" ctaText={post.primary_cta_text || undefined} ctaUrl={post.primary_cta_url || undefined} />
             <BlogPostSidebar relatedApps={post.related_apps} />
           </div>
         </div>

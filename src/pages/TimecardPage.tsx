@@ -3,7 +3,7 @@ import React from "react";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { Link } from "react-router-dom";
 import { ArrowLeft, AlertTriangle, Clock, Shield, Smartphone, ExternalLink, CheckCircle } from "lucide-react";
-import InwoutBlogCTA from "@/components/blog/InwoutBlogCTA";
+
 
 export default function TimecardPage() {
   return (
@@ -153,8 +153,6 @@ export default function TimecardPage() {
             Generar documentación legal <ExternalLink className="h-4 w-4" />
           </a>
         </div>
-
-        <InwoutBlogCTA variant="footer" />
       </div>
     </div>
   );

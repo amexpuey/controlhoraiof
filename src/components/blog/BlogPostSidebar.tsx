@@ -23,9 +23,9 @@ export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
       try {
         setLoading(true);
         
-        const { data, error } = await supabase
-          .from('blog_posts')
-          .select('*')
+        const { data, error } = await (supabase
+          .from('site_articles' as any)
+          .select('*') as any)
           .not('published_at', 'is', null)
           .order('published_at', { ascending: false })
           .limit(3);
