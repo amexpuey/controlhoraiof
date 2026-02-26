@@ -1,0 +1,4966 @@
+[
+  {
+    "slug": "intratime",
+    "title": "Intratime",
+    "url": "https://www.intratime.es",
+    "description": "La solución para fichar desde móvil, ordenador o tablet. El control horario más funcional y económico. Con informes de horas trabajadas.",
+    "categories": [
+      "Control Horario",
+      "Reportes",
+      "Gestión de Ausencias",
+      "Apps",
+      "Geolocalización"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Vacaciones",
+      "AI",
+      "Reportes",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Reportes"
+    ],
+    "rank": 1,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/intratime.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/intratime_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/intratime_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "twitter": "https://twitter.com/intratime",
+      "facebook": "https://www.facebook.com/intratime/",
+      "instagram": "https://www.instagram.com/intratime_es/",
+      "linkedin": "https://es.linkedin.com/company/intratime"
+    },
+    "meta_title": "Intratime | Control horario, maquina de fichar, fichaje desde el móvil",
+    "og_title": "Intratime | Control horario, maquina de fichar, fichaje desde el móvil",
+    "og_image": "https://www.intratime.es/wp-content/uploads/2018/07/intratime-control-horario-con-geolocalizacion-1.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "workia",
+    "title": "Workia",
+    "url": "https://workia.io",
+    "description": "La APP de control horario perfecta para el Decreto Ley del 12 mayo Software de control horario con mejor interfaz y precio ideal para startups y empresas con personal itinerante y teletrabajadores",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Vacaciones",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Reportes"
+    ],
+    "rank": 2,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/workia.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/workia_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/workia_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "Controla la Jornada de tus Empleados - Workia",
+    "og_title": "Workia | Control horario, maquina de fichar, fichaje desde el móvil",
+    "og_image": "https://www.workia.io/assets/img/mobile-image-4.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "controllaboral",
+    "title": "Control Laboral",
+    "url": "https://controllaboral.es",
+    "description": "Cumple la ley de registro horario y cuenta con informes ante una inspección. Un software de control horario y más herramientas de rrhh.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "AI",
+      "Reportes",
+      "Teletrabajo",
+      "Integraciones API",
+      "Portal del Empleado"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Nóminas",
+      "Portal del Empleado",
+      "Reportes",
+      "Teletrabajo"
+    ],
+    "rank": 3,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/controllaboral.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/controllaboral_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/controllaboral_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": [
+        {
+          "price": 24.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "24€/mes"
+        },
+        {
+          "price": 35.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "35€/mes"
+        },
+        {
+          "price": 68.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "68€/mes"
+        },
+        {
+          "price": 92.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "92€/mes"
+        },
+        {
+          "price": 119.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "119€/mes"
+        },
+        {
+          "price": 2.5,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "2,50€/mes"
+        },
+        {
+          "price": 19.9,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "19,90€ mes"
+        },
+        {
+          "price": 29.9,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "29,90€ mes"
+        },
+        {
+          "price": 59.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "59€ mes"
+        },
+        {
+          "price": 85.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "85€ mes"
+        },
+        {
+          "price": 99.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "99€ mes"
+        },
+        {
+          "price": 2.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "2€ mes"
+        }
+      ]
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/ControlLaboral",
+      "linkedin": "https://es.linkedin.com/company/control-laboral"
+    },
+    "meta_title": "Control Laboral - El mejor sistema para el control horario de trabajadores",
+    "og_title": "Control Laboral - El mejor sistema para el control horario de trabajadores",
+    "og_image": "https://controllaboral.es/wp-content/uploads/2025/09/faviconcontrollaboral.jpg",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "tramitapp",
+    "title": "Tramitapp",
+    "url": "https://www.tramitapp.com",
+    "description": "El software de recursos humanos que te ayuda con la gestión del tiempo, la planificación de turnos y la automatización de procesos.",
+    "categories": [
+      "Control Horario",
+      "Reportes",
+      "Gestión de Ausencias",
+      "Apps",
+      "Geolocalización",
+      "AI"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Teletrabajo",
+      "Integraciones API",
+      "Portal del Empleado"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Nóminas",
+      "Portal del Empleado",
+      "Reportes",
+      "Teletrabajo"
+    ],
+    "rank": 4,
+    "is_free": false,
+    "is_top_rated": true,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/tramitapp.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/tramitapp_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/tramitapp_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/tramitapp.es",
+      "twitter": "https://twitter.com/tramitapp_ES",
+      "instagram": "https://instagram.com/tramitapp_es",
+      "linkedin": "https://es.linkedin.com/company/tramitapp"
+    },
+    "meta_title": "Software de RRHH para control horario y planificación",
+    "og_title": "Software de RRHH para control horario y planificación",
+    "og_image": "https://d2fco1oc9breti.cloudfront.net/wp-content/uploads/2023/11/Imagen_destacada_nueva_home.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "talentiontime",
+    "title": "TalentionTime",
+    "url": "https://talentiontime.com",
+    "description": "TalentionTime simplifica los procesos de RRHH.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "AI"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones"
+    ],
+    "rank": 5,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/talentiontime.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/talentiontime_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/talentiontime_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": [
+        {
+          "price": 25.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "25 €/mes"
+        }
+      ]
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/people/Talention-Time/100069800464694/",
+      "linkedin": "https://www.linkedin.com/company/talentiontime/?original_referer=https%3A%2F%2Ftalentiontime.com%2F",
+      "instagram": "https://www.instagram.com/talentiontime/"
+    },
+    "meta_title": "TalentionTime | El software de Recursos Humanos que necesitas | Software de Recursos Humanos",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "profesto",
+    "title": "Profesto",
+    "url": "https://profesto.io",
+    "description": "Profesto, sistema de control de horarios laborales a través de Tablet, Web y App móvil.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "AI",
+      "Reportes"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Reportes"
+    ],
+    "rank": 6,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/profesto.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/profesto_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/profesto_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/company/profesto-io/",
+      "facebook": "https://www.facebook.com/Profestoio-109328490690594/",
+      "instagram": "https://www.instagram.com/profesto.io/ ",
+      "twitter": "https://twitter.com/Profestoio"
+    },
+    "meta_title": "Sistema de control de horarios laborales | Profesto",
+    "og_title": "Sistema de control de horarios laborales | Profesto",
+    "og_image": "https://profesto.io//images/thumbs/Logo-profesto-v3.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "hrlog",
+    "title": "HRLOG",
+    "url": "https://hrlog.es",
+    "description": "HRLOG es el software de recursos humanos que centraliza fichajes digitales, gestión de vacaciones, permisos y más. Fácil, ágil y 100% legal.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Sistemas Biométricos"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Reportes",
+      "Sistemas Biométricos"
+    ],
+    "rank": 7,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/hrlog.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/hrlog_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/hrlog_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/feed/update/urn:li:activity:7389642645351968768",
+      "twitter": "https://twitter.com/hrlogapp?lang=es",
+      "youtube": "https://www.youtube.com/channel/UCQV2ABRMofJ-Xoz_GKbF9ww/",
+      "facebook": "https://www.facebook.com/hrlogapp/",
+      "instagram": "https://www.instagram.com/hrlogapp/"
+    },
+    "meta_title": "Software de Recursos Humanos | Fichaje digital, vacaciones y más | HRLOG",
+    "og_title": "Software de Recursos Humanos | Fichaje digital, vacaciones y más | HRLOG",
+    "og_image": "https://hrlog.es/wp-content/uploads/2025/07/HRLOG-eL-exito-de-hacer-buenos-equipos.jpg",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "checkjc",
+    "title": "CheckJC",
+    "url": "https://www.checkjc.com",
+    "description": "CheckJC - La herramienta Cloud para la gestión de horarios que ayuda a la toma de decisiones y a la mejora de la productividad de las PYMES.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Sistemas Biométricos",
+      "Portal del Empleado"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Turnos",
+      "Portal del Empleado",
+      "Reportes",
+      "Sistemas Biométricos"
+    ],
+    "rank": 8,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/checkjc_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/checkjc_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/in/jorgecebreiros/recent-activity/all/"
+    },
+    "meta_title": "CheckJC - La gestión inteligente de tiempos y personas del futuro",
+    "og_title": "CheckJC - La gestión inteligente de tiempos y personas del futuro",
+    "og_image": "https://www.checkjc.com/img/noahl/logo.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "miregistrolaboral",
+    "title": "Mi Registro Laboral",
+    "url": "https://www.miregistrolaboral.es",
+    "description": "Lilon- Portfolio Template",
+    "categories": [
+      "Control Horario",
+      "Reportes",
+      "Gestión de Ausencias",
+      "Apps",
+      "Geolocalización"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Gestión de Turnos",
+      "AI",
+      "Teletrabajo",
+      "Integraciones API",
+      "Portal del Empleado"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Nóminas",
+      "Portal del Empleado",
+      "Reportes",
+      "Teletrabajo"
+    ],
+    "rank": 9,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/miregistrolaboral.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/miregistrolaboral_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/miregistrolaboral_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": [
+        {
+          "price": 150.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "Desde 150€"
+        }
+      ]
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/people/Mi-Registro-Laboral/100067882422580/",
+      "linkedin": "https://www.linkedin.com/company/mi-registro-laboral/"
+    },
+    "meta_title": "Registro diario de jornada y la gestión integral de los RRHH",
+    "og_title": "Registro diario de jornada y la gestión integral de los RRHH",
+    "og_image": "https://www.miregistrolaboral.es/wp-content/uploads/2023/11/blog-10-1.jpg",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "workmeter",
+    "title": "WorkMeter",
+    "url": "https://www.workmeter.com",
+    "description": "WorkMeter es tu solución para fichar automáticamente, gestionar vacaciones, aumentar la productividad, gestionar proyectos y mucho más.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "AI",
+      "Reportes",
+      "Teletrabajo"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Reportes",
+      "Teletrabajo"
+    ],
+    "rank": 10,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/workmeter.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/workmeter_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/workmeter_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "youtube": "http://www.youtube.com/workmeter",
+      "instagram": "https://www.instagram.com/workmeter_es/?hl=es",
+      "facebook": "https://www.facebook.com/WorkMeter/",
+      "twitter": "http://twitter.com/WorkMeter_es",
+      "linkedin": "https://www.linkedin.com/company/workmeter/"
+    },
+    "meta_title": "Software de gestión de recursos humanos - WorkMeter",
+    "og_title": "Home",
+    "og_image": "https://www.workmeter.com/wp-content/uploads/2023/08/Multidispositivos-definitva.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "zeusmanager",
+    "title": "Zeus Manager",
+    "url": "https://zeusmanager.com",
+    "description": "Zeus Manager Website",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [],
+    "all_features": [
+      "Control Horario"
+    ],
+    "rank": 11,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/zeusmanager.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/zeusmanager_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/zeusmanager_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "Zeus Manager Website",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "taclia",
+    "title": "Taclia",
+    "url": "https://www.taclia.com",
+    "description": "Creamos herramientas y páginas web adaptadas a la operativa real de cada negocio. Sin SaaS genérico. Entrega en días y mantenimiento incluido.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Apps",
+      "Gestión de Ausencias",
+      "AI"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Gestión de Ausencias"
+    ],
+    "rank": 12,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/taclia.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/taclia_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/taclia_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": [
+        {
+          "price": 220.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "220€/mes"
+        },
+        {
+          "price": 45.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "45€/mes"
+        },
+        {
+          "price": 90.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "90€/mes"
+        },
+        {
+          "price": 75.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "75€/mes"
+        },
+        {
+          "price": 52.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "52€/mes"
+        },
+        {
+          "price": 35.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "35€/mes"
+        }
+      ]
+    },
+    "social": {
+      "instagram": "https://www.instagram.com/taclia_es/",
+      "facebook": "https://www.facebook.com/tacliaes",
+      "linkedin": "https://www.linkedin.com/company/taclia",
+      "youtube": "https://www.youtube.com/@taclia_es"
+    },
+    "meta_title": "Herramientas y webs a medida, listas en días | Taclia",
+    "og_title": "Herramientas y webs a medida, listas en días | Taclia",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "relojlaboral",
+    "title": "Reloj Laboral",
+    "url": "https://www.relojlaboral.com",
+    "description": "Con el control laboral puede calcular las horas de trabajo de su empresa. El contador de horas se dedica a apuntar las horas de trabajo sin máquinas de fichar.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Teletrabajo",
+      "Sistemas Biométricos",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Reportes",
+      "Sistemas Biométricos",
+      "Teletrabajo"
+    ],
+    "rank": 13,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/relojlaboral.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/relojlaboral_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/relojlaboral_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": [
+        {
+          "price": 1.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "1€ / mes"
+        },
+        {
+          "price": 10.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "10 €/mes"
+        }
+      ]
+    },
+    "social": {},
+    "meta_title": "Reloj Laboral: El mejor control laboral para su empresa",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "niikiis",
+    "title": "Niikiis",
+    "url": "https://www.niikiis.com",
+    "description": "niikiis, nuestro software para la gestión de equipos de cara al público, da super poderes al manager para la gestión de equipos.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Sistemas Biométricos",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Nóminas",
+      "Reportes",
+      "Sistemas Biométricos"
+    ],
+    "rank": 14,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/niikiis.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/niikiis_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/niikiis_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/niikiisknowtion",
+      "instagram": "https://www.instagram.com/niikiisknowtion/",
+      "youtube": "https://www.youtube.com/channel/UCLKrUZhSnDJ9SnrGWaH9VPQ",
+      "linkedin": "https://www.linkedin.com/company/niikiis"
+    },
+    "meta_title": "Software para la gestión de equipos de cara al público | niikiis",
+    "og_title": "Software para la gestión de equipos de cara al público | niikiis",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "fichareneltrabajo",
+    "title": "Fichar en el Trabajo",
+    "url": "https://fichareneltrabajo.com",
+    "description": "Ficha en el trabajo con nuestra app especializada. Registra horarios de forma eficiente, cumple con la normativa laboral ¡Entra ya y descubre más!",
+    "categories": [
+      "Control Horario",
+      "Reportes",
+      "Gestión de Ausencias",
+      "Apps",
+      "Geolocalización"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "AI",
+      "Reportes"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Reportes"
+    ],
+    "rank": 15,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/fichareneltrabajo.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/fichareneltrabajo_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/fichareneltrabajo_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": [
+        {
+          "price": 1.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "1 €/mes"
+        },
+        {
+          "price": 0.5,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "0,50 €/mes"
+        },
+        {
+          "price": 2.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "2 €/mes"
+        },
+        {
+          "price": 10.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "10,00 €/mes"
+        },
+        {
+          "price": 5.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "5 €/mes"
+        },
+        {
+          "price": 3.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "3 €/mes"
+        },
+        {
+          "price": 8.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "8 €/mes"
+        }
+      ]
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/Fichar-en-el-trabajo-3199259086766150/",
+      "twitter": "https://x.com/fichartrabajo",
+      "linkedin": "https://www.linkedin.com/company/fichar-en-el-trabajo",
+      "instagram": "https://www.instagram.com/fichartrabajo/"
+    },
+    "meta_title": "▷ Control fichaje empleados | Fichar en el trabajo",
+    "og_title": "▷ Control fichaje empleados | Fichar en el trabajo",
+    "og_image": "https://fichareneltrabajo.com/images/logo-app-fichar-en-el-trabajo-grande.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "ev4",
+    "title": "eV4",
+    "url": "https://ev4erp.net/es",
+    "description": "Sistema de Gestión para Empresas que complementa los procesos de tu negocio. Prueba Gratis! Visión Real y Global de tu Negocio para Trabajar de Forma Óptim",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "AI",
+      "Reportes",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Integraciones API",
+      "Reportes"
+    ],
+    "rank": 16,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/ev4.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/ev4_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/ev4_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/ev4software/",
+      "twitter": "https://twitter.com/ev4erp",
+      "instagram": "https://www.instagram.com/ev4erp/"
+    },
+    "meta_title": "El software de gestión para tu empresa | eV4",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "zinkee",
+    "title": "Zinkee",
+    "url": "https://www.zinkee.com",
+    "description": "Zinkee: El Software de Gestión Flexible e Intuitivo",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "AI",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Integraciones API"
+    ],
+    "rank": 17,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/zinkee.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/zinkee_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/zinkee_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": [
+        {
+          "price": 239.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "239€/mes"
+        },
+        {
+          "price": 199.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "199€/mes"
+        },
+        {
+          "price": 419.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "419€/mes"
+        },
+        {
+          "price": 349.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "349€/mes"
+        },
+        {
+          "price": 599.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "599€/mes"
+        },
+        {
+          "price": 499.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "499€/mes"
+        }
+      ]
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/zinkee.projects",
+      "youtube": "https://www.youtube.com/channel/UCx57k1pO1YOEvhs8TQe9_lw",
+      "instagram": "https://www.instagram.com/zinkee_business/?hl=es",
+      "twitter": "https://twitter.com/zinkee_business",
+      "linkedin": "https://es.linkedin.com/company/zinkee"
+    },
+    "meta_title": "Zinkee: El Software de Gestión Flexible e Intuitivo",
+    "og_title": "Zinkee: El Software de Gestión Flexible e Intuitivo",
+    "og_image": "https://cdn.prod.website-files.com/61ea7ce196d2bf4e7223dff1/64199aca5c5c178aeb650586_Home.svg",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "simplygest",
+    "title": "SimplyGest",
+    "url": "https://simplygest.es",
+    "description": "SimplyGest: Software de Facturación, Gestión Comercial y Punto de Venta para Empresas, Comercios, Hostelería, Peluquerías y pymes",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "AI",
+      "Reportes"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Reportes"
+    ],
+    "rank": 18,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/simplygest.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/simplygest_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/simplygest_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": [
+        {
+          "price": 36.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "36 €/mes"
+        },
+        {
+          "price": 45.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "45 €/mes"
+        },
+        {
+          "price": 0.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "0 € /mes"
+        },
+        {
+          "price": 14.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "14 € /mes"
+        },
+        {
+          "price": 28.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "28 € /mes"
+        },
+        {
+          "price": 59.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "59 € /mes"
+        },
+        {
+          "price": 99.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "99 € /mes"
+        },
+        {
+          "price": 149.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "149 € /mes"
+        }
+      ]
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/simplygest/",
+      "twitter": "https://twitter.com/simplygest",
+      "youtube": "https://www.youtube.com/simplygest",
+      "instagram": "https://www.instagram.com/simplygest/",
+      "linkedin": "https://www.linkedin.com/company/simplygest/"
+    },
+    "meta_title": "SimplyGest: Software de Gestión y TPV",
+    "og_title": "SimplyGest. Software de Facturación y TPV para pymes",
+    "og_image": "https://simplygest.es/logo.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "nominac",
+    "title": "Nominac Asesores",
+    "url": "https://nominac.com",
+    "description": "Nominac es una asesoría que a través de Factorial gestiona los recursos humanos de tu empresa. Olvídate de facturas, nominas y mucho más, llámanos",
+    "categories": [
+      "Nóminas",
+      "Asesoría laboral"
+    ],
+    "detected_features": [
+      "Apps",
+      "AI",
+      "Reportes"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Asesoría laboral",
+      "Nóminas",
+      "Reportes"
+    ],
+    "rank": 19,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/nominac.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/nominac_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/nominac_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "Inicio - Nominac Asesores",
+    "og_title": "Inicio - Nominac Asesores",
+    "og_image": "https://nominac.com/wp-content/uploads/2020/12/Nominac-Logo-x2.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "hvasesores",
+    "title": "HV Asesores",
+    "url": "https://www.hvasesores.com",
+    "description": "HV Asesores, expertos en asesoría fiscal y contabilidad.",
+    "categories": [
+      "Asesoría fiscal"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "Gestión de Ausencias",
+      "Nóminas",
+      "AI",
+      "Teletrabajo"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Asesoría fiscal",
+      "Control Horario",
+      "Gestión de Ausencias",
+      "Nóminas",
+      "Teletrabajo"
+    ],
+    "rank": 20,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/hvasesores.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/hvasesores_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/hvasesores_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/in/franciscovazquezsanchez/",
+      "instagram": "https://www.instagram.com/hv.asesores/"
+    },
+    "meta_title": "HV Asesores – Impuestos, gestión laboral y consultoría para Pyme y Autónomos",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "integriapps",
+    "title": "Integriapps",
+    "url": "https://integriapps.com",
+    "description": "Apps y soluciones que apoyan la gestión diaria de tu MiPyME. Calculadoras, generadores, plantillas, modelos y recursos gratuitos.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Apps",
+      "Nóminas",
+      "AI",
+      "Reportes",
+      "Teletrabajo",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Integraciones API",
+      "Nóminas",
+      "Reportes",
+      "Teletrabajo"
+    ],
+    "rank": 21,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/integriapps.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/integriapps_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/integriapps_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/integriapps",
+      "twitter": "https://twitter.com/IntegriApps",
+      "linkedin": "https://www.linkedin.com/company/integriapps",
+      "youtube": "https://www.youtube.com/@integriapps"
+    },
+    "meta_title": "Soluciones Gratuitas - Gestión de MiPyMEs | IntegriApps",
+    "og_title": "Soluciones Inteligentes para la Gestión de PyMES | IntegriApps",
+    "og_image": "https://integriapps.com/wp-content/uploads/2024/08/Social-Share-Principal.jpg",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "oraculus",
+    "title": "Oraculus",
+    "url": "https://oraculus.es",
+    "description": "Solución integral para Control Horario con Geolocalización del personal",
+    "categories": [
+      "Reportes"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Reportes"
+    ],
+    "rank": 22,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/oraculus.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/oraculus_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/oraculus_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/checkpoint/1501092823525282/?next=https%3A%2F%2Fwww.facebook.com%2Foraculussystems%2F#",
+      "youtube": "https://www.youtube.com/channel/UCqPdZxZ5hoDmBHE0ZRt7l-Q",
+      "instagram": "https://www.instagram.com/oraculus.app/"
+    },
+    "meta_title": "INICIO - Oraculus",
+    "og_title": "INICIO - Oraculus",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "symphonysoft",
+    "title": "Symphony Software",
+    "url": "https://symphonysoft.es",
+    "description": "Symphony software para el Control horario y Registro de Jornada Laboral que se adapta a la gran mayoría de dispositivos del mercado. Demo gratuita.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Teletrabajo",
+      "Sistemas Biométricos"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Reportes",
+      "Sistemas Biométricos",
+      "Teletrabajo"
+    ],
+    "rank": 23,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/symphonysoft.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/symphonysoft_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/symphonysoft_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "Control horario y Registro de Jornada Laboral - Symphony Software",
+    "og_title": "Control horario y Registro de Jornada Laboral - Symphony Software",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "imesd",
+    "title": "Imesd",
+    "url": "https://imesd.es",
+    "description": "Imesd Numa es el software de control horario que ahorra tiempo a tu empresa. Puedes contratarlo en nuestra nube o comprarlo para ponerlo en tu servidor o nube privada.",
+    "categories": [
+      "Control Horario",
+      "Software a medida",
+      "Integraciones API"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Teletrabajo",
+      "Sistemas Biométricos",
+      "Portal del Empleado"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Nóminas",
+      "Portal del Empleado",
+      "Reportes",
+      "Sistemas Biométricos",
+      "Software a medida",
+      "Teletrabajo"
+    ],
+    "rank": 24,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/imesd.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/imesd_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/imesd_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": [
+        {
+          "price": 22.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "22€/mes"
+        },
+        {
+          "price": 308.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "desde 308€"
+        }
+      ]
+    },
+    "social": {
+      "instagram": "https://www.instagram.com/imesdelectronica/",
+      "facebook": "https://www.facebook.com/imesd.elec/",
+      "linkedin": "https://www.linkedin.com/company/imesd-electr%C3%B2nica/"
+    },
+    "meta_title": "Software de control horario Numa | Imesd",
+    "og_title": "Software de control horario Numa | Imesd",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "viboal",
+    "title": "Viboal",
+    "url": "https://viboal.es",
+    "description": "Viboal, software de gestión laboral y control de presencia.",
+    "categories": [
+      "Control Horario",
+      "Control de presencia"
+    ],
+    "detected_features": [],
+    "all_features": [
+      "Control Horario",
+      "Control de presencia"
+    ],
+    "rank": 25,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/viboal_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/viboal_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "failed",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "sesametime",
+    "title": "Sesametime",
+    "url": "https://sesametime.com",
+    "description": "Descubre Sesame, la aplicación de control horario más completa del mercado. Gestiona horarios, vacaciones, turnos, trabajo remoto... ¡Pruébalo gratis!",
+    "categories": [
+      "Control Horario",
+      "Reportes",
+      "Gestión de Ausencias",
+      "Apps",
+      "Geolocalización",
+      "Gestión de proyectos"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Teletrabajo",
+      "Sistemas Biométricos"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Gestión de proyectos",
+      "Nóminas",
+      "Reportes",
+      "Sistemas Biométricos",
+      "Teletrabajo"
+    ],
+    "rank": 26,
+    "is_free": false,
+    "is_top_rated": true,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/sesametime.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/sesametime_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/sesametime_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": [
+        {
+          "price": 4.5,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "4,50€ al mes"
+        },
+        {
+          "price": 5.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "5€ al mes"
+        },
+        {
+          "price": 75.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "desde 75€"
+        },
+        {
+          "price": 67.5,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "desde 67,50€"
+        }
+      ]
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/sesamehr",
+      "linkedin": "https://es.linkedin.com/company/sesamehr",
+      "instagram": "https://www.instagram.com/sesame_hr/",
+      "youtube": "https://www.youtube.com/channel/UCDkKd1M7DOqcwHDzmpsKCCw"
+    },
+    "meta_title": "Sesame | Control horario y vacaciones",
+    "og_title": "Sesame | Control horario y vacaciones",
+    "og_image": "https://www.sesametime.com/wp-content/uploads/2019/12/main-alerts-1-1.jpg",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "peoplerise",
+    "title": "Peoplerise",
+    "url": "https://peoplerise.net",
+    "description": "Peoplerise, transformación digital en la gestión de personas.",
+    "categories": [
+      "Gestión de Talento"
+    ],
+    "detected_features": [
+      "AI",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Gestión de Talento",
+      "Integraciones API"
+    ],
+    "rank": 27,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/peoplerise.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/peoplerise_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/peoplerise_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/peoplerise",
+      "instagram": "https://www.instagram.com/peoplerise/",
+      "linkedin": "http://www.linkedin.com/company/peoplerise",
+      "twitter": "https://twitter.com/PeopleriseSrl",
+      "youtube": "http://www.youtube.com/user/peoplerise"
+    },
+    "meta_title": "peoplerise - People will always be essential",
+    "og_title": "Home",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "timereport",
+    "title": "TimeReport",
+    "url": "https://timereport.es",
+    "description": "Aplicación de gestión de horarios y jornadas laborales.",
+    "categories": [
+      "Control Horario",
+      "Reportes",
+      "Gestión de Ausencias",
+      "Apps",
+      "Geolocalización"
+    ],
+    "detected_features": [
+      "Apps",
+      "Gestión de Turnos",
+      "AI"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Reportes"
+    ],
+    "rank": 28,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/timereport_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/timereport_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "Time Report",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "effiwork",
+    "title": "Effiwork",
+    "url": "https://effiwork.com",
+    "description": "Effiwork, eficiencia y productividad en la gestión del tiempo.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [],
+    "all_features": [
+      "Control Horario"
+    ],
+    "rank": 29,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/effiwork.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/effiwork_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/effiwork_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "4work",
+    "title": "4Work",
+    "url": "https://4work.com",
+    "description": "4Work, simplificando la gestión del tiempo y tareas en empresas.",
+    "categories": [
+      "Control Horario",
+      "Tareas"
+    ],
+    "detected_features": [],
+    "all_features": [
+      "Control Horario",
+      "Tareas"
+    ],
+    "rank": 30,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/4work_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/4work_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "4work.com",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "eficloud",
+    "title": "Eficloud",
+    "url": "https://eficloud.org",
+    "description": "Eficloud, la nube para eficientizar tus procesos empresariales.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [],
+    "all_features": [
+      "Control Horario"
+    ],
+    "rank": 31,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/eficloud_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/eficloud_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "failed",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "effortime",
+    "title": "Effortime",
+    "url": "https://effortime.es",
+    "description": "Effortime, control de tiempo laboral y gestión de proyectos.",
+    "categories": [
+      "Control Horario",
+      "Gestión de proyectos"
+    ],
+    "detected_features": [],
+    "all_features": [
+      "Control Horario",
+      "Gestión de proyectos"
+    ],
+    "rank": 32,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/effortime_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/effortime_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "failed",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "laborplan",
+    "title": "Laborplan",
+    "url": "https://laborplan.com",
+    "description": "Laborplan, planificación y seguimiento del tiempo laboral.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [],
+    "all_features": [
+      "Control Horario"
+    ],
+    "rank": 33,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/laborplan.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/laborplan_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/laborplan_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "failed",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "tempos21",
+    "title": "Tempos21",
+    "url": "https://tempos21.com",
+    "description": "Tempos21, innovación en la gestión de tiempo y recursos.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [],
+    "all_features": [
+      "Control Horario"
+    ],
+    "rank": 34,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/tempos21_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/tempos21_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "failed",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "woffu",
+    "title": "Woffu",
+    "url": "https://woffu.com",
+    "description": "Digitaliza la gestión del tiempo de los empleados con Woffu, Gestor de Vacaciones intuitivo y Control Horario adaptado a la legalidad.",
+    "categories": [
+      "Gestión de vacaciones",
+      "Ausencias"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Ausencias",
+      "Control Horario",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Gestión de vacaciones",
+      "Integraciones API",
+      "Reportes"
+    ],
+    "rank": 35,
+    "is_free": false,
+    "is_top_rated": true,
+    "verified": true,
+    "premium": true,
+    "logo_url": "",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/woffu_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/woffu_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": [
+        {
+          "price": 1.5,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "Desde 1,5€"
+        }
+      ]
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/company/woffu/",
+      "youtube": "https://www.youtube.com/@woffu"
+    },
+    "meta_title": "Gestión del tiempo adaptado a la legalidad con Woffu",
+    "og_title": "Gestión del tiempo adaptado a la legalidad con Woffu",
+    "og_image": "https://woffu.com/wp-content/uploads/2020/03/Captura-de-pantalla-2020-03-04-a-las-12.58.51.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "sesamehr",
+    "title": "SesameHR",
+    "url": "https://sesamehr.com",
+    "description": "The Human Resouces platform that will help you to manage your company: time tracking, absences requests, shift management...",
+    "categories": [
+      "Control Horario",
+      "Reportes",
+      "Gestión de Ausencias",
+      "Apps",
+      "Geolocalización",
+      "Gestión de proyectos"
+    ],
+    "detected_features": [
+      "Nóminas",
+      "AI"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de proyectos",
+      "Nóminas",
+      "Reportes"
+    ],
+    "rank": 36,
+    "is_free": false,
+    "is_top_rated": true,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/sesamehr.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/sesamehr_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/sesamehr_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/wordpress",
+      "twitter": "https://twitter.com/wordpress",
+      "instagram": "https://www.instagram.com/explore/tags/wordcamp/",
+      "linkedin": "https://es.linkedin.com/company/sesamehr",
+      "youtube": "https://www.youtube.com/channel/UCDkKd1M7DOqcwHDzmpsKCCw"
+    },
+    "meta_title": "Sesame HR - The most complete Human Resources Software",
+    "og_title": "Sesame HR - The most complete Human Resources Software",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "daytrack",
+    "title": "DayTrack",
+    "url": "https://daytrack.es",
+    "description": "DayTrack, seguimiento diario del rendimiento laboral.",
+    "categories": [
+      "Control Horario",
+      "Rendimiento laboral"
+    ],
+    "detected_features": [],
+    "all_features": [
+      "Control Horario",
+      "Rendimiento laboral"
+    ],
+    "rank": 37,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/daytrack_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/daytrack_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "failed",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "noray",
+    "title": "Noray",
+    "url": "https://noray.com",
+    "description": "Noray Htl, el software de gestión para hoteles. Todo en uno con el que tomarás el control de tu negocio maximizando los resultados.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Apps",
+      "Gestión de Ausencias",
+      "AI",
+      "Reportes",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Gestión de Ausencias",
+      "Integraciones API",
+      "Reportes"
+    ],
+    "rank": 38,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/noray.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/noray_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/noray_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/company/noray/",
+      "twitter": "https://x.com/noraysoftware",
+      "facebook": "https://www.facebook.com/Noray.Software/",
+      "youtube": "https://www.youtube.com/user/NoraySoftware"
+    },
+    "meta_title": "Software de gestión para hoteles | Noray",
+    "og_title": "Software de gestión para hoteles | Noray",
+    "og_image": "https://www.noray.com/wp-content/uploads/2022/09/Noray.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "wofftime",
+    "title": "Wofftime",
+    "url": "https://wofftime.com",
+    "description": "Wofftime, herramientas avanzadas para el control de tiempo.",
+    "categories": [
+      "Control Horario",
+      "Reportes",
+      "Gestión de Ausencias",
+      "Apps",
+      "Geolocalización",
+      "Nóminas"
+    ],
+    "detected_features": [],
+    "all_features": [
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Nóminas",
+      "Reportes"
+    ],
+    "rank": 39,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/wofftime_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/wofftime_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "failed",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "task4work",
+    "title": "Task4Work",
+    "url": "https://task4work.com",
+    "description": "Task4Work es la solución 100% cloud de Field Service Management para gestionar de la forma más eficiente tus servicios de campo.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Apps",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Gestión de Turnos",
+      "Reportes"
+    ],
+    "rank": 40,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/task4work.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/task4work_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/task4work_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "twitter": "https://twitter.com/task4work",
+      "linkedin": "https://www.linkedin.com/company/11019590/"
+    },
+    "meta_title": "Task4Work",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "efectivus",
+    "title": "Efectivus",
+    "url": "https://efectivus.com",
+    "description": "App para pcs, smartphones y tablets para control de trabajadores: horario, horas extras, planificador tareas. Mejorar la productividad. Control Personal",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "AI",
+      "Reportes"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Reportes"
+    ],
+    "rank": 41,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/efectivus.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/efectivus_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/efectivus_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": [
+        {
+          "price": 1.0,
+          "currency": "EUR",
+          "unit": "Mes",
+          "raw": "1€/Mes"
+        },
+        {
+          "price": 2.0,
+          "currency": "EUR",
+          "unit": "Mes",
+          "raw": "2€/Mes"
+        },
+        {
+          "price": 5.0,
+          "currency": "EUR",
+          "unit": "Mes",
+          "raw": "5€/Mes"
+        },
+        {
+          "price": 29.0,
+          "currency": "EUR",
+          "unit": "Mes",
+          "raw": "29€/Mes"
+        },
+        {
+          "price": 10.0,
+          "currency": "EUR",
+          "unit": "Mes",
+          "raw": "10€/Mes"
+        }
+      ]
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/Efectivus-311371799060509/?ref=hl",
+      "twitter": "https://twitter.com/Efectivus",
+      "linkedin": "https://www.linkedin.com/company/efectivus",
+      "youtube": "https://www.youtube.com/channel/UC_BRlmi_t7DF6ZDxxv0Qbcg/videos"
+    },
+    "meta_title": "Mejorar Productividad Laboral, Control trabajadores, horario, horas extras",
+    "og_title": "Mejorar Productividad Laboral, Control trabajadores, horario, horas extras",
+    "og_image": "https://efectivus.com/wp-content/uploads/2016/01/SENCILLEZ-DE-USO.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "factorialhr",
+    "title": "Factorial",
+    "url": "https://factorialhr.es",
+    "description": "Factorial es el software de gestión empresarial todo en uno que conecta todo lo que necesitas para gestionar a tu equipo y hacer crecer tu negocio.",
+    "categories": [
+      "Control Horario",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Gestión de Talento",
+      "Geolocalización",
+      "Reconocimiento Facial",
+      "Nóminas",
+      "Gestión de proyectos",
+      "Gestión Documental",
+      "AI"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Teletrabajo",
+      "Integraciones API",
+      "Portal del Empleado"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión Documental",
+      "Gestión de Ausencias",
+      "Gestión de Talento",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Gestión de proyectos",
+      "Integraciones API",
+      "Nóminas",
+      "Portal del Empleado",
+      "Reconocimiento Facial",
+      "Reportes",
+      "Teletrabajo"
+    ],
+    "rank": 42,
+    "is_free": true,
+    "is_top_rated": true,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/factorialhr.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/factorialhr_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/factorialhr_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": [
+        {
+          "price": 200.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "200€ al mes"
+        },
+        {
+          "price": 5.5,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "5.5€ al mes"
+        },
+        {
+          "price": 5.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "5€  al mes"
+        }
+      ]
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/company/factorialhr/life/610d75d5-fd8a-49cb-a17b-965af7239cb3/?viewAsMember=true",
+      "instagram": "https://www.instagram.com/factorial_es/",
+      "twitter": "https://x.com/factoriales",
+      "facebook": "https://www.facebook.com/factorialhres/",
+      "youtube": "https://www.youtube.com/c/FactorialHR"
+    },
+    "meta_title": "Factorial",
+    "og_title": "Factorial | Software de gestión empresarial",
+    "og_image": "https://factorial.es/images/factorial-open-graph.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "anviz",
+    "title": "Anviz",
+    "url": "https://anviz.com",
+    "description": "Anviz is the world's leading provider of biometrics, video surveillance, intelligent smart home and smart building solutions.",
+    "categories": [
+      "Control de Accesos"
+    ],
+    "detected_features": [
+      "AI"
+    ],
+    "all_features": [
+      "AI",
+      "Control de Accesos"
+    ],
+    "rank": 43,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/anviz.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/anviz_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/anviz_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "twitter": "https://twitter.com/anvizglobal",
+      "facebook": "https://www.facebook.com/AnvizHQ",
+      "youtube": "https://www.youtube.com/user/AnvizGlobalinc",
+      "linkedin": "https://www.linkedin.com/company/shanghai-anviz-biometric-tech--co--ltd-?trk=tyah&trkInfo=tas%3Aanviz%2Cidx%3A2-2-3",
+      "instagram": "https://www.instagram.com/anvizglobal/?igshid=1i42l3mcte7gz"
+    },
+    "meta_title": "Anviz Global | Secure workplace , Simplify management",
+    "og_title": "Anviz Global | Secure workplace , Simplify management",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "viboalconsulting",
+    "title": "Viboal Consulting",
+    "url": "https://viboalconsulting.com",
+    "description": "Viboal Consulting, asesoría y soluciones en gestión empresarial.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [],
+    "all_features": [
+      "Control Horario"
+    ],
+    "rank": 44,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/viboalconsulting_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/viboalconsulting_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "failed",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "tekusapp",
+    "title": "Tekus APP",
+    "url": "https://tekusapp.com",
+    "description": "Tekus APP, innovación en la gestión y comunicación empresarial.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [],
+    "all_features": [
+      "Control Horario"
+    ],
+    "rank": 45,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/tekusapp_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/tekusapp_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "failed",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "tempusquality",
+    "title": "Tempus Quality",
+    "url": "https://tempusquality.com",
+    "description": "Tempus Quality, garantía de calidad y tiempo en tus procesos.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [],
+    "all_features": [
+      "Control Horario"
+    ],
+    "rank": 46,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/tempusquality.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/tempusquality_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/tempusquality_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "failed",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "controlsoft",
+    "title": "ControlSoft",
+    "url": "https://controlsoft.com",
+    "description": "ControlSoft, software de gestión y control de tiempos laborales.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [],
+    "all_features": [
+      "Control Horario"
+    ],
+    "rank": 47,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/controlsoft.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/controlsoft_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/controlsoft_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "youtube": "https://www.youtube.com/channel/UCMUTUFhnU1et7qqwHFFWKxw",
+      "linkedin": "https://www.linkedin.com/company/controlsoft-access?trk=vsrp_companies_cluster_name&trkInfo=VSRPsearchId%3A423226821407325663583%2CVSRPtargetId%3A5293054%2CVSRPcmpt%3Acompanies_cluster",
+      "twitter": "https://twitter.com/Controlsoft_Ltd",
+      "facebook": "https://www.facebook.com/Controlsoft-223387301111009/"
+    },
+    "meta_title": "Controlsoft Ltd",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "timewellscheduled",
+    "title": "TimeWellScheduled",
+    "url": "https://timewellscheduled.com",
+    "description": "Streamline your business with TimeWellScheduled. Free employee scheduling, time clock software, and payroll integration for retail, hotels, and restaurants. Start for free today!",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Geolocalización",
+      "Nóminas",
+      "Reportes",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Integraciones API",
+      "Nóminas",
+      "Reportes"
+    ],
+    "rank": 48,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/timewellscheduled.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/timewellscheduled_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/timewellscheduled_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/timewellscheduled/",
+      "twitter": "https://twitter.com/wellscheduled",
+      "youtube": "https://www.youtube.com/user/TIMEwellSCHEDULED",
+      "linkedin": "https://www.linkedin.com/in/timewellscheduled"
+    },
+    "meta_title": "Free Employee Scheduling & Time Clock Software | TimeWellScheduled",
+    "og_title": "TimeWellScheduled | Employee Time Clock Software",
+    "og_image": "https://timewellscheduled.com/wp-content/uploads/2019/08/TimeWellScheduledLogo-300x55.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "timecontrol",
+    "title": "TimeControl",
+    "url": "https://timecontrol.com",
+    "description": "TimeControl timesheet software that is fast to implement and easy to use to track time for finance, payroll, HR and Project Management.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Nóminas",
+      "AI"
+    ],
+    "all_features": [
+      "AI",
+      "Control Horario",
+      "Nóminas"
+    ],
+    "rank": 49,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/timecontrol.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/timecontrol_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/timecontrol_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "twitter": "https://twitter.com/HMS_TimeControl",
+      "facebook": "https://www.facebook.com/pages/HMS-Software/583127538372399",
+      "linkedin": "https://www.linkedin.com/company/hms-software",
+      "youtube": "https://www.youtube.com/channel/UC-I21bjwfIq9JEioRUV8kLQ"
+    },
+    "meta_title": "TimeControl | Web timesheets for Finance and Project Management | Web timesheets for Finance and Project Management",
+    "og_title": "TimeControl - Web timesheets for Finance and Project Management",
+    "og_image": "http://www.timecontrol.com/images/logos/tc-og.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "workforcemanager",
+    "title": "WorkForce Manager",
+    "url": "https://workforcemanager.com",
+    "description": "WorkForce Manager, optimización de la gestión de fuerzas de trabajo.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [],
+    "all_features": [
+      "Control Horario"
+    ],
+    "rank": 50,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": true,
+    "premium": true,
+    "logo_url": "",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/workforcemanager_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/workforcemanager_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "failed",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "personio",
+    "title": "Personio",
+    "url": "https://www.personio.es",
+    "description": "Personio, Gestión integral de recursos humanos para pymes y empresas",
+    "categories": [
+      "Control Horario",
+      "Reportes",
+      "Gestión de Ausencias",
+      "Apps",
+      "Geolocalización",
+      "Gestión de proyectos"
+    ],
+    "detected_features": [],
+    "all_features": [
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de proyectos",
+      "Reportes"
+    ],
+    "rank": 51,
+    "is_free": false,
+    "is_top_rated": true,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/personio.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/personio_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/personio_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "failed",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "binzneo",
+    "title": "Bizneo",
+    "url": "https://www.bizneo.com/",
+    "description": "Software de RR. HH. con +16 soluciones de gestión de personal y talento. 72% de los clientes nos eligen por ser la tecnología más completa.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Teletrabajo",
+      "Sistemas Biométricos",
+      "Integraciones API",
+      "Portal del Empleado"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Nóminas",
+      "Portal del Empleado",
+      "Reportes",
+      "Sistemas Biométricos",
+      "Teletrabajo"
+    ],
+    "rank": 52,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/binzneo.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/binzneo_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/binzneo_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": [
+        {
+          "price": 6.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "Desde 6€"
+        },
+        {
+          "price": 9.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "Desde 9€"
+        }
+      ]
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/company/bizneo/",
+      "youtube": "https://www.youtube.com/@BizneoHR"
+    },
+    "meta_title": "Bizneo HR | Software de Recursos Humanos + recomendado",
+    "og_title": "Bizneo HR | Software de Recursos Humanos + recomendado",
+    "og_image": "https://bvzdavspmsiusnhgcoof.supabase.co/storage/v1/object/public/images/1f0f42d2-093f-47eb-a850-7c2398cb3c2e/Software-de-Recursos-Humanos-Bizneo-HR-1723812958508.webp",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "sagehr",
+    "title": "Sage España",
+    "url": "https://www.sage.com/es-es/sage-business-cloud/hr/",
+    "description": "Sage HR es una plataforma de Recursos Humanos con numerosas funciones y módulos como Plantillas horarias, Programación de turnos, Gastos y Rendimiento. Empieza tus 6 meses de prueba gratis hoy mismo.",
+    "categories": [
+      "Control Horario",
+      "Gestión de Trunos",
+      "Selección de Personal",
+      "Evaluación Desempeño",
+      "Portal del Empleado"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Teletrabajo",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Evaluación Desempeño",
+      "Gestión de Ausencias",
+      "Gestión de Trunos",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Nóminas",
+      "Portal del Empleado",
+      "Reportes",
+      "Selección de Personal",
+      "Teletrabajo"
+    ],
+    "rank": 53,
+    "is_free": false,
+    "is_top_rated": true,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/sagehr.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/sagehr_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/sagehr_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": [
+        {
+          "price": 150.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "150€ al mes"
+        },
+        {
+          "price": 3.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "Desde 3€"
+        }
+      ]
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/SageSpain/",
+      "instagram": "https://www.instagram.com/sageofficial/",
+      "linkedin": "https://www.linkedin.com/company/sage-software/",
+      "twitter": "https://twitter.com/SageSpain",
+      "youtube": "https://www.youtube.com/user/sagespain"
+    },
+    "meta_title": "Sage HR - Software de gestión de Recursos Humanos | Sage España",
+    "og_title": "Sage HR - Software de gestión de Recursos Humanos | Sage España",
+    "og_image": "https://www.sage.com/es-es/-/media/images/sagedotcom/master/meta%20data/open%20graph%20images/og-generic-safe-1200w1200h.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "cezannehr",
+    "title": "Cezanne HR",
+    "url": "https://cezannehr.com/es/",
+    "description": "El Software de Recursos Humanos que te ayuda a agilizar tareas y procesos administrativos, optimizar tu tiempo y dedicarte a lo que importa.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Apps",
+      "Gestión de Ausencias",
+      "Nóminas",
+      "AI",
+      "Reportes",
+      "Teletrabajo",
+      "Integraciones API",
+      "Portal del Empleado"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Gestión de Ausencias",
+      "Integraciones API",
+      "Nóminas",
+      "Portal del Empleado",
+      "Reportes",
+      "Teletrabajo"
+    ],
+    "rank": 54,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/cezannehr.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/cezannehr_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/cezannehr_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/showcase/cezanne-hr-espa%C3%B1a",
+      "twitter": "https://twitter.com/CezanneHR",
+      "facebook": "https://www.facebook.com/CezanneHR"
+    },
+    "meta_title": "Software de Recursos Humanos | Cezanne HR",
+    "og_title": "Home",
+    "og_image": "https://cezannehr.com/wp-content/uploads/2025/01/say-hello-to-Cezanne_Landing-page-banner-image.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "nubhora",
+    "title": "Nubhora",
+    "url": "https://www.nubhora.com/",
+    "description": "Nubhora es una solución empresarial para el control horario de los empleados. Controla fichajes, accesos, vacaciones , ausencias y mucho más.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Teletrabajo",
+      "Sistemas Biométricos",
+      "Integraciones API",
+      "Portal del Empleado"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Portal del Empleado",
+      "Reportes",
+      "Sistemas Biométricos",
+      "Teletrabajo"
+    ],
+    "rank": 55,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/nubhora.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/nubhora_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/nubhora_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "youtube": "https://www.youtube.com/@nubhoraNB"
+    },
+    "meta_title": "Solución Integral de Gestión del Tiempo - Nubhora",
+    "og_title": "Solución Integral de Gestión del Tiempo - Nubhora",
+    "og_image": "https://www.nubhora.com/wp-content/uploads/2024/11/nubhora-home.jpg",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "bixpe",
+    "title": "Bixpe",
+    "url": "https://www.bixpe.com/",
+    "description": "Bixpe, Control horario y geolocalización de empleados",
+    "categories": [
+      "Control Horario",
+      "Reportes",
+      "Gestión de Ausencias",
+      "Apps",
+      "Geolocalización",
+      "Gratis"
+    ],
+    "detected_features": [],
+    "all_features": [
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gratis",
+      "Reportes"
+    ],
+    "rank": 56,
+    "is_free": true,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/bixpe.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/bixpe_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/bixpe_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "failed",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "timenet",
+    "title": "Timenet",
+    "url": "https://www.timenet.es/",
+    "description": "timenet es una solución modular para el registro de la jornada laboral, la gestión de proyectos, el control de accesos y helpdesk",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "AI",
+      "Teletrabajo",
+      "Sistemas Biométricos"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Sistemas Biométricos",
+      "Teletrabajo"
+    ],
+    "rank": 57,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/timenet.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/timenet_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/timenet_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "youtube": "https://www.youtube.com/embed/1fVjI-cX6dY?autoplay=1&rel=0"
+    },
+    "meta_title": "Registro jornada laboral, control accesos y control proyectos",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "quinyx",
+    "title": "Quinyx",
+    "url": "https://www.quinyx.com/",
+    "description": "Save time, reduce costs and enjoy work with Quinyx, the cloud-based, mobile-first AI-powered Workforce Management Platform.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Nóminas",
+      "AI",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Control Horario",
+      "Integraciones API",
+      "Nóminas"
+    ],
+    "rank": 58,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/quinyx.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/quinyx_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/quinyx_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "twitter": "https://www.quinyx.com/manage-your-workforce",
+      "linkedin": "https://linkedin.com/company/quinyx",
+      "youtube": "http://youtube.com/@quinyxab",
+      "instagram": "https://www.instagram.com/quinyx/",
+      "facebook": "https://www.facebook.com/quinyx/"
+    },
+    "meta_title": "Quinyx | AI-powered Workforce Management, Planning & Scheduling",
+    "og_title": "Quinyx | AI-powered Workforce Management, Planning & Scheduling",
+    "og_image": "https://www.quinyx.com/hubfs/Copy%20of%20apple-devices-responsive-Psd-mockup-new-1.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "talentia",
+    "title": "Talentia Software",
+    "url": "https://www.talentia-software.com/es/",
+    "description": "Talentia Software es un editor de soluciones software financieras y de RRHH. Descubre cómo digitalizar estos departamentos en medianas y grandes empresas.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Apps",
+      "AI",
+      "Reportes"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Reportes"
+    ],
+    "rank": 59,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/talentia.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/talentia_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/talentia_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/company/talentia-software",
+      "twitter": "https://twitter.com/TalentiaSWGroup",
+      "facebook": "https://www.facebook.com/TalentiaSoftware",
+      "youtube": "https://www.youtube.com/channel/UCeLQ-XnQgae6lAKJU4yw1-A",
+      "instagram": "https://www.instagram.com/talentiasoftware/"
+    },
+    "meta_title": "Soluciones software RRHH y financieras | TALENTIA SOFTWARE",
+    "og_title": "Soluciones software RRHH y financieras | TALENTIA SOFTWARE",
+    "og_image": "https://www.talentia-software.com/wp-content/uploads/2025/03/Home_FI2.jpg",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "mhp",
+    "title": "MHP SERVICIOS DE CONTROL, S.L.",
+    "url": "https://www.mhp.es/",
+    "description": "Registro horario, gestión de vacaciones, permisos y ausencias. Se adapta a tu organización e incluye todas las etapas del control y gestión de horarios.",
+    "categories": [
+      "Control de Accesos",
+      "Control Horario",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Gestión de Turnos"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Control de Accesos",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Reportes"
+    ],
+    "rank": 60,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/mhp.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/mhp_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/mhp_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "twitter": "https://twitter.com/mhp_es",
+      "linkedin": "https://www.linkedin.com/company/mhp-espana",
+      "youtube": "https://www.youtube.com/c/MhpEsServicioIntegralControlHorario"
+    },
+    "meta_title": "Sistema Integral de Control Horario | MHP España",
+    "og_title": "",
+    "og_image": "https://www.mhp.es/uploads/mi-imagen.jpg",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "ecocomputer",
+    "title": "ECOCOMPUTER S.L.",
+    "url": "https://www.ecocomputer.com/",
+    "description": "Residuos Gestión de personal Instalaciones Servicios IT Farmacias ¿Qué es Ecocomputer? Ecocomputer es una firma de soluciones tecnológicas fundada en Asturias en 1999. Estamos especializados en proporcionar soluciones y servicios de alto valor añadido, con amplio conocimiento y experiencia en sectores como medioambiente, transporte por ferrocarril, seguridad de instalaciones, sanidad y farmacia, etc. Contamos en […]",
+    "categories": [
+      "Control de Accesos"
+    ],
+    "detected_features": [
+      "Apps",
+      "AI",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control de Accesos",
+      "Integraciones API"
+    ],
+    "rank": 61,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/ecocomputer.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/ecocomputer_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/ecocomputer_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "linkedin": "http://www.linkedin.com/company/ecocomputer-s-l-",
+      "twitter": "https://twitter.com/EcocomputerSL",
+      "youtube": "http://www.youtube.com/c/EcocomputerES",
+      "instagram": "https://www.instagram.com/_eco_pharma_/"
+    },
+    "meta_title": "Home - Principal - Ecocomputer",
+    "og_title": "Home - Principal - Ecocomputer",
+    "og_image": "https://www.ecocomputer.com/wp-content/uploads/2024/03/ISO_9001-14001.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "iest",
+    "title": "INFORMÁTICA DEL ESTE",
+    "url": "https://www.iest.com/",
+    "description": "Optimiza la gestión del tiempo con nuestro Software de Control Horario. Eficiente, preciso y fácil de usar. ¡Mejora la productividad ya!",
+    "categories": [
+      "Control de Accesos"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Sistemas Biométricos",
+      "Integraciones API",
+      "Portal del Empleado"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Control de Accesos",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Nóminas",
+      "Portal del Empleado",
+      "Reportes",
+      "Sistemas Biométricos"
+    ],
+    "rank": 62,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/iest.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/iest_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/iest_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/company/inform-tica-del-este",
+      "facebook": "https://www.facebook.com/Iestwinplus",
+      "twitter": "https://twitter.com/INFORMATICAESTE",
+      "youtube": "https://www.youtube.com/user/controldeaccesos",
+      "instagram": "https://www.instagram.com/informaticadelestee"
+    },
+    "meta_title": "Software de Control Horario - Informática del Este",
+    "og_title": "Control Horario y Control de Accesos",
+    "og_image": "https://www.iest.com/wp-content/uploads/2018/10/b-inspired-kaba-terminal-97-00-copia.jpg",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "tecisa",
+    "title": "TECISA 74",
+    "url": "https://www.tecisa.com/",
+    "description": "+50 años liderando desarrollos de seguridad a medida Soluciones Productos       +50 años liderando desarrollos de seguridad a medida Soluciones Productos       +50 años liderando desarrollos de seguridad a medida Soluciones Productos",
+    "categories": [
+      "Control de Accesos"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "AI",
+      "Reportes",
+      "Teletrabajo",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Control de Accesos",
+      "Integraciones API",
+      "Reportes",
+      "Teletrabajo"
+    ],
+    "rank": 63,
+    "is_free": true,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/tecisa.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/tecisa_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/tecisa_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/company/tecisa/"
+    },
+    "meta_title": "Inicio - Tecisa",
+    "og_title": "Inicio - Tecisa",
+    "og_image": "https://www.tecisa.com/wp-content/uploads/2024/10/logo_tecisa_oscuro.svg",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "zp",
+    "title": "ZP INFORMATICA",
+    "url": "https://www.zpinformatica.com/control-presencial/",
+    "description": "¿Cumples con la ley de control horario? Tenemos la solución de control presencial 100% configurable para adaptarnos a las necesidades de tu negocio",
+    "categories": [
+      "Control de Accesos"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "AI",
+      "Reportes",
+      "Sistemas Biométricos",
+      "Portal del Empleado"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Control de Accesos",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Portal del Empleado",
+      "Reportes",
+      "Sistemas Biométricos"
+    ],
+    "rank": 64,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/zp.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/zp_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/zp_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "Control presencial intuitivo y fácil de instalar",
+    "og_title": "Control presencial intuitivo y fácil de instalar",
+    "og_image": "https://www.zpinformatica.com/wp-content/uploads/2023/04/Control-Presencial.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "biosys",
+    "title": "SISTEMAS DE TECNOLOGÍA APLICADA, S.L.U",
+    "url": "https://www.biosys.es/control-horario/",
+    "description": "Optimiza la gestión del tiempo y la productividad con nuestro sistema de control horario y fichajes. Simplifica el cumplimiento normativo.",
+    "categories": [
+      "Control de Accesos"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Sistemas Biométricos",
+      "Integraciones API",
+      "Portal del Empleado"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Control de Accesos",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Nóminas",
+      "Portal del Empleado",
+      "Reportes",
+      "Sistemas Biométricos"
+    ],
+    "rank": 65,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/biosys.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/biosys_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/biosys_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": [
+        {
+          "price": 60.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "desde 60 €"
+        }
+      ]
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/biosys.es",
+      "twitter": "https://twitter.com/i/flow/login?redirect_after_login=%2Fbiosys_es",
+      "linkedin": "https://www.linkedin.com/company/biosys/"
+    },
+    "meta_title": "Soluciones de control horario y fichaje | BIOSYS",
+    "og_title": "Soluciones de control horario y fichaje | BIOSYS",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "tantice",
+    "title": "EVELB TÉCNICAS Y SISTEMAS, S.L",
+    "url": "https://evelb.es/productos/tantice/",
+    "description": "Tántice es un potente software que facilita la gestión de los fichajes obligatorios de la plantilla, así como otras necesidades de recursos humanos.",
+    "categories": [
+      "Control de Accesos"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Vacaciones",
+      "AI",
+      "Sistemas Biométricos"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Control de Accesos",
+      "Geolocalización",
+      "Gestión de Vacaciones",
+      "Sistemas Biométricos"
+    ],
+    "rank": 66,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/tantice.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/tantice_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/tantice_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "facebook": "https://es-la.facebook.com/evelbtecnicas",
+      "twitter": "https://twitter.com/evelbtecnicas",
+      "linkedin": "https://es.linkedin.com/company/evelb-t%C3%A9cnicas-y-sistemas",
+      "instagram": "https://www.instagram.com/evelbtecnicas/"
+    },
+    "meta_title": "Tántice - Evelb",
+    "og_title": "Tántice - Evelb",
+    "og_image": "https://evelb.es/wp-content/uploads/2018/09/cartel-tantice.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "checkingplan",
+    "title": "Soluciones 480",
+    "url": "https://checkingplan.com/software-control-horario-fichajes/",
+    "description": "Software para Control de Horario y Fichajes. Diferentes sistemas de registro horario: app para fichar, reloj de presencia o portal de empleados.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Teletrabajo",
+      "Sistemas Biométricos",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Reportes",
+      "Sistemas Biométricos",
+      "Teletrabajo"
+    ],
+    "rank": 67,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/checkingplan.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/checkingplan_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/checkingplan_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/company/checkingplan/",
+      "twitter": "https://twitter.com/checkingplan",
+      "youtube": "https://www.youtube.com/channel/UCYZzc6xHVHbIkiBLl-_m0ug",
+      "facebook": "https://www.facebook.com/cuatroochenta",
+      "instagram": "https://www.instagram.com/480cuatroochenta/"
+    },
+    "meta_title": "Software para el registro horario y fichajes – CheckingPlan",
+    "og_title": "Software para el registro horario y fichajes – CheckingPlan",
+    "og_image": "https://checkingplan.com/wp-content/uploads/2022/11/registro-horario-cover-01.jpg",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "fichanet",
+    "title": "LOGIC SOLUCIONES DE HARDWARE",
+    "url": "https://logicsh.es/desarrollo-web/portales-corporativos/fichanet",
+    "description": "Gestione el control horario con nuestra aplicación para fichar, integrada con nuestro dispositivo de control presencial PRONE. Ahora con gestión de flota.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Teletrabajo"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Reportes",
+      "Teletrabajo"
+    ],
+    "rank": 68,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/fichanet.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/fichanet_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/fichanet_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "FichaNet, su aplicación de Control y Registro de la Jornada Laboral",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "winfor",
+    "title": "MF WINFOR SLU",
+    "url": "https://winfor.es/",
+    "description": "Somos Winfor,tu partnertecnológico. Hace más de 25 años que contribuimos a crear procesos que ahorran tiempo, dinero y espacio a nuestros clientes con la ayuda de herramientas que logran aportar mejoras en el ámbito de la  tecnología, la innovación y la gestión informática con el fin de modernizar el servicio que ofrecen.",
+    "categories": [
+      "Control de Accesos"
+    ],
+    "detected_features": [
+      "Apps",
+      "AI",
+      "Reportes",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control de Accesos",
+      "Integraciones API",
+      "Reportes"
+    ],
+    "rank": 69,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/winfor.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/winfor_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/winfor_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/profile.php?id=100074805546673",
+      "twitter": "https://twitter.com/winfo_mf/",
+      "linkedin": "https://www.linkedin.com/company/winfor-consulting/",
+      "youtube": "https://www.youtube.com/channel/UCFpBPLtgvvepZR3lIKyOLuQ"
+    },
+    "meta_title": "Inicio - Winfor Consulting",
+    "og_title": "Inicio - Winfor Consulting",
+    "og_image": "https://winfor.es/wp-content/uploads/2021/10/winfor-favicon.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "shs",
+    "title": "UTE GREENAALL-SHS",
+    "url": "https://www.shsconsultores.es/",
+    "description": "Consultoría Informática, Proveedores de sistemas de identificación y control de acceso biométrico, vascular y del Iris. Centro de Servicios para Gestión Integral de los Recursos Humanos \\",
+    "categories": [
+      "Control de Accesos"
+    ],
+    "detected_features": [
+      "AI"
+    ],
+    "all_features": [
+      "AI",
+      "Control de Accesos"
+    ],
+    "rank": 71,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/shs.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/shs_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/shs_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "twitter": "https://twitter.com/SHSConsultoria",
+      "linkedin": "https://www.linkedin.com/company/shs-consultores?trk=biz-companies-cym",
+      "youtube": "https://www.youtube.com/channel/UClugVS4hh7glF3X5_bGGYNA"
+    },
+    "meta_title": "SHS Consultores",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "primion",
+    "title": "PRIMION DIGITEK SLU",
+    "url": "https://www.primion.es/productos/sistemas-de-registro-de-tiempo/",
+    "description": "Gestión de personal hoy",
+    "categories": [
+      "Control de Accesos"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "Nóminas",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Control de Accesos",
+      "Gestión de Turnos",
+      "Integraciones API",
+      "Nóminas",
+      "Reportes"
+    ],
+    "rank": 72,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/primion.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/primion_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/primion_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/company/primion/",
+      "youtube": "https://www.youtube.com/@PrimionTechnology/"
+    },
+    "meta_title": "Gestión de personal | Primion",
+    "og_title": "Gestión de personal | Primion",
+    "og_image": "https://primion.io/wp-content/uploads/2025/01/AdobeStock_1071647004-scaled.jpeg",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "kometasoft",
+    "title": "KOMETASOFT, S.L.",
+    "url": "https://kometasoft.com/",
+    "description": "Kometasoft, Soluciones informáticas de gestión empresarial",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Apps",
+      "AI",
+      "Reportes"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Reportes"
+    ],
+    "rank": 73,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/kometasoft.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/kometasoft_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/kometasoft_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "Kometasoft - Transformamos empresas de la mano de nuestros clientes",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "atm",
+    "title": "ATM DOS, S.L.",
+    "url": "https://www.atm-maggioli.es/",
+    "description": "ATM Grupo Maggioli es un grupo internacional formado por expertos en Asistencia T√©cnica al Municipio encargados de dar Soluciones para la Administraci√≥n P√∫blica",
+    "categories": [
+      "Control de Accesos"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "AI"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Control de Accesos"
+    ],
+    "rank": 74,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/atm.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/atm_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/atm_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/company/atm-grupo-maggioli/"
+    },
+    "meta_title": "Soluciones para la Administraci√≥n P√∫blica - ATM Grupo Maggioli",
+    "og_title": "Soluciones para la Administraci√≥n P√∫blica - ATM Grupo Maggioli",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "sdatos",
+    "title": "SISTEMAS DE DATOS, S.L.",
+    "url": "https://www.sdatos.com/",
+    "description": "SISTEMAS DE DATOS es una empresa de Integradores y Consultores Tecnológicos, fundada en 1985 . Advanced Bussines Parter de IBM.",
+    "categories": [
+      "Control de Accesos"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "AI",
+      "Reportes",
+      "Sistemas Biométricos",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Control de Accesos",
+      "Geolocalización",
+      "Integraciones API",
+      "Reportes",
+      "Sistemas Biométricos"
+    ],
+    "rank": 75,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/sdatos.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/sdatos_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/sdatos_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "twitter": "https://twitter.com/hashtag/ERP?src=hash",
+      "linkedin": "https://www.linkedin.com/company/sistemas-de-datos-sl"
+    },
+    "meta_title": "Sistemas de Datos",
+    "og_title": "Sistemas de Datos",
+    "og_image": "https://www.sdatos.com/wp-content/uploads/2018/07/Logo-SD_Web.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "grupocastilla",
+    "title": "PEIXE SOFTWARE S.L.",
+    "url": "https://www.grupocastilla.es/software-rrhh/registro-horario/",
+    "description": "Optimiza la gestión de tu plantilla con un software integral y cumple con la normativa",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Gestión de Turnos",
+      "AI",
+      "Teletrabajo",
+      "Sistemas Biométricos",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Nóminas",
+      "Sistemas Biométricos",
+      "Teletrabajo"
+    ],
+    "rank": 77,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/grupocastilla.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/grupocastilla_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/grupocastilla_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/company/grupo-castilla",
+      "facebook": "https://es-la.facebook.com/grupocastillasoftware/",
+      "twitter": "https://twitter.com/GrupoCastilla",
+      "instagram": "https://www.instagram.com/grupo.castilla"
+    },
+    "meta_title": "Software de Control de Horario y Presencia| Grupo Castilla",
+    "og_title": "Software de Control de Horario y Presencia| Grupo Castilla",
+    "og_image": "https://www.grupocastilla.es/wp-content/uploads/1200x630-registro-horario-2024.jpg",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "bepress",
+    "title": "OMESA INFORMATICA S.L.U.",
+    "url": "https://www.omesa.es/soluciones/BePress",
+    "description": "Completo software de control de presencia. Desarrollo de módulos para software de gestión de personal para control horario, jornada laboral...",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Reportes"
+    ],
+    "rank": 78,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/bepress_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/bepress_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "Software control de presencia laboral y horarios",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "ayesa",
+    "title": "AYESA ADVANCED TECHNOLOGY, S.A",
+    "url": "https://www.ayesa.com/",
+    "description": "Ayesa, Tecnología avanzada en soluciones de RRHH y control de accesos",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Apps",
+      "AI"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario"
+    ],
+    "rank": 79,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/ayesa.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/ayesa_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/ayesa_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/company/ayesa/",
+      "facebook": "https://es-es.facebook.com/ayesa.paginaoficial/",
+      "twitter": "https://twitter.com/ayesanews",
+      "instagram": "https://www.instagram.com/ayesaoficial/",
+      "youtube": "https://www.youtube.com/@AyesaCompany"
+    },
+    "meta_title": "Home - Ayesa",
+    "og_title": "Home - Ayesa",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "ati",
+    "title": "Atisoluciones Diseño de Sistemas",
+    "url": "https://www.atisoluciones.com/",
+    "description": "Atisoluciones Diseño de Sistemas, Soluciones informáticas de control",
+    "categories": [
+      "Control de Accesos"
+    ],
+    "detected_features": [
+      "Apps",
+      "AI",
+      "Sistemas Biométricos"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control de Accesos",
+      "Sistemas Biométricos"
+    ],
+    "rank": 80,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/ati.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/ati_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/ati_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "instagram": "https://www.instagram.com/atisoluciones/",
+      "facebook": "https://www.facebook.com/atisolucionesseguridad/",
+      "linkedin": "https://www.linkedin.com/company/atisoluciones/",
+      "twitter": "https://twitter.com/Atisoluciones"
+    },
+    "meta_title": "ATIS - Soluciones y Seguridad",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "pyv",
+    "title": "AQUIENMADRUGA, S.L",
+    "url": "https://pyv.technology/",
+    "description": "Soluciones para las necesidades más exigentes en Sistemas de Seguridad, Controles de Accesos, Tiempo y Asistencia y Planta de Producción. ¡Contáctanos!",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Apps",
+      "Nóminas",
+      "AI",
+      "Reportes",
+      "Teletrabajo",
+      "Integraciones API",
+      "Portal del Empleado"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Integraciones API",
+      "Nóminas",
+      "Portal del Empleado",
+      "Reportes",
+      "Teletrabajo"
+    ],
+    "rank": 81,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/pyv.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/pyv_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/pyv_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "Controles de Acceso y Sistemas de Seguridad Integral | PYV",
+    "og_title": "Controles de Acceso y Sistemas de Seguridad Integral | PYV",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "checkingplan",
+    "title": "Asintec Gestión SL",
+    "url": "https://checkingplan.com/software-control-horario-fichajes/",
+    "description": "Software para Control de Horario y Fichajes. Diferentes sistemas de registro horario: app para fichar, reloj de presencia o portal de empleados.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Teletrabajo",
+      "Sistemas Biométricos",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Reportes",
+      "Sistemas Biométricos",
+      "Teletrabajo"
+    ],
+    "rank": 82,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/checkingplan.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/checkingplan_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/checkingplan_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/company/checkingplan/",
+      "twitter": "https://twitter.com/checkingplan",
+      "youtube": "https://www.youtube.com/channel/UCYZzc6xHVHbIkiBLl-_m0ug",
+      "facebook": "https://www.facebook.com/cuatroochenta",
+      "instagram": "https://www.instagram.com/480cuatroochenta/"
+    },
+    "meta_title": "Software para el registro horario y fichajes – CheckingPlan",
+    "og_title": "Software para el registro horario y fichajes – CheckingPlan",
+    "og_image": "https://checkingplan.com/wp-content/uploads/2022/11/registro-horario-cover-01.jpg",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "fichanet",
+    "title": "NETWORK SOLUTIONS CONTROL, S.L",
+    "url": "https://nscontrol.es/desarrollo-web/portales-corporativos/fichanet",
+    "description": "Gestione el control horario con nuestra aplicación para fichar, integrada con nuestro dispositivo de control presencial PRONE. Ahora con gestión de flota.",
+    "categories": [
+      "Control de Accesos"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Teletrabajo"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Control de Accesos",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Reportes",
+      "Teletrabajo"
+    ],
+    "rank": 83,
+    "is_free": true,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/fichanet.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/fichanet_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/fichanet_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "FichaNet, su aplicación de Control y Registro de la Jornada Laboral",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "sdi",
+    "title": "SISTEMAS DIGITALES DE INFORMÁTICA, S.L",
+    "url": "https://www.sdi.es/",
+    "description": "Creamos tecnología para empresas que valoran su tiempo. Porque la tecnología no debería quitar tiempo, sino devolverlo.",
+    "categories": [
+      "Control de Accesos"
+    ],
+    "detected_features": [
+      "Apps",
+      "Nóminas",
+      "AI",
+      "Reportes",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control de Accesos",
+      "Integraciones API",
+      "Nóminas",
+      "Reportes"
+    ],
+    "rank": 84,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/sdi.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/sdi_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/sdi_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "youtube": "https://www.youtube.com/playlist?list=PLxk6CAUrf3ic40SnvgVT44W_f1179TORn",
+      "linkedin": "https://www.linkedin.com/company/somos-sdi/",
+      "instagram": "https://www.instagram.com/somos.sdi/"
+    },
+    "meta_title": "SDi, invest in time - ¿Cuánto vale tu tiempo?",
+    "og_title": "SDi, invest in time - ¿Cuánto vale tu tiempo?",
+    "og_image": "https://www.sdi.es/wp-content/uploads/2025/05/Web-SDi.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "summar",
+    "title": "Summar",
+    "url": "https://www.summar.es/software-recursos-humanos/",
+    "description": "Software de recursos humanos, prevención de riesgos, portal del empleado y del candidato, para la completa gestión de personas. ¡Videos demostración!",
+    "categories": [
+      "Control Horario",
+      "Teletrabajo"
+    ],
+    "detected_features": [
+      "Apps",
+      "Nóminas",
+      "AI",
+      "Reportes",
+      "Integraciones API",
+      "Portal del Empleado"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Integraciones API",
+      "Nóminas",
+      "Portal del Empleado",
+      "Reportes",
+      "Teletrabajo"
+    ],
+    "rank": 85,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/summar.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/summar_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/summar_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/company/summar-software/",
+      "youtube": "https://www.youtube.com/@summar.software"
+    },
+    "meta_title": "Software de RRHH, PRL y portal del empleado | Mentor",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "beebole",
+    "title": "Beebole",
+    "url": "https://beebole.com/es/control-horario-gestion-proyectos/",
+    "description": "Software para la gestión de proyectos y seguimiento de tareas: analiza el tiempo en proyectos, clientes y tareas de tus empleados y genera informes de control.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "Gestión de Ausencias",
+      "AI",
+      "Reportes",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Gestión de Ausencias",
+      "Integraciones API",
+      "Reportes"
+    ],
+    "rank": 86,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/beebole.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/beebole_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/beebole_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/company/beebole",
+      "twitter": "https://twitter.com/beebole",
+      "youtube": "https://www.youtube.com/c/BeeBole"
+    },
+    "meta_title": "Software para la gestión de proyectos y seguimiento de tareas. 30 días gratis.",
+    "og_title": "Software para la gestión de proyectos y seguimiento de tareas",
+    "og_image": "https://a.storyblok.com/f/118349/1200x630/ddba779b8b/gestion-proyectos-software-og.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "a3gestiontiempo",
+    "title": "Wolters Kluwer",
+    "url": "https://www.wolterskluwer.com/es-es/solutions/a3gestion-tiempo",
+    "description": "a3gestión del tiempo es el software de registro  horario y gestión de presencia de empleados y trabajadores desde app, web, relojes de marcaje, etc.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Teletrabajo",
+      "Integraciones API",
+      "Portal del Empleado"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Nóminas",
+      "Portal del Empleado",
+      "Reportes",
+      "Teletrabajo"
+    ],
+    "rank": 87,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/a3gestiontiempo.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/a3gestiontiempo_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/a3gestiontiempo_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/WKa3Software/",
+      "instagram": "https://www.instagram.com/_wolterskluwer/ ",
+      "linkedin": "https://www.linkedin.com/showcase/wka3software",
+      "youtube": "https://www.youtube.com/@WoltersKluwerComms"
+    },
+    "meta_title": "Registro horario - a3gestión del tiempo | Wolters Kluwer",
+    "og_title": "a3gestión del tiempo - Registro horario y gestión de presencia",
+    "og_image": "https://assets.contenthub.wolterskluwer.com/api/public/content/773fde6151484c5585930065214b1ac1",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "lunia",
+    "title": "Lunia",
+    "url": "https://lunia.es/soluciones-de-negocio/control-de-presencia/",
+    "description": "Aplicación en la nube para una gestión eficaz de la jornada laboral, ausencias y vacaciones de tus empleados. ¡Pruébala GRATIS 30 días!",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Teletrabajo",
+      "Sistemas Biométricos",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Nóminas",
+      "Reportes",
+      "Sistemas Biométricos",
+      "Teletrabajo"
+    ],
+    "rank": 88,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/lunia.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/lunia_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/lunia_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {
+      "facebook": " https://www.facebook.com/luniasl/",
+      "twitter": " https://twitter.com/LuniaSL",
+      "linkedin": " https://www.linkedin.com/company/lunia-consultores?trk=biz-companies-cym"
+    },
+    "meta_title": "Software de Control de Presencia y Fichajes TYVER | Lunia",
+    "og_title": "Software para el Control de presencia y fichajes | Lunia",
+    "og_image": "https://lunia.es/wp-content/uploads/2023/08/imagen-destacada-actualizada2023.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "plain",
+    "title": "Plain",
+    "url": "https://plain.ninja/",
+    "description": "Software de planificación de turnos con IA que ayuda a los managers de RRHH y de operacionesen la gestión de turnos, en el control horario y la gestión de ausencias.",
+    "categories": [
+      "Control Horario",
+      "Automatizaciones",
+      "Mejor valoradas"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Gestión de Turnos",
+      "AI",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Automatizaciones",
+      "Control Horario",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Mejor valoradas"
+    ],
+    "rank": 89,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/plain.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/plain_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/plain_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "instagram": "https://www.instagram.com/plain.ninja/",
+      "linkedin": "https://www.linkedin.com/company/plainapp"
+    },
+    "meta_title": "Plain - Planificación de turnos con IA para equipos de RRHH y operaciones",
+    "og_title": "Home",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "evertime",
+    "title": "Evertime",
+    "url": "https://evercloud.es/evertime/",
+    "description": "Cumplimiento del registro de la jornada laboral.",
+    "categories": [
+      "Control Horario"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Integraciones API",
+      "Reportes"
+    ],
+    "rank": 90,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/evertime.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/evertime_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/evertime_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/company/evercloud-business-solutions/",
+      "twitter": "https://twitter.com/evercloudbs"
+    },
+    "meta_title": "Evertime - Evercloud",
+    "og_title": "Evertime - Evercloud",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "endalia",
+    "title": "Endalia",
+    "url": "https://www.endalia.com/",
+    "description": "Compañía referente en digitalización de procesos de RRHH y Nómina. Software RRHH y Outsourcing al servicio de las empresas. ¡Conócenos!",
+    "categories": [
+      "Control Horario",
+      "Nóminas",
+      "Selección de Personal",
+      "Canal de Denuncias",
+      "Evaluación Desempeño",
+      "Formación",
+      "Portal del Empleado"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "AI",
+      "Reportes",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Canal de Denuncias",
+      "Control Horario",
+      "Evaluación Desempeño",
+      "Formación",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Nóminas",
+      "Portal del Empleado",
+      "Reportes",
+      "Selección de Personal"
+    ],
+    "rank": 91,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/endalia.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/endalia_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/endalia_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "Endalia | ¿Has dicho Recursos Humanos? Podemos ayudarte",
+    "og_title": "Endalia | ¿Has dicho Recursos Humanos? Podemos ayudarte",
+    "og_image": "https://www.endalia.com/wp-content/uploads/endalia-1200x630-2.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "lucca",
+    "title": "Lucca",
+    "url": "https://www.lucca-software.es/gestion-del-desempeno",
+    "description": "Con Performance, podrá retomar el control de sus campañas de entrevistas y favorecer los intercambios entre empleados y superiores.",
+    "categories": [
+      "Control Horario",
+      "Nóminas",
+      "Evaluación Desempeño",
+      "Formación",
+      "Portal del Empleado",
+      "Selección de Personal",
+      "Gestión de Turnos"
+    ],
+    "detected_features": [
+      "Apps",
+      "Gestión de Ausencias",
+      "Nóminas",
+      "AI",
+      "Teletrabajo"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Evaluación Desempeño",
+      "Formación",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Nóminas",
+      "Portal del Empleado",
+      "Selección de Personal",
+      "Teletrabajo"
+    ],
+    "rank": 92,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/lucca.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/lucca_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/lucca_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "Performance, programa de gestión de campañas de contratación y de rendimiento | SIRH LUCCA",
+    "og_title": "Performance, programa de gestión de campañas de contratación y de rendimiento | SIRH LUCCA",
+    "og_image": "https://www.datocms-assets.com/159754/1752164039-og-performance.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "exact",
+    "title": "Exact Software",
+    "url": "https://www.exact.com/es/productos/rr-hh",
+    "description": "Software empresarial para tomar decisiones informadas.",
+    "categories": [
+      "Control Horario",
+      "Evaluación Desempeño",
+      "Formación",
+      "Portal del Empleado",
+      "Selección de Personal",
+      "Gestión de Turnos"
+    ],
+    "detected_features": [],
+    "all_features": [
+      "Control Horario",
+      "Evaluación Desempeño",
+      "Formación",
+      "Gestión de Turnos",
+      "Portal del Empleado",
+      "Selección de Personal"
+    ],
+    "rank": 93,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/exact.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/exact_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/exact_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "failed",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "natureh",
+    "title": "Natureh",
+    "url": "https://www.natureh.com/hm/Portal_trabajador",
+    "description": "Aumente la productividad con un Portal del Trabajador, que reduzca la administrativa, los tiempos de respuesta y de costes, a través de una eficaz gestión laboral.",
+    "categories": [
+      "Control Horario",
+      "Evaluación Desempeño",
+      "Formación",
+      "Portal del Empleado",
+      "Selección de Personal",
+      "Gestión de Turnos"
+    ],
+    "detected_features": [
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Integraciones API",
+      "Portal del Empleado"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Evaluación Desempeño",
+      "Formación",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Nóminas",
+      "Portal del Empleado",
+      "Reportes",
+      "Selección de Personal"
+    ],
+    "rank": 94,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/natureh.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/natureh_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/natureh_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "twitter": "https://x.com/natureh_madrid",
+      "linkedin": "https://www.linkedin.com/company/natureh",
+      "instagram": "https://instagram.com/natureh_ideas/"
+    },
+    "meta_title": "Portal del Trabajador listo para usar, reprogramable y rediseñable",
+    "og_title": "",
+    "og_image": "",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "pgplanning",
+    "title": "PGPlanning",
+    "url": "https://www.pgplanning.es/",
+    "description": "PGPlanning es un software para gestionar turnos de trabajo. Crea una planificación de turnos en minutos con nuestro motor.",
+    "categories": [
+      "Control Horario",
+      "Portal del Empleado",
+      "Selección de Personal",
+      "Gestión de Turnos",
+      "Nóminas"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "Gestión de Turnos",
+      "AI",
+      "Reportes",
+      "Integraciones API",
+      "Portal del Empleado"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Control Horario",
+      "Gestión de Ausencias",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Integraciones API",
+      "Nóminas",
+      "Portal del Empleado",
+      "Reportes",
+      "Selección de Personal"
+    ],
+    "rank": 95,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/pgplanning.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/pgplanning_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/pgplanning_512x512.png",
+    "pricing": {
+      "has_free_plan": false,
+      "tiers": []
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/pgplanning.es",
+      "linkedin": "https://www.linkedin.com/company/72397086",
+      "instagram": "https://www.instagram.com/pgplanning.es",
+      "youtube": "https://www.youtube.com/user/pgplanningTV"
+    },
+    "meta_title": "Programa para turnos de trabajo y cuadrantes de personal",
+    "og_title": "Programa de cuadrantes de trabajo | PGPlanning",
+    "og_image": "https://www.pgplanning.es/wp-content/uploads/2020/06/programa-de-cuadrantes-PGPlanning.jpg",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "zohopeople",
+    "title": "Zoho People",
+    "url": "https://www.zoho.com/es-xl/people/",
+    "description": "Optimiza las operaciones de RR. HH. con nuestro HRMS basado en la nube que ofrece funciones avanzadas para mejorar la productividad del lugar de trabajo y brindar una experiencia excepcional a los empleados. ¡Prueba el software de RR. HH. de Zoho ahora!",
+    "categories": [
+      "Control Horario",
+      "Nóminas",
+      "Selección de Personal",
+      "Canal de Denuncias",
+      "Evaluación Desempeño",
+      "Formación",
+      "Portal del Empleado"
+    ],
+    "detected_features": [
+      "Apps",
+      "Nóminas",
+      "AI",
+      "Reportes",
+      "Integraciones API"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Canal de Denuncias",
+      "Control Horario",
+      "Evaluación Desempeño",
+      "Formación",
+      "Integraciones API",
+      "Nóminas",
+      "Portal del Empleado",
+      "Reportes",
+      "Selección de Personal"
+    ],
+    "rank": 96,
+    "is_free": false,
+    "is_top_rated": false,
+    "verified": false,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/zohopeople.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/zohopeople_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/zohopeople_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": []
+    },
+    "social": {},
+    "meta_title": "Software de RR. HH. en la nube | Solución de HRMS | Zoho People",
+    "og_title": "Software de RR. HH. en la nube | Solución de HRMS | Zoho People",
+    "og_image": "https://www.zohowebstatic.com/sites/zweb/images/ogimage/people-logo.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  },
+  {
+    "slug": "inwout",
+    "title": "INWOUT",
+    "url": "https://inwout.com/",
+    "description": "Simplifica la gestión de fichajes y ausencias con INWOUT, cumple con el Registro Horario Electrónico Obligatorio y optimizar el control de presencia en las empresas. Automatiza el control horario con geofencing, gestiona ausencias, vacaciones y permisos de manera fácil, y genera informes automáticos sin errores. Con INWOUT, olvídate del papeleo y las hojas de cálculo: nuestra plataforma en la nube y app móvil te permiten tener todo centralizado y organizado en un solo lugar. Además, gracias a las integraciones avanzadas con sistemas biométricos, aseguras precisión y seguridad en cada fichaje. Más de 200 empresas ya confían en INWOUT para reducir errores, cumplir con la normativa y ganar en eficiencia. Prueba gratuita disponible para pequeños equipos de hasta 5 empleados. Descubre cómo INWOUT puede ayudarte a evitar sanciones y mejorar la gestión horaria de tu negocio de forma rápida y sin complicaciones.",
+    "categories": [
+      "Control Horario",
+      "Targetas RFID",
+      "Sistemas Biométricos",
+      "PIN",
+      "Gestión de Turnos",
+      "Reportes",
+      "Gratis",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Apps",
+      "Geolocalización",
+      "Automatizaciones",
+      "Mejor valoradas",
+      "Software a medida",
+      "Integraciones API",
+      "Control de presencia",
+      "AI",
+      "Teletrabajo",
+      "Geofence",
+      "Portal del Empleado",
+      "Gestión de Turnos",
+      "Gestión de Incidencias,"
+    ],
+    "detected_features": [
+      "Control Horario",
+      "Geolocalización",
+      "Apps",
+      "Gestión de Ausencias",
+      "Gestión de Vacaciones",
+      "Nóminas",
+      "AI",
+      "Reportes",
+      "Sistemas Biométricos",
+      "Integraciones API",
+      "Portal del Empleado"
+    ],
+    "all_features": [
+      "AI",
+      "Apps",
+      "Automatizaciones",
+      "Control Horario",
+      "Control de presencia",
+      "Geofence",
+      "Geolocalización",
+      "Gestión de Ausencias",
+      "Gestión de Incidencias,",
+      "Gestión de Turnos",
+      "Gestión de Vacaciones",
+      "Gratis",
+      "Integraciones API",
+      "Mejor valoradas",
+      "Nóminas",
+      "PIN",
+      "Portal del Empleado",
+      "Reportes",
+      "Sistemas Biométricos",
+      "Software a medida",
+      "Targetas RFID",
+      "Teletrabajo"
+    ],
+    "rank": 100,
+    "is_free": true,
+    "is_top_rated": true,
+    "verified": true,
+    "premium": true,
+    "logo_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/logos/inwout.png",
+    "screenshot_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/inwout_1200x630.png",
+    "thumbnail_url": "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/fichajeempresas/screenshots/inwout_512x512.png",
+    "pricing": {
+      "has_free_plan": true,
+      "tiers": [
+        {
+          "price": 2.0,
+          "currency": "EUR",
+          "unit": "usuario",
+          "raw": "2 € /usuario"
+        },
+        {
+          "price": 0.0,
+          "currency": "EUR",
+          "unit": "mes",
+          "raw": "Desde 0€"
+        }
+      ]
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/inwout.corp/",
+      "instagram": "https://www.instagram.com/inwout.corp/",
+      "linkedin": "https://es.linkedin.com/company/inwout"
+    },
+    "meta_title": "INWOUT | Control Horario y Gestión de Ausencias",
+    "og_title": "INWOUT | Control Horario y Gestión de Ausencias",
+    "og_image": "https://cdn.prod.website-files.com/5ea5f48af0e20846c0564597/683aad954b25fe9ea40e2a39_control.png",
+    "scrape_status": "success",
+    "scrape_date": "2026-02-26"
+  }
+]

@@ -34,3 +34,6 @@ verify_jwt = false
 
 [edge_functions.blog-rss]
 verify_jwt = false
+
+[edge_functions.import-solutions]
+verify_jwt = false

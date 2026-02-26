@@ -2253,6 +2253,7 @@ export type Database = {
           meta_description: string | null
           meta_title: string | null
           min_price: number | null
+          og_image: string | null
           platforms: string[] | null
           positioning_message: string | null
           price_per_user_month: number | null
@@ -2266,8 +2267,13 @@ export type Database = {
           rank: number | null
           rating: number | null
           redirect_url: string | null
+          scrape_date: string | null
+          scrape_status: string | null
+          screenshot_url: string | null
           slug: string
+          social: Json | null
           target_audience: string | null
+          thumbnail_url: string | null
           title: string
           type: string
           updated_at: string | null
@@ -2319,6 +2325,7 @@ export type Database = {
           meta_description?: string | null
           meta_title?: string | null
           min_price?: number | null
+          og_image?: string | null
           platforms?: string[] | null
           positioning_message?: string | null
           price_per_user_month?: number | null
@@ -2332,8 +2339,13 @@ export type Database = {
           rank?: number | null
           rating?: number | null
           redirect_url?: string | null
+          scrape_date?: string | null
+          scrape_status?: string | null
+          screenshot_url?: string | null
           slug: string
+          social?: Json | null
           target_audience?: string | null
+          thumbnail_url?: string | null
           title?: string
           type?: string
           updated_at?: string | null
@@ -2385,6 +2397,7 @@ export type Database = {
           meta_description?: string | null
           meta_title?: string | null
           min_price?: number | null
+          og_image?: string | null
           platforms?: string[] | null
           positioning_message?: string | null
           price_per_user_month?: number | null
@@ -2398,8 +2411,13 @@ export type Database = {
           rank?: number | null
           rating?: number | null
           redirect_url?: string | null
+          scrape_date?: string | null
+          scrape_status?: string | null
+          screenshot_url?: string | null
           slug?: string
+          social?: Json | null
           target_audience?: string | null
+          thumbnail_url?: string | null
           title?: string
           type?: string
           updated_at?: string | null
