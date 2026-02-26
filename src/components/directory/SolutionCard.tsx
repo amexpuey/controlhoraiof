@@ -92,7 +92,7 @@ export function SolutionCard({ solution }: SolutionCardProps) {
             </div>
 
             <p className="text-sm md:text-[15px] leading-relaxed mb-4" style={{ color: 'rgba(255,255,255,.65)' }}>
-              {solution.description}
+              Plataforma española de control horario y gestión de ausencias para cumplir el RD 8/2019. Geofencing automático, flujos de aprobación y trazabilidad inmutable según criterios ITSS. Para empresas de 5 a 500 empleados.
             </p>
 
             {activeFeatures.length > 0 && (
