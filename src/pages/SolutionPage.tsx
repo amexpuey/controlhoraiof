@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ExternalLink, Globe, MessageSquare } from 'lucide-react';
-import { Footer } from '@/components/Footer';
+
 import { SolutionHero } from '@/components/solution/SolutionHero';
 import { SolutionSocialLinks } from '@/components/solution/SolutionSocialLinks';
 
@@ -244,7 +244,7 @@ export default function SolutionPage() {
           </div>
         )}
       </div>
-      <Footer />
+      
     </div>
   );
 }
