@@ -39,10 +39,12 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
       
       <div className="p-6 md:p-8">
         {/* Post Meta */}
-        <ArticleMeta 
-          publishedDate={formattedDate} 
-          readingTime={readingTime} 
-        />
+        <div style={{ color: "var(--text-muted)" }}>
+          <ArticleMeta 
+            publishedDate={formattedDate} 
+            readingTime={readingTime} 
+          />
+        </div>
         
         {/* Post Content with integrated title handling */}
         <div className="article-container">
