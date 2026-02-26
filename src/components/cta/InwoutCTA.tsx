@@ -1,4 +1,5 @@
 import { ExternalLink } from 'lucide-react';
+import inwoutLogo from '@/assets/inwout-logo.png';
 import { Button } from '@/components/ui/button';
 
 interface InwoutCTAProps {
@@ -42,8 +43,8 @@ export function InwoutCTA({ variant = 'sidebar', className = '' }: InwoutCTAProp
   return (
     <div className={`sticky top-24 rounded-xl p-6 ${className}`} style={{ background: 'var(--white)', border: '1px solid var(--border)', boxShadow: '0 4px 24px rgba(0,0,0,.06)' }}>
       <div className="text-center">
-        <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: 'var(--green-bg)' }}>
-          <span className="text-xl font-bold" style={{ color: 'var(--green)' }}>IW</span>
+        <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3 overflow-hidden">
+          <img src={inwoutLogo} alt="INWOUT" className="w-full h-full object-cover" />
         </div>
         <h3 className="font-bold mb-1" style={{ color: 'var(--text)' }}>Prueba INWOUT</h3>
         <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
