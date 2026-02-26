@@ -18,20 +18,19 @@ export const templateData: TemplateData[] = [
     description: "Herramienta completa para el control diario, semanal, mensual y anual de las horas laborales de los trabajadores.",
     imageSrc: "/lovable-uploads/4efc5a5e-0fc6-450c-8097-471f8f05bcd9.png",
     category: "Control horario",
-    action: "download",
-    actionLabel: "Descargar Excel",
-    exampleLink: "#",
-    downloadUrl: "/templates/registro-horas-trabajadas.xlsx"
+    action: "edit",
+    actionLabel: "Ver recurso",
+    editUrl: "/plantillas/registro-horas"
   },
   {
     id: "kit-herramientas-ley",
     title: "Kit de herramientas esenciales para cumplir con la Ley",
-    description: "Conjunto de documentos y guías para asegurar el cumplimiento de la normativa laboral.",
+    description: "Genera automáticamente la documentación legal necesaria para el registro horario.",
     imageSrc: "/lovable-uploads/d48380f9-f5c9-4f3f-8184-8ef27150846d.png",
     category: "Normativa Laboral",
-    action: "edit",
-    actionLabel: "Acceder al Kit",
-    editUrl: "/kit-legal"
+    action: "external",
+    actionLabel: "Generar documentación",
+    editUrl: "https://comunicado-legal.inwout.app"
   },
   {
     id: "plantilla-onboarding",

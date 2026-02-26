@@ -24,7 +24,7 @@ export default function TemplateCard({ template, onAction }: TemplateCardProps) 
     return iconMap[template.category] || <Book className="h-7 w-7" style={{ color: 'var(--green)' }} />;
   };
 
-  const isComingSoon = template.action === "download" && template.id !== "registro-horas-trabajadas";
+  const isComingSoon = template.action === "download";
 
   const renderAction = () => {
     if (isComingSoon) {
@@ -34,14 +34,10 @@ export default function TemplateCard({ template, onAction }: TemplateCardProps) 
         </span>
       );
     }
-    if (template.action === "download") {
-      return onAction ? (
-        <button className="btn btn-green" style={{ width: '100%' }} onClick={onAction}>
-          <Download className="h-4 w-4" /> {template.actionLabel}
-        </button>
-      ) : (
-        <a href={template.downloadUrl} download className="btn btn-green" style={{ width: '100%' }}>
-          <Download className="h-4 w-4" /> {template.actionLabel}
+    if (template.action === "external") {
+      return (
+        <a href={template.editUrl} target="_blank" rel="noopener noreferrer" className="btn btn-green" style={{ width: '100%' }}>
+          <ExternalLink className="h-4 w-4" /> {template.actionLabel}
         </a>
       );
     }
