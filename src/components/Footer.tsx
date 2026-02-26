@@ -44,8 +44,8 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {/* Brand */}
           <div className="flex flex-col items-center md:items-start space-y-4">
-            <img src={logoFichajes} alt="Fichajes Empresas" className="w-14 h-14" />
-            <h3 className="font-semibold text-lg" style={{ color: "var(--dark-text)" }}>Fichajes Empresas .es</h3>
+            <img src={logoFichajes} alt="Fichaje Empresas" className="w-14 h-14" />
+            <h3 className="font-semibold text-lg" style={{ color: "var(--dark-text)" }}>FichajeEmpresas.es</h3>
             <p className="text-sm max-w-md" style={{ color: "var(--dark-muted)" }}>
               Encuentra tu app de registro horario de forma fácil y rápida. El directorio más completo para empresas de todos los tamaños.
             </p>
@@ -123,7 +123,7 @@ export function Footer() {
         <div className="mt-8 pt-4 flex flex-col sm:flex-row justify-between items-center gap-4" style={{ borderTop: "1px solid rgba(255,255,255,.10)" }}>
           <div className="flex items-center space-x-2 text-sm" style={{ color: "var(--dark-muted)" }}>
             <Copyright className="h-4 w-4" />
-            <span>Fichajes Empresas .es 2026</span>
+            <span>FichajeEmpresas.es 2026</span>
           </div>
           <div className="flex items-center space-x-4 text-sm" style={{ color: "var(--dark-muted)" }}>
             <span>Desarrollado con ♥ en España</span>
