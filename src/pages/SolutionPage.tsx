@@ -97,9 +97,26 @@ export default function SolutionPage() {
               <SolutionSocialLinks social={social} />
             )}
 
-            <p className="text-muted-foreground leading-relaxed">
-              {solution.long_description || solution.description}
-            </p>
+            {solution.is_promoted ? (
+              <div className="space-y-4 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                <p>
+                  INWOUT es una plataforma española de control horario y gestión de ausencias diseñada específicamente para cumplir con el Registro Horario Electrónico Obligatorio del <strong style={{ color: 'var(--text)' }}>RD 8/2019</strong>. Fundada en Barcelona, opera en la nube con app móvil nativa para iOS y Android.
+                </p>
+                <p>
+                  <strong style={{ color: 'var(--text)' }}>Puntos fuertes verificados:</strong> geofencing automático para fichar sin interacción, gestión completa de vacaciones y permisos con flujos de aprobación, e integraciones con dispositivos biométricos de terceros. Los registros se conservan con trazabilidad inmutable, requisito explícito de los criterios técnicos <strong style={{ color: 'var(--text)' }}>ITSS 101/2019</strong>.
+                </p>
+                <p>
+                  <strong style={{ color: 'var(--text)' }}>Para quién es:</strong> empresas de 5 a 500 trabajadores que necesitan compliance inmediato sin implementación compleja. Especialmente adecuado para pymes con trabajadores móviles o distribuidos.
+                </p>
+                <p className="text-sm font-medium" style={{ color: 'var(--green-dark)', background: 'var(--green-bg)', padding: '12px 16px', borderRadius: 'var(--radius-xs)', border: '1px solid var(--green-light)' }}>
+                  Prueba gratuita disponible hasta 5 empleados sin límite de tiempo.
+                </p>
+              </div>
+            ) : (
+              <p className="text-muted-foreground leading-relaxed">
+                {solution.long_description || solution.description}
+              </p>
+            )}
 
             {solution.url && (
               <Button variant="outline" asChild>
