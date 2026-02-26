@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Mail, Phone, MessageSquare, Copyright, ExternalLink, CheckCircle, Book } from "lucide-react";
+import { Mail, Copyright, ExternalLink, CheckCircle, Book } from "lucide-react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -32,7 +32,6 @@ export function Footer() {
         description: "Gracias por suscribirte a nuestro newsletter. Recibirás novedades pronto.",
       });
       
-      // Reset form
       setEmail("");
     } catch (error) {
       console.error('Error submitting newsletter form:', error);
@@ -47,65 +46,67 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-gradient-to-r from-gray-800 to-gray-900 mt-20 py-12 text-white">
+    <footer style={{ background: "var(--dark)" }} className="mt-20 py-12 text-white">
       <div className="container mx-auto px-4">
-        {/* Main Footer Content - Three Column Layout */}
+        {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {/* Column 1: Brand Statement */}
+          {/* Column 1: Brand */}
           <div className="flex flex-col items-center md:items-start space-y-4">
             <img
               src="/lovable-uploads/c2b90205-f41e-4c0d-bf34-bb7a5bba9103.png"
               alt="Fichajes Empresas Logo"
               className="w-16 h-16"
             />
-            <h3 className="font-semibold text-lg">Fichajes Empresas .es</h3>
-            <p className="text-gray-300 text-sm max-w-md">
+            <h3 className="font-semibold text-lg" style={{ color: "var(--dark-text)" }}>Fichajes Empresas .es</h3>
+            <p className="text-sm max-w-md" style={{ color: "var(--dark-muted)" }}>
               Encuentra tu app de registro horario de forma fácil y rápida. El directorio más completo para empresas de todos los tamaños.
             </p>
           </div>
 
           {/* Column 2: Quick Links */}
           <div className="flex flex-col items-center md:items-start space-y-4">
-            <h3 className="font-semibold text-lg">Enlaces Rápidos</h3>
+            <h3 className="font-semibold text-lg" style={{ color: "var(--dark-text)" }}>Enlaces Rápidos</h3>
             <nav className="flex flex-col space-y-2">
-              <a href="/dashboard" className="text-gray-300 hover:text-white flex items-center transition-colors text-sm">
+              <a href="/directorio" className="flex items-center transition-colors text-sm hover:opacity-80" style={{ color: "var(--dark-muted)" }}>
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Directorio de Apps
               </a>
-              <a href="/blog" className="text-gray-300 hover:text-white flex items-center transition-colors text-sm">
+              <a href="/blog" className="flex items-center transition-colors text-sm hover:opacity-80" style={{ color: "var(--dark-muted)" }}>
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Blog
               </a>
               <button 
                 onClick={() => setShowComplianceDialog(true)}
-                className="text-gray-300 hover:text-white flex items-center transition-colors text-sm text-left"
+                className="flex items-center transition-colors text-sm text-left hover:opacity-80"
+                style={{ color: "var(--dark-muted)" }}
               >
-                <CheckCircle className="h-4 w-4 mr-2 text-blue-400" />
+                <CheckCircle className="h-4 w-4 mr-2" style={{ color: "var(--green)" }} />
                 Verificador de cumplimiento
               </button>
               <button 
                 onClick={() => setShowLearningDialog(true)}
-                className="text-gray-300 hover:text-white flex items-center transition-colors text-sm text-left"
+                className="flex items-center transition-colors text-sm text-left hover:opacity-80"
+                style={{ color: "var(--dark-muted)" }}
               >
-                <Book className="h-4 w-4 mr-2 text-blue-400" />
+                <Book className="h-4 w-4 mr-2" style={{ color: "var(--green)" }} />
                 Módulos de aprendizaje
               </button>
             </nav>
           </div>
 
-          {/* Column 3: Legal Links */}
+          {/* Column 3: Legal */}
           <div className="flex flex-col items-center md:items-start space-y-4">
-            <h3 className="font-semibold text-lg">Legal</h3>
+            <h3 className="font-semibold text-lg" style={{ color: "var(--dark-text)" }}>Legal</h3>
             <nav className="flex flex-col space-y-2">
-              <a href="/terminos" className="text-gray-300 hover:text-white flex items-center transition-colors text-sm">
+              <a href="/terminos" className="flex items-center transition-colors text-sm hover:opacity-80" style={{ color: "var(--dark-muted)" }}>
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Términos y Condiciones
               </a>
-              <a href="/privacidad" className="text-gray-300 hover:text-white flex items-center transition-colors text-sm">
+              <a href="/privacidad" className="flex items-center transition-colors text-sm hover:opacity-80" style={{ color: "var(--dark-muted)" }}>
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Política de Privacidad
               </a>
-              <a href="/cookies" className="text-gray-300 hover:text-white flex items-center transition-colors text-sm">
+              <a href="/cookies" className="flex items-center transition-colors text-sm hover:opacity-80" style={{ color: "var(--dark-muted)" }}>
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Política de Cookies
               </a>
@@ -113,29 +114,31 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Newsletter Subscription */}
-        <div className="py-8 border-t border-gray-700">
+        {/* Newsletter */}
+        <div className="py-8" style={{ borderTop: "1px solid rgba(255,255,255,.10)" }}>
           <div className="max-w-xl mx-auto text-center">
-            <h3 className="text-xl font-semibold mb-2">Suscríbete a nuestro Newsletter</h3>
-            <p className="text-gray-300 mb-4 text-sm">
+            <h3 className="text-xl font-semibold mb-2" style={{ color: "var(--dark-text)" }}>Suscríbete a nuestro Newsletter</h3>
+            <p className="mb-4 text-sm" style={{ color: "var(--dark-muted)" }}>
               Recibe consejos y novedades sobre el control horario digital para tu empresa
             </p>
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
               <div className="relative flex-grow">
-                <Mail className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+                <Mail className="absolute left-3 top-2.5 h-4 w-4" style={{ color: "var(--dark-muted)" }} />
                 <Input
                   type="email"
                   placeholder="Tu correo electrónico"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="pl-10 bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400 focus:ring-blue-400 h-10 text-sm"
+                  className="pl-10 h-10 text-sm"
+                  style={{ background: "rgba(255,255,255,.08)", borderColor: "rgba(255,255,255,.15)", color: "var(--dark-text)" }}
                 />
               </div>
               <Button 
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-blue-600 hover:bg-blue-700 text-white text-sm h-10"
+                className="text-sm h-10"
+                style={{ background: "var(--green)", color: "white" }}
               >
                 {isSubmitting ? "Enviando..." : "Suscribirse"}
               </Button>
@@ -143,13 +146,13 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom copyright section */}
-        <div className="mt-8 pt-4 border-t border-gray-700 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="flex items-center space-x-2 text-sm text-gray-400">
+        {/* Bottom copyright */}
+        <div className="mt-8 pt-4 flex flex-col sm:flex-row justify-between items-center gap-4" style={{ borderTop: "1px solid rgba(255,255,255,.10)" }}>
+          <div className="flex items-center space-x-2 text-sm" style={{ color: "var(--dark-muted)" }}>
             <Copyright className="h-4 w-4" />
-            <span>Fichajes Empresas .es 2025</span>
+            <span>Fichajes Empresas .es 2026</span>
           </div>
-          <div className="flex items-center space-x-4 text-sm text-gray-400">
+          <div className="flex items-center space-x-4 text-sm" style={{ color: "var(--dark-muted)" }}>
             <span>Desarrollado con ♥ en España</span>
           </div>
         </div>

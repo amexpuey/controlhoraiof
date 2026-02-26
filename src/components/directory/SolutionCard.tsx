@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import { Check, ExternalLink, Star } from 'lucide-react';
 import type { Database } from '@/integrations/supabase/types';
 
@@ -11,60 +9,92 @@ interface SolutionCardProps {
   solution: Company;
 }
 
+const featureLabels: Record<string, string> = {
+  has_time_tracking: 'Control horario',
+  has_mobile_app: 'App móvil',
+  has_geolocation: 'Geolocalización',
+  has_biometric: 'Biometría',
+  has_absence_management: 'Gestión ausencias',
+  has_shift_management: 'Gestión turnos',
+  has_reports: 'Informes',
+  has_api: 'API',
+  has_remote_work: 'Teletrabajo',
+  has_ai: 'Inteligencia artificial',
+  has_employee_portal: 'Portal empleado',
+  has_payroll: 'Nóminas',
+  has_geofence: 'Geovalla',
+};
+
 export function SolutionCard({ solution }: SolutionCardProps) {
   const isInwout = solution.is_promoted;
 
-  // Count active features
-  const featureKeys = [
-    'has_time_tracking', 'has_mobile_app', 'has_geolocation', 'has_biometric',
-    'has_absence_management', 'has_shift_management', 'has_reports', 'has_api',
-    'has_remote_work', 'has_ai', 'has_employee_portal', 'has_payroll', 'has_geofence',
-  ] as const;
-  
+  const featureKeys = Object.keys(featureLabels) as (keyof typeof featureLabels)[];
   const activeFeatures = featureKeys.filter(k => (solution as Record<string, unknown>)[k]);
 
   return (
-    <Card className={`group relative overflow-hidden transition-all hover:shadow-lg ${isInwout ? 'ring-2 ring-primary shadow-md' : 'hover:border-primary/30'}`}>
+    <div
+      className={`group relative overflow-hidden rounded-[var(--radius)] transition-all ${isInwout ? 'shadow-md' : ''}`}
+      style={{
+        background: 'var(--white)',
+        border: isInwout ? '2px solid var(--green)' : '1px solid var(--border)',
+      }}
+      onMouseEnter={e => {
+        if (!isInwout) (e.currentTarget as HTMLElement).style.borderColor = 'var(--green)';
+        (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)';
+        (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 28px -6px rgba(15,184,159,.10)';
+      }}
+      onMouseLeave={e => {
+        if (!isInwout) (e.currentTarget as HTMLElement).style.borderColor = 'var(--border)';
+        (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
+        (e.currentTarget as HTMLElement).style.boxShadow = 'none';
+      }}
+    >
       {isInwout && (
-        <div className="absolute top-0 left-0 right-0 bg-primary text-primary-foreground text-xs text-center py-1 font-semibold">
+        <div className="text-xs text-center py-1 font-semibold" style={{ background: 'var(--green)', color: 'white' }}>
           ⭐ Recomendada
         </div>
       )}
-      <CardContent className={`p-5 ${isInwout ? 'pt-8' : ''}`}>
+      <div className={`p-5 ${isInwout ? '' : ''}`}>
         <div className="flex items-start gap-3 mb-3">
-          <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center shrink-0 overflow-hidden">
+          <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 overflow-hidden" style={{ background: 'var(--surface-alt)' }}>
             {solution.logo_url ? (
               <img src={solution.logo_url} alt={solution.title} className="w-full h-full object-contain" loading="lazy" />
             ) : (
-              <span className="text-xs font-bold text-muted-foreground">{solution.title?.charAt(0)}</span>
+              <span className="text-xs font-bold" style={{ color: 'var(--text-muted)' }}>{solution.title?.charAt(0)}</span>
             )}
           </div>
           <div className="min-w-0 flex-1">
-            <Link to={`/directorio/${solution.slug}`} className="font-semibold text-foreground hover:text-primary transition-colors line-clamp-1">
+            <Link to={`/directorio/${solution.slug}`} className="font-semibold transition-colors line-clamp-1" style={{ color: 'var(--text)' }}>
               {solution.title}
             </Link>
             <div className="flex items-center gap-2 mt-0.5">
-              {solution.is_top_rated && <Badge variant="secondary" className="text-[10px] px-1.5 py-0">Top</Badge>}
-              {solution.verified && <Badge variant="outline" className="text-[10px] px-1.5 py-0">Verificada</Badge>}
-              {solution.is_free && <Badge className="text-[10px] px-1.5 py-0 bg-green-100 text-green-800 border-green-200">Gratis</Badge>}
+              {solution.is_top_rated && (
+                <span className="text-[10px] px-1.5 py-0 rounded-full font-medium" style={{ background: 'var(--green-bg)', color: 'var(--green-dark)' }}>Top</span>
+              )}
+              {solution.verified && (
+                <span className="text-[10px] px-1.5 py-0 rounded-full font-medium" style={{ background: 'var(--surface-alt)', color: 'var(--text-secondary)', border: '1px solid var(--border)' }}>Verificada</span>
+              )}
+              {solution.is_free && (
+                <span className="text-[10px] px-1.5 py-0 rounded-full font-medium" style={{ background: 'var(--green-bg)', color: 'var(--green-dark)' }}>Gratis</span>
+              )}
             </div>
           </div>
         </div>
 
-        <p className="text-sm text-muted-foreground line-clamp-2 mb-3 min-h-[2.5rem]">
+        <p className="text-sm line-clamp-2 mb-3 min-h-[2.5rem]" style={{ color: 'var(--text-secondary)' }}>
           {solution.description}
         </p>
 
         {activeFeatures.length > 0 && (
           <div className="flex flex-wrap gap-1 mb-3">
             {activeFeatures.slice(0, 4).map(f => (
-              <span key={f} className="inline-flex items-center gap-0.5 text-[11px] bg-muted px-1.5 py-0.5 rounded">
-                <Check className="h-3 w-3 text-green-600" />
-                {f.replace('has_', '').replace(/_/g, ' ')}
+              <span key={f} className="inline-flex items-center gap-0.5 text-[11px] px-1.5 py-0.5 rounded" style={{ background: 'var(--surface-alt)', color: 'var(--text-secondary)' }}>
+                <Check className="h-3 w-3" style={{ color: 'var(--green)' }} />
+                {featureLabels[f]}
               </span>
             ))}
             {activeFeatures.length > 4 && (
-              <span className="text-[11px] text-muted-foreground px-1.5 py-0.5">
+              <span className="text-[11px] px-1.5 py-0.5" style={{ color: 'var(--text-muted)' }}>
                 +{activeFeatures.length - 4} más
               </span>
             )}
@@ -83,7 +113,7 @@ export function SolutionCard({ solution }: SolutionCardProps) {
             </Button>
           )}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

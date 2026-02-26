@@ -131,12 +131,12 @@ export default function DashboardApps({
 
       {/* Comparison Section */}
       {selectedAppsForComparison.length > 0 && (
-        <div className="bg-white p-6 rounded-lg shadow-sm">
-          <h2 className="text-xl font-semibold mb-4">
+        <div className="p-6 rounded-xl" style={{ background: 'var(--white)', border: '1px solid var(--border)' }}>
+          <h2 className="text-xl font-semibold mb-4" style={{ color: 'var(--text)' }}>
             Comparar ({selectedAppsForComparison.length}/3)
           </h2>
           <div className="flex justify-between items-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
               {selectedAppsForComparison.length < 2
                 ? "Selecciona al menos 2 aplicaciones para comparar"
                 : "¡Listo para comparar!"}
@@ -157,18 +157,18 @@ export default function DashboardApps({
       {isLoading && (
         <div className="text-center py-8">
           <div className="animate-pulse mb-2">
-            <div className="h-4 bg-gray-200 rounded w-32 mx-auto"></div>
+            <div className="h-4 rounded w-32 mx-auto" style={{ background: 'var(--surface-alt)' }}></div>
           </div>
-          <p className="text-gray-500">Cargando aplicaciones...</p>
+          <p style={{ color: 'var(--text-muted)' }}>Cargando aplicaciones...</p>
         </div>
       )}
 
       {/* Show message when no filters are selected */}
       {!hasActiveFilters && !isLoading && (
-        <div className="text-center bg-blue-50 p-8 rounded-lg border border-blue-100">
-          <AlertCircle className="h-12 w-12 text-blue-500 mx-auto mb-4" />
-          <h3 className="text-xl font-bold text-blue-800 mb-2">No hay filtros seleccionados</h3>
-          <p className="text-blue-700 mb-4">
+        <div className="text-center p-8 rounded-xl" style={{ background: 'var(--green-bg)', border: '1px solid var(--green-light)' }}>
+          <AlertCircle className="h-12 w-12 mx-auto mb-4" style={{ color: 'var(--green)' }} />
+          <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--text)' }}>No hay filtros seleccionados</h3>
+          <p className="mb-4" style={{ color: 'var(--text-secondary)' }}>
             Selecciona al menos un filtro para visualizar las aplicaciones disponibles.
           </p>
         </div>
@@ -190,13 +190,14 @@ export default function DashboardApps({
 
       {/* Show message if filters are applied but no apps are found */}
       {hasActiveFilters && appsToShow.length === 0 && !isLoading && (
-        <div className="text-center text-gray-600 py-8 bg-gray-50 rounded-lg border border-gray-100">
-          <AlertCircle className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-          <p className="font-medium">No se encontraron aplicaciones que coincidan con tus criterios.</p>
+        <div className="text-center py-8 rounded-xl" style={{ background: 'var(--surface-alt)', border: '1px solid var(--border)' }}>
+          <AlertCircle className="h-8 w-8 mx-auto mb-2" style={{ color: 'var(--text-muted)' }} />
+          <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>No se encontraron aplicaciones que coincidan con tus criterios.</p>
           <Button 
             onClick={clearAllFilters} 
             variant="link" 
-            className="mt-2 text-blue-600 cursor-pointer"
+            className="mt-2 cursor-pointer"
+            style={{ color: 'var(--green)' }}
             type="button"
           >
             Limpiar filtros

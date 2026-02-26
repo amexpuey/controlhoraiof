@@ -8,7 +8,6 @@ import {
   LayoutGrid, 
   X, 
   User,
-  FileText,
   CheckCircle,
   Book
 } from "lucide-react";
@@ -20,42 +19,22 @@ interface MobileMenuProps {
 
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const menuItems = [
-    {
-      label: 'Inicio',
-      href: '/',
-      icon: Home
-    },
-    {
-      label: 'Mejores Apps',
-      href: '/dashboard',
-      icon: LayoutGrid
-    },
-    {
-      label: 'Blog',
-      href: '/blog',
-      icon: BookOpen
-    }
+    { label: 'Inicio', href: '/', icon: Home },
+    { label: 'Directorio', href: '/directorio', icon: LayoutGrid },
+    { label: 'Blog', href: '/blog', icon: BookOpen },
   ];
   
   const toolsItems = [
-    {
-      label: 'Verificador de cumplimiento',
-      href: '/compliance-checker',
-      icon: CheckCircle
-    },
-    {
-      label: 'Módulos de aprendizaje',
-      href: '/learning',
-      icon: Book
-    }
+    { label: 'Verificador de cumplimiento', href: '/compliance-checker', icon: CheckCircle },
+    { label: 'Módulos de aprendizaje', href: '/learning', icon: Book },
   ];
   
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent side="right" className="p-0 max-w-[280px]">
         <div className="flex flex-col h-full">
-          <div className="p-4 border-b flex items-center justify-between">
-            <h2 className="font-semibold">Menú</h2>
+          <div className="p-4 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border)' }}>
+            <h2 className="font-semibold" style={{ color: 'var(--text)' }}>Menú</h2>
             <Button variant="ghost" size="icon" onClick={onClose}>
               <X className="h-5 w-5" />
             </Button>
@@ -67,18 +46,19 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 <li key={index}>
                   <Link
                     to={item.href}
-                    className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 transition-colors"
+                    className="flex items-center gap-3 px-4 py-3 transition-colors"
+                    style={{ color: 'var(--text-secondary)' }}
                     onClick={onClose}
                   >
-                    <item.icon className="h-5 w-5 text-gray-500" />
+                    <item.icon className="h-5 w-5" style={{ color: 'var(--text-muted)' }} />
                     <span>{item.label}</span>
                   </Link>
                 </li>
               ))}
             </ul>
             
-            <div className="px-4 py-2 border-t">
-              <h3 className="font-medium text-sm text-gray-500 mb-1">Herramientas</h3>
+            <div className="px-4 py-2" style={{ borderTop: '1px solid var(--border)' }}>
+              <h3 className="font-medium text-sm mb-1" style={{ color: 'var(--text-muted)' }}>Herramientas</h3>
             </div>
             
             <ul className="py-2">
@@ -86,10 +66,11 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 <li key={index}>
                   <Link
                     to={item.href}
-                    className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 transition-colors"
+                    className="flex items-center gap-3 px-4 py-3 transition-colors"
+                    style={{ color: 'var(--text-secondary)' }}
                     onClick={onClose}
                   >
-                    <item.icon className="h-5 w-5 text-blue-500" />
+                    <item.icon className="h-5 w-5" style={{ color: 'var(--green)' }} />
                     <span>{item.label}</span>
                   </Link>
                 </li>
@@ -97,17 +78,16 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             </ul>
           </nav>
           
-          <div className="p-4 border-t mt-auto">
-            <Button 
-              variant="outline" 
-              className="w-full justify-start text-gray-700"
-              asChild
+          <div className="p-4 mt-auto" style={{ borderTop: '1px solid var(--border)' }}>
+            <a
+              href="https://inwout.com/demo-online"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-green w-full"
             >
-              <a href="https://inwout.com/demo-online" target="_blank" rel="noopener noreferrer">
-                <User className="mr-2 h-4 w-4" />
-                Solicitar Demo
-              </a>
-            </Button>
+              <User className="mr-2 h-4 w-4" />
+              Solicitar Demo
+            </a>
           </div>
         </div>
       </SheetContent>
