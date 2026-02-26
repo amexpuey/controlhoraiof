@@ -1,19 +1,15 @@
 
 import { useState } from "react";
-import { Mail, Copyright, ExternalLink, CheckCircle, Book } from "lucide-react";
+import { Mail, Copyright, ExternalLink } from "lucide-react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Dialog, DialogContent } from "./ui/dialog";
-import ComplianceChecker from "@/components/blog/ComplianceChecker";
-import LearningModules from "@/components/learning/LearningModules";
+import logoFichajes from "@/assets/logo-fichajes.png";
 
 export function Footer() {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showComplianceDialog, setShowComplianceDialog] = useState(false);
-  const [showLearningDialog, setShowLearningDialog] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -24,20 +20,17 @@ export function Footer() {
       const { error } = await supabase.functions.invoke('handle-contact-form', {
         body: { email }
       });
-
       if (error) throw error;
-
       toast({
         title: "Suscripción completada",
-        description: "Gracias por suscribirte a nuestro newsletter. Recibirás novedades pronto.",
+        description: "Gracias por suscribirte a nuestro newsletter.",
       });
-      
       setEmail("");
     } catch (error) {
       console.error('Error submitting newsletter form:', error);
       toast({
         title: "Error",
-        description: "Hubo un error al procesar tu suscripción. Por favor, inténtalo de nuevo.",
+        description: "Hubo un error al procesar tu suscripción.",
         variant: "destructive",
       });
     } finally {
@@ -48,67 +41,47 @@ export function Footer() {
   return (
     <footer style={{ background: "var(--dark)" }} className="mt-20 py-12 text-white">
       <div className="container mx-auto px-4">
-        {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {/* Column 1: Brand */}
+          {/* Brand */}
           <div className="flex flex-col items-center md:items-start space-y-4">
-            <img
-              src="/lovable-uploads/c2b90205-f41e-4c0d-bf34-bb7a5bba9103.png"
-              alt="Fichajes Empresas Logo"
-              className="w-16 h-16"
-            />
+            <img src={logoFichajes} alt="Fichajes Empresas" className="w-14 h-14" />
             <h3 className="font-semibold text-lg" style={{ color: "var(--dark-text)" }}>Fichajes Empresas .es</h3>
             <p className="text-sm max-w-md" style={{ color: "var(--dark-muted)" }}>
               Encuentra tu app de registro horario de forma fácil y rápida. El directorio más completo para empresas de todos los tamaños.
             </p>
           </div>
 
-          {/* Column 2: Quick Links */}
+          {/* Quick Links */}
           <div className="flex flex-col items-center md:items-start space-y-4">
             <h3 className="font-semibold text-lg" style={{ color: "var(--dark-text)" }}>Enlaces Rápidos</h3>
             <nav className="flex flex-col space-y-2">
               <a href="/directorio" className="flex items-center transition-colors text-sm hover:opacity-80" style={{ color: "var(--dark-muted)" }}>
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Directorio de Apps
+                <ExternalLink className="h-4 w-4 mr-2" /> Directorio de Apps
+              </a>
+              <a href="/plantillas" className="flex items-center transition-colors text-sm hover:opacity-80" style={{ color: "var(--dark-muted)" }}>
+                <ExternalLink className="h-4 w-4 mr-2" /> Plantillas
               </a>
               <a href="/blog" className="flex items-center transition-colors text-sm hover:opacity-80" style={{ color: "var(--dark-muted)" }}>
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Blog
+                <ExternalLink className="h-4 w-4 mr-2" /> Blog
               </a>
-              <button 
-                onClick={() => setShowComplianceDialog(true)}
-                className="flex items-center transition-colors text-sm text-left hover:opacity-80"
-                style={{ color: "var(--dark-muted)" }}
-              >
-                <CheckCircle className="h-4 w-4 mr-2" style={{ color: "var(--green)" }} />
-                Verificador de cumplimiento
-              </button>
-              <button 
-                onClick={() => setShowLearningDialog(true)}
-                className="flex items-center transition-colors text-sm text-left hover:opacity-80"
-                style={{ color: "var(--dark-muted)" }}
-              >
-                <Book className="h-4 w-4 mr-2" style={{ color: "var(--green)" }} />
-                Módulos de aprendizaje
-              </button>
+              <a href="/compliance-checker" className="flex items-center transition-colors text-sm hover:opacity-80" style={{ color: "var(--dark-muted)" }}>
+                <ExternalLink className="h-4 w-4 mr-2" /> Verificador de cumplimiento
+              </a>
             </nav>
           </div>
 
-          {/* Column 3: Legal */}
+          {/* Legal */}
           <div className="flex flex-col items-center md:items-start space-y-4">
             <h3 className="font-semibold text-lg" style={{ color: "var(--dark-text)" }}>Legal</h3>
             <nav className="flex flex-col space-y-2">
               <a href="/terminos" className="flex items-center transition-colors text-sm hover:opacity-80" style={{ color: "var(--dark-muted)" }}>
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Términos y Condiciones
+                <ExternalLink className="h-4 w-4 mr-2" /> Términos y Condiciones
               </a>
               <a href="/privacidad" className="flex items-center transition-colors text-sm hover:opacity-80" style={{ color: "var(--dark-muted)" }}>
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Política de Privacidad
+                <ExternalLink className="h-4 w-4 mr-2" /> Política de Privacidad
               </a>
               <a href="/cookies" className="flex items-center transition-colors text-sm hover:opacity-80" style={{ color: "var(--dark-muted)" }}>
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Política de Cookies
+                <ExternalLink className="h-4 w-4 mr-2" /> Política de Cookies
               </a>
             </nav>
           </div>
@@ -146,7 +119,7 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom copyright */}
+        {/* Copyright */}
         <div className="mt-8 pt-4 flex flex-col sm:flex-row justify-between items-center gap-4" style={{ borderTop: "1px solid rgba(255,255,255,.10)" }}>
           <div className="flex items-center space-x-2 text-sm" style={{ color: "var(--dark-muted)" }}>
             <Copyright className="h-4 w-4" />
@@ -157,32 +130,6 @@ export function Footer() {
           </div>
         </div>
       </div>
-
-      {/* Compliance Checker Dialog */}
-      <Dialog 
-        open={showComplianceDialog} 
-        onOpenChange={(open) => {
-          setShowComplianceDialog(open);
-          if (!open) document.body.style.pointerEvents = "";
-        }}
-      >
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-          <ComplianceChecker onClose={() => setShowComplianceDialog(false)} />
-        </DialogContent>
-      </Dialog>
-
-      {/* Learning Modules Dialog */}
-      <Dialog 
-        open={showLearningDialog} 
-        onOpenChange={(open) => {
-          setShowLearningDialog(open);
-          if (!open) document.body.style.pointerEvents = "";
-        }}
-      >
-        <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
-          <LearningModules />
-        </DialogContent>
-      </Dialog>
     </footer>
   );
 }

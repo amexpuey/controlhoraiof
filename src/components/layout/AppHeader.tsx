@@ -1,21 +1,23 @@
 
-import { Link, useLocation } from "react-router-dom";
-import { ToolsDropdown } from "../ui/ToolsDropdown";
-import { Menu } from "lucide-react";
+import { Link } from "react-router-dom";
+import { CheckCircle, Menu } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileMenu } from "./MobileMenu";
+import logoFichajes from "@/assets/logo-fichajes.png";
 
 export function AppHeader() {
   const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = useState(false);
-  const location = useLocation();
 
   return (
     <div className="h-16 border-b flex items-center justify-between px-4 md:px-6 shadow-md z-10 relative" style={{ background: "var(--dark)" }}>
-      <Link to="/" className="text-lg md:text-xl font-semibold hover:opacity-80 transition-opacity truncate max-w-[180px] md:max-w-none" style={{ color: "var(--dark-text)" }}>
-        Fichajes Empresas .es
+      <Link to="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
+        <img src={logoFichajes} alt="Fichajes Empresas" className="h-9 w-9" />
+        <span className="text-lg font-semibold hidden sm:inline" style={{ color: "var(--dark-text)" }}>
+          Fichajes Empresas
+        </span>
       </Link>
       
       {isMobile ? (
@@ -28,32 +30,44 @@ export function AppHeader() {
           >
             <Menu className="h-5 w-5" />
           </Button>
-          
           <MobileMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
         </>
       ) : (
         <div className="flex items-center gap-4">
-          <ToolsDropdown />
           <Link 
-            to="/blog" 
+            to="/directorio" 
             className="text-sm font-medium transition-colors"
             style={{ color: "var(--dark-muted)" }}
             onMouseEnter={e => (e.currentTarget.style.color = "var(--dark-text)")}
             onMouseLeave={e => (e.currentTarget.style.color = "var(--dark-muted)")}
           >
+            Directorio
+          </Link>
+          <Link 
+            to="/plantillas" 
+            className="text-sm font-medium transition-colors"
+            style={{ color: "var(--dark-muted)" }}
+            onMouseEnter={e => (e.currentTarget.style.color = "var(--dark-text)")}
+            onMouseLeave={e => (e.currentTarget.style.color = "var(--dark-muted)")}
+          >
+            Plantillas
+          </Link>
+          <Link 
+            to="/blog" 
+            className="text-sm font-medium transition-colors"
+            style={{ color: "var(--dark-muted)" }}
+            onMouseEnter={e => (e.currentTarget.style.color = "var(--dark-muted)")}
+            onMouseLeave={e => (e.currentTarget.style.color = "var(--dark-muted)")}
+          >
             Blog
           </Link>
           <Link 
-            to="/" 
+            to="/compliance-checker" 
             className="flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-md transition-colors"
             style={{ background: "var(--green)", color: "white" }}
           >
-            <img
-              src="/lovable-uploads/c2b90205-f41e-4c0d-bf34-bb7a5bba9103.png"
-              alt="Home"
-              className="w-4 h-4"
-            />
-            Descubre las mejores apps
+            <CheckCircle className="w-4 h-4" />
+            Verificador de cumplimiento
           </Link>
         </div>
       )}
