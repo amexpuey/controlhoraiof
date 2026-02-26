@@ -379,12 +379,12 @@ export default function TalentGuide() {
 
   return (
     <div className="container mx-auto py-6 px-0 md:px-6" id="talent-guide-content">
-      <Card className="mb-8">
-        <CardHeader className="bg-blue-50">
-          <CardTitle className="text-xl md:text-2xl font-bold text-blue-900">
+      <div className="glass" style={{ marginBottom: '32px' }}>
+        <div style={{ background: 'var(--green-bg)', padding: '20px 24px', borderRadius: 'var(--radius) var(--radius) 0 0' }}>
+          <h2 style={{ fontSize: '20px', color: 'var(--text)' }}>
             Guía de Talento: Desempeño y Seguimiento
-          </CardTitle>
-        </CardHeader>
+          </h2>
+        </div>
         <CardContent className="pt-6">
           <Tabs defaultValue="datos" value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className={`grid w-full ${isMobile ? 'grid-cols-2 gap-1 mb-4' : 'grid-cols-5 mb-6'}`}>
@@ -918,7 +918,7 @@ export default function TalentGuide() {
             </TabsContent>
           </Tabs>
         </CardContent>
-      </Card>
+      </div>
     </div>
   );
 }

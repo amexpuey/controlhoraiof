@@ -1,64 +1,71 @@
 
 import React from "react";
-import { CheckCircle } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { CheckCircle, Target, TrendingUp, Users, BookOpen, BarChart3 } from "lucide-react";
+import evaluationImg from "@/assets/talent-guide-evaluation.jpg";
+import growthImg from "@/assets/talent-guide-growth.jpg";
 
 export const IntroductionCard: React.FC = () => {
+  const benefits = [
+    { icon: <Users className="h-5 w-5" style={{ color: 'var(--green)' }} />, text: "Ayudar a tu equipo a crecer profesionalmente" },
+    { icon: <Target className="h-5 w-5" style={{ color: 'var(--green)' }} />, text: "Planificar y dar seguimiento a objetivos claros" },
+    { icon: <BarChart3 className="h-5 w-5" style={{ color: 'var(--green)' }} />, text: "Evaluar el desempeño de tus colaboradores" },
+    { icon: <BookOpen className="h-5 w-5" style={{ color: 'var(--green)' }} />, text: "Estructurar planes de formación efectivos" },
+    { icon: <TrendingUp className="h-5 w-5" style={{ color: 'var(--green)' }} />, text: "Tomar decisiones informadas basadas en datos" },
+  ];
+
+  const advantages = [
+    "Ahorrar tiempo con plantillas ya estructuradas",
+    "Mejorar la experiencia de los colaboradores",
+    "Aumentar la retención del talento",
+    "Fomentar el crecimiento organizacional",
+  ];
+
   return (
-    <Card className="mb-8 border-0 shadow-md overflow-hidden">
-      <div className="bg-gradient-to-r from-blue-700 to-blue-600 p-4 md:p-6 text-white">
-        <h2 className="text-xl md:text-2xl font-bold mb-4">¿Qué puedes hacer con esta guía?</h2>
-        <p className="mb-4">
-          Si ya has llegado hasta aquí, es porque tu equipo te importa de verdad. Esta guía no solo te ayudará a conocer y entender a las personas de tu equipo, sino que te dará las herramientas necesarias para sacar lo mejor de ellas y llevar a tu equipo al éxito.
-        </p>
-      </div>
-      <CardContent className="bg-white p-4 md:p-6">
-        <h3 className="text-lg md:text-xl font-semibold mb-4">Dentro de esta guía encontrarás recursos para:</h3>
-        <ul className="space-y-2">
-          <li className="flex items-start gap-2">
-            <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-            <span>Ayudar a tu equipo a crecer profesionalmente</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-            <span>Planificar y dar seguimiento a objetivos claros</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-            <span>Evaluar el desempeño de tus colaboradores</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-            <span>Estructurar planes de formación efectivos</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-            <span>Tomar decisiones informadas basadas en datos concretos</span>
-          </li>
-        </ul>
-        
-        <div className="mt-6 bg-blue-50 p-4 rounded-lg">
-          <h3 className="text-lg font-semibold text-blue-800 mb-2">Beneficios de utilizar esta guía:</h3>
-          <ul className="space-y-2 text-blue-900">
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
-              <span>Ahorrar tiempo con plantillas ya estructuradas</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
-              <span>Mejorar la experiencia de los colaboradores</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
-              <span>Aumentar la retención del talento en tu organización</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
-              <span>Fomentar el crecimiento organizacional</span>
-            </li>
+    <div style={{ marginBottom: '32px' }}>
+      {/* Two-column intro with image */}
+      <div className="setup-grid" style={{ marginBottom: '32px' }}>
+        <div className="setup-content">
+          <p className="s-label">¿Qué puedes hacer?</p>
+          <h2 style={{ fontSize: 'clamp(22px, 2.4vw, 30px)' }}>
+            Todo lo que necesitas para gestionar el talento
+          </h2>
+          <p style={{ color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: '20px' }}>
+            Si ya has llegado hasta aquí, es porque tu equipo te importa de verdad. Esta guía te dará las herramientas para sacar lo mejor de cada persona.
+          </p>
+          <ul className="check-list">
+            {benefits.map((b, i) => (
+              <li key={i}>
+                <span className="check-icon">✓</span>
+                <span>{b.text}</span>
+              </li>
+            ))}
           </ul>
         </div>
-      </CardContent>
-    </Card>
+        <div className="setup-visual">
+          <img src={evaluationImg} alt="Evaluación de desempeño del equipo" />
+        </div>
+      </div>
+
+      {/* Benefits section with image */}
+      <div className="setup-grid" style={{ direction: 'rtl' }}>
+        <div className="setup-content" style={{ direction: 'ltr' }}>
+          <p className="s-label">Beneficios</p>
+          <h2 style={{ fontSize: 'clamp(22px, 2.4vw, 30px)' }}>
+            Resultados que notarás desde el primer día
+          </h2>
+          <ul className="check-list">
+            {advantages.map((a, i) => (
+              <li key={i}>
+                <span className="check-icon">✓</span>
+                <span>{a}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="setup-visual" style={{ direction: 'ltr' }}>
+          <img src={growthImg} alt="Crecimiento profesional y desarrollo de carrera" />
+        </div>
+      </div>
+    </div>
   );
 };
