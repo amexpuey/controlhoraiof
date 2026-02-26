@@ -52,6 +52,10 @@ const router = createBrowserRouter([
     element: <Dashboard />,
   },
   {
+    path: "/mejores-apps-control-horario",
+    element: <Dashboard />,
+  },
+  {
     path: "/directorio",
     element: <DirectoryPage />,
   },
@@ -113,7 +117,7 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <Dashboard />,
+    element: <DirectoryPage />,
   },
 ]);
 
