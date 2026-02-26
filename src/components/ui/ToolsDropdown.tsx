@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Button } from "./button";
-import { Book, ChevronDown, FileText, CheckCircle } from "lucide-react";
+import { Book, ChevronDown, CheckCircle } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,7 +11,6 @@ import {
 import { Dialog, DialogContent } from "./dialog";
 import ComplianceChecker from "@/components/blog/ComplianceChecker";
 import LearningModules from "@/components/learning/LearningModules";
-import { Link } from "react-router-dom";
 
 export function ToolsDropdown() {
   const [showComplianceDialog, setShowComplianceDialog] = useState(false);
@@ -22,14 +21,15 @@ export function ToolsDropdown() {
     <>
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="sm" className="text-white text-sm font-medium">
-            Tools
+          <Button variant="ghost" size="sm" className="text-sm font-medium" style={{ color: 'var(--dark-muted)' }}>
+            Herramientas
             <ChevronDown className="ml-1 h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent 
           align="end" 
-          className="w-56 bg-white z-50"
+          className="w-56 z-50"
+          style={{ background: 'var(--white)' }}
         >
           <DropdownMenuItem
             className="flex items-center gap-2 py-2 cursor-pointer"
@@ -38,10 +38,10 @@ export function ToolsDropdown() {
               setOpen(false);
             }}
           >
-            <CheckCircle className="h-5 w-5 text-blue-600" />
+            <CheckCircle className="h-5 w-5" style={{ color: 'var(--green)' }} />
             <div>
-              <p className="font-medium">Verificador de cumplimiento</p>
-              <p className="text-xs text-gray-500">Comprueba tu normativa laboral</p>
+              <p className="font-medium" style={{ color: 'var(--text)' }}>Verificador de cumplimiento</p>
+              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Comprueba tu normativa laboral</p>
             </div>
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -51,16 +51,15 @@ export function ToolsDropdown() {
               setOpen(false);
             }}
           >
-            <Book className="h-5 w-5 text-blue-600" />
+            <Book className="h-5 w-5" style={{ color: 'var(--green)' }} />
             <div>
-              <p className="font-medium">Módulos de aprendizaje</p>
-              <p className="text-xs text-gray-500">Todo sobre control horario</p>
+              <p className="font-medium" style={{ color: 'var(--text)' }}>Módulos de aprendizaje</p>
+              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Todo sobre control horario</p>
             </div>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* Compliance Checker Dialog */}
       <Dialog 
         open={showComplianceDialog} 
         onOpenChange={(open) => {
@@ -73,7 +72,6 @@ export function ToolsDropdown() {
         </DialogContent>
       </Dialog>
 
-      {/* Learning Modules Dialog */}
       <Dialog 
         open={showLearningDialog} 
         onOpenChange={(open) => {

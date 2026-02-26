@@ -2,8 +2,7 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Book, Play, CheckCircle, AlertTriangle, Info, ChevronRight } from "lucide-react";
+import { Book, Play, CheckCircle, ChevronRight } from "lucide-react";
 import Module1 from "./Module1";
 import Module2 from "./Module2";
 import Module3 from "./Module3";
@@ -15,7 +14,7 @@ const modules = [
     description: "Aprende sobre la normativa de control horario y cómo afecta a tu empresa",
     icon: Book,
     component: Module1,
-    status: "available" // available, coming-soon, completed
+    status: "available"
   },
   {
     id: "module2",
@@ -60,10 +59,10 @@ export default function LearningModules({ initialModule }: LearningModulesProps)
     <>
       <section className="py-6">
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-blue-800 mb-2">
+          <h2 className="text-2xl font-bold mb-2" style={{ color: 'var(--text)' }}>
             Módulos de Aprendizaje Interactivo
           </h2>
-          <p className="text-gray-600">
+          <p style={{ color: 'var(--text-secondary)' }}>
             Descubre todo lo que necesitas saber sobre el control horario a través de estos módulos interactivos
           </p>
         </div>
@@ -72,35 +71,33 @@ export default function LearningModules({ initialModule }: LearningModulesProps)
           {modules.map((module) => (
             <Card 
               key={module.id}
-              className={`overflow-hidden transition-all ${
-                module.status === "available" 
-                  ? "border-blue-200 hover:shadow-md cursor-pointer" 
-                  : "border-gray-200 opacity-75"
-              }`}
+              className="overflow-hidden transition-all cursor-pointer"
+              style={{ 
+                borderColor: 'var(--border)',
+                background: 'var(--white)'
+              }}
               onClick={() => openModule(module.id)}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--green)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 28px -6px rgba(15,184,159,.08)'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--border)'; (e.currentTarget as HTMLElement).style.boxShadow = 'none'; }}
             >
-              <CardHeader className="bg-blue-50 pb-2">
+              <CardHeader className="pb-2" style={{ background: 'var(--green-bg)' }}>
                 <div className="flex justify-between items-center">
-                  <module.icon className="h-6 w-6 text-blue-600" />
+                  <module.icon className="h-6 w-6" style={{ color: 'var(--green)' }} />
                   {module.status === "coming-soon" && (
-                    <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
+                    <span className="text-xs px-2 py-1 rounded" style={{ background: 'var(--yellow-bg)', color: 'var(--yellow)' }}>
                       Próximamente
                     </span>
                   )}
-                  {module.status === "completed" && (
-                    <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
-                      Completado
-                    </span>
-                  )}
                 </div>
-                <CardTitle className="text-lg text-blue-800 mt-2">{module.title}</CardTitle>
-                <CardDescription className="text-sm">{module.description}</CardDescription>
+                <CardTitle className="text-lg mt-2" style={{ color: 'var(--text)' }}>{module.title}</CardTitle>
+                <CardDescription className="text-sm" style={{ color: 'var(--text-secondary)' }}>{module.description}</CardDescription>
               </CardHeader>
               <CardFooter className="pt-4 pb-4 flex justify-end">
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className={`text-blue-600 p-0 ${module.status !== "available" && "opacity-50 cursor-not-allowed"}`}
+                  className="p-0"
+                  style={{ color: 'var(--green)' }}
                   disabled={module.status !== "available"}
                 >
                   Acceder <ChevronRight className="h-4 w-4 ml-1" />
@@ -111,14 +108,13 @@ export default function LearningModules({ initialModule }: LearningModulesProps)
         </div>
       </section>
 
-      {/* Module Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           {activeModule && activeModule.component && (
             <>
               <DialogHeader>
-                <DialogTitle className="text-2xl font-bold text-blue-800 flex items-center gap-2">
-                  <activeModule.icon className="h-6 w-6 text-blue-600" />
+                <DialogTitle className="text-2xl font-bold flex items-center gap-2" style={{ color: 'var(--text)' }}>
+                  <activeModule.icon className="h-6 w-6" style={{ color: 'var(--green)' }} />
                   {activeModule.title}
                 </DialogTitle>
               </DialogHeader>
