@@ -16,9 +16,9 @@ export default function RelatedPosts({ currentPost }: RelatedPostsProps) {
     const fetch = async () => {
       // Try related_post_slugs first
       if (currentPost.related_post_slugs?.length) {
-        const { data } = await supabase
-          .from("blog_posts")
-          .select("*")
+        const { data } = await (supabase
+          .from("site_articles" as any)
+          .select("*") as any)
           .in("slug", currentPost.related_post_slugs)
           .limit(4);
         if (data?.length) {
@@ -27,9 +27,9 @@ export default function RelatedPosts({ currentPost }: RelatedPostsProps) {
         }
       }
       // Fallback: same category
-      const { data } = await supabase
-        .from("blog_posts")
-        .select("*")
+      const { data } = await (supabase
+        .from("site_articles" as any)
+        .select("*") as any)
         .eq("category", currentPost.category)
         .neq("slug", currentPost.slug)
         .order("published_at", { ascending: false })
