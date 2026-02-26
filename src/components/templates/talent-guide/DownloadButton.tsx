@@ -1,8 +1,6 @@
 
 import React from "react";
 import { Download, FileText } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 
 interface DownloadButtonProps {
   downloadAttempted: boolean;
@@ -14,24 +12,30 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
   handleDownload 
 }) => {
   return (
-    <div className="mt-6 text-center">
+    <div>
       {!downloadAttempted ? (
-        <Button className="bg-blue-600 hover:bg-blue-700" onClick={handleDownload}>
-          <Download className="mr-2 h-4 w-4" /> Descargar Guía en PDF
-        </Button>
+        <button className="btn btn-green btn-lg" onClick={handleDownload}>
+          <Download className="h-5 w-5" /> Descargar Guía en PDF
+        </button>
       ) : (
-        <div className="flex flex-col items-center space-y-3">
-          <div className="bg-green-100 text-green-800 px-4 py-2 rounded-md flex items-center">
-            <FileText className="h-5 w-5 mr-2" />
-            <span>Guía interactiva disponible a continuación</span>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+          <div style={{ 
+            background: 'var(--green-bg)', 
+            color: 'var(--green-dark)', 
+            padding: '10px 20px', 
+            borderRadius: 'var(--radius-xs)',
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '8px',
+            fontSize: '14px',
+            fontWeight: 500
+          }}>
+            <FileText className="h-5 w-5" />
+            Guía interactiva disponible a continuación
           </div>
-          <Button 
-            variant="outline" 
-            onClick={handleDownload}
-            className="border-blue-300 hover:bg-blue-50"
-          >
-            <Download className="mr-2 h-4 w-4" /> Intentar descargar nuevamente
-          </Button>
+          <button className="btn btn-outline" onClick={handleDownload}>
+            <Download className="h-4 w-4" /> Intentar descargar nuevamente
+          </button>
         </div>
       )}
     </div>

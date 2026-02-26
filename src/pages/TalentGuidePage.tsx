@@ -6,7 +6,6 @@ import { TalentGuideHeader } from "@/components/templates/talent-guide/TalentGui
 import { IntroductionCard } from "@/components/templates/talent-guide/IntroductionCard";
 import { DownloadButton } from "@/components/templates/talent-guide/DownloadButton";
 import { usePdfGenerator } from "@/components/templates/talent-guide/usePdfGenerator";
-import { Card, CardContent } from "@/components/ui/card";
 
 export default function TalentGuidePage() {
   const [downloadAttempted, setDownloadAttempted] = useState(false);
@@ -18,23 +17,25 @@ export default function TalentGuidePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
-      {/* Responsive header with navigation */}
+    <div className="min-h-screen" style={{ background: 'var(--white)' }}>
       <AppHeader />
       
-      <div className="container mx-auto px-4 py-6">
-        <TalentGuideHeader />
-        
+      {/* Hero */}
+      <div className="hero" style={{ padding: '56px 0 48px' }}>
+        <div className="container">
+          <TalentGuideHeader />
+        </div>
+      </div>
+      
+      <div className="container" style={{ paddingTop: '40px', paddingBottom: '48px' }}>
         <IntroductionCard />
         
-        <Card className="mb-8">
-          <CardContent className="p-4 md:p-6">
-            <DownloadButton 
-              downloadAttempted={downloadAttempted} 
-              handleDownload={handleDownload} 
-            />
-          </CardContent>
-        </Card>
+        <div className="glass" style={{ padding: '24px', marginBottom: '32px', textAlign: 'center' }}>
+          <DownloadButton 
+            downloadAttempted={downloadAttempted} 
+            handleDownload={handleDownload} 
+          />
+        </div>
         
         <div id="talent-guide-content">
           <TalentGuide />
