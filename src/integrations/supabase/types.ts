@@ -7183,6 +7183,99 @@ export type Database = {
         }
         Relationships: []
       }
+      site_articles: {
+        Row: {
+          author: string | null
+          author_avatar_url: string | null
+          canonical_url: string | null
+          category: string
+          content: string | null
+          content_html: string | null
+          content_markdown: string | null
+          created_at: string
+          excerpt: string | null
+          featured_image: string | null
+          featured_image_alt: string | null
+          focus_keyword: string | null
+          id: number
+          meta_description: string | null
+          meta_title: string | null
+          og_image_url: string | null
+          primary_cta_text: string | null
+          primary_cta_url: string | null
+          published_at: string | null
+          reading_time: number | null
+          related_post_slugs: string[] | null
+          schema_json: Json | null
+          secondary_keywords: string[] | null
+          slug: string
+          status: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author?: string | null
+          author_avatar_url?: string | null
+          canonical_url?: string | null
+          category?: string
+          content?: string | null
+          content_html?: string | null
+          content_markdown?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured_image?: string | null
+          featured_image_alt?: string | null
+          focus_keyword?: string | null
+          id?: number
+          meta_description?: string | null
+          meta_title?: string | null
+          og_image_url?: string | null
+          primary_cta_text?: string | null
+          primary_cta_url?: string | null
+          published_at?: string | null
+          reading_time?: number | null
+          related_post_slugs?: string[] | null
+          schema_json?: Json | null
+          secondary_keywords?: string[] | null
+          slug: string
+          status?: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author?: string | null
+          author_avatar_url?: string | null
+          canonical_url?: string | null
+          category?: string
+          content?: string | null
+          content_html?: string | null
+          content_markdown?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured_image?: string | null
+          featured_image_alt?: string | null
+          focus_keyword?: string | null
+          id?: number
+          meta_description?: string | null
+          meta_title?: string | null
+          og_image_url?: string | null
+          primary_cta_text?: string | null
+          primary_cta_url?: string | null
+          published_at?: string | null
+          reading_time?: number | null
+          related_post_slugs?: string[] | null
+          schema_json?: Json | null
+          secondary_keywords?: string[] | null
+          slug?: string
+          status?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       solution_categories: {
         Row: {
           category_id: string
