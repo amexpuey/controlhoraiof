@@ -1,6 +1,6 @@
 
 import React from "react";
-import type { BlogPost } from "@/components/blog/FeaturedPost";
+import type { BlogPost } from "@/types/blog";
 import ArticleMeta from "./content/ArticleMeta";
 import ArticleFormatter from "./content/ArticleFormatter";
 import ShareButtons from "./content/ShareButtons";

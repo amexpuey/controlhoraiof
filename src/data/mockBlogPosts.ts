@@ -1,5 +1,5 @@
 
-import type { BlogPost } from "@/components/blog/FeaturedPost";
+import type { BlogPost } from "@/types/blog";
 
 // Base URL for Supabase storage
 const STORAGE_BASE_URL = "https://pvqbknpvkohxoftoloda.supabase.co/storage/v1/object/public/app_assets/blog_img";

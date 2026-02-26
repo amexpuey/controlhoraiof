@@ -2,26 +2,15 @@
 import { Link } from "react-router-dom";
 import { CalendarDays, ChevronRight, Tag } from "lucide-react";
 
-export interface BlogPost {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  category: string;
-  featured_image: string;
-  published_at: string;
-  author: string;
-  reading_time: number;
-  content: string;
-  related_apps: string[];
-}
+// Re-export BlogPost from centralized types
+export type { BlogPost } from "@/types/blog";
+import type { BlogPost } from "@/types/blog";
 
 interface FeaturedPostProps {
   post: BlogPost;
 }
 
 export default function FeaturedPost({ post }: FeaturedPostProps) {
-  // Format the date in Spanish
   const formattedDate = new Date(post.published_at).toLocaleDateString('es-ES', {
     year: 'numeric',
     month: 'long',
@@ -34,15 +23,20 @@ export default function FeaturedPost({ post }: FeaturedPostProps) {
         <div className="md:w-1/2">
           <img 
             src={post.featured_image} 
-            alt={post.title} 
+            alt={post.featured_image_alt || post.title} 
             className="w-full h-64 md:h-full object-cover"
           />
         </div>
         <div className="md:w-1/2 p-6 flex flex-col justify-between">
           <div>
-            <div className="flex items-center mb-2">
-              <Tag className="w-4 h-4 mr-1 text-yellow-600" />
-              <span className="text-sm text-yellow-700">{post.category}</span>
+            <div className="flex items-center gap-2 mb-2 flex-wrap">
+              <span className="inline-flex items-center gap-1 text-sm text-yellow-700">
+                <Tag className="w-4 h-4 text-yellow-600" />
+                {post.category}
+              </span>
+              {post.tags?.slice(0, 2).map((tag) => (
+                <span key={tag} className="text-xs px-2 py-0.5 bg-gray-100 rounded-full text-gray-500">{tag}</span>
+              ))}
             </div>
             <h2 className="text-2xl font-bold mb-3">{post.title}</h2>
             <p className="text-gray-700 mb-4">{post.excerpt}</p>

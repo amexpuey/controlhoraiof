@@ -28,3 +28,9 @@ enabled = true
 [edge_functions]
 [edge_functions.send-verification-email]
 verify_jwt = false
+
+[edge_functions.blog-sitemap]
+verify_jwt = false
+
+[edge_functions.blog-rss]
+verify_jwt = false

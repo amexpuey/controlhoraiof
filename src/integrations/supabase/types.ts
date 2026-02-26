@@ -864,46 +864,109 @@ export type Database = {
       blog_posts: {
         Row: {
           author: string
+          author_avatar_url: string | null
+          canonical_url: string | null
           category: string
+          comparison_type: string | null
           content: string
+          content_html: string | null
+          content_markdown: string | null
           created_at: string
           excerpt: string
           featured_image: string
+          featured_image_alt: string | null
+          focus_keyword: string | null
           id: string
+          meta_description: string | null
+          meta_title: string | null
+          og_image_url: string | null
+          pillar: string | null
+          primary_cta_text: string | null
+          primary_cta_url: string | null
           published_at: string
           reading_time: number
           related_apps: string[] | null
+          related_post_slugs: string[] | null
+          related_solution_slugs: string[] | null
+          scheduled_at: string | null
+          schema_json: Json | null
+          secondary_keywords: string[] | null
+          show_comparison_cta: boolean | null
           slug: string
+          status: string
+          tags: string[] | null
           title: string
           updated_at: string
         }
         Insert: {
           author: string
+          author_avatar_url?: string | null
+          canonical_url?: string | null
           category: string
+          comparison_type?: string | null
           content: string
+          content_html?: string | null
+          content_markdown?: string | null
           created_at?: string
           excerpt: string
           featured_image: string
+          featured_image_alt?: string | null
+          focus_keyword?: string | null
           id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          og_image_url?: string | null
+          pillar?: string | null
+          primary_cta_text?: string | null
+          primary_cta_url?: string | null
           published_at?: string
           reading_time?: number
           related_apps?: string[] | null
+          related_post_slugs?: string[] | null
+          related_solution_slugs?: string[] | null
+          scheduled_at?: string | null
+          schema_json?: Json | null
+          secondary_keywords?: string[] | null
+          show_comparison_cta?: boolean | null
           slug: string
+          status?: string
+          tags?: string[] | null
           title: string
           updated_at?: string
         }
         Update: {
           author?: string
+          author_avatar_url?: string | null
+          canonical_url?: string | null
           category?: string
+          comparison_type?: string | null
           content?: string
+          content_html?: string | null
+          content_markdown?: string | null
           created_at?: string
           excerpt?: string
           featured_image?: string
+          featured_image_alt?: string | null
+          focus_keyword?: string | null
           id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          og_image_url?: string | null
+          pillar?: string | null
+          primary_cta_text?: string | null
+          primary_cta_url?: string | null
           published_at?: string
           reading_time?: number
           related_apps?: string[] | null
+          related_post_slugs?: string[] | null
+          related_solution_slugs?: string[] | null
+          scheduled_at?: string | null
+          schema_json?: Json | null
+          secondary_keywords?: string[] | null
+          show_comparison_cta?: boolean | null
           slug?: string
+          status?: string
+          tags?: string[] | null
           title?: string
           updated_at?: string
         }
