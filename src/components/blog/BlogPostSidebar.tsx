@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import ComplianceChecker from "./ComplianceChecker";
 import { Link } from "react-router-dom";
 import { CalendarDays, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -14,7 +12,6 @@ interface BlogPostSidebarProps {
 }
 
 export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
-  const [isCheckerOpen, setIsCheckerOpen] = useState(false);
   const [recentPosts, setRecentPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -65,13 +62,14 @@ export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
       <div className="rounded-lg shadow-sm p-4 border" style={{ background: "var(--green-bg)", borderColor: "var(--green)" }}>
         <h3 className="text-lg font-bold mb-2 text-left" style={{ color: "var(--green-dark)" }}>Verificador de cumplimiento</h3>
         <p className="text-sm mb-4 text-left" style={{ color: "var(--green-dark)" }}>Comprueba si cumples con la normativa laboral de registro horario y evita multas</p>
-        <Button 
-          className="w-full text-white"
-          style={{ background: "var(--green)" }}
-          onClick={() => setIsCheckerOpen(true)}
-        >
-          Comprobar ahora
-        </Button>
+        <Link to="/verificador-cumplimiento">
+          <Button 
+            className="w-full text-white"
+            style={{ background: "var(--green)" }}
+          >
+            Comprobar ahora
+          </Button>
+        </Link>
       </div>
       
       <div className="sticky top-4">
@@ -122,20 +120,6 @@ export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
           )}
         </div>
       </div>
-      
-      <Dialog open={isCheckerOpen} onOpenChange={setIsCheckerOpen}>
-        <DialogContent className="sm:max-w-[900px] max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-bold" style={{ color: "var(--green-dark)" }}>
-              Verificador de Cumplimiento Normativo
-            </DialogTitle>
-            <DialogDescription style={{ color: "var(--text-muted)" }}>
-              Comprueba si tu empresa cumple con la normativa de registro horario en España
-            </DialogDescription>
-          </DialogHeader>
-          <ComplianceChecker onClose={() => setIsCheckerOpen(false)} />
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

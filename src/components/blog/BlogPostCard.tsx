@@ -3,6 +3,17 @@ import { Link } from "react-router-dom";
 import { CalendarDays, ChevronRight, Clock } from "lucide-react";
 import type { BlogPost } from "@/types/blog";
 
+const categoryLabels: Record<string, string> = {
+  "control-horario": "Control Horario",
+  "normativa-legal": "Normativa",
+  "comparativas": "Comparativas",
+  "sectores": "Sectores",
+  "gestion-ausencias": "Ausencias",
+  "productividad": "Productividad",
+  "guias": "Guías",
+  "alternativas": "Alternativas",
+};
+
 interface BlogPostCardProps {
   post: BlogPost;
 }
@@ -29,7 +40,7 @@ export default function BlogPostCard({ post }: BlogPostCardProps) {
             className="inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full"
             style={{ background: "var(--green-bg)", color: "var(--green-dark)" }}
           >
-            {post.category}
+            {categoryLabels[post.category] || post.category}
           </span>
           {post.tags?.slice(0, 1).map((tag) => (
             <span
