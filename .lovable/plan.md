@@ -1,196 +1,171 @@
 
 
-# Plan: Evolucionar fichajeempresas.es a Directorio Competitivo + Intelligence Hub
+# Plan: Blog/CMS Completo para fichajeempresas.es
 
 ## Estado Actual
 
-- **Tabla `companies`**: Solo 9 registros, con campos: title, slug, url, description, features (text[]), type, verified, is_top_rated, img_url, logo_url, pricing fields, highlights, rating, free_plan, free_trial, platforms, use_case
-- **CSV disponible**: 96 soluciones con: title, url, page (slug), text (description), Category (semicolon-separated), Rank, isFree, isTopRated, verified, premium, imgUrl, logoUrl
-- **Páginas existentes**: Dashboard (`/dashboard`) con grid+filtros, UserView (`/mejores-apps-control-horario/:slug`), ComparisonPage por UUIDs, Blog, ComplianceChecker, Templates, ComplianceKit
-- **El CSV usa logos/imgs placeholder idénticas** para todas las soluciones -- necesitará enriquecimiento posterior
-
-## Alcance del Plan -- Fase 1 (P0)
-
-Dada la magnitud del proyecto, propongo implementar la **Fase 1** que cubre las piezas de mayor impacto SEO inmediato. Las fases 2 y 3 se implementarán en iteraciones posteriores.
+- **Tabla `blog_posts`**: 13 columnas simples (title, slug, content, excerpt, category, featured_image, published_at, author, reading_time, related_apps, created_at, updated_at). Sin columnas de status, SEO, ni HTML dedicado.
+- **Frontend**: Renderiza contenido via ReactMarkdown con procesamiento complejo de MD/HTML mixto. Sin tabla de contenidos, sin estilos para HTML pre-renderizado, sin CTAs dinámicos.
+- **Categorías hardcodeadas**: "Normativa", "Registro Horario", "Productividad", "Trabajo Remoto"
+- **Sin RLS basada en status** (no existe columna status)
 
 ---
 
 ## 1. Migración de Base de Datos
 
-### 1.1 Expandir tabla `companies` (o crear `solutions`)
-
-Crear una migración que añada columnas a `companies`:
+Expandir `blog_posts` con ~20 nuevas columnas:
 
 ```text
 Nuevas columnas:
-- long_description TEXT
-- redirect_url TEXT  
-- rank INTEGER
-- is_free BOOLEAN DEFAULT false
-- is_premium BOOLEAN DEFAULT false
-- pricing_model TEXT (free/freemium/paid/custom)
-- price_per_user_month NUMERIC
-- min_price NUMERIC
-- has_free_trial BOOLEAN
-- free_trial_days INTEGER
-- Feature booleans: has_time_tracking, has_mobile_app, has_geolocation, 
-  has_biometric, has_absence_management, has_shift_management, 
-  has_reports, has_api, has_remote_work, has_ai, has_employee_portal, 
-  has_payroll, has_geofence, has_project_management, has_document_management
-- founded_year INTEGER
-- hq_country TEXT
-- company_size_target TEXT
-- meta_title TEXT
-- meta_description TEXT
-- positioning_message TEXT
-- target_audience TEXT
-- key_differentiator TEXT
-- is_promoted BOOLEAN DEFAULT false
+- content_html TEXT              -- HTML pre-renderizado (reemplaza content como fuente principal)
+- content_markdown TEXT          -- Backup MD
+- meta_title TEXT                -- SEO title alternativo
+- meta_description TEXT          -- max 160 chars
+- canonical_url TEXT
+- schema_json JSONB              -- JSON-LD structured data
+- focus_keyword TEXT
+- secondary_keywords TEXT[]
+- featured_image_alt TEXT
+- og_image_url TEXT
+- tags TEXT[]
+- pillar TEXT
+- related_solution_slugs TEXT[]
+- comparison_type TEXT
+- author_avatar_url TEXT
+- status TEXT DEFAULT 'draft'    -- draft/published/scheduled/archived
+- scheduled_at TIMESTAMPTZ
+- primary_cta_text TEXT DEFAULT 'Prueba INWOUT gratis'
+- primary_cta_url TEXT DEFAULT 'https://app.inwout.com/register'
+- show_comparison_cta BOOLEAN DEFAULT true
+- related_post_slugs TEXT[]
 ```
 
-### 1.2 Crear tablas auxiliares
+Renombrar columnas existentes para compatibilidad:
+- `featured_image` se mantiene, `featured_image_url` será un alias via la app
+- `content` se mantiene como fallback, `content_html` tiene prioridad
+- `reading_time` se mantiene, `reading_time_minutes` será alias
+- `author` se mantiene, `author_name` será alias
+
+Nuevos indices: status, focus_keyword, category+status.
+
+RLS actualizada: lectura pública solo para `status = 'published'` y `published_at <= now()`.
+
+Storage bucket: `blog-images` (público).
+
+---
+
+## 2. Actualización de Categorías
+
+Ampliar las categorías del blog para alinearse con el calendario editorial:
 
 ```text
-categories (id, name, slug, description, icon)
-solution_categories (solution_id FK companies, category_id FK categories)
-sectors (id, name, slug, description, relevant_regulations, hero_image)
-solution_sectors (solution_id, sector_id, relevance_score)
+control-horario, normativa-legal, comparativas, sectores,
+gestion-ausencias, productividad, guias, alternativas
 ```
 
-### 1.3 Importar datos del CSV
-
-- Insertar las 96 soluciones del CSV en `companies`
-- Parsear el campo `Category` (separado por `;`) para crear categorías y relaciones many-to-many
-- Inferir feature booleans desde las categorías (ej: "Geolocalización" -> has_geolocation = true)
-- INWOUT marcado como `is_promoted = true`, `rank = 100`
+Actualizar `BlogCategoryTabs` con las nuevas categorías.
 
 ---
 
-## 2. Nuevas Rutas y Páginas
+## 3. Nuevos Componentes
 
-### 2.1 Directorio Principal -- `/directorio`
+### 3.1 BlogArticleRenderer
+- Recibe `content_html` y lo renderiza con `dangerouslySetInnerHTML`
+- Clase contenedora `.blog-article-content` con estilos completos para:
+  - Tipografía (h2-h4, p, strong, em, a)
+  - Listas (ul/ol con bullets estilizados)
+  - Tablas responsive
+  - Blockquotes con borde verde (#0fb89f)
+  - Code blocks
+  - `.highlight-box`, `.warning-box`, `.danger-box`
+  - `details/summary` FAQ
+  - `.cta-section` con gradiente oscuro
+  - Imágenes responsive con caption
 
-- Grid responsivo de SolutionCards
-- INWOUT siempre primera con badge "Recomendada"
-- Panel de filtros lateral: categoría, modelo de precio, funcionalidades, valoración
-- Buscador con autocompletado (cmdk ya instalado)
-- Ordenar por: relevancia, nombre, precio, valoración
-- Paginación (12-24 por página)
-- Schema JSON-LD SoftwareApplication inyectado en cada tarjeta
+### 3.2 TableOfContents
+- Parsea content_html, extrae H2/H3 por sus IDs
+- Navegación lateral sticky con scroll spy
+- En móvil: colapsable arriba del artículo
 
-### 2.2 Ficha Individual -- `/directorio/:slug`
+### 3.3 InwoutBlogCTA
+- Variantes: `inline`, `sidebar`, `footer`
+- Texto y URL configurables desde los campos del post
+- Gradiente oscuro (#0A1628) con acento verde (#0fb89f)
 
-- Hero con logo, nombre, descripción, badges, enlace web
-- Tabla de funcionalidades con iconos check/cross
-- Sección Pricing (placeholder "Consultar en su web")
-- Sección "Lo que dicen los usuarios" (placeholder para reviews futuras)
-- CTA lateral sticky "Prueba INWOUT gratis"
-- Comparativa rápida automática vs INWOUT (tabla side-by-side)
-- Breadcrumbs con schema BreadcrumbList
-- Carrusel de 4-6 soluciones relacionadas (misma categoría)
-- SEO: meta title "[Nombre] - Opiniones, Precios y Alternativas 2026"
+### 3.4 RelatedPosts
+- Recibe post actual, muestra 3-4 posts de la misma categoría
+- Fallback a posts más recientes
 
-### 2.3 Comparativas VS -- `/comparar/:slug1-vs-:slug2`
-
-- Refactorizar la comparación existente (actualmente usa UUIDs) para usar slugs
-- Tabla side-by-side de features con checks/crosses
-- Sección "Veredicto" con mención a INWOUT
-- Pre-generar links internos para los 15 principales vs INWOUT
-- SEO: "[Solución A] vs [Solución B] - Comparativa 2026"
-
----
-
-## 3. Componentes UI Nuevos
-
-```text
-src/components/directory/
-  SolutionCard.tsx        -- Tarjeta con logo, nombre, badges, features, CTA
-  SolutionGrid.tsx        -- Grid con paginación
-  FilterSidebar.tsx       -- Filtros por categoría, precio, features
-  SearchBar.tsx           -- Buscador con autocompletado
-  SortSelect.tsx          -- Selector de ordenación
-  
-src/components/solution/
-  SolutionHero.tsx        -- Hero de ficha individual
-  FeatureChecklist.tsx    -- Lista de features check/cross
-  PricingSection.tsx      -- Sección de precios
-  ReviewsPlaceholder.tsx  -- Placeholder para reviews
-  RelatedSolutions.tsx    -- Carrusel de soluciones relacionadas
-  QuickComparison.tsx     -- Mini tabla comparativa vs INWOUT
-
-src/components/comparison/
-  VsComparisonTable.tsx   -- Tabla comparativa por slugs
-  VerdictSection.tsx      -- Sección de veredicto
-
-src/components/seo/
-  SEOHead.tsx             -- Meta tags dinámicos + JSON-LD
-  BreadcrumbNav.tsx       -- Breadcrumbs con schema markup
-
-src/components/cta/
-  InwoutCTA.tsx           -- CTA sticky reutilizable
-  InwoutBanner.tsx        -- Banner flotante global
-```
+### 3.5 BlogSEOHead
+- Reutiliza el `SEOHead` existente pero añade:
+  - JSON-LD dinámico desde `schema_json` del post
+  - Twitter Card tags
+  - article:published_time, article:author
 
 ---
 
-## 4. SEO Técnico
+## 4. Actualización de Páginas
 
-- Componente `SEOHead` que use `document.title` y meta tags dinámicos (React Helmet no disponible, usaremos `useEffect` para manipular `<head>`)
-- JSON-LD schemas: SoftwareApplication, BreadcrumbList, FAQPage
-- Internal linking automático entre fichas y comparativas
-- Open Graph tags dinámicos
+### 4.1 `/blog` (index)
+- Actualizar `BlogPostCard` para mostrar excerpt, reading_time, tags
+- Actualizar `useBlogPosts` para filtrar por `status = 'published'` (ya filtra por published_at, pero añadir status)
+- Sidebar con categorías, posts populares, CTA INWOUT
+- Inyectar SEO con Blog schema
 
----
+### 4.2 `/blog/:slug` (artículo)
+- Reemplazar `ArticleFormatter` (ReactMarkdown) por `BlogArticleRenderer` (HTML directo)
+- Lógica: si `content_html` existe, usar BlogArticleRenderer; si no, fallback a ArticleFormatter actual
+- Añadir `TableOfContents` en sidebar sticky
+- Añadir `InwoutBlogCTA` al final del artículo
+- Breadcrumbs: Home > Blog > [Categoría] > [Título]
+- `RelatedPosts` al final (usa `related_post_slugs` o misma categoría)
+- SEO dinámico completo desde los campos del post
 
-## 5. CTA Strategy (Transversal)
-
-- `InwoutCTA` sticky en todas las fichas de competidores
-- `InwoutBanner` flotante inferior en páginas del directorio
-- INWOUT siempre con badge "Recomendada" y posición destacada
-- Links a inwout.com en cada comparativa
-
----
-
-## 6. Actualización de Rutas (App.tsx)
-
-```text
-Nuevas rutas:
-/directorio                        -> DirectoryPage
-/directorio/:slug                  -> SolutionPage  
-/comparar/:slug1-vs-:slug2         -> VsComparisonPage
-```
-
-Mantener las rutas existentes (`/dashboard`, `/blog`, etc.) para no romper nada.
+### 4.3 `/blog/categoria/:category` (nueva ruta)
+- Mismo layout que `/blog` pero filtrado por categoría
+- H1 y meta description específicos
 
 ---
 
-## 7. Hooks y Data Layer
+## 5. Estilos CSS
 
-```text
-src/hooks/
-  useSolutions.ts          -- Fetch + filtro + paginación de soluciones
-  useSolution.ts           -- Fetch individual por slug
-  useCategories.ts         -- Fetch categorías
-  useComparison.ts         -- Fetch 2 soluciones por slug para comparar
-  useRelatedSolutions.ts   -- Fetch soluciones de misma categoría
-```
+Añadir al `index.css` la clase `.blog-article-content` con todos los estilos para el HTML pre-renderizado (~80 líneas de CSS).
 
 ---
 
-## Fases Posteriores (No incluidas en esta implementación)
+## 6. Edge Functions
 
-- **Fase 2**: Páginas por sector (`/sector/:sector`), pricing intelligence (`/precios`), blog programático
-- **Fase 3**: Mapa competitivo visual (`/mapa-competitivo`), sistema de reviews, calculadoras avanzadas
+### 6.1 Sitemap Blog (`/sitemap-blog.xml`)
+- Edge function que genera XML sitemap con todos los posts publicados
+- Incluye lastmod, changefreq, priority
+
+### 6.2 RSS Feed (`/blog/feed.xml`)
+- Edge function que genera RSS 2.0 con los últimos 20 posts
+
+---
+
+## 7. Actualización del Type BlogPost
+
+Expandir la interfaz `BlogPost` en `FeaturedPost.tsx` (o moverla a `src/types/blog.ts`) con todos los campos nuevos, manteniendo los existentes como opcionales para retrocompatibilidad.
+
+---
+
+## 8. Compatibilidad
+
+- Los posts existentes (que solo tienen `content` en markdown) seguirán funcionando: el renderer comprobará `content_html` primero, fallback a `content`
+- Los mock posts siguen funcionando como fallback
+- Las categorías antiguas se mapean a las nuevas
 
 ---
 
 ## Orden de Implementación
 
-1. Migración DB: expandir `companies` + crear tablas auxiliares
-2. Importar las 96 soluciones del CSV + crear categorías
-3. Componentes base: SolutionCard, FeatureChecklist, InwoutCTA, SEOHead, BreadcrumbNav
-4. Página Directorio (`/directorio`) con filtros y búsqueda
-5. Página Ficha Individual (`/directorio/:slug`)
-6. Página Comparativas VS (`/comparar/:slug1-vs-:slug2`)
-7. Actualizar navegación global con links al directorio
+1. Migración DB + storage bucket
+2. Tipo `BlogPost` expandido
+3. Estilos CSS `.blog-article-content`
+4. `BlogArticleRenderer` + `TableOfContents` + `InwoutBlogCTA` + `RelatedPosts`
+5. Actualizar `/blog/:slug` con nuevo renderer y sidebar
+6. Actualizar `/blog` con nuevas categorías y SEO
+7. Nueva ruta `/blog/categoria/:category`
+8. Edge functions: sitemap + RSS
 
