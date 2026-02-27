@@ -16,7 +16,7 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
       
       if (session?.user) {
         // Check if the user is the admin
-        const isAdminUser = session.user.email === "amexpuey@gmail.com";
+        const isAdminUser = session.user.email === "amexpuey@gmail.com" || session.user.email === "onboarding@inwout.app";
         setIsAdmin(isAdminUser);
         setIsAuthenticated(true);
       } else {
@@ -28,7 +28,7 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
-        const isAdminUser = session.user.email === "amexpuey@gmail.com";
+        const isAdminUser = session.user.email === "amexpuey@gmail.com" || session.user.email === "onboarding@inwout.app";
         setIsAdmin(isAdminUser);
         setIsAuthenticated(true);
       } else {

@@ -18,7 +18,7 @@ Deno.serve(async (req) => {
     }
 
     const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(authHeader)
-    if (authError || !user || user.email !== 'amexpuey@gmail.com') {
+    if (authError || !user || (user.email !== 'amexpuey@gmail.com' && user.email !== 'onboarding@inwout.app')) {
       throw new Error('Unauthorized')
     }
 

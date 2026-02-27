@@ -29,7 +29,7 @@ const Login = () => {
     try {
       // Check if it's admin login
       if (window.location.pathname === "/login") {
-        if (!password || email !== "amexpuey@gmail.com") {
+        if (!password || (email !== "amexpuey@gmail.com" && email !== "onboarding@inwout.app")) {
           toast({
             title: "Error",
             description: "Invalid credentials",
@@ -46,7 +46,7 @@ const Login = () => {
         if (error) throw error;
 
         if (data?.user) {
-          if (data.user.email !== "amexpuey@gmail.com") {
+          if (data.user.email !== "amexpuey@gmail.com" && data.user.email !== "onboarding@inwout.app") {
             await supabase.auth.signOut();
             toast({
               title: "Error",
