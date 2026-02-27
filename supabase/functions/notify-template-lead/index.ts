@@ -66,8 +66,8 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'FichajeEmpresas.es <onboarding@resend.dev>',
-        to: ['albert@inwout.com'],
+        from: 'FichajeEmpresas.es <noreply@inwout.app>',
+        to: ['hi@inwout.com'],
         subject: `🎯 Nuevo lead: ${plantilla_title}`,
         html: internalHtml,
       }),
@@ -114,7 +114,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'FichajeEmpresas.es <onboarding@resend.dev>',
+        from: 'FichajeEmpresas.es <noreply@inwout.app>',
         to: [email],
         subject: `Tu plantilla: ${plantilla_title} ✅`,
         html: welcomeHtml,
