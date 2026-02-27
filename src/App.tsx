@@ -16,6 +16,7 @@ import BlogCategoryPage from "@/pages/BlogCategoryPage";
 import AdminCompanies from "@/pages/admin/Companies";
 import AdminUsers from "@/pages/admin/Users";
 import AdminLeads from "@/pages/admin/Leads";
+import AdminArticles from "@/pages/admin/Articles";
 import Login from "@/pages/Login";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { Footer } from "@/components/Footer";
@@ -41,6 +42,7 @@ const router = createBrowserRouter([
   { path: "/admin/companies", element: <ProtectedRoute><AdminCompanies /></ProtectedRoute> },
   { path: "/admin/users", element: <ProtectedRoute><AdminUsers /></ProtectedRoute> },
   { path: "/admin/leads", element: <ProtectedRoute><AdminLeads /></ProtectedRoute> },
+  { path: "/admin/articles", element: <ProtectedRoute><AdminArticles /></ProtectedRoute> },
   { path: "*", element: <DirectoryPage /> },
 ]);
 
