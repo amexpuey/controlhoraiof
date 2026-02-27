@@ -7,8 +7,7 @@ import {
   BookOpen, 
   LayoutGrid, 
   X, 
-  FileText,
-  CheckCircle
+  FileText
 } from "lucide-react";
 
 interface MobileMenuProps {
@@ -53,16 +52,6 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             </ul>
           </nav>
           
-          <div className="p-4 mt-auto" style={{ borderTop: '1px solid var(--border)' }}>
-            <Link
-              to="/compliance-checker"
-              className="btn btn-green w-full"
-              onClick={onClose}
-            >
-              <CheckCircle className="mr-2 h-4 w-4" />
-              Verificador de cumplimiento
-            </Link>
-          </div>
         </div>
       </SheetContent>
     </Sheet>
