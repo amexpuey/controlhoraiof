@@ -125,7 +125,7 @@ export function useVacationCalendar() {
   return {
     year, setYear,
     employees, addEmployee, removeEmployee, renameEmployee, updateAllowance,
-    absences, toggleAbsence, getAbsence,
+    absences, setAbsences, toggleAbsence, getAbsence,
     selectedType, setSelectedType,
     holidays, setHolidays, isHoliday, addHoliday, removeHoliday,
     getUsedDays, overlapDates,
