@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { CheckCircle, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -59,14 +59,6 @@ export function AppHeader() {
             onMouseLeave={e => (e.currentTarget.style.color = "var(--dark-muted)")}
           >
             Blog
-          </Link>
-          <Link 
-            to="/compliance-checker" 
-            className="flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-md transition-colors"
-            style={{ background: "var(--green)", color: "white" }}
-          >
-            <CheckCircle className="w-4 h-4" />
-            Verificador de cumplimiento
           </Link>
         </div>
       )}
