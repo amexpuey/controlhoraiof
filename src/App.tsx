@@ -7,6 +7,7 @@ import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import ComplianceCheckerPage from "@/pages/ComplianceCheckerPage";
 import Templates from "@/pages/Templates";
+import TemplateLandingPage from "@/pages/TemplateLandingPage";
 import TalentGuidePage from "@/pages/TalentGuidePage";
 import TimecardPage from "@/pages/TimecardPage";
 import DirectoryPage from "@/pages/DirectoryPage";
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
   { path: "/plantillas", element: <Templates /> },
   { path: "/plantillas/guia-talento", element: <TalentGuidePage /> },
   { path: "/plantillas/registro-horas", element: <TimecardPage /> },
+  { path: "/plantillas/:slug", element: <TemplateLandingPage /> },
   { path: "/login", element: <Login /> },
   { path: "/admin/companies", element: <ProtectedRoute><AdminCompanies /></ProtectedRoute> },
   { path: "/admin/users", element: <ProtectedRoute><AdminUsers /></ProtectedRoute> },

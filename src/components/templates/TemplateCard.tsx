@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useMemo } from "react";
 import { Download, ExternalLink, Pencil, Book, Clock, FileText, Users, Calendar, MessageSquare, GraduationCap, Briefcase } from "lucide-react";
 import { TemplateData } from "./types";
 import { Link } from "react-router-dom";
@@ -12,6 +12,22 @@ interface TemplateCardProps {
 }
 
 export default function TemplateCard({ template, isPublished, onLeadGate }: TemplateCardProps) {
+  // Simulated download count with daily micro-increment for realism
+  const displayDownloads = useMemo(() => {
+    const base = template.baseDownloads || 0;
+    if (!base) return null;
+    const daysSinceEpoch = Math.floor(Date.now() / 86400000);
+    const hash = template.id.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+    const dailyIncrement = ((daysSinceEpoch + hash) % 7) + 1;
+    const dayOffset = daysSinceEpoch % 365;
+    return base + (dayOffset * dailyIncrement);
+  }, [template.baseDownloads, template.id]);
+
+  const formatDownloads = (n: number) => {
+    if (n >= 1000) return `${(n / 1000).toFixed(1).replace('.0', '')}k`;
+    return n.toString();
+  };
+
   const getCategoryIcon = () => {
     const iconMap: Record<string, React.ReactNode> = {
       "Evaluación": <FileText className="h-7 w-7" style={{ color: 'var(--green)' }} />,
@@ -92,8 +108,16 @@ export default function TemplateCard({ template, isPublished, onLeadGate }: Temp
       </div>
       
       <div className="feature-body" style={{ flex: 1 }}>
-        <h3 style={{ fontSize: '16px', lineHeight: '1.3' }}>{template.title}</h3>
+        <Link to={`/plantillas/${template.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <h3 style={{ fontSize: '16px', lineHeight: '1.3' }}>{template.title}</h3>
+        </Link>
         <p style={{ fontSize: '13.5px' }}>{template.description}</p>
+        {displayDownloads && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '8px', fontSize: '12px', color: 'var(--text-muted)' }}>
+            <Download className="h-3 w-3" />
+            <span>{formatDownloads(displayDownloads)} descargas</span>
+          </div>
+        )}
       </div>
       
       <div style={{ padding: '0 24px 24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
