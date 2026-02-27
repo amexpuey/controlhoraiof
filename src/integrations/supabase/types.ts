@@ -8326,6 +8326,10 @@ export type Database = {
         Args: { user_uuid: string }
         Returns: undefined
       }
+      increment_download_count: {
+        Args: { template_slug: string }
+        Returns: undefined
+      }
       increment_email_count: { Args: { p_user_id?: string }; Returns: boolean }
       insert_campaign_with_recipients: {
         Args: { campaign: Json; contacts: Json[] }
