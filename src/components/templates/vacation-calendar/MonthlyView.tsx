@@ -11,6 +11,7 @@ interface MonthlyViewProps {
   toggleAbsence: (employeeId: string, date: string, shiftKey?: boolean) => void;
   isHoliday: (date: string) => Holiday | undefined;
   overlapDates: Set<string>;
+  coverageViolationDates: Set<string>;
   onPrevMonth: () => void;
   onNextMonth: () => void;
 }
@@ -18,7 +19,7 @@ interface MonthlyViewProps {
 const MONTH_FULL = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 const DAY_NAMES = ["L", "M", "X", "J", "V", "S", "D"];
 
-export default function MonthlyView({ year, month, employees, getAbsence, toggleAbsence, isHoliday, overlapDates, onPrevMonth, onNextMonth }: MonthlyViewProps) {
+export default function MonthlyView({ year, month, employees, getAbsence, toggleAbsence, isHoliday, overlapDates, coverageViolationDates, onPrevMonth, onNextMonth }: MonthlyViewProps) {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const fmt = (d: number) => `${year}-${String(month + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
   const isWeekend = (date: string) => { const day = new Date(date).getDay(); return day === 0 || day === 6; };
@@ -77,6 +78,7 @@ export default function MonthlyView({ year, month, employees, getAbsence, toggle
                   const absence = getAbsence(emp.id, date);
                   const absConfig = absence ? getAbsenceConfig(absence.type) : null;
                   const hasOverlap = overlapDates.has(date);
+                  const hasViolation = coverageViolationDates.has(date);
                   const clickable = !we && !hol;
                   return (
                     <td
@@ -94,13 +96,13 @@ export default function MonthlyView({ year, month, employees, getAbsence, toggle
                         display: "flex", alignItems: "center", justifyContent: "center",
                         position: "relative",
                         background: absence ? absConfig?.color : hol ? "hsla(0,72%,51%,0.08)" : we ? "var(--surface-alt)" : "transparent",
-                        border: absence ? "none" : "1px solid var(--border)",
+                        border: hasViolation && absence ? "2px solid hsl(0,72%,51%)" : absence ? "none" : "1px solid var(--border)",
                         color: absence ? "white" : "transparent",
                         fontSize: 9, fontWeight: 700,
                         transition: "all 0.1s",
                       }}>
                         {absence && absConfig?.label.charAt(0)}
-                        {hasOverlap && absence && (
+                        {hasOverlap && absence && !hasViolation && (
                           <AlertTriangle style={{ width: 10, height: 10, color: "hsl(38,92%,50%)", position: "absolute", top: -4, right: -4 }} />
                         )}
                       </div>

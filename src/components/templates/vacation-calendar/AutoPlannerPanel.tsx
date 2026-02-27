@@ -6,6 +6,8 @@ import { Wand2, Users, Calendar, Settings2, Play, RotateCcw } from "lucide-react
 interface AutoPlannerPanelProps {
   employees: Employee[];
   year: number;
+  minCoverage: number;
+  onMinCoverageChange: (v: number) => void;
   onPlanRotative: (minCoverage: number) => void;
   onPlanCollective: (minCoverage: number, start: string, end: string) => void;
   onPlanPreferences: (minCoverage: number, prefs: Record<string, number[]>) => void;
@@ -18,10 +20,10 @@ const MONTHS = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "
 type PlanMode = "rotative" | "collective" | "preferences";
 
 export default function AutoPlannerPanel({
-  employees, year, onPlanRotative, onPlanCollective, onPlanPreferences, onClearAll, hasAbsences,
+  employees, year, minCoverage, onMinCoverageChange, onPlanRotative, onPlanCollective, onPlanPreferences, onClearAll, hasAbsences,
 }: AutoPlannerPanelProps) {
   const [mode, setMode] = useState<PlanMode>("rotative");
-  const [minCoverage, setMinCoverage] = useState(Math.max(1, Math.ceil(employees.length / 2)));
+  const setMinCoverage = onMinCoverageChange;
   const [collectiveStart, setCollectiveStart] = useState(`${year}-08-03`);
   const [collectiveEnd, setCollectiveEnd] = useState(`${year}-08-14`);
   const [preferences, setPreferences] = useState<Record<string, number[]>>(() => {
@@ -88,12 +90,12 @@ export default function AutoPlannerPanel({
         <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>Cobertura mínima:</span>
         <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
           <button
-            onClick={() => setMinCoverage(c => Math.max(1, c - 1))}
+            onClick={() => setMinCoverage(Math.max(1, minCoverage - 1))}
             style={{ width: 28, height: 28, borderRadius: 6, border: "1px solid var(--border)", background: "var(--white)", cursor: "pointer", fontWeight: 700, fontSize: 14, color: "var(--text)" }}
           >−</button>
           <span style={{ minWidth: 36, textAlign: "center", fontWeight: 700, fontSize: 15, color: "var(--green)" }}>{minCoverage}</span>
           <button
-            onClick={() => setMinCoverage(c => Math.min(employees.length, c + 1))}
+            onClick={() => setMinCoverage(Math.min(employees.length, minCoverage + 1))}
             style={{ width: 28, height: 28, borderRadius: 6, border: "1px solid var(--border)", background: "var(--white)", cursor: "pointer", fontWeight: 700, fontSize: 14, color: "var(--text)" }}
           >+</button>
         </div>
