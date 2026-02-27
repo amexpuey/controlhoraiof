@@ -1150,3 +1150,9 @@
 .blog-article-content .cta-section h4 {
   color: white;
 }
+
+@media (max-width: 768px) {
+  .template-landing-grid {
+    grid-template-columns: 1fr !important;
+  }
+}

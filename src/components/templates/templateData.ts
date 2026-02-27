@@ -6,11 +6,13 @@ export const templateData: TemplateData[] = [
     id: "guia-talento",
     title: "Guía de talento: desempeño y seguimiento de objetivos",
     description: "Herramienta interactiva para evaluar el desempeño, planificar formaciones y realizar seguimiento de objetivos.",
-    imageSrc: "/lovable-uploads/91e7dd43-1049-45fc-ae3d-b7ecbd608938.png", // Using an existing image from the project
+    imageSrc: "/lovable-uploads/91e7dd43-1049-45fc-ae3d-b7ecbd608938.png",
     category: "Evaluación",
     action: "edit",
     actionLabel: "Usar plantilla",
-    editUrl: "/plantillas/guia-talento"
+    editUrl: "/plantillas/guia-talento",
+    baseDownloads: 1247,
+    metaDescription: "Evalúa el desempeño de tu equipo y haz seguimiento de objetivos con esta guía interactiva gratuita. Adaptada a empresas españolas.",
   },
   {
     id: "registro-horas-trabajadas",
@@ -20,7 +22,9 @@ export const templateData: TemplateData[] = [
     category: "Control horario",
     action: "edit",
     actionLabel: "Ver recurso",
-    editUrl: "/plantillas/registro-horas"
+    editUrl: "/plantillas/registro-horas",
+    baseDownloads: 2384,
+    metaDescription: "Registra las horas trabajadas de tus empleados con esta herramienta gratuita. Control diario, semanal y mensual conforme a la normativa española.",
   },
   {
     id: "kit-herramientas-ley",
@@ -30,7 +34,9 @@ export const templateData: TemplateData[] = [
     category: "Normativa Laboral",
     action: "external",
     actionLabel: "Generar documentación",
-    editUrl: "https://comunicado-legal.inwout.app"
+    editUrl: "https://comunicado-legal.inwout.app",
+    baseDownloads: 876,
+    metaDescription: "Genera la documentación legal obligatoria para el registro horario: comunicado, acuerdo con representantes y protocolo.",
   },
   {
     id: "plantilla-onboarding",
@@ -40,7 +46,9 @@ export const templateData: TemplateData[] = [
     category: "Onboarding",
     action: "download",
     actionLabel: "Descargar PDF",
-    downloadUrl: "#"
+    downloadUrl: "#",
+    baseDownloads: 643,
+    metaDescription: "Descarga gratis esta plantilla de onboarding para nuevas incorporaciones. Checklist paso a paso para RRHH.",
   },
   {
     id: "modelo-evaluacion-competencias",
@@ -50,7 +58,9 @@ export const templateData: TemplateData[] = [
     category: "Evaluación",
     action: "download",
     actionLabel: "Descargar PDF",
-    downloadUrl: "#"
+    downloadUrl: "#",
+    baseDownloads: 512,
+    metaDescription: "Modelo gratuito de evaluación por competencias para RRHH. Formato profesional y listo para usar.",
   },
   {
     id: "descripcion-puestos",
@@ -60,7 +70,9 @@ export const templateData: TemplateData[] = [
     category: "Productividad",
     action: "download",
     actionLabel: "Descargar DOCX",
-    downloadUrl: "#"
+    downloadUrl: "#",
+    baseDownloads: 1089,
+    metaDescription: "Plantilla gratuita para describir puestos de trabajo. Define responsabilidades, requisitos y competencias.",
   },
   {
     id: "control-ausencias",
@@ -70,7 +82,9 @@ export const templateData: TemplateData[] = [
     category: "Control horario",
     action: "download",
     actionLabel: "Descargar Excel",
-    downloadUrl: "#"
+    downloadUrl: "#",
+    baseDownloads: 1756,
+    metaDescription: "Controla las ausencias de tu equipo con esta plantilla Excel gratuita. Incluye motivos y documentación justificativa.",
   },
   {
     id: "acta-reunion-equipos",
@@ -80,7 +94,9 @@ export const templateData: TemplateData[] = [
     category: "Comunicación Interna",
     action: "download",
     actionLabel: "Descargar PDF",
-    downloadUrl: "#"
+    downloadUrl: "#",
+    baseDownloads: 438,
+    metaDescription: "Acta de reunión para equipos remotos. Formato profesional para documentar acuerdos y seguimiento.",
   },
   {
     id: "calendario-rrhh-2026",
@@ -90,7 +106,9 @@ export const templateData: TemplateData[] = [
     category: "Productividad",
     action: "download",
     actionLabel: "Descargar Excel",
-    downloadUrl: "#"
+    downloadUrl: "#",
+    baseDownloads: 1923,
+    metaDescription: "Calendario RRHH 2026 editable y gratuito. Planifica vacaciones, formaciones y eventos de empresa.",
   },
   {
     id: "encuesta-clima-laboral",
@@ -100,7 +118,9 @@ export const templateData: TemplateData[] = [
     category: "Comunicación Interna",
     action: "download",
     actionLabel: "Descargar PDF",
-    downloadUrl: "#"
+    downloadUrl: "#",
+    baseDownloads: 689,
+    metaDescription: "Encuesta de clima laboral gratuita. Evalúa la satisfacción y el ambiente de trabajo de tu equipo.",
   },
   {
     id: "guia-planificacion-formaciones",
@@ -110,7 +130,9 @@ export const templateData: TemplateData[] = [
     category: "Formación",
     action: "download",
     actionLabel: "Descargar PDF",
-    downloadUrl: "#"
+    downloadUrl: "#",
+    baseDownloads: 374,
+    metaDescription: "Planifica las formaciones de tu equipo con esta guía trimestral gratuita. Estructura y calendario incluidos.",
   },
   {
     id: "seguimiento-tareas",
@@ -120,6 +142,8 @@ export const templateData: TemplateData[] = [
     category: "Productividad",
     action: "download",
     actionLabel: "Descargar Excel",
-    downloadUrl: "#"
+    downloadUrl: "#",
+    baseDownloads: 821,
+    metaDescription: "Hoja de seguimiento de tareas por empleado. Plantilla Excel gratuita para gestionar la productividad.",
   }
 ];

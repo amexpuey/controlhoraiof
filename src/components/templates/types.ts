@@ -22,4 +22,8 @@ export interface TemplateData {
   actionLabel: string;
   downloadUrl?: string;
   editUrl?: string;
+  /** Simulated base download count for social proof */
+  baseDownloads?: number;
+  /** Meta description for individual SEO page */
+  metaDescription?: string;
 }
