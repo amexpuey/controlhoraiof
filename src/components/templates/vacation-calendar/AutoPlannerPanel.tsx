@@ -60,9 +60,9 @@ export default function AutoPlannerPanel({
       {/* Mode selector */}
       <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap" }}>
         {([
-          { key: "rotative" as PlanMode, icon: <RotateCcw className="h-4 w-4" />, label: "Auto-rotatiu", desc: "L'eina distribueix equitativament" },
-          { key: "preferences" as PlanMode, icon: <Users className="h-4 w-4" />, label: "Per preferències", desc: "Cada empleat tria mesos" },
-          { key: "collective" as PlanMode, icon: <Calendar className="h-4 w-4" />, label: "Col·lectives", desc: "Període comú + resta individual" },
+          { key: "rotative" as PlanMode, icon: <RotateCcw className="h-4 w-4" />, label: "Auto-rotativo", desc: "La herramienta distribuye equitativamente" },
+          { key: "preferences" as PlanMode, icon: <Users className="h-4 w-4" />, label: "Por preferencias", desc: "Cada empleado elige meses" },
+          { key: "collective" as PlanMode, icon: <Calendar className="h-4 w-4" />, label: "Colectivas", desc: "Período común + resto individual" },
         ]).map(m => (
           <button
             key={m.key}
@@ -126,7 +126,7 @@ export default function AutoPlannerPanel({
 
       {mode === "preferences" && (
         <div style={{ marginBottom: 16 }}>
-          <div style={{ fontSize: 13, color: "var(--text-secondary)", marginBottom: 8 }}>Selecciona mesos preferits per empleat:</div>
+          <div style={{ fontSize: 13, color: "var(--text-secondary)", marginBottom: 8 }}>Selecciona meses preferidos por empleado:</div>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {employees.map(emp => (
               <div key={emp.id} style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
