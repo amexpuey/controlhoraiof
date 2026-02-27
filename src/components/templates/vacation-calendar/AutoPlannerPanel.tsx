@@ -43,6 +43,10 @@ export default function AutoPlannerPanel({
     if (mode === "rotative") onPlanRotative(minCoverage);
     else if (mode === "collective") onPlanCollective(minCoverage, collectiveStart, collectiveEnd);
     else onPlanPreferences(minCoverage, preferences);
+    // Scroll to calendar after generating
+    setTimeout(() => {
+      document.getElementById("vc-calendar-area")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
   };
 
   return (

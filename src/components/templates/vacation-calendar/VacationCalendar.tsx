@@ -162,7 +162,7 @@ export default function VacationCalendar() {
         </div>
 
         {/* Calendar */}
-        <div className="feature-card" style={{ padding: 20, minWidth: 0, overflow: "hidden" }}>
+        <div id="vc-calendar-area" className="feature-card" style={{ padding: 20, minWidth: 0, overflow: "hidden" }}>
           {cal.view === "annual" ? (
             <AnnualView
               year={cal.year}
