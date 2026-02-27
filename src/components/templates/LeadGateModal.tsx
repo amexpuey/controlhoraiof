@@ -70,23 +70,15 @@ export default function LeadGateModal({
       } as any);
 
       // 2. Notify edge function (fire & forget)
-      const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
-      if (projectId) {
-        fetch(
-          `https://${projectId}.supabase.co/functions/v1/notify-template-lead`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              email: parsed.data,
-              nombre: nombre.trim(),
-              empresa: empresa.trim(),
-              plantilla_slug: templateSlug,
-              plantilla_title: templateTitle,
-            }),
-          }
-        ).catch(() => {});
-      }
+      supabase.functions.invoke('notify-template-lead', {
+        body: {
+          email: parsed.data,
+          nombre: nombre.trim(),
+          empresa: empresa.trim(),
+          plantilla_slug: templateSlug,
+          plantilla_title: templateTitle,
+        },
+      }).catch(() => {});
 
       // 3. Increment download count (fire & forget)
       supabase.rpc("increment_download_count", { template_slug: templateSlug } as any).then(() => {});
