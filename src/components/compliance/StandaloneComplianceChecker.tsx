@@ -5,6 +5,7 @@ import { ComplianceResults } from "./ComplianceResults";
 import { SanctionCalculator } from "./SanctionCalculator";
 import { complianceQuestions } from "./complianceData";
 import { trackComplianceComplete } from "@/lib/analytics";
+import LeadGateModal from "@/components/templates/LeadGateModal";
 
 interface FormValues {
   [key: string]: "si" | "no";
@@ -21,6 +22,8 @@ export default function StandaloneComplianceChecker({ isEmbedded = false }: Stan
     complianceScore: number;
   } | null>(null);
   const [showCalculator, setShowCalculator] = useState(true);
+  const [showLeadGate, setShowLeadGate] = useState(false);
+  const [pendingResults, setPendingResults] = useState<typeof results>(null);
 
   const onSubmit = (data: FormValues) => {
     const violations = complianceQuestions.filter(q => {
@@ -46,7 +49,33 @@ export default function StandaloneComplianceChecker({ isEmbedded = false }: Stan
     }
 
     trackComplianceComplete(complianceScore, level);
-    setResults({ level, violations, complianceScore });
+
+    // If not embedded, show lead gate before results
+    if (!isEmbedded) {
+      setPendingResults({ level, violations, complianceScore });
+      setShowLeadGate(true);
+    } else {
+      setResults({ level, violations, complianceScore });
+    }
+  };
+
+  const handleLeadGateClose = (open: boolean) => {
+    if (!open) {
+      // Show results whether they submitted or dismissed
+      if (pendingResults) {
+        setResults(pendingResults);
+        setPendingResults(null);
+      }
+      setShowLeadGate(false);
+    }
+  };
+
+  const handleAfterSubmit = () => {
+    if (pendingResults) {
+      setResults(pendingResults);
+      setPendingResults(null);
+    }
+    setShowLeadGate(false);
   };
 
   const resetForm = () => {
@@ -65,6 +94,16 @@ export default function StandaloneComplianceChecker({ isEmbedded = false }: Stan
         <div className="tool-card">{mainContent}</div>
         {showCalculator && <div className="tool-card"><SanctionCalculator /></div>}
       </div>
+
+      <LeadGateModal
+        open={showLeadGate}
+        onOpenChange={handleLeadGateClose}
+        templateTitle="Verificador de cumplimiento normativo"
+        templateSlug="verificador-cumplimiento"
+        templateDescription="Desbloquea tu informe personalizado de cumplimiento con el detalle de infracciones detectadas y recomendaciones."
+        templateImage="/lovable-uploads/654278fc-cbcc-4b9d-8b9a-0a7065e56d8d.png"
+        onAfterSubmit={handleAfterSubmit}
+      />
     </div>
   );
 }
