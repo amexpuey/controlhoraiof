@@ -15,21 +15,23 @@ export default function ComplianceCheckerPage() {
   const testRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Always hide global footer on this page
+    const footer = document.querySelector('footer');
+    if (footer) (footer as HTMLElement).style.display = 'none';
+
     if (isEmbedded) {
       document.body.style.background = "#ffffff";
       document.body.style.margin = "0";
       document.body.style.padding = "0";
-      const footer = document.querySelector('footer');
-      if (footer) footer.style.display = 'none';
       setShowTest(true);
     }
 
     return () => {
+      const footer = document.querySelector('footer');
+      if (footer) (footer as HTMLElement).style.display = '';
       document.body.style.background = "";
       document.body.style.margin = "";
       document.body.style.padding = "";
-      const footer = document.querySelector('footer');
-      if (footer) footer.style.display = '';
     };
   }, [isEmbedded]);
 
