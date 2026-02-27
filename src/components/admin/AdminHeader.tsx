@@ -27,6 +27,16 @@ export default function AdminHeader() {
           >
             Users
           </Link>
+          <Link
+            to="/admin/leads"
+            className={`py-4 px-2 border-b-2 ${
+              location.pathname.startsWith('/admin/leads')
+                ? 'border-primary text-primary font-medium'
+                : 'border-transparent hover:text-primary'
+            }`}
+          >
+            Leads
+          </Link>
         </nav>
       </div>
     </div>
