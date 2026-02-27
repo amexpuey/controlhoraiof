@@ -8,6 +8,7 @@ import MonthlyView from "./MonthlyView";
 import DaysSummary from "./DaysSummary";
 import HolidayManager from "./HolidayManager";
 import AutoPlannerPanel from "./AutoPlannerPanel";
+import PrintSummary from "./PrintSummary";
 import { autoplanRotative, autoplanCollective, autoplanPreferences } from "./autoPlanner";
 import { Calendar, Eye, Printer, ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -190,6 +191,16 @@ export default function VacationCalendar() {
           )}
         </div>
       </div>
+
+      {/* Print-only summary */}
+      <PrintSummary
+        year={cal.year}
+        employees={cal.employees}
+        absences={cal.absences}
+        holidays={cal.holidays}
+        getUsedDays={cal.getUsedDays}
+        minCoverage={cal.minCoverage}
+      />
     </div>
   );
 }
