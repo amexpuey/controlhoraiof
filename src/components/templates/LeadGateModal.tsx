@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Download, Loader2 } from "lucide-react";
+import { Download, Loader2, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { z } from "zod";
@@ -16,6 +16,8 @@ interface LeadGateModalProps {
   onOpenChange: (open: boolean) => void;
   templateTitle: string;
   templateSlug: string;
+  templateImage?: string;
+  templateDescription?: string;
   /** URL to open after submit. If not provided, onAfterSubmit is called instead */
   pdfUrl?: string;
   /** Called after successful submit when no pdfUrl */
@@ -36,6 +38,8 @@ export default function LeadGateModal({
   onOpenChange,
   templateTitle,
   templateSlug,
+  templateImage,
+  templateDescription,
   pdfUrl,
   onAfterSubmit,
 }: LeadGateModalProps) {
@@ -115,12 +119,64 @@ export default function LeadGateModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md" style={{ borderRadius: 'var(--radius-sm)' }}>
-        <DialogHeader>
-          <DialogTitle style={{ fontSize: '18px', lineHeight: '1.4' }}>
-            Descarga gratuita: {templateTitle}
-          </DialogTitle>
-        </DialogHeader>
+      <DialogContent className="sm:max-w-lg" style={{ borderRadius: 'var(--radius-sm)', padding: 0, overflow: 'hidden' }}>
+        {/* Preview section */}
+        {templateImage && (
+          <div style={{ 
+            background: 'linear-gradient(135deg, hsl(var(--muted)) 0%, hsl(var(--accent)) 100%)',
+            padding: '20px',
+            display: 'flex',
+            gap: '16px',
+            alignItems: 'center',
+            borderBottom: '1px solid hsl(var(--border))'
+          }}>
+            <img 
+              src={templateImage} 
+              alt={`Preview de ${templateTitle}`}
+              style={{ 
+                width: '80px', 
+                height: '100px', 
+                objectFit: 'cover', 
+                borderRadius: '6px',
+                border: '1px solid hsl(var(--border))',
+                background: 'white',
+                flexShrink: 0,
+                boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+              }} 
+            />
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <p style={{ 
+                fontSize: '13px', 
+                color: 'hsl(var(--foreground))', 
+                fontWeight: 600,
+                lineHeight: 1.3,
+                marginBottom: '8px'
+              }}>
+                {templateTitle}
+              </p>
+              {templateDescription && (
+                <p style={{ fontSize: '12px', color: 'hsl(var(--muted-foreground))', lineHeight: 1.4, marginBottom: '8px' }}>
+                  {templateDescription}
+                </p>
+              )}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                {["Lista para usar, sin edición", "Adaptada a normativa española", "Formato profesional"].map((item) => (
+                  <span key={item} style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11px', color: 'hsl(var(--muted-foreground))' }}>
+                    <CheckCircle2 className="h-3 w-3" style={{ color: '#0fb89f', flexShrink: 0 }} />
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div style={{ padding: '24px' }}>
+          <DialogHeader>
+            <DialogTitle style={{ fontSize: '18px', lineHeight: '1.4' }}>
+              {templateImage ? 'Accede gratis a este recurso' : `Descarga gratuita: ${templateTitle}`}
+            </DialogTitle>
+          </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-2">
           <div className="space-y-2">
@@ -181,6 +237,7 @@ export default function LeadGateModal({
             Recibirás recursos de RRHH útiles. Puedes darte de baja en cualquier momento.
           </p>
         </form>
+        </div>
       </DialogContent>
     </Dialog>
   );

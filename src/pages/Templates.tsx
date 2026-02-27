@@ -166,6 +166,8 @@ export default function Templates() {
           onOpenChange={setModalOpen}
           templateTitle={selectedTemplate.title}
           templateSlug={selectedTemplate.id}
+          templateImage={selectedTemplate.imageSrc}
+          templateDescription={selectedTemplate.description}
           pdfUrl={modalPdfUrl}
           onAfterSubmit={handleAfterSubmit}
         />
