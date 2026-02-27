@@ -4,10 +4,13 @@ import { supabase } from "@/integrations/supabase/client";
 import AdminHeader from "@/components/admin/AdminHeader";
 import { LeadsTable } from "@/components/admin/LeadsTable";
 import { LeadsTableHeader } from "@/components/admin/LeadsTableHeader";
+import { LeadsDateFilter, type DateRange } from "@/components/admin/LeadsDateFilter";
+import { endOfDay } from "date-fns";
 
 export default function Leads() {
   const [searchTerm, setSearchTerm] = useState("");
   const [slugFilter, setSlugFilter] = useState("all");
+  const [dateRange, setDateRange] = useState<DateRange>({ from: undefined, to: undefined });
 
   const { data: leads = [], isLoading } = useQuery({
     queryKey: ["admin-leads"],
@@ -28,6 +31,16 @@ export default function Leads() {
 
   const filtered = useMemo(() => {
     let result = leads;
+
+    // Date range filter
+    if (dateRange.from) {
+      result = result.filter((l) => new Date(l.created_at) >= dateRange.from!);
+    }
+    if (dateRange.to) {
+      const end = endOfDay(dateRange.to);
+      result = result.filter((l) => new Date(l.created_at) <= end);
+    }
+
     if (slugFilter !== "all") {
       result = result.filter((l) => l.plantilla_slug === slugFilter);
     }
@@ -41,7 +54,7 @@ export default function Leads() {
       );
     }
     return result;
-  }, [leads, slugFilter, searchTerm]);
+  }, [leads, slugFilter, searchTerm, dateRange]);
 
   const handleDownload = () => {
     const headers = ["Email", "Nombre", "Empresa", "Plantilla", "Source", "UTM Source", "UTM Medium", "UTM Campaign", "Fecha"];
@@ -66,6 +79,7 @@ export default function Leads() {
       <div className="container mx-auto p-8">
         <h1 className="text-3xl font-bold mb-6">Leads de Plantillas</h1>
         <div className="space-y-4">
+          <LeadsDateFilter dateRange={dateRange} onDateRangeChange={setDateRange} />
           <LeadsTableHeader
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}
