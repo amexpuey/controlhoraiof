@@ -1156,3 +1156,10 @@
     grid-template-columns: 1fr !important;
   }
 }
+
+/* Lead gate modal responsive */
+@media (max-width: 640px) {
+  .sm\:max-w-3xl > div:first-child {
+    grid-template-columns: 1fr !important;
+  }
+}
