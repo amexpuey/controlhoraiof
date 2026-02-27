@@ -37,6 +37,7 @@ const router = createBrowserRouter([
   { path: "/blog/:slug", element: <BlogPost /> },
   { path: "/blog/categoria/:category", element: <BlogCategoryPage /> },
   { path: "/compliance-checker", element: <ComplianceCheckerPage /> },
+  { path: "/plantillas/verificador-cumplimiento", element: <ComplianceCheckerPage /> },
   { path: "/plantillas", element: <Templates /> },
   { path: "/plantillas/guia-talento", element: <TalentGuidePage /> },
   { path: "/plantillas/registro-horas", element: <TimecardPage /> },

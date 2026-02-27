@@ -3,6 +3,18 @@ import { TemplateData } from "./types";
 
 export const templateData: TemplateData[] = [
   {
+    id: "verificador-cumplimiento",
+    title: "Verificador de cumplimiento normativo",
+    description: "Comprueba en 2 minutos si tu empresa cumple con la normativa de registro horario y calcula posibles sanciones.",
+    imageSrc: "/lovable-uploads/654278fc-cbcc-4b9d-8b9a-0a7065e56d8d.png",
+    category: "Normativa Laboral",
+    action: "edit",
+    actionLabel: "Iniciar verificación",
+    editUrl: "/plantillas/verificador-cumplimiento",
+    baseDownloads: 3412,
+    metaDescription: "Verifica gratis si tu empresa cumple la normativa de registro horario. Test de 10 preguntas con calculadora de sanciones.",
+  },
+  {
     id: "planificador-turnos",
     title: "Planificador visual de turnos rotativos",
     description: "Organiza los turnos de tu equipo con rotación automática, vista semanal/mensual y control de horas por empleado.",
