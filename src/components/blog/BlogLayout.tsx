@@ -1,5 +1,7 @@
 
 import { Link } from "react-router-dom";
+import logoIcon from "@/assets/logofichajes-3.png";
+import logoText from "@/assets/fichajeempresas-text.png";
 
 import { Menu } from "lucide-react";
 import { Button } from "../ui/button";
@@ -24,10 +26,10 @@ export default function BlogLayout({ children }: BlogLayoutProps) {
       >
         <Link
           to="/"
-          className="text-lg md:text-xl font-semibold transition-colors truncate max-w-[180px] md:max-w-none"
-          style={{ color: "var(--dark-text)" }}
+          className="flex items-center gap-2 hover:opacity-80 transition-opacity"
         >
-          FichajeEmpresas.es
+          <img src={logoIcon} alt="FichajeEmpresas.es" className="h-8 w-8" />
+          <img src={logoText} alt="FichajeEmpresas.es" className="h-5 hidden sm:inline" />
         </Link>
 
         {isMobile ? (

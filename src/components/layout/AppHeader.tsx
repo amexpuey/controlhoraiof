@@ -5,7 +5,8 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileMenu } from "./MobileMenu";
-import logoFichajes from "@/assets/logo-fichajes.png";
+import logoIcon from "@/assets/logofichajes-3.png";
+import logoText from "@/assets/fichajeempresas-text.png";
 
 export function AppHeader() {
   const isMobile = useIsMobile();
@@ -13,11 +14,9 @@ export function AppHeader() {
 
   return (
     <div className="h-16 border-b flex items-center justify-between px-4 md:px-6 shadow-md z-10 relative" style={{ background: "var(--dark)" }}>
-      <Link to="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
-        <img src={logoFichajes} alt="Fichaje Empresas" className="h-9 w-9" />
-        <span className="text-lg font-semibold hidden sm:inline" style={{ color: "var(--dark-text)" }}>
-          FichajeEmpresas.es
-        </span>
+      <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+        <img src={logoIcon} alt="FichajeEmpresas.es" className="h-8 w-8" />
+        <img src={logoText} alt="FichajeEmpresas.es" className="h-5 hidden sm:inline" />
       </Link>
       
       {isMobile ? (
