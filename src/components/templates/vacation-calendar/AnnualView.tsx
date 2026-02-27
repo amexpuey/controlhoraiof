@@ -10,12 +10,13 @@ interface AnnualViewProps {
   toggleAbsence: (employeeId: string, date: string, shiftKey?: boolean) => void;
   isHoliday: (date: string) => Holiday | undefined;
   overlapDates: Set<string>;
+  coverageViolationDates: Set<string>;
   onMonthClick: (month: number) => void;
 }
 
 const MONTH_NAMES = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
 
-export default function AnnualView({ year, employees, getAbsence, toggleAbsence, isHoliday, overlapDates, onMonthClick }: AnnualViewProps) {
+export default function AnnualView({ year, employees, getAbsence, toggleAbsence, isHoliday, overlapDates, coverageViolationDates, onMonthClick }: AnnualViewProps) {
   const getDaysInMonth = (month: number) => new Date(year, month + 1, 0).getDate();
   const fmt = (m: number, d: number) => `${year}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
   const isWeekend = (date: string) => { const day = new Date(date).getDay(); return day === 0 || day === 6; };
@@ -72,6 +73,7 @@ export default function AnnualView({ year, employees, getAbsence, toggleAbsence,
                         const hol = isHoliday(date);
                         const absence = getAbsence(emp.id, date);
                         const hasOverlap = overlapDates.has(date);
+                        const hasViolation = coverageViolationDates.has(date);
                         const clickable = !we && !hol;
                         return (
                           <td
@@ -83,13 +85,13 @@ export default function AnnualView({ year, employees, getAbsence, toggleAbsence,
                               width: 22, height: 22, textAlign: "center", padding: 0,
                               background: absence ? getAbsenceColor(absence.type) : hol ? "hsla(0,72%,51%,0.06)" : we ? "var(--surface-alt)" : "transparent",
                               cursor: clickable ? "pointer" : "default",
-                              border: "1px solid var(--border)",
+                              border: hasViolation && absence ? "2px solid hsl(0,72%,51%)" : "1px solid var(--border)",
                               borderRadius: 2,
                               position: "relative",
                               transition: "background 0.1s ease",
                             }}
                           >
-                            {hasOverlap && absence && (
+                            {hasOverlap && absence && !hasViolation && (
                               <AlertTriangle style={{ width: 8, height: 8, color: "hsl(38,92%,50%)", position: "absolute", top: -2, right: -2 }} />
                             )}
                           </td>

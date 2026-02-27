@@ -19,6 +19,7 @@ export function useVacationCalendar() {
   const [holidays, setHolidays] = useState<Holiday[]>(SPAIN_HOLIDAYS_2026);
   const [view, setView] = useState<"annual" | "monthly">("annual");
   const [currentMonth, setCurrentMonth] = useState(0);
+  const [minCoverage, setMinCoverage] = useState(1);
 
   // Shift+click range selection
   const lastClick = useRef<{ employeeId: string; date: string } | null>(null);
@@ -110,6 +111,20 @@ export function useVacationCalendar() {
     return new Set(Object.entries(dateCount).filter(([, c]) => c >= 2).map(([d]) => d));
   }, [absences]);
 
+  // Coverage violation: days where absent count leaves fewer than minCoverage present
+  const coverageViolationDates = useMemo(() => {
+    const total = employees.length;
+    const dateCount: Record<string, number> = {};
+    absences.forEach(a => {
+      dateCount[a.date] = (dateCount[a.date] || 0) + 1;
+    });
+    return new Set(
+      Object.entries(dateCount)
+        .filter(([, absent]) => total - absent < minCoverage)
+        .map(([d]) => d)
+    );
+  }, [absences, employees.length, minCoverage]);
+
   // Holiday management
   const addHoliday = useCallback((date: string, name: string) => {
     setHolidays(prev => {
@@ -128,7 +143,8 @@ export function useVacationCalendar() {
     absences, setAbsences, toggleAbsence, getAbsence,
     selectedType, setSelectedType,
     holidays, setHolidays, isHoliday, addHoliday, removeHoliday,
-    getUsedDays, overlapDates,
+    getUsedDays, overlapDates, coverageViolationDates,
+    minCoverage, setMinCoverage,
     view, setView,
     currentMonth, setCurrentMonth,
   };

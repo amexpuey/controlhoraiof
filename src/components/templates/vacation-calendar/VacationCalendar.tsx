@@ -101,6 +101,8 @@ export default function VacationCalendar() {
       <AutoPlannerPanel
         employees={cal.employees}
         year={cal.year}
+        minCoverage={cal.minCoverage}
+        onMinCoverageChange={cal.setMinCoverage}
         onPlanRotative={handlePlanRotative}
         onPlanCollective={handlePlanCollective}
         onPlanPreferences={handlePlanPreferences}
@@ -146,6 +148,8 @@ export default function VacationCalendar() {
                 employees={cal.employees}
                 getUsedDays={cal.getUsedDays}
                 overlapCount={cal.overlapDates.size}
+                coverageViolationCount={cal.coverageViolationDates.size}
+                minCoverage={cal.minCoverage}
               />
               <HolidayManager
                 holidays={cal.holidays}
@@ -167,6 +171,7 @@ export default function VacationCalendar() {
               toggleAbsence={cal.toggleAbsence}
               isHoliday={cal.isHoliday}
               overlapDates={cal.overlapDates}
+              coverageViolationDates={cal.coverageViolationDates}
               onMonthClick={handleMonthClick}
             />
           ) : (
@@ -178,6 +183,7 @@ export default function VacationCalendar() {
               toggleAbsence={cal.toggleAbsence}
               isHoliday={cal.isHoliday}
               overlapDates={cal.overlapDates}
+              coverageViolationDates={cal.coverageViolationDates}
               onPrevMonth={handlePrevMonth}
               onNextMonth={handleNextMonth}
             />
