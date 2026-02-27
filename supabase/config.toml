@@ -37,3 +37,6 @@ verify_jwt = false
 
 [edge_functions.import-solutions]
 verify_jwt = false
+
+[edge_functions.notify-template-lead]
+verify_jwt = false
