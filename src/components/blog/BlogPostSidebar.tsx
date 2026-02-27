@@ -62,7 +62,7 @@ export default function BlogPostSidebar({ relatedApps }: BlogPostSidebarProps) {
       <div className="rounded-lg shadow-sm p-4 border" style={{ background: "var(--green-bg)", borderColor: "var(--green)" }}>
         <h3 className="text-lg font-bold mb-2 text-left" style={{ color: "var(--green-dark)" }}>Verificador de cumplimiento</h3>
         <p className="text-sm mb-4 text-left" style={{ color: "var(--green-dark)" }}>Comprueba si cumples con la normativa laboral de registro horario y evita multas</p>
-        <Link to="/verificador-cumplimiento">
+        <Link to="/compliance-checker">
           <Button 
             className="w-full text-white"
             style={{ background: "var(--green)" }}
