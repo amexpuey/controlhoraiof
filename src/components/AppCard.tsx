@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { AppCardHeader } from "./app-card/AppCardHeader";
 import { AppCardTitle } from "./app-card/AppCardTitle";
 import { AppCardFeatures } from "./app-card/AppCardFeatures";
+import { trackSolutionClick } from "@/lib/analytics";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
@@ -28,6 +29,7 @@ export default function AppCard({
   const handleCardClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    trackSolutionClick(app.slug || '', app.title);
     navigate(`/mejores-apps-control-horario/${app.slug}`);
   };
 

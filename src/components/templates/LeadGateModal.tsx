@@ -8,6 +8,7 @@ import { Download, Loader2, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { z } from "zod";
+import { trackLeadCapture, trackTemplateDownload } from "@/lib/analytics";
 
 const emailSchema = z.string().trim().email("Introduce un email válido").max(255);
 
@@ -87,8 +88,12 @@ export default function LeadGateModal({
       // 3. Increment download count (fire & forget)
       supabase.rpc("increment_download_count", { template_slug: templateSlug } as any).then(() => {});
 
-      // 4. Open PDF or execute action
+      // 4. Track lead + download
+      trackLeadCapture(templateSlug, templateTitle);
+
+      // 5. Open PDF or execute action
       if (pdfUrl) {
+        trackTemplateDownload(templateSlug, templateTitle);
         window.open(pdfUrl, "_blank");
       } else if (onAfterSubmit) {
         onAfterSubmit();

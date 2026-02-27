@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Check, ExternalLink, Crown, Sparkles } from 'lucide-react';
 import type { Database } from '@/integrations/supabase/types';
 import inwoutLogo from '@/assets/inwout-logo.png';
+import { trackSolutionClick, trackExternalLinkClick } from '@/lib/analytics';
 
 type Company = Database['public']['Tables']['companies']['Row'];
 
@@ -128,7 +129,7 @@ export function SolutionCard({ solution }: SolutionCardProps) {
               </Button>
               {solution.url && (
                 <Button variant="ghost" size="sm" asChild className="text-white/50 hover:text-white hover:bg-white/10">
-                  <a href={solution.redirect_url || solution.url} target="_blank" rel="noopener noreferrer">
+                  <a href={solution.redirect_url || solution.url} target="_blank" rel="noopener noreferrer" onClick={() => trackExternalLinkClick(solution.slug || '', solution.title, solution.redirect_url || solution.url || '')}>
                     Visitar web <ExternalLink className="h-3.5 w-3.5 ml-1" />
                   </a>
                 </Button>
@@ -212,7 +213,7 @@ export function SolutionCard({ solution }: SolutionCardProps) {
           </Button>
           {solution.url && (
             <Button variant="ghost" size="sm" asChild>
-              <a href={solution.redirect_url || solution.url} target="_blank" rel="noopener noreferrer">
+              <a href={solution.redirect_url || solution.url} target="_blank" rel="noopener noreferrer" onClick={() => trackExternalLinkClick(solution.slug || '', solution.title, solution.redirect_url || solution.url || '')}>
                 <ExternalLink className="h-4 w-4" />
               </a>
             </Button>
