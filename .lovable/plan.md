@@ -1,82 +1,45 @@
 
 
-## Pla: Injectar dades del scraping a les fitxes de solucions
+## Test Results
 
-### Situació actual
-- 98 empreses a la taula `companies`, 95 amb logos/imatges placeholder (`unicorn-cdn`, `ucarecdn`)
-- JSON amb 96 empreses amb dades reals: logos, screenshots i thumbnails ja pujats a Supabase Storage, descripcions actualitzades, features complets, social links, pricing, meta_title, og_image
-- La taula NO té columnes per: `screenshot_url`, `thumbnail_url`, `social` (jsonb), `og_image`, `scrape_status`, `scrape_date`
+I tested the full download flow end-to-end in the Lovable preview:
 
-### Pas 1: Migració SQL - Afegir columnes noves
+1. Navigated to `/plantillas`
+2. Clicked "Descargar gratis" on "Control de Ausencias" → lead gate modal opened correctly
+3. Filled email (`test-e2e@lovable.dev`), nombre (`Test User`), empresa (`Lovable Inc`)
+4. Clicked "Descargar ahora" → modal closed, toast "¡Descarga iniciada!" appeared, no console errors
+5. Verified the lead was saved in `plantilla_leads` table (id=3, all fields correct)
 
-Afegir a `companies`:
-- `screenshot_url TEXT` (imatge principal 1200x630)
-- `thumbnail_url TEXT` (imatge 512x512)
-- `og_image TEXT`
-- `social JSONB DEFAULT '{}'`
-- `scrape_status TEXT`
-- `scrape_date DATE`
+**Result: The download flow works correctly end-to-end.**
 
-### Pas 2: Edge function `import-solutions` - Reescriure
+---
 
-Reescriure l'edge function existent per acceptar el JSON complet via POST i fer upsert per slug:
+## Plan: Admin Leads Panel
 
-**Mapping de camps:**
-- `logo_url` → `logo_url`
-- `screenshot_url` → `screenshot_url` (nou) + `img_url` (existent, per compatibilitat)
-- `thumbnail_url` → `thumbnail_url` (nou)
-- `description` → `description`
-- `all_features` → `features` (array)
-- `rank`, `is_free`, `is_top_rated`, `verified` → directes
-- `premium` → `is_premium`
-- `url` → `url` + `redirect_url`
-- `meta_title` → `meta_title`
-- `og_image` → `og_image`
-- `social` → `social` (jsonb)
-- `pricing.has_free_plan` → `free_plan` = 'yes'/'no'
-- `pricing.tiers[0].price` → `pricing_starting_price`, `min_price`
-- `all_features` → mapejar als camps `has_*` booleans (has_time_tracking, has_mobile_app, etc.)
-- `scrape_status`, `scrape_date` → directes
+### Discovery
 
-**Feature → Boolean mapping:**
-```
-"Control Horario" → has_time_tracking
-"Apps" → has_mobile_app
-"Geolocalización" → has_geolocation
-"Sistemas Biométricos" → has_biometric
-"Gestión de Ausencias" → has_absence_management
-"Gestión de Turnos" → has_shift_management
-"Reportes" → has_reports
-"Integraciones API" → has_api
-"Teletrabajo" → has_remote_work
-"AI" → has_ai
-"Portal del Empleado" → has_employee_portal
-"Nóminas" → has_payroll
-"Geofence" → has_geofence
-"Gestión de proyectos" → has_project_management
-"Gestión Documental" → has_document_management
-"Evaluación Desempeño" → has_performance_eval
-"Selección de Personal" → has_recruitment
-"Formación" → has_training
-"Canal de Denuncias" → has_whistleblower
-```
+The admin routes (`/admin/companies`, `/admin/users`) are **not defined in App.tsx** -- they're caught by the `*` wildcard and render DirectoryPage (which happens to work because existing admin pages may not be reached). I need to add proper routes.
 
-### Pas 3: Executar la importació
+The `plantilla_leads` table has: `id`, `email`, `nombre`, `empresa`, `plantilla_slug`, `source`, `utm_source`, `utm_medium`, `utm_campaign`, `created_at`.
 
-Copiar `companies.json` al projecte, cridar l'edge function amb les dades, i verificar que s'actualitzen les 96 empreses.
+### Implementation Steps
 
-### Pas 4: Actualitzar `SolutionPage.tsx` per mostrar les noves dades
+1. **Create `src/pages/admin/Leads.tsx`** -- New page with AdminHeader, fetches from `plantilla_leads` ordered by `created_at DESC`. Includes:
+   - Search by email/nombre/empresa
+   - Filter by `plantilla_slug` (dropdown)
+   - Table with columns: Email, Nombre, Empresa, Plantilla, Source, UTM Source, Fecha
+   - CSV download button
+   - Total lead count badge
 
-- Mostrar `screenshot_url` com a imatge hero de la fitxa
-- Mostrar xarxes socials (`social` jsonb) amb icones
-- Mostrar `og_image` com a fallback d'imatge
+2. **Create `src/components/admin/LeadsTable.tsx`** -- Table component displaying leads with the columns above, using the existing shadcn Table components.
 
-### Resum de fitxers
+3. **Create `src/components/admin/LeadsTableHeader.tsx`** -- Search input + slug filter dropdown + CSV download button (following the pattern of `UsersTableHeader`).
 
-| Acció | Fitxer |
-|-------|--------|
-| Migració SQL | Afegir 6 columnes noves a `companies` |
-| Reescriure | `supabase/functions/import-solutions/index.ts` |
-| Editar | `src/pages/SolutionPage.tsx` (screenshot, social links) |
-| Editar | `src/components/directory/SolutionCard.tsx` (thumbnail) |
+4. **Update `src/components/admin/AdminHeader.tsx`** -- Add a third nav link: "Leads" pointing to `/admin/leads`.
+
+5. **Update `src/App.tsx`** -- Add the missing admin routes:
+   - `/admin/companies` → Companies page (wrapped in ProtectedRoute)
+   - `/admin/users` → Users page (wrapped in ProtectedRoute)
+   - `/admin/leads` → Leads page (wrapped in ProtectedRoute)
+   - `/login` → Login page
 
