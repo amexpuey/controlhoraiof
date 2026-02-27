@@ -55,7 +55,7 @@ export const templateData: TemplateData[] = [
     downloadUrl: "#"
   },
   {
-    id: "plantilla-descripcion-puestos",
+    id: "descripcion-puestos",
     title: "Plantilla para la descripción de puestos",
     description: "Documento para definir con claridad las responsabilidades de cada puesto de trabajo.",
     imageSrc: "/lovable-uploads/dfe6d0a8-a218-4527-9602-1b4165cbe731.png",
@@ -88,7 +88,7 @@ export const templateData: TemplateData[] = [
     downloadUrl: "#"
   },
   {
-    id: "calendario-anual",
+    id: "calendario-rrhh-2026",
     title: "Calendario anual editable para planificación de RRHH",
     description: "Calendario anual para la planificación de vacaciones, formaciones y eventos de empresa.",
     imageSrc: "/lovable-uploads/afe2beb8-a0b8-4bb7-8a23-e7ead8320fd4.png",

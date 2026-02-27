@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Download, ExternalLink, Pencil, Book, Clock, FileText, Users, Calendar, MessageSquare, GraduationCap, Briefcase } from "lucide-react";
 import { TemplateData } from "./types";
@@ -5,10 +6,12 @@ import { Link } from "react-router-dom";
 
 interface TemplateCardProps {
   template: TemplateData;
-  onAction?: () => void;
+  /** If true, this template has a real PDF from Supabase */
+  isPublished?: boolean;
+  onLeadGate?: (template: TemplateData) => void;
 }
 
-export default function TemplateCard({ template, onAction }: TemplateCardProps) {
+export default function TemplateCard({ template, isPublished, onLeadGate }: TemplateCardProps) {
   const getCategoryIcon = () => {
     const iconMap: Record<string, React.ReactNode> = {
       "Evaluación": <FileText className="h-7 w-7" style={{ color: 'var(--green)' }} />,
@@ -24,7 +27,14 @@ export default function TemplateCard({ template, onAction }: TemplateCardProps) 
     return iconMap[template.category] || <Book className="h-7 w-7" style={{ color: 'var(--green)' }} />;
   };
 
-  const isComingSoon = template.action === "download";
+  // A template is "coming soon" if it's a download type AND not published in Supabase
+  const isComingSoon = template.action === "download" && !isPublished;
+
+  const handleClick = () => {
+    if (onLeadGate) {
+      onLeadGate(template);
+    }
+  };
 
   const renderAction = () => {
     if (isComingSoon) {
@@ -34,17 +44,30 @@ export default function TemplateCard({ template, onAction }: TemplateCardProps) 
         </span>
       );
     }
-    if (template.action === "external") {
+
+    // Published download templates → lead gate
+    if (template.action === "download" && isPublished) {
       return (
-        <a href={template.editUrl} target="_blank" rel="noopener noreferrer" className="btn btn-green" style={{ width: '100%' }}>
-          <ExternalLink className="h-4 w-4" /> {template.actionLabel}
-        </a>
+        <button onClick={handleClick} className="btn btn-green" style={{ width: '100%' }}>
+          <Download className="h-4 w-4" /> {template.actionLabel || "Descargar gratis"}
+        </button>
       );
     }
+
+    // External templates → lead gate first
+    if (template.action === "external") {
+      return (
+        <button onClick={handleClick} className="btn btn-green" style={{ width: '100%' }}>
+          <ExternalLink className="h-4 w-4" /> {template.actionLabel}
+        </button>
+      );
+    }
+
+    // Edit (interactive) templates → lead gate first
     return (
-      <Link to={template.editUrl || "#"} className="btn btn-green" style={{ width: '100%' }}>
+      <button onClick={handleClick} className="btn btn-green" style={{ width: '100%' }}>
         <Pencil className="h-4 w-4" /> {template.actionLabel}
-      </Link>
+      </button>
     );
   };
 

@@ -4,10 +4,12 @@ import TemplateCard from "./TemplateCard";
 import { TemplateData } from "./types";
 
 interface TemplatesGridProps {
-  templates: TemplateData[];
+  templates: (TemplateData & { _published?: boolean })[];
+  publishedSlugs?: Map<string, any>;
+  onLeadGate?: (template: TemplateData) => void;
 }
 
-export default function TemplatesGrid({ templates }: TemplatesGridProps) {
+export default function TemplatesGrid({ templates, publishedSlugs, onLeadGate }: TemplatesGridProps) {
   return (
     <div>
       {templates.length === 0 ? (
@@ -17,7 +19,12 @@ export default function TemplatesGrid({ templates }: TemplatesGridProps) {
       ) : (
         <div className="features-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
           {templates.map((template) => (
-            <TemplateCard key={template.id} template={template} />
+            <TemplateCard
+              key={template.id}
+              template={template}
+              isPublished={(template as any)._published || false}
+              onLeadGate={onLeadGate}
+            />
           ))}
         </div>
       )}
