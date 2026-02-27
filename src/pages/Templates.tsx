@@ -215,6 +215,7 @@ export default function Templates() {
           templateDescription={selectedTemplate.description}
           pdfUrl={modalPdfUrl}
           onAfterSubmit={handleAfterSubmit}
+          ctaLabel={selectedTemplate.actionLabel}
         />
       )}
     </div>

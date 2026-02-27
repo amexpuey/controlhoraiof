@@ -23,6 +23,8 @@ interface LeadGateModalProps {
   pdfUrl?: string;
   /** Called after successful submit when no pdfUrl */
   onAfterSubmit?: () => void;
+  /** Custom CTA button label (defaults to "Descargar ahora") */
+  ctaLabel?: string;
 }
 
 function getUtmParams() {
@@ -43,6 +45,7 @@ export default function LeadGateModal({
   templateDescription,
   pdfUrl,
   onAfterSubmit,
+  ctaLabel = "Descargar ahora",
 }: LeadGateModalProps) {
   const [email, setEmail] = useState("");
   const [nombre, setNombre] = useState("");
@@ -236,7 +239,7 @@ export default function LeadGateModal({
                 ) : (
                   <Download className="h-4 w-4 mr-2" />
                 )}
-                Descargar ahora
+                {ctaLabel}
               </Button>
 
               <p style={{ fontSize: '11px', color: 'var(--text-muted)', textAlign: 'center', lineHeight: '1.4' }}>
