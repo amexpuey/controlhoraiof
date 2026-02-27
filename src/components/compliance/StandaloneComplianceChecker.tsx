@@ -103,6 +103,7 @@ export default function StandaloneComplianceChecker({ isEmbedded = false }: Stan
         templateDescription="Desbloquea tu informe personalizado de cumplimiento con el detalle de infracciones detectadas y recomendaciones."
         templateImage="/lovable-uploads/654278fc-cbcc-4b9d-8b9a-0a7065e56d8d.png"
         onAfterSubmit={handleAfterSubmit}
+        ctaLabel="Iniciar verificación"
       />
     </div>
   );

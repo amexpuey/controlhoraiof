@@ -202,6 +202,7 @@ export default function TemplateLandingPage() {
         templateImage={template.imageSrc}
         templateDescription={template.description}
         pdfUrl={pdfUrl}
+        ctaLabel={template.actionLabel}
         onAfterSubmit={() => {
           if (template.action === "external" && template.editUrl) {
             window.open(template.editUrl, "_blank");
