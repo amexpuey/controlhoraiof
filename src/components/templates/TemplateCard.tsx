@@ -98,11 +98,6 @@ export default function TemplateCard({ template, isPublished, onLeadGate }: Temp
       
       <div style={{ padding: '0 24px 24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
         {renderAction()}
-        {template.exampleLink && !isComingSoon && template.id !== "registro-horas-trabajadas" && (
-          <a href={template.exampleLink} target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ width: '100%', fontSize: '13px' }}>
-            <ExternalLink className="h-3 w-3" /> Ver ejemplo
-          </a>
-        )}
       </div>
     </div>
   );

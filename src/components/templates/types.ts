@@ -20,7 +20,6 @@ export interface TemplateData {
   category: TemplateCategory;
   action: TemplateAction;
   actionLabel: string;
-  exampleLink?: string;
   downloadUrl?: string;
   editUrl?: string;
 }

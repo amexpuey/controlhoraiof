@@ -40,7 +40,6 @@ export const templateData: TemplateData[] = [
     category: "Onboarding",
     action: "download",
     actionLabel: "Descargar PDF",
-    exampleLink: "#",
     downloadUrl: "#"
   },
   {
@@ -51,7 +50,6 @@ export const templateData: TemplateData[] = [
     category: "Evaluación",
     action: "download",
     actionLabel: "Descargar PDF",
-    exampleLink: "#",
     downloadUrl: "#"
   },
   {
@@ -62,7 +60,6 @@ export const templateData: TemplateData[] = [
     category: "Productividad",
     action: "download",
     actionLabel: "Descargar DOCX",
-    exampleLink: "#",
     downloadUrl: "#"
   },
   {
@@ -73,7 +70,6 @@ export const templateData: TemplateData[] = [
     category: "Control horario",
     action: "download",
     actionLabel: "Descargar Excel",
-    exampleLink: "#",
     downloadUrl: "#"
   },
   {
@@ -84,7 +80,6 @@ export const templateData: TemplateData[] = [
     category: "Comunicación Interna",
     action: "download",
     actionLabel: "Descargar PDF",
-    exampleLink: "#",
     downloadUrl: "#"
   },
   {
@@ -95,7 +90,6 @@ export const templateData: TemplateData[] = [
     category: "Productividad",
     action: "download",
     actionLabel: "Descargar Excel",
-    exampleLink: "#",
     downloadUrl: "#"
   },
   {
@@ -106,7 +100,6 @@ export const templateData: TemplateData[] = [
     category: "Comunicación Interna",
     action: "download",
     actionLabel: "Descargar PDF",
-    exampleLink: "#",
     downloadUrl: "#"
   },
   {
@@ -117,7 +110,6 @@ export const templateData: TemplateData[] = [
     category: "Formación",
     action: "download",
     actionLabel: "Descargar PDF",
-    exampleLink: "#",
     downloadUrl: "#"
   },
   {
@@ -128,7 +120,6 @@ export const templateData: TemplateData[] = [
     category: "Productividad",
     action: "download",
     actionLabel: "Descargar Excel",
-    exampleLink: "#",
     downloadUrl: "#"
   }
 ];
