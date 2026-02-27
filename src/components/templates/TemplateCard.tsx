@@ -1,7 +1,7 @@
 
 import React, { useMemo } from "react";
-import { Download, ExternalLink, Pencil, Book, Clock, FileText, Users, Calendar, MessageSquare, GraduationCap, Briefcase } from "lucide-react";
-import { TemplateData } from "./types";
+import { Download, ExternalLink, Pencil, Book, Clock, FileText, Users, Calendar, MessageSquare, GraduationCap, Briefcase, Play, Link2 } from "lucide-react";
+import { TemplateData, TemplateAction } from "./types";
 import { Link } from "react-router-dom";
 
 interface TemplateCardProps {
@@ -43,6 +43,20 @@ export default function TemplateCard({ template, isPublished, onLeadGate }: Temp
     return iconMap[template.category] || <Book className="h-7 w-7" style={{ color: 'var(--green)' }} />;
   };
 
+  const getTypeBadge = () => {
+    const config: Record<TemplateAction, { label: string; bg: string; border: string; color: string }> = {
+      edit: { label: "Herramienta online", bg: "hsla(199, 89%, 48%, 0.1)", border: "hsla(199, 89%, 48%, 0.3)", color: "hsl(199, 89%, 38%)" },
+      download: { label: "Descarga", bg: "var(--green-bg)", border: "hsla(152, 60%, 40%, 0.3)", color: "hsl(152, 60%, 32%)" },
+      external: { label: "Enlace externo", bg: "hsla(270, 50%, 50%, 0.1)", border: "hsla(270, 50%, 50%, 0.3)", color: "hsl(270, 50%, 40%)" },
+    };
+    const c = config[template.action];
+    return (
+      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '999px', background: c.bg, border: `1px solid ${c.border}`, color: c.color, fontWeight: 600, letterSpacing: '0.02em', whiteSpace: 'nowrap' }}>
+        {c.label}
+      </span>
+    );
+  };
+
   // A template is "coming soon" if it's a download type AND not published in Supabase
   const isComingSoon = template.action === "download" && !isPublished;
 
@@ -61,32 +75,29 @@ export default function TemplateCard({ template, isPublished, onLeadGate }: Temp
       );
     }
 
-    // Published download templates → lead gate
     if (template.action === "download" && isPublished) {
       return (
-        <button onClick={handleClick} className="btn btn-green" style={{ width: '100%' }}>
+        <button onClick={handleClick} className="btn btn-outline" style={{ width: '100%', borderColor: 'hsl(152, 60%, 40%)', color: 'hsl(152, 60%, 32%)' }}>
           <Download className="h-4 w-4" /> {template.actionLabel || "Descargar gratis"}
         </button>
       );
     }
 
-    // External templates → lead gate first
     if (template.action === "external") {
       return (
-        <button onClick={handleClick} className="btn btn-green" style={{ width: '100%' }}>
-          <ExternalLink className="h-4 w-4" /> {template.actionLabel}
+        <button onClick={handleClick} className="btn btn-outline" style={{ width: '100%', borderColor: 'hsl(270, 50%, 50%)', color: 'hsl(270, 50%, 40%)' }}>
+          <Link2 className="h-4 w-4" /> {template.actionLabel}
         </button>
       );
     }
 
-    // Edit (interactive) templates → lead gate first
+    // Interactive / edit → primary green button
     return (
       <button onClick={handleClick} className="btn btn-green" style={{ width: '100%' }}>
-        <Pencil className="h-4 w-4" /> {template.actionLabel}
+        <Play className="h-4 w-4" /> {template.actionLabel}
       </button>
     );
   };
-
   return (
     <div className="feature-card" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <div style={{ padding: '24px 24px 0', display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -100,6 +111,7 @@ export default function TemplateCard({ template, isPublished, onLeadGate }: Temp
         <span className="chip" style={{ fontSize: '11px', padding: '3px 10px' }}>
           {template.category}
         </span>
+        {getTypeBadge()}
         {isComingSoon && (
           <span className="chip" style={{ fontSize: '11px', padding: '3px 10px', background: 'var(--yellow-bg)', borderColor: 'var(--yellow)', color: 'var(--yellow)' }}>
             Próximamente
