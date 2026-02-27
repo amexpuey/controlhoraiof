@@ -6337,6 +6337,53 @@ export type Database = {
         }
         Relationships: []
       }
+      plantilla_leads: {
+        Row: {
+          created_at: string | null
+          email: string
+          empresa: string | null
+          id: number
+          nombre: string | null
+          plantilla_slug: string
+          source: string | null
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          empresa?: string | null
+          id?: number
+          nombre?: string | null
+          plantilla_slug: string
+          source?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          empresa?: string | null
+          id?: number
+          nombre?: string | null
+          plantilla_slug?: string
+          source?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "plantilla_leads_plantilla_slug_fkey"
+            columns: ["plantilla_slug"]
+            isOneToOne: false
+            referencedRelation: "site_templates"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
       premium_customers: {
         Row: {
           active_users: number
@@ -7291,6 +7338,60 @@ export type Database = {
           tags?: string[] | null
           title?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      site_templates: {
+        Row: {
+          category: string | null
+          created_at: string | null
+          cta_text: string | null
+          cta_url: string | null
+          description: string | null
+          download_count: number | null
+          id: number
+          inwout_pitch: string | null
+          keywords: string[] | null
+          pdf_url: string | null
+          preview_image_url: string | null
+          slug: string
+          status: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string | null
+          cta_text?: string | null
+          cta_url?: string | null
+          description?: string | null
+          download_count?: number | null
+          id?: number
+          inwout_pitch?: string | null
+          keywords?: string[] | null
+          pdf_url?: string | null
+          preview_image_url?: string | null
+          slug: string
+          status?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string | null
+          cta_text?: string | null
+          cta_url?: string | null
+          description?: string | null
+          download_count?: number | null
+          id?: number
+          inwout_pitch?: string | null
+          keywords?: string[] | null
+          pdf_url?: string | null
+          preview_image_url?: string | null
+          slug?: string
+          status?: string | null
+          title?: string
+          updated_at?: string | null
         }
         Relationships: []
       }
