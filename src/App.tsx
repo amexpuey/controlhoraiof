@@ -10,6 +10,7 @@ import Templates from "@/pages/Templates";
 import TemplateLandingPage from "@/pages/TemplateLandingPage";
 import TalentGuidePage from "@/pages/TalentGuidePage";
 import TimecardPage from "@/pages/TimecardPage";
+import ShiftPlannerPage from "@/pages/ShiftPlannerPage";
 import DirectoryPage from "@/pages/DirectoryPage";
 import SolutionPage from "@/pages/SolutionPage";
 import VsComparisonPage from "@/pages/VsComparisonPage";
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
   { path: "/plantillas", element: <Templates /> },
   { path: "/plantillas/guia-talento", element: <TalentGuidePage /> },
   { path: "/plantillas/registro-horas", element: <TimecardPage /> },
+  { path: "/plantillas/planificador-turnos", element: <ShiftPlannerPage /> },
   { path: "/plantillas/:slug", element: <TemplateLandingPage /> },
   { path: "/login", element: <Login /> },
   { path: "/admin/companies", element: <ProtectedRoute><AdminCompanies /></ProtectedRoute> },

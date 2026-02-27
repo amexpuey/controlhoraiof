@@ -3,6 +3,18 @@ import { TemplateData } from "./types";
 
 export const templateData: TemplateData[] = [
   {
+    id: "planificador-turnos",
+    title: "Planificador visual de turnos rotativos",
+    description: "Organiza los turnos de tu equipo con rotación automática, vista semanal/mensual y control de horas por empleado.",
+    imageSrc: "/lovable-uploads/d48380f9-f5c9-4f3f-8184-8ef27150846d.png",
+    category: "Turnos",
+    action: "edit",
+    actionLabel: "Usar planificador",
+    editUrl: "/plantillas/planificador-turnos",
+    baseDownloads: 1563,
+    metaDescription: "Planifica turnos rotativos gratis con esta herramienta visual. Rotación automática, vista semanal y mensual, y resumen de horas.",
+  },
+  {
     id: "guia-talento",
     title: "Guía de talento: desempeño y seguimiento de objetivos",
     description: "Herramienta interactiva para evaluar el desempeño, planificar formaciones y realizar seguimiento de objetivos.",
