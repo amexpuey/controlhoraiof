@@ -1,18 +1,42 @@
 
 
-## Plan: Eliminar enlaces "Ver ejemplo" sin destino
+## Millores del calendari de vacances
 
-### Problema
-Los templates de descarga tienen `exampleLink: "#"` en sus datos, lo que genera botones "Ver ejemplo" que no llevan a ningún sitio.
+Després de revisar l'eina, he identificat aquestes millores clau:
 
-### Solución
+### 1. Responsivitat mòbil
+- El layout actual és `grid 280px + 1fr`, no funciona en mòbil
+- Canviar a layout vertical en pantalles petites (sidebar a dalt, calendari a sota)
+- Fer el panel d'empleats col·lapsable en mòbil
 
-**1. Eliminar `exampleLink` de todos los templates en `templateData.ts`**
-- Quitar la propiedad `exampleLink: "#"` de los 9 templates que la tienen (todos apuntan a `#`)
+### 2. Selecció per rang de dies (drag o shift+click)
+- Ara cal fer clic dia a dia, poc pràctic per posar 2 setmanes de vacances
+- Afegir shift+click: primer clic = inici, shift+clic = final, omple tot el rang (saltant caps de setmana i festius)
 
-**2. Limpiar el renderizado en `TemplateCard.tsx`**
-- Eliminar el bloque que renderiza el botón "Ver ejemplo" (líneas ~80-85), ya que ningún template tiene un enlace real
+### 3. Selector d'any
+- Ara està fixat a 2026 sense opció de canvi
+- Afegir botons +/- per navegar anys i actualitzar festius
 
-**3. Limpiar el tipo en `types.ts`**
-- Eliminar la propiedad opcional `exampleLink` de la interfaz `TemplateData`
+### 4. Millores visuals de la graella anual
+- Les cel·les són massa petites (18px) i difícils de clicar
+- Augmentar mida mínima a 22-24px
+- Afegir hover effect per indicar que són clicables
+- Afegir zebra striping per files d'empleats
+
+### 5. Llegenda de festius
+- Afegir una secció plegable que mostri la llista de festius configurats
+- Opció d'afegir/treure festius personalitzats (locals)
+
+### 6. Exportar a PDF/Excel
+- El botó "Imprimir" fa `window.print()` genèric
+- Afegir CSS `@media print` dedicat per millorar el resultat imprès
+- Ocultar controls i sidebar en mode impressió
+
+### Ordre d'implementació
+1. Responsivitat mòbil (layout + col·lapsable)
+2. Shift+click per rang de dies
+3. Selector d'any
+4. Millores visuals graella (mida cel·les, hover, zebra)
+5. Gestió de festius personalitzats
+6. CSS d'impressió
 
