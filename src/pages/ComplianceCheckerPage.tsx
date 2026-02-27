@@ -62,12 +62,6 @@ export default function ComplianceCheckerPage() {
 
       {!showTest && <FinalCTASection onStartTest={handleStartTest} />}
 
-      {/* Compliance Footer */}
-      <div className="compliance-footer">
-        <div className="container">
-          Verificador creado por <a href="https://www.inwout.com" target="_blank" rel="noopener noreferrer">INWOUT</a> · Software de control horario para empresas españolas
-        </div>
-      </div>
     </div>
   );
 }
