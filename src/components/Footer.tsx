@@ -5,7 +5,8 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import logoFichajes from "@/assets/logo-fichajes.png";
+import logoIcon from "@/assets/logofichajes-3.png";
+import logoText from "@/assets/fichajeempresas-text.png";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -44,8 +45,10 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {/* Brand */}
           <div className="flex flex-col items-center md:items-start space-y-4">
-            <img src={logoFichajes} alt="Fichaje Empresas" className="w-14 h-14" />
-            <h3 className="font-semibold text-lg" style={{ color: "var(--dark-text)" }}>FichajeEmpresas.es</h3>
+            <div className="flex items-center gap-3">
+              <img src={logoIcon} alt="FichajeEmpresas.es" className="w-12 h-12" />
+              <img src={logoText} alt="FichajeEmpresas.es" className="h-6" />
+            </div>
             <p className="text-sm max-w-md" style={{ color: "var(--dark-muted)" }}>
               Encuentra tu app de registro horario de forma fácil y rápida. El directorio más completo para empresas de todos los tamaños.
             </p>
