@@ -7,7 +7,7 @@ interface AnnualViewProps {
   year: number;
   employees: Employee[];
   getAbsence: (employeeId: string, date: string) => AbsenceEntry | undefined;
-  toggleAbsence: (employeeId: string, date: string) => void;
+  toggleAbsence: (employeeId: string, date: string, shiftKey?: boolean) => void;
   isHoliday: (date: string) => Holiday | undefined;
   overlapDates: Set<string>;
   onMonthClick: (month: number) => void;
@@ -19,7 +19,6 @@ export default function AnnualView({ year, employees, getAbsence, toggleAbsence,
   const getDaysInMonth = (month: number) => new Date(year, month + 1, 0).getDate();
   const fmt = (m: number, d: number) => `${year}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
   const isWeekend = (date: string) => { const day = new Date(date).getDay(); return day === 0 || day === 6; };
-
   const getAbsenceColor = (type: AbsenceType) => ABSENCE_TYPES.find(t => t.type === type)?.color || "var(--text-muted)";
 
   return (
@@ -50,9 +49,9 @@ export default function AnnualView({ year, employees, getAbsence, toggleAbsence,
                           key={i}
                           title={hol?.name}
                           style={{
-                            width: 18, textAlign: "center", padding: "2px 0", fontSize: 9, fontWeight: 500,
+                            width: 22, textAlign: "center", padding: "2px 0", fontSize: 9, fontWeight: 500,
                             color: hol ? "hsl(0,72%,51%)" : we ? "var(--text-muted)" : "var(--text-secondary)",
-                            background: hol ? "hsla(0,72%,51%,0.06)" : we ? "var(--surface)" : "transparent",
+                            background: hol ? "hsla(0,72%,51%,0.06)" : we ? "var(--surface-alt)" : "transparent",
                           }}
                         >
                           {i + 1}
@@ -62,9 +61,9 @@ export default function AnnualView({ year, employees, getAbsence, toggleAbsence,
                   </tr>
                 </thead>
                 <tbody>
-                  {employees.map(emp => (
-                    <tr key={emp.id}>
-                      <td style={{ padding: "2px 4px", fontWeight: 500, color: "var(--text)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", position: "sticky", left: 0, background: "var(--white)", zIndex: 1 }}>
+                  {employees.map((emp, empIdx) => (
+                    <tr key={emp.id} style={{ background: empIdx % 2 === 1 ? "var(--surface-alt)" : "transparent" }}>
+                      <td style={{ padding: "2px 4px", fontWeight: 500, color: "var(--text)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", position: "sticky", left: 0, background: empIdx % 2 === 1 ? "var(--surface-alt)" : "var(--white)", zIndex: 1 }}>
                         {emp.name}
                       </td>
                       {Array.from({ length: days }, (_, i) => {
@@ -73,18 +72,21 @@ export default function AnnualView({ year, employees, getAbsence, toggleAbsence,
                         const hol = isHoliday(date);
                         const absence = getAbsence(emp.id, date);
                         const hasOverlap = overlapDates.has(date);
+                        const clickable = !we && !hol;
                         return (
                           <td
                             key={i}
-                            onClick={() => !we && !hol && toggleAbsence(emp.id, date)}
+                            onClick={(e) => clickable && toggleAbsence(emp.id, date, e.shiftKey)}
                             title={hol?.name || (absence ? ABSENCE_TYPES.find(t => t.type === absence.type)?.label : "")}
+                            className={clickable ? "vc-cell-hover" : ""}
                             style={{
-                              width: 18, height: 18, textAlign: "center", padding: 0,
-                              background: absence ? getAbsenceColor(absence.type) : hol ? "hsla(0,72%,51%,0.06)" : we ? "var(--surface)" : "transparent",
-                              cursor: we || hol ? "default" : "pointer",
+                              width: 22, height: 22, textAlign: "center", padding: 0,
+                              background: absence ? getAbsenceColor(absence.type) : hol ? "hsla(0,72%,51%,0.06)" : we ? "var(--surface-alt)" : "transparent",
+                              cursor: clickable ? "pointer" : "default",
                               border: "1px solid var(--border)",
                               borderRadius: 2,
                               position: "relative",
+                              transition: "background 0.1s ease",
                             }}
                           >
                             {hasOverlap && absence && (

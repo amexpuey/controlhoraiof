@@ -1,5 +1,5 @@
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useRef } from "react";
 import { Employee, AbsenceEntry, AbsenceType, ABSENCE_TYPES, SPAIN_HOLIDAYS_2026, Holiday } from "./types";
 
 const createId = () => Math.random().toString(36).slice(2, 9);
@@ -18,7 +18,10 @@ export function useVacationCalendar() {
   const [selectedType, setSelectedType] = useState<AbsenceType>("vacaciones");
   const [holidays, setHolidays] = useState<Holiday[]>(SPAIN_HOLIDAYS_2026);
   const [view, setView] = useState<"annual" | "monthly">("annual");
-  const [currentMonth, setCurrentMonth] = useState(0); // 0-11
+  const [currentMonth, setCurrentMonth] = useState(0);
+
+  // Shift+click range selection
+  const lastClick = useRef<{ employeeId: string; date: string } | null>(null);
 
   const addEmployee = useCallback(() => {
     setEmployees(prev => [
@@ -42,7 +45,46 @@ export function useVacationCalendar() {
     ));
   }, []);
 
-  const toggleAbsence = useCallback((employeeId: string, date: string) => {
+  const isHoliday = useCallback((date: string) => {
+    return holidays.find(h => h.date === date);
+  }, [holidays]);
+
+  const isWeekendDay = useCallback((date: string) => {
+    const day = new Date(date).getDay();
+    return day === 0 || day === 6;
+  }, []);
+
+  // Fill a range of dates for an employee, skipping weekends and holidays
+  const fillRange = useCallback((employeeId: string, startDate: string, endDate: string, type: AbsenceType) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    if (start > end) { const tmp = new Date(start); start.setTime(end.getTime()); end.setTime(tmp.getTime()); }
+
+    const dates: string[] = [];
+    const cur = new Date(start);
+    while (cur <= end) {
+      const ds = cur.toISOString().slice(0, 10);
+      if (!isWeekendDay(ds) && !isHoliday(ds)) {
+        dates.push(ds);
+      }
+      cur.setDate(cur.getDate() + 1);
+    }
+
+    setAbsences(prev => {
+      const filtered = prev.filter(a => !(a.employeeId === employeeId && dates.includes(a.date)));
+      return [...filtered, ...dates.map(d => ({ employeeId, date: d, type }))];
+    });
+  }, [isWeekendDay, isHoliday]);
+
+  const toggleAbsence = useCallback((employeeId: string, date: string, shiftKey?: boolean) => {
+    if (shiftKey && lastClick.current && lastClick.current.employeeId === employeeId) {
+      fillRange(employeeId, lastClick.current.date, date, selectedType);
+      lastClick.current = null;
+      return;
+    }
+
+    lastClick.current = { employeeId, date };
+
     setAbsences(prev => {
       const existing = prev.find(a => a.employeeId === employeeId && a.date === date);
       if (existing) {
@@ -50,22 +92,16 @@ export function useVacationCalendar() {
       }
       return [...prev, { employeeId, date, type: selectedType }];
     });
-  }, [selectedType]);
+  }, [selectedType, fillRange]);
 
   const getAbsence = useCallback((employeeId: string, date: string) => {
     return absences.find(a => a.employeeId === employeeId && a.date === date);
   }, [absences]);
 
-  const isHoliday = useCallback((date: string) => {
-    return holidays.find(h => h.date === date);
-  }, [holidays]);
-
-  // Count used days per employee per type
   const getUsedDays = useCallback((employeeId: string, type: AbsenceType) => {
     return absences.filter(a => a.employeeId === employeeId && a.type === type).length;
   }, [absences]);
 
-  // Overlap detection: dates where 2+ employees are absent
   const overlapDates = useMemo(() => {
     const dateCount: Record<string, number> = {};
     absences.forEach(a => {
@@ -74,12 +110,24 @@ export function useVacationCalendar() {
     return new Set(Object.entries(dateCount).filter(([, c]) => c >= 2).map(([d]) => d));
   }, [absences]);
 
+  // Holiday management
+  const addHoliday = useCallback((date: string, name: string) => {
+    setHolidays(prev => {
+      if (prev.find(h => h.date === date)) return prev;
+      return [...prev, { date, name }].sort((a, b) => a.date.localeCompare(b.date));
+    });
+  }, []);
+
+  const removeHoliday = useCallback((date: string) => {
+    setHolidays(prev => prev.filter(h => h.date !== date));
+  }, []);
+
   return {
     year, setYear,
     employees, addEmployee, removeEmployee, renameEmployee, updateAllowance,
     absences, toggleAbsence, getAbsence,
     selectedType, setSelectedType,
-    holidays, setHolidays, isHoliday,
+    holidays, setHolidays, isHoliday, addHoliday, removeHoliday,
     getUsedDays, overlapDates,
     view, setView,
     currentMonth, setCurrentMonth,

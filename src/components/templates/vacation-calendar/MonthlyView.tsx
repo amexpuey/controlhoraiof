@@ -8,7 +8,7 @@ interface MonthlyViewProps {
   month: number;
   employees: Employee[];
   getAbsence: (employeeId: string, date: string) => AbsenceEntry | undefined;
-  toggleAbsence: (employeeId: string, date: string) => void;
+  toggleAbsence: (employeeId: string, date: string, shiftKey?: boolean) => void;
   isHoliday: (date: string) => Holiday | undefined;
   overlapDates: Set<string>;
   onPrevMonth: () => void;
@@ -65,9 +65,9 @@ export default function MonthlyView({ year, month, employees, getAbsence, toggle
             </tr>
           </thead>
           <tbody>
-            {employees.map(emp => (
-              <tr key={emp.id}>
-                <td style={{ padding: "4px 8px", fontWeight: 500, color: "var(--text)", whiteSpace: "nowrap", position: "sticky", left: 0, background: "var(--white)", zIndex: 1, borderBottom: "1px solid var(--border)" }}>
+            {employees.map((emp, empIdx) => (
+              <tr key={emp.id} style={{ background: empIdx % 2 === 1 ? "var(--surface-alt)" : "transparent" }}>
+                <td style={{ padding: "4px 8px", fontWeight: 500, color: "var(--text)", whiteSpace: "nowrap", position: "sticky", left: 0, background: empIdx % 2 === 1 ? "var(--surface-alt)" : "var(--white)", zIndex: 1, borderBottom: "1px solid var(--border)" }}>
                   {emp.name}
                 </td>
                 {Array.from({ length: daysInMonth }, (_, i) => {
@@ -77,13 +77,15 @@ export default function MonthlyView({ year, month, employees, getAbsence, toggle
                   const absence = getAbsence(emp.id, date);
                   const absConfig = absence ? getAbsenceConfig(absence.type) : null;
                   const hasOverlap = overlapDates.has(date);
+                  const clickable = !we && !hol;
                   return (
                     <td
                       key={i}
-                      onClick={() => !we && !hol && toggleAbsence(emp.id, date)}
+                      onClick={(e) => clickable && toggleAbsence(emp.id, date, e.shiftKey)}
                       title={hol?.name || absConfig?.label || ""}
+                      className={clickable ? "vc-cell-hover" : ""}
                       style={{
-                        textAlign: "center", padding: 2, cursor: we || hol ? "default" : "pointer",
+                        textAlign: "center", padding: 2, cursor: clickable ? "pointer" : "default",
                         borderBottom: "1px solid var(--border)",
                       }}
                     >
@@ -91,7 +93,7 @@ export default function MonthlyView({ year, month, employees, getAbsence, toggle
                         width: 26, height: 26, borderRadius: 6, margin: "0 auto",
                         display: "flex", alignItems: "center", justifyContent: "center",
                         position: "relative",
-                        background: absence ? absConfig?.color : hol ? "hsla(0,72%,51%,0.08)" : we ? "var(--surface)" : "transparent",
+                        background: absence ? absConfig?.color : hol ? "hsla(0,72%,51%,0.08)" : we ? "var(--surface-alt)" : "transparent",
                         border: absence ? "none" : "1px solid var(--border)",
                         color: absence ? "white" : "transparent",
                         fontSize: 9, fontWeight: 700,
