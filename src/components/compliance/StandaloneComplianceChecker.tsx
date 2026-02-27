@@ -4,6 +4,7 @@ import { ComplianceQuestionForm } from "./ComplianceQuestionForm";
 import { ComplianceResults } from "./ComplianceResults";
 import { SanctionCalculator } from "./SanctionCalculator";
 import { complianceQuestions } from "./complianceData";
+import { trackComplianceComplete } from "@/lib/analytics";
 
 interface FormValues {
   [key: string]: "si" | "no";
@@ -44,6 +45,7 @@ export default function StandaloneComplianceChecker({ isEmbedded = false }: Stan
       level = "medium-risk";
     }
 
+    trackComplianceComplete(complianceScore, level);
     setResults({ level, violations, complianceScore });
   };
 

@@ -3,6 +3,7 @@ import { ThumbsUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
+import { trackVote } from "@/lib/analytics";
 
 interface VoteButtonProps {
   companyId: string;
@@ -27,6 +28,7 @@ export default function VoteButton({ companyId, votes = 0 }: VoteButtonProps) {
       if (error) throw error;
 
       setCurrentVotes(prev => prev + 1);
+      trackVote(companyId);
       toast({
         title: "¡Gracias por tu voto!",
         description: "Tu opinión nos ayuda a mejorar.",
