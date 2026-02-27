@@ -8,7 +8,8 @@ export type TemplateCategory =
   | "Normativa Laboral"
   | "Onboarding"
   | "Productividad"
-  | "Documentos Legales";
+  | "Documentos Legales"
+  | "Vacaciones";
 
 export type TemplateAction = "download" | "edit" | "external";
 

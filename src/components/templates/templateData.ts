@@ -27,6 +27,18 @@ export const templateData: TemplateData[] = [
     metaDescription: "Planifica turnos rotativos gratis con esta herramienta visual. Rotación automática, vista semanal y mensual, y resumen de horas.",
   },
   {
+    id: "calendario-vacaciones",
+    title: "Calendario de vacaciones para equipos",
+    description: "Planifica las vacaciones de tu equipo con vista anual y mensual, 4 tipos de ausencia, detección de solapamientos y festivos.",
+    imageSrc: "/lovable-uploads/afe2beb8-a0b8-4bb7-8a23-e7ead8320fd4.png",
+    category: "Productividad",
+    action: "edit",
+    actionLabel: "Usar calendario",
+    editUrl: "/plantillas/calendario-vacaciones",
+    baseDownloads: 2156,
+    metaDescription: "Calendario interactivo de vacaciones para equipos. Vista anual y mensual, control de días, solapamientos y festivos nacionales.",
+  },
+  {
     id: "guia-talento",
     title: "Guía de talento: desempeño y seguimiento de objetivos",
     description: "Herramienta interactiva para evaluar el desempeño, planificar formaciones y realizar seguimiento de objetivos.",
