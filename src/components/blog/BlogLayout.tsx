@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import logoIcon from "@/assets/logofichajes-3.png";
 import logoText from "@/assets/fichajeempresas-text.png";
+import { LayoutGrid } from "lucide-react";
 
 import { Menu } from "lucide-react";
 import { Button } from "../ui/button";
@@ -57,14 +58,10 @@ export default function BlogLayout({ children }: BlogLayoutProps) {
             </Link>
             <Link
               to="/directorio"
-              className="flex items-center gap-1.5 text-sm font-semibold px-3 py-1.5 rounded-md transition-colors hover:opacity-90"
+              className="flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-full transition-all hover:opacity-90 shadow-sm"
               style={{ background: "var(--green)", color: "var(--white)" }}
             >
-              <img
-                src="/lovable-uploads/c2b90205-f41e-4c0d-bf34-bb7a5bba9103.png"
-                alt="Home"
-                className="w-4 h-4"
-              />
+              <LayoutGrid className="w-4 h-4" />
               Descubre las mejores apps
             </Link>
           </div>
