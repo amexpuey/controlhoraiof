@@ -1,45 +1,47 @@
 
 
-## Test Results
+## Plan: Admin Tab para gestionar artículos del blog
 
-I tested the full download flow end-to-end in the Lovable preview:
+### Contexto
+La tabla `site_articles` ya existe en Supabase con todos los campos necesarios (title, slug, content_html, status, featured_image, category, etc.). Se añadirá un nuevo tab "Artículos" en el panel de administración con listado, búsqueda, edición inline y opción de publicar/despublicar.
 
-1. Navigated to `/plantillas`
-2. Clicked "Descargar gratis" on "Control de Ausencias" → lead gate modal opened correctly
-3. Filled email (`test-e2e@lovable.dev`), nombre (`Test User`), empresa (`Lovable Inc`)
-4. Clicked "Descargar ahora" → modal closed, toast "¡Descarga iniciada!" appeared, no console errors
-5. Verified the lead was saved in `plantilla_leads` table (id=3, all fields correct)
+### Pasos de implementación
 
-**Result: The download flow works correctly end-to-end.**
+**1. Añadir tab "Artículos" al AdminHeader**
+- Nuevo `<Link>` a `/admin/articles` en `src/components/admin/AdminHeader.tsx`
 
----
+**2. Añadir ruta en App.tsx**
+- Nueva ruta protegida `/admin/articles` apuntando a `AdminArticles`
 
-## Plan: Admin Leads Panel
+**3. Crear página `src/pages/admin/Articles.tsx`**
+- Lista de artículos desde `site_articles` con `@tanstack/react-query`
+- Buscador por título/slug
+- Filtro por categoría y estado (published/draft)
+- Tabla con columnas: Título, Categoría, Estado, Fecha publicación, Acciones
+- Botón rápido para cambiar estado (publicar/despublicar)
+- Botón para abrir editor
 
-### Discovery
+**4. Crear componente editor `src/components/admin/ArticleEditor.tsx`**
+- Modal/dialog con formulario completo para editar un artículo
+- Campos editables:
+  - **Básicos**: título, slug, excerpt, categoría, autor
+  - **Contenido**: content_html (textarea grande), content_markdown
+  - **SEO**: meta_title, meta_description, focus_keyword, canonical_url
+  - **Imágenes**: featured_image (URL), featured_image_alt, og_image_url
+  - **CTA**: primary_cta_text, primary_cta_url
+  - **Estado**: status (published/draft), published_at
+  - **Tags**: tags, secondary_keywords
+- Botón guardar que hace `UPDATE` a `site_articles`
+- Botón despublicar que cambia `status` a `draft`
 
-The admin routes (`/admin/companies`, `/admin/users`) are **not defined in App.tsx** -- they're caught by the `*` wildcard and render DirectoryPage (which happens to work because existing admin pages may not be reached). I need to add proper routes.
+**5. Crear componente tabla `src/components/admin/ArticlesTable.tsx`**
+- Tabla reutilizable con las columnas del listado
+- Badge de color para estado (verde=published, gris=draft)
+- Acciones: Editar, Publicar/Despublicar, Ver en blog (link externo)
 
-The `plantilla_leads` table has: `id`, `email`, `nombre`, `empresa`, `plantilla_slug`, `source`, `utm_source`, `utm_medium`, `utm_campaign`, `created_at`.
-
-### Implementation Steps
-
-1. **Create `src/pages/admin/Leads.tsx`** -- New page with AdminHeader, fetches from `plantilla_leads` ordered by `created_at DESC`. Includes:
-   - Search by email/nombre/empresa
-   - Filter by `plantilla_slug` (dropdown)
-   - Table with columns: Email, Nombre, Empresa, Plantilla, Source, UTM Source, Fecha
-   - CSV download button
-   - Total lead count badge
-
-2. **Create `src/components/admin/LeadsTable.tsx`** -- Table component displaying leads with the columns above, using the existing shadcn Table components.
-
-3. **Create `src/components/admin/LeadsTableHeader.tsx`** -- Search input + slug filter dropdown + CSV download button (following the pattern of `UsersTableHeader`).
-
-4. **Update `src/components/admin/AdminHeader.tsx`** -- Add a third nav link: "Leads" pointing to `/admin/leads`.
-
-5. **Update `src/App.tsx`** -- Add the missing admin routes:
-   - `/admin/companies` → Companies page (wrapped in ProtectedRoute)
-   - `/admin/users` → Users page (wrapped in ProtectedRoute)
-   - `/admin/leads` → Leads page (wrapped in ProtectedRoute)
-   - `/login` → Login page
+### Detalle técnico
+- Query a `site_articles` usando `supabase.from('site_articles')` con cast `as any` (patrón ya usado en el proyecto)
+- Updates directos vía `supabase.from('site_articles').update(...)` 
+- No se requieren migraciones de BD (la tabla ya tiene todos los campos)
+- Se sigue el mismo patrón de layout que Leads/Companies (AdminHeader + container)
 
