@@ -1191,4 +1191,11 @@
   .vacation-calendar-root th {
     border: 1px solid #ccc !important;
   }
+  .print-only {
+    display: block !important;
+  }
+}
+
+.print-only {
+  display: none;
 }
