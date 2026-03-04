@@ -56,7 +56,9 @@ export default function SolutionPage() {
   const social = (solution as any).social as Record<string, string> | null;
   const screenshotUrl = (solution as any).screenshot_url as string | null;
   const ogImage = (solution as any).og_image as string | null;
-  const heroImage = screenshotUrl || ogImage || solution.img_url;
+  const heroImage = slug === 'inwout'
+    ? '/lovable-uploads/inwout-home.png'
+    : screenshotUrl || ogImage || solution.img_url;
 
   return (
     <div className="min-h-screen bg-background">
