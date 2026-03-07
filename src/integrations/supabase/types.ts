@@ -4842,6 +4842,33 @@ export type Database = {
         }
         Relationships: []
       }
+      mcp_audit_log: {
+        Row: {
+          executed_at: string
+          id: string
+          input_params: Json | null
+          result: Json | null
+          source: string | null
+          tool_name: string
+        }
+        Insert: {
+          executed_at?: string
+          id?: string
+          input_params?: Json | null
+          result?: Json | null
+          source?: string | null
+          tool_name: string
+        }
+        Update: {
+          executed_at?: string
+          id?: string
+          input_params?: Json | null
+          result?: Json | null
+          source?: string | null
+          tool_name?: string
+        }
+        Relationships: []
+      }
       np_calendario_laboral: {
         Row: {
           ccaa_id: number | null
