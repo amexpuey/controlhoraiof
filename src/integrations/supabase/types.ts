@@ -7715,6 +7715,36 @@ export type Database = {
         }
         Relationships: []
       }
+      webhook_errors: {
+        Row: {
+          created_at: string
+          error_message: string
+          id: string
+          payload: Json | null
+          resolved: boolean
+          source: string
+          step: string | null
+        }
+        Insert: {
+          created_at?: string
+          error_message: string
+          id?: string
+          payload?: Json | null
+          resolved?: boolean
+          source?: string
+          step?: string | null
+        }
+        Update: {
+          created_at?: string
+          error_message?: string
+          id?: string
+          payload?: Json | null
+          resolved?: boolean
+          source?: string
+          step?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       holded_prospect_mapping: {
@@ -7959,6 +7989,14 @@ export type Database = {
           total_opened: number
           total_sent: number
           total_unsubscribed: number
+        }[]
+      }
+      get_campaigns_without_active_schedule: {
+        Args: never
+        Returns: {
+          campaign_id: string
+          campaign_name: string
+          pending_recipients: number
         }[]
       }
       get_click_conversion_metrics: {
