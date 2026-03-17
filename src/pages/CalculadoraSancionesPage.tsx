@@ -81,6 +81,8 @@ function EmailGateInline({ result, onComplete }: {
     setLoading(true);
     try {
       const { supabase } = await import("@/integrations/supabase/client");
+
+      // 1. Save lead to Supabase
       await supabase.from("plantilla_leads").insert({
         email: email.trim(),
         plantilla_slug: "calculadora-sanciones",
@@ -98,8 +100,32 @@ function EmailGateInline({ result, onComplete }: {
           infractions: result.itssSanctions.map(s => s.label),
         }),
       } as any);
+
+      // 2. Send report email via edge function
+      supabase.functions.invoke('notify-calculator-lead', {
+        body: {
+          email: email.trim(),
+          itss_min: result.itssMin,
+          itss_max: result.itssMax,
+          judicial_min: result.judicialMin,
+          judicial_max: result.judicialMax,
+          total_min: result.totalMin,
+          total_max: result.totalMax,
+          work_centers: result.workCenters,
+          employees: result.employeesAffected,
+          months: result.monthsWithoutRecord,
+          infractions: result.itssSanctions.map(s => s.label),
+          itss_sanctions: result.itssSanctions.map(s => ({
+            label: s.label,
+            level: s.level,
+            min: s.totalMin,
+            max: s.totalMax,
+          })),
+        },
+      });
+
       setDone(true);
-      setTimeout(onComplete, 2000);
+      setTimeout(onComplete, 3000);
     } catch {
       // silent
     } finally {
