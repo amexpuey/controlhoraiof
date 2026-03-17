@@ -202,12 +202,12 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
                   )}
 
                   <FormControl>
-                    <div className="flex gap-4 mt-6">
+                    <div className="flex gap-4 mt-10">
                       <button
                         type="button"
                         onClick={() => handleAnswerChange(currentQuestion.id, 'si')}
                         className={cn(
-                          "flex-1 py-4 px-6 rounded-full text-lg font-semibold transition-all duration-200 border-2",
+                          "flex-1 py-4 px-6 rounded-full text-lg font-semibold transition-all duration-200 border-2 flex items-center justify-center gap-2",
                           "hover:scale-[1.02] active:scale-[0.98]"
                         )}
                         style={{
@@ -217,13 +217,24 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
                           boxShadow: currentValue === 'si' ? '0 4px 14px rgba(15,184,159,0.3)' : 'none',
                         }}
                       >
-                        ✓ Sí
+                        <div
+                          className="w-5 h-5 rounded-full border-2 flex items-center justify-center"
+                          style={{
+                            borderColor: currentValue === 'si' ? 'white' : '#0fb89f',
+                            background: currentValue === 'si' ? 'white' : 'transparent',
+                          }}
+                        >
+                          {currentValue === 'si' && (
+                            <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#0fb89f' }} />
+                          )}
+                        </div>
+                        Sí
                       </button>
                       <button
                         type="button"
                         onClick={() => handleAnswerChange(currentQuestion.id, 'no')}
                         className={cn(
-                          "flex-1 py-4 px-6 rounded-full text-lg font-semibold transition-all duration-200 border-2",
+                          "flex-1 py-4 px-6 rounded-full text-lg font-semibold transition-all duration-200 border-2 flex items-center justify-center gap-2",
                           "hover:scale-[1.02] active:scale-[0.98]"
                         )}
                         style={{
@@ -233,7 +244,18 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
                           boxShadow: currentValue === 'no' ? '0 4px 14px rgba(249,115,22,0.3)' : 'none',
                         }}
                       >
-                        ✗ No
+                        <div
+                          className="w-5 h-5 rounded-full border-2 flex items-center justify-center"
+                          style={{
+                            borderColor: currentValue === 'no' ? 'white' : '#f97316',
+                            background: currentValue === 'no' ? 'white' : 'transparent',
+                          }}
+                        >
+                          {currentValue === 'no' && (
+                            <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#f97316' }} />
+                          )}
+                        </div>
+                        No
                       </button>
                     </div>
                   </FormControl>
