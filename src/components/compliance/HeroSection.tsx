@@ -18,8 +18,11 @@ export function HeroSection({ onStartTest }: HeroSectionProps) {
           </div>
 
           <h1 className="hero-title font-bold">
-            ¿Cuánto arriesga tu empresa?
+            Verificador de Cumplimiento del Registro Horario 2026
           </h1>
+          <p className="text-xl md:text-2xl font-semibold mt-2 mb-2" style={{ color: 'var(--dark-muted)' }}>
+            ¿Cuánto arriesga tu empresa?
+          </p>
 
           <p className="lead mb-8 max-w-2xl mx-auto">
             Responde 5 preguntas. Descubre tu nivel de riesgo real. Sin registro, sin datos personales.
