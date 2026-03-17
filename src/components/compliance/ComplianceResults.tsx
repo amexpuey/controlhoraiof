@@ -1,6 +1,4 @@
-
 import { ExternalLink, CheckCircle, AlertTriangle, AlertCircle, Shield } from "lucide-react";
-import { SanctionCalculator } from "./SanctionCalculator";
 import { useAnimatedCounter } from "@/hooks/useAnimatedCounter";
 
 interface ComplianceResultsProps {
@@ -12,6 +10,12 @@ interface ComplianceResultsProps {
   resetForm: () => void;
   isEmbedded?: boolean;
 }
+
+const legalNotes: Record<string, string> = {
+  "high-risk": "El 33,9% de empresas inspeccionadas reciben sanción. Media condena judicial: 12.000€ por trabajador (ITSS 2022).",
+  "medium-risk": "1.869 infracciones de registro horario en 2024. Total multas: 20,2M€.",
+  "compliant": "Bien encaminado. La STS 41/2023 valida sistemas digitales con trazabilidad.",
+};
 
 export function ComplianceResults({ results, resetForm, isEmbedded = false }: ComplianceResultsProps) {
   const { currentValue: animatedScore } = useAnimatedCounter(results.complianceScore);
@@ -91,6 +95,18 @@ export function ComplianceResults({ results, resetForm, isEmbedded = false }: Co
             </span>
           </div>
         </div>
+      </div>
+
+      {/* Legal note */}
+      <div
+        className="panel mb-6 text-center"
+        style={{
+          borderLeft: `4px solid ${config.iconColor}`,
+        }}
+      >
+        <p className="text-sm font-medium italic leading-relaxed" style={{ color: 'var(--text)' }}>
+          {legalNotes[results.level]}
+        </p>
       </div>
 
       <div className="panel mb-6">
