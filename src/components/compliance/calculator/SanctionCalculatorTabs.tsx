@@ -1,12 +1,12 @@
 
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SanctionForm } from "./SanctionForm";
+import { SanctionForm, EstimatedSanctions } from "./SanctionForm";
 import { SanctionInfoContent } from "./SanctionInfoContent";
 import { Calculator } from "lucide-react";
 
 interface SanctionCalculatorTabsProps {
-  onResultCalculated?: (min: number, max: number) => void;
+  onResultCalculated?: (result: EstimatedSanctions) => void;
 }
 
 export function SanctionCalculatorTabs({ onResultCalculated }: SanctionCalculatorTabsProps = {}) {

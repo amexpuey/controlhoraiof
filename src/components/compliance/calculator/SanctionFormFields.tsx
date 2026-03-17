@@ -4,9 +4,9 @@ import { Control, useWatch } from "react-hook-form";
 import { FormField, FormItem, FormLabel, FormControl } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Users, Calendar, AlertTriangle, ChevronDown } from "lucide-react";
+import { Users, Building2, AlertTriangle, ChevronDown } from "lucide-react";
 import { CalculatorFormValues } from "./SanctionForm";
-import { sanctionTypes, getRiskColor } from "../complianceData";
+import { sanctionTypes } from "../complianceData";
 
 interface SanctionFormFieldsProps {
   control: Control<CalculatorFormValues>;
@@ -23,17 +23,21 @@ export function SanctionFormFields({ control }: SanctionFormFieldsProps) {
 
   return (
     <>
+      {/* Centros de trabajo */}
       <FormField
         control={control}
-        name="employees"
+        name="workCenters"
         render={({ field }) => (
           <FormItem>
             <FormLabel className="flex items-center gap-3 text-[color:var(--text-strong)] font-medium mb-2">
               <div className="p-2 rounded-full bg-white/14 border border-white/55">
-                <Users className="h-4 w-4 text-[#36AF9A]" />
+                <Building2 className="h-4 w-4 text-[#36AF9A]" />
               </div>
-              Número de empleados con riesgo de sanción para la empresa
+              Número de centros de trabajo
             </FormLabel>
+            <p className="text-xs mb-2" style={{ color: 'var(--muted)' }}>
+              Las sanciones ITSS se aplican por centro de trabajo afectado (LISOS art. 40)
+            </p>
             <FormControl>
               <Input
                 type="number"
@@ -46,23 +50,60 @@ export function SanctionFormFields({ control }: SanctionFormFieldsProps) {
           </FormItem>
         )}
       />
-      
+
+      {/* Trabajadores afectados */}
       <FormField
         control={control}
-        name="duration"
+        name="employees"
         render={({ field }) => (
           <FormItem>
             <FormLabel className="flex items-center gap-3 text-[color:var(--text-strong)] font-medium mb-2">
               <div className="p-2 rounded-full bg-white/14 border border-white/55">
-                <Calendar className="h-4 w-4 text-[#36AF9A]" />
+                <Users className="h-4 w-4 text-[#36AF9A]" />
               </div>
-              Duración del incumplimiento (meses)
+              Número de trabajadores afectados
             </FormLabel>
+            <p className="text-xs mb-2" style={{ color: 'var(--muted)' }}>
+              Se usa para el cálculo de riesgo judicial y para infracciones muy graves
+            </p>
             <FormControl>
               <Input
                 type="number"
                 min={1}
-                placeholder="Ej: 2"
+                placeholder="Ej: 10"
+                {...field}
+                onChange={(e) => field.onChange(parseInt(e.target.value) || 1)}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+
+      {/* Meses sin registro (solo para riesgo judicial) */}
+      <FormField
+        control={control}
+        name="monthsWithoutRecord"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className="flex items-center gap-3 text-[color:var(--text-strong)] font-medium mb-2">
+              <div className="p-2 rounded-full bg-white/14 border border-white/55">
+                <svg className="h-4 w-4 text-[#36AF9A]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </div>
+              Meses sin registro horario
+            </FormLabel>
+            <p className="text-xs mb-2" style={{ color: 'var(--muted)' }}>
+              Solo para el cálculo de riesgo judicial (no afecta a la sanción ITSS)
+            </p>
+            <FormControl>
+              <Input
+                type="number"
+                min={1}
+                placeholder="Ej: 6"
                 {...field}
                 onChange={(e) => field.onChange(parseInt(e.target.value) || 1)}
               />
