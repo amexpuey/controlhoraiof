@@ -124,7 +124,7 @@ export function SanctionForm({ onResultCalculated }: SanctionFormProps) {
           </div>
           
           <p className="text-xs italic text-center" style={{ color: 'var(--muted)' }}>
-            Esta es una estimación orientativa. Te mostramos cómo arreglarlo paso a paso.
+            Sanciones aplicadas por centro de trabajo. Estimación orientativa basada en LISOS art. 40.
           </p>
         </div>
       )}

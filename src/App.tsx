@@ -40,6 +40,7 @@ const router = createBrowserRouter([
   { path: "/blog/categoria/:category", element: <BlogCategoryPage /> },
   { path: "/compliance-checker", element: <ComplianceCheckerPage /> },
   { path: "/plantillas/verificador-cumplimiento", element: <ComplianceCheckerPage /> },
+  { path: "/calculadora-sanciones", element: <CalculadoraSancionesPage /> },
   { path: "/plantillas", element: <Templates /> },
   { path: "/plantillas/guia-talento", element: <TalentGuidePage /> },
   { path: "/plantillas/registro-horas", element: <TimecardPage /> },
