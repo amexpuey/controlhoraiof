@@ -1,152 +1,118 @@
 
-import { FileText, Info, AlertTriangle, AlertCircle, Scale, TrendingUp } from "lucide-react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { FileText, Scale, TrendingUp, AlertTriangle, ShieldCheck, ShieldAlert, Gavel } from "lucide-react";
 
 export function SanctionInfoContent() {
   return (
-    <div className="space-y-6 text-sm">
-      <div className="bg-white/10 backdrop-blur-xl p-6 rounded-[var(--radius)] border border-white/30 animate-fade-in">
-        <h4 className="flex items-center gap-3 font-medium text-[color:var(--text-strong)] mb-4">
-          <div className="p-2 rounded-full bg-[#57BFAD]/20">
-            <FileText className="h-5 w-5 text-[#57BFAD]" />
+    <div className="space-y-6 text-sm animate-fade-in">
+      {/* Row 1: Normativa + Datos ITSS — two columns */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Normativa */}
+        <div className="bg-white/10 backdrop-blur-xl p-5 rounded-[var(--radius)] border border-white/30">
+          <h4 className="flex items-center gap-2.5 font-semibold text-[color:var(--text-strong)] mb-3 text-sm">
+            <FileText className="h-4 w-4 text-[#57BFAD] shrink-0" />
+            Normativa aplicable
+          </h4>
+          <ul className="space-y-2 text-[color:var(--text)] text-xs leading-relaxed">
+            <li><strong className="text-[color:var(--text-strong)]">RD 8/2019</strong> — Obligación de registro diario de jornada, vigente desde 12 mayo 2019.</li>
+            <li><strong className="text-[color:var(--text-strong)]">LISOS art. 40</strong> — RD Legislativo 5/2000, rangos de sanción por centro de trabajo.</li>
+          </ul>
+        </div>
+
+        {/* Datos ITSS */}
+        <div className="bg-white/10 backdrop-blur-xl p-5 rounded-[var(--radius)] border border-white/30">
+          <h4 className="flex items-center gap-2.5 font-semibold text-[color:var(--text-strong)] mb-3 text-sm">
+            <TrendingUp className="h-4 w-4 text-[#F4B957] shrink-0" />
+            Datos ITSS 2024
+          </h4>
+          <div className="grid grid-cols-2 gap-3">
+            {[
+              { value: "20,2M€", label: "multas totales" },
+              { value: "1.869", label: "infracciones" },
+              { value: "+193%", label: "desde 2019" },
+              { value: "1.237€", label: "multa media" },
+            ].map((s) => (
+              <div key={s.value} className="text-center">
+                <div className="text-base font-bold text-[#F4B957] leading-tight">{s.value}</div>
+                <div className="text-[10px] text-[color:var(--muted)] mt-0.5">{s.label}</div>
+              </div>
+            ))}
           </div>
-          Normativa aplicable
-        </h4>
-         <p className="text-[color:var(--text)] mb-4 leading-relaxed px-2"><strong>RD 8/2019</strong>, vigente desde el 12 de mayo de 2019, establece la obligación de garantizar un registro diario de la jornada laboral para todos los trabajadores.</p>
-         <p className="text-[color:var(--text)] mb-4 leading-relaxed px-2"><strong>LISOS (RD Legislativo 5/2000), art. 40</strong> — define los rangos de sanción aplicables por centro de trabajo.</p>
-         <p className="text-[color:var(--text)] leading-relaxed px-2">Las sanciones se aplican por centro de trabajo afectado, no por trabajador (salvo infracciones muy graves).</p>
+        </div>
       </div>
 
-      {/* Key stats */}
-      <div className="bg-white/10 backdrop-blur-xl p-6 rounded-[var(--radius)] border border-white/30 animate-fade-in [animation-delay:100ms]">
-        <h4 className="flex items-center gap-3 font-medium text-[color:var(--text-strong)] mb-4">
-          <div className="p-2 rounded-full bg-[#F4B957]/20">
-            <TrendingUp className="h-5 w-5 text-[#F4B957]" />
-          </div>
-          Datos clave de inspecciones
+      {/* Row 2: Rangos LISOS — compact table-style */}
+      <div className="bg-white/10 backdrop-blur-xl p-5 rounded-[var(--radius)] border border-white/30">
+        <h4 className="flex items-center gap-2.5 font-semibold text-[color:var(--text-strong)] mb-3 text-sm">
+          <AlertTriangle className="h-4 w-4 text-orange-400 shrink-0" />
+          Rangos de sanción (LISOS art. 40)
         </h4>
-         <ul className="space-y-3 text-[color:var(--text)] leading-relaxed">
-           <li className="flex items-start gap-2">
-             <span className="text-[#F4B957] font-bold">20,2M€</span>
-             <span>en multas por tiempo de trabajo en 2024</span>
-           </li>
-           <li className="flex items-start gap-2">
-             <span className="text-[#F4B957] font-bold">1.869</span>
-             <span>infracciones de registro horario detectadas en 2024</span>
-           </li>
-           <li className="flex items-start gap-2">
-             <span className="text-[#F4B957] font-bold">+193%</span>
-             <span>crecimiento de multas desde 2019</span>
-           </li>
-           <li className="flex items-start gap-2">
-             <span className="text-[#F4B957] font-bold">1.237€</span>
-             <span>multa media por infracción</span>
-           </li>
-         </ul>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div className="flex items-center gap-3 bg-white/5 rounded-lg px-4 py-3 border border-white/10">
+            <ShieldCheck className="h-5 w-5 text-[#F4B957] shrink-0" />
+            <div>
+              <div className="font-semibold text-xs text-[color:var(--text-strong)]">Leve</div>
+              <div className="text-xs text-[color:var(--text)]">60€ – 625€ <span className="text-[color:var(--muted)]">/ centro</span></div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 bg-white/5 rounded-lg px-4 py-3 border border-white/10">
+            <AlertTriangle className="h-5 w-5 text-orange-400 shrink-0" />
+            <div>
+              <div className="font-semibold text-xs text-[color:var(--text-strong)]">Grave</div>
+              <div className="text-xs text-[color:var(--text)]">625€ – 6.250€ <span className="text-[color:var(--muted)]">/ centro</span></div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 bg-white/5 rounded-lg px-4 py-3 border border-white/10">
+            <ShieldAlert className="h-5 w-5 text-red-400 shrink-0" />
+            <div>
+              <div className="font-semibold text-xs text-[color:var(--text-strong)]">Muy grave</div>
+              <div className="text-xs text-[color:var(--text)]">6.251€ – 187.515€ <span className="text-[color:var(--muted)]">/ trabajador</span></div>
+            </div>
+          </div>
+        </div>
       </div>
-      
-      <Accordion type="single" collapsible className="bg-white/10 backdrop-blur-xl rounded-[var(--radius)] border border-white/30 animate-fade-in [animation-delay:200ms]">
-        <AccordionItem value="leves">
-          <AccordionTrigger className="px-6 py-4 text-sm hover:no-underline text-[color:var(--text-strong)] transition-all duration-200 hover:bg-white/5">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-full bg-[#F4B957]/20 backdrop-blur-sm">
-                <Info className="h-5 w-5 text-[#F4B957]" />
-              </div>
-              <span className="font-medium">Infracciones leves (60€ - 625€ por centro)</span>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="px-6 pt-0 pb-4">
-            <p className="text-[color:var(--text)] text-sm leading-relaxed mb-3">
-              Faltas de carácter meramente formal o documental relacionadas con el registro horario.
-            </p>
-            <ul className="list-disc pl-6 mt-3 text-xs text-[color:var(--muted)] space-y-2 leading-relaxed">
-              <li>No conservar los registros durante el periodo establecido (4 años)</li>
-              <li>Errores o defectos formales en el sistema de registro</li>
-            </ul>
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="graves">
-          <AccordionTrigger className="px-6 py-4 text-sm hover:no-underline text-[color:var(--text-strong)] transition-all duration-200 hover:bg-white/5">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-full bg-orange-500/20 backdrop-blur-sm">
-                <AlertTriangle className="h-5 w-5 text-orange-500" />
-              </div>
-              <span className="font-medium">Infracciones graves (625€ - 6.250€ por centro)</span>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="px-6 pt-0 pb-4">
-            <p className="text-[color:var(--text)] text-sm leading-relaxed mb-3">
-              Transgresión de las normas y límites legales en materia de jornada, trabajo nocturno, 
-              horas extraordinarias, descansos, vacaciones o permisos.
-            </p>
-            <ul className="list-disc pl-6 mt-3 text-xs text-[color:var(--muted)] space-y-2 leading-relaxed">
-              <li>No llevar registro horario de los trabajadores</li>
-              <li>Registro incompleto o inadecuado</li>
-              <li>No controlar las horas extraordinarias realizadas</li>
-              <li>No informar a los representantes de los trabajadores</li>
-            </ul>
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="muy-graves">
-          <AccordionTrigger className="px-6 py-4 text-sm hover:no-underline text-[color:var(--text-strong)] transition-all duration-200 hover:bg-white/5">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-full bg-red-500/20 backdrop-blur-sm">
-                <AlertCircle className="h-5 w-5 text-red-500" />
-              </div>
-              <span className="font-medium">Infracciones muy graves (6.251€ - 187.515€ por trabajador)</span>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="px-6 pt-0 pb-4">
-            <p className="text-[color:var(--text)] text-sm leading-relaxed mb-3">
-              Acciones u omisiones que impliquen incumplimiento de normas laborales en aspectos esenciales, 
-              afectando gravemente los derechos de los trabajadores. Se aplican por trabajador afectado.
-            </p>
-            <ul className="list-disc pl-6 mt-3 text-xs text-[color:var(--muted)] space-y-2 leading-relaxed">
-              <li>No pagar horas extras realizadas</li>
-              <li>Retrasos reiterados en el pago del salario</li>
-              <li>Obstrucción a la labor inspectora</li>
-            </ul>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
 
-      {/* Jurisprudencia relevante */}
-      <div className="bg-white/10 backdrop-blur-xl p-6 rounded-[var(--radius)] border border-white/30 animate-fade-in [animation-delay:400ms]">
-        <h4 className="flex items-center gap-3 font-medium text-[color:var(--text-strong)] mb-4">
-          <div className="p-2 rounded-full bg-[#57BFAD]/20">
-            <Scale className="h-5 w-5 text-[#57BFAD]" />
-          </div>
-          Jurisprudencia relevante
-        </h4>
-         <ul className="space-y-4 text-[color:var(--text)] leading-relaxed">
-           <li>
-             <span className="font-medium text-[color:var(--text-strong)]">STJUE C-55/18 (Deutsche Bank):</span>
-             <p className="text-sm mt-1 text-[color:var(--muted)]">El sistema de registro debe ser «objetivo, fiable y accesible». Sentencia del Tribunal de Justicia de la UE que fundamenta la obligación del RD 8/2019.</p>
-           </li>
-           <li>
-             <span className="font-medium text-[color:var(--text-strong)]">SAN 22/2022 — Ferrovial (ECLI:ES:AN:2022:477):</span>
-             <p className="text-sm mt-1 text-[color:var(--muted)]">Los registros en papel y los tiempos estimados NO son válidos como registro de jornada.</p>
-           </li>
-           <li>
-             <span className="font-medium text-[color:var(--text-strong)]">STS 41/2023 (ECLI:ES:TS:2023:85):</span>
-             <p className="text-sm mt-1 text-[color:var(--muted)]">La autodeclaración telemática con trazabilidad SÍ es válida para el cumplimiento del registro horario.</p>
-           </li>
-           <li>
-             <span className="font-medium text-[color:var(--text-strong)]">TSJ Gipuzkoa 2024 (Lidl):</span>
-             <p className="text-sm mt-1 text-[color:var(--muted)]">Condena de 57.000€ por irregularidades en registro horario.</p>
-           </li>
-         </ul>
-      </div>
-      
-      <div className="bg-white/10 backdrop-blur-xl p-6 rounded-[var(--radius)] border border-white/30 animate-fade-in [animation-delay:600ms]">
-        <h4 className="font-medium text-[color:var(--text-strong)] mb-4">Factores que determinan la cuantía</h4>
-        <ul className="list-disc pl-6 text-[color:var(--text)] space-y-3 leading-relaxed">
-          <li><span className="font-medium">Gravedad de la infracción</span>: Leve, grave o muy grave según LISOS</li>
-          <li><span className="font-medium">Centros de trabajo</span>: Las sanciones se aplican por cada centro afectado</li>
-          <li><span className="font-medium">Trabajadores afectados</span>: Relevante para infracciones muy graves y riesgo judicial</li>
-          <li><span className="font-medium">Reincidencia</span>: La repetición de infracciones similares agrava la sanción</li>
-          <li><span className="font-medium">Intencionalidad</span>: Si la infracción fue deliberada, la sanción puede incrementarse</li>
-        </ul>
+      {/* Row 3: Jurisprudencia + Factores — two columns */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Jurisprudencia */}
+        <div className="bg-white/10 backdrop-blur-xl p-5 rounded-[var(--radius)] border border-white/30">
+          <h4 className="flex items-center gap-2.5 font-semibold text-[color:var(--text-strong)] mb-3 text-sm">
+            <Scale className="h-4 w-4 text-[#57BFAD] shrink-0" />
+            Jurisprudencia clave
+          </h4>
+          <ul className="space-y-3 text-xs leading-relaxed">
+            <li>
+              <span className="font-semibold text-[color:var(--text-strong)]">STJUE C-55/18</span>
+              <span className="text-[color:var(--muted)]"> — Sistema debe ser «objetivo, fiable y accesible».</span>
+            </li>
+            <li>
+              <span className="font-semibold text-[color:var(--text-strong)]">SAN 22/2022 Ferrovial</span>
+              <span className="text-[color:var(--muted)]"> — Papel y tiempos estimados NO válidos.</span>
+            </li>
+            <li>
+              <span className="font-semibold text-[color:var(--text-strong)]">STS 41/2023</span>
+              <span className="text-[color:var(--muted)]"> — Autodeclaración telemática con trazabilidad SÍ válida.</span>
+            </li>
+            <li>
+              <span className="font-semibold text-[color:var(--text-strong)]">TSJ Gipuzkoa 2024</span>
+              <span className="text-[color:var(--muted)]"> — Lidl: condena de 57.000€.</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Factores */}
+        <div className="bg-white/10 backdrop-blur-xl p-5 rounded-[var(--radius)] border border-white/30">
+          <h4 className="flex items-center gap-2.5 font-semibold text-[color:var(--text-strong)] mb-3 text-sm">
+            <Gavel className="h-4 w-4 text-[#F4B957] shrink-0" />
+            Factores de la cuantía
+          </h4>
+          <ul className="space-y-2 text-xs text-[color:var(--text)] leading-relaxed">
+            <li><strong className="text-[color:var(--text-strong)]">Gravedad</strong> — Leve, grave o muy grave según LISOS</li>
+            <li><strong className="text-[color:var(--text-strong)]">Centros de trabajo</strong> — Sanción por cada centro afectado</li>
+            <li><strong className="text-[color:var(--text-strong)]">Trabajadores</strong> — Relevante en muy graves y riesgo judicial</li>
+            <li><strong className="text-[color:var(--text-strong)]">Reincidencia</strong> — Agrava la sanción</li>
+            <li><strong className="text-[color:var(--text-strong)]">Intencionalidad</strong> — Incrementa si fue deliberada</li>
+          </ul>
+        </div>
       </div>
     </div>
   );
