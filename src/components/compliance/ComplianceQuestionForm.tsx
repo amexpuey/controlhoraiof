@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
-import { ArrowRight, ArrowLeft, CheckCircle, Info } from "lucide-react";
+import { ArrowRight, ArrowLeft, CheckCircle, Info, Clock, Timer, Wallet } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { complianceQuestions, questionBlocks } from "./complianceData";
 import { StepProgress } from "./StepProgress";
