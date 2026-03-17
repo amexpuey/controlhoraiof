@@ -142,7 +142,14 @@ export function ComplianceQuestionForm({ onCompleted, isEmbedded = false }: Comp
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <span className="text-xl">{currentBlock.emoji}</span>
+                <div
+                  className="w-7 h-7 rounded-full flex items-center justify-center"
+                  style={{ background: `${blockColor}20` }}
+                >
+                  {currentBlockIndex === 0 && <Clock className="w-4 h-4" style={{ color: blockColor }} />}
+                  {currentBlockIndex === 1 && <Timer className="w-4 h-4" style={{ color: blockColor }} />}
+                  {currentBlockIndex === 2 && <Wallet className="w-4 h-4" style={{ color: blockColor }} />}
+                </div>
                 <span className="font-semibold text-base" style={{ color: 'var(--text)' }}>
                   {currentBlock.title}
                 </span>
