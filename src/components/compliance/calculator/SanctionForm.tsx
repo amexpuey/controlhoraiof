@@ -25,7 +25,11 @@ export interface EstimatedSanctions {
   reincidenceApplied: boolean;
 }
 
-export function SanctionForm() {
+interface SanctionFormProps {
+  onResultCalculated?: (min: number, max: number) => void;
+}
+
+export function SanctionForm({ onResultCalculated }: SanctionFormProps) {
   const [estimatedSanctions, setEstimatedSanctions] = useState<EstimatedSanctions | null>(null);
   
   const calculatorForm = useForm<CalculatorFormValues>({
