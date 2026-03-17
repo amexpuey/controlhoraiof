@@ -12,8 +12,9 @@ export function SanctionInfoContent() {
           </div>
           Normativa aplicable
         </h4>
-        <p className="text-[color:var(--text)] mb-4 leading-relaxed px-2">El artículo 34 del Estatuto de los Trabajadores (ET) y el RD 8/2019 establecen la obligación de las empresas de garantizar un registro diario de la jornada laboral desde mayo de 2019.</p>
-        <p className="text-[color:var(--text)] leading-relaxed px-2">Las sanciones se detallan en el Real Decreto Legislativo 5/2000 (LISOS) y se aplican por centro de trabajo afectado.</p>
+         <p className="text-[color:var(--text)] mb-4 leading-relaxed px-2"><strong>RD 8/2019</strong>, vigente desde el 12 de mayo de 2019, establece la obligación de garantizar un registro diario de la jornada laboral para todos los trabajadores.</p>
+         <p className="text-[color:var(--text)] mb-4 leading-relaxed px-2"><strong>LISOS (RD Legislativo 5/2000), art. 40</strong> — define los rangos de sanción aplicables por centro de trabajo.</p>
+         <p className="text-[color:var(--text)] leading-relaxed px-2">Las sanciones se aplican por centro de trabajo afectado, no por trabajador (salvo infracciones muy graves).</p>
       </div>
 
       {/* Key stats */}
