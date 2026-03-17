@@ -118,20 +118,24 @@ export function SanctionInfoContent() {
           </div>
           Jurisprudencia relevante
         </h4>
-        <ul className="space-y-4 text-[color:var(--text)] leading-relaxed">
-          <li>
-            <span className="font-medium text-[color:var(--text-strong)]">SAN 22/2022 (Ferrovial):</span>
-            <p className="text-sm mt-1 text-[color:var(--muted)]">Los registros en papel y los tiempos estimados no son válidos como registro de jornada.</p>
-          </li>
-          <li>
-            <span className="font-medium text-[color:var(--text-strong)]">STS 41/2023:</span>
-            <p className="text-sm mt-1 text-[color:var(--muted)]">Los sistemas telemáticos con trazabilidad son válidos para el cumplimiento del registro horario.</p>
-          </li>
-          <li>
-            <span className="font-medium text-[color:var(--text-strong)]">TSJ Gipuzkoa 2024 (Lidl):</span>
-            <p className="text-sm mt-1 text-[color:var(--muted)]">Condena de 57.000€ por irregularidades en registro horario.</p>
-          </li>
-        </ul>
+         <ul className="space-y-4 text-[color:var(--text)] leading-relaxed">
+           <li>
+             <span className="font-medium text-[color:var(--text-strong)]">STJUE C-55/18 (Deutsche Bank):</span>
+             <p className="text-sm mt-1 text-[color:var(--muted)]">El sistema de registro debe ser «objetivo, fiable y accesible». Sentencia del Tribunal de Justicia de la UE que fundamenta la obligación del RD 8/2019.</p>
+           </li>
+           <li>
+             <span className="font-medium text-[color:var(--text-strong)]">SAN 22/2022 — Ferrovial (ECLI:ES:AN:2022:477):</span>
+             <p className="text-sm mt-1 text-[color:var(--muted)]">Los registros en papel y los tiempos estimados NO son válidos como registro de jornada.</p>
+           </li>
+           <li>
+             <span className="font-medium text-[color:var(--text-strong)]">STS 41/2023 (ECLI:ES:TS:2023:85):</span>
+             <p className="text-sm mt-1 text-[color:var(--muted)]">La autodeclaración telemática con trazabilidad SÍ es válida para el cumplimiento del registro horario.</p>
+           </li>
+           <li>
+             <span className="font-medium text-[color:var(--text-strong)]">TSJ Gipuzkoa 2024 (Lidl):</span>
+             <p className="text-sm mt-1 text-[color:var(--muted)]">Condena de 57.000€ por irregularidades en registro horario.</p>
+           </li>
+         </ul>
       </div>
       
       <div className="bg-white/10 backdrop-blur-xl p-6 rounded-[var(--radius)] border border-white/30 animate-fade-in [animation-delay:600ms]">
