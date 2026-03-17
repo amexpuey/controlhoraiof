@@ -118,8 +118,8 @@ function EmailGateInline({ result, onComplete }: {
           itss_sanctions: result.itssSanctions.map(s => ({
             label: s.label,
             level: s.level,
-            min: s.totalMin,
-            max: s.totalMax,
+            base_min: s.minPerCenter,
+            base_max: s.maxPerCenter,
           })),
         },
       });
