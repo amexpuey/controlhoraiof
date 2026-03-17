@@ -12,6 +12,7 @@ import TalentGuidePage from "@/pages/TalentGuidePage";
 import TimecardPage from "@/pages/TimecardPage";
 import ShiftPlannerPage from "@/pages/ShiftPlannerPage";
 import VacationCalendarPage from "@/pages/VacationCalendarPage";
+import CalculadoraSancionesPage from "@/pages/CalculadoraSancionesPage";
 import DirectoryPage from "@/pages/DirectoryPage";
 import SolutionPage from "@/pages/SolutionPage";
 import VsComparisonPage from "@/pages/VsComparisonPage";
