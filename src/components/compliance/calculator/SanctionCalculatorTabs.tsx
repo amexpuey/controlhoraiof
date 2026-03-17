@@ -1,8 +1,9 @@
 
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SanctionForm, EstimatedSanctions } from "./SanctionForm";
-import { SanctionInfoContent } from "./SanctionInfoContent";
+import { StepByStepCalculator } from "./StepByStepCalculator";
+import { StepByStepLegalInfo } from "./StepByStepLegalInfo";
+import { EstimatedSanctions } from "./SanctionForm";
 import { Calculator } from "lucide-react";
 
 interface SanctionCalculatorTabsProps {
@@ -14,28 +15,14 @@ export function SanctionCalculatorTabs({ onResultCalculated }: SanctionCalculato
   
   return (
     <div className="calculator">
-      <div className="flex items-center gap-3 mb-4">
-        <div className="icon">
-          <Calculator className="h-5 w-5" style={{ color: 'var(--brand)' }} />
-        </div>
-        <div>
-          <h3 className="text-xl font-semibold" style={{ color: 'var(--text-strong)' }}>
-            Calculadora de sanciones
-          </h3>
-          <p className="text-sm" style={{ color: 'var(--text)' }}>
-            Selecciona los incumplimientos que aplican para estimar el rango de sanción
-          </p>
-        </div>
-      </div>
-      
       <Tabs defaultValue="calculator" className="w-full" onValueChange={setActiveTab}>
         <TabsList className="grid grid-cols-2 gap-2 p-0 bg-transparent mb-6 h-auto">
           <TabsTrigger 
             value="calculator"
-            className={`px-4 py-3 rounded-full transition-all duration-200 ease-[cubic-bezier(.2,.8,.2,1)] text-center border backdrop-blur-[10px] font-semibold ${
+            className={`px-4 py-3 rounded-full transition-all duration-200 text-center border font-semibold ${
               activeTab === 'calculator' 
-                ? 'bg-gradient-to-b from-white/22 to-white/12 text-[color:var(--text-strong)] border-white/60 shadow-[0_8px_24px_rgba(0,0,0,0.16),0_0_0_1px_rgba(255,255,255,0.6)_inset]' 
-                : 'bg-white/14 text-[color:var(--text)] border-white/55 hover:bg-white/18'
+                ? 'bg-white text-[var(--text)] border-[var(--border)] shadow-[0_1px_3px_rgba(0,0,0,0.06),0_8px_24px_rgba(0,0,0,0.04)]' 
+                : 'bg-transparent text-[var(--text-secondary)] border-[var(--border)] hover:bg-[var(--green-bg)]'
             }`}
             onClick={() => setActiveTab('calculator')}
           >
@@ -43,10 +30,10 @@ export function SanctionCalculatorTabs({ onResultCalculated }: SanctionCalculato
           </TabsTrigger>
           <TabsTrigger 
             value="info"
-            className={`px-4 py-3 rounded-full transition-all duration-200 ease-[cubic-bezier(.2,.8,.2,1)] text-center border backdrop-blur-[10px] font-semibold ${
+            className={`px-4 py-3 rounded-full transition-all duration-200 text-center border font-semibold ${
               activeTab === 'info' 
-                ? 'bg-gradient-to-b from-white/22 to-white/12 text-[color:var(--text-strong)] border-white/60 shadow-[0_8px_24px_rgba(0,0,0,0.16),0_0_0_1px_rgba(255,255,255,0.6)_inset]' 
-                : 'bg-white/14 text-[color:var(--text)] border-white/55 hover:bg-white/18'
+                ? 'bg-white text-[var(--text)] border-[var(--border)] shadow-[0_1px_3px_rgba(0,0,0,0.06),0_8px_24px_rgba(0,0,0,0.04)]' 
+                : 'bg-transparent text-[var(--text-secondary)] border-[var(--border)] hover:bg-[var(--green-bg)]'
             }`}
             onClick={() => setActiveTab('info')}
           >
@@ -55,11 +42,11 @@ export function SanctionCalculatorTabs({ onResultCalculated }: SanctionCalculato
         </TabsList>
         
         <TabsContent value="calculator" className="pt-0">
-          <SanctionForm onResultCalculated={onResultCalculated} />
+          <StepByStepCalculator onResultCalculated={onResultCalculated} />
         </TabsContent>
         
         <TabsContent value="info" className="pt-0">
-          <SanctionInfoContent />
+          <StepByStepLegalInfo />
         </TabsContent>
       </Tabs>
     </div>
