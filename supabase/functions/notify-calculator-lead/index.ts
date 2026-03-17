@@ -129,7 +129,7 @@ serve(async (req) => {
           <!-- CTA -->
           <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
             <tr><td align="center">
-              <a href="https://inwoutapp.com/demo-online?utm_source=calculadora&utm_medium=email&utm_campaign=sanction_report" style="display:inline-block;background:#0fb89f;color:#ffffff;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:600;font-size:15px;">Evitar estas sanciones →</a>
+              <a href="https://inwout.com/demo-online?utm_source=calculadora&utm_medium=email&utm_campaign=sanction_report" style="display:inline-block;background:#0fb89f;color:#ffffff;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:600;font-size:15px;">Evitar estas sanciones →</a>
             </td></tr>
           </table>
         </td></tr>
