@@ -59,15 +59,9 @@ export default function ComplianceCheckerPage() {
 
   return (
     <div className="compliance-theme min-h-screen pb-12">
-      <HeroSection onStartTest={handleStartTest} />
-
-      {showTest && (
-        <div ref={testRef} className="container">
-          <StandaloneComplianceChecker isEmbedded={false} />
-        </div>
-      )}
-
-      {!showTest && <FinalCTASection onStartTest={handleStartTest} />}
+      <div className="container pt-6">
+        <StandaloneComplianceChecker isEmbedded={false} />
+      </div>
     </div>
   );
 }

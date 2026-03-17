@@ -34,62 +34,7 @@ export default function CalculadoraSancionesPage() {
 
   return (
     <div className="compliance-theme min-h-screen pb-12">
-      {/* Hero */}
-      <div className="hero">
-        <div className="urgency-bar">
-          En 2024, la Inspección de Trabajo impuso 20,2M€ en multas por registro horario. ¿Cuánto te puede costar?
-        </div>
-
-        <div className="container">
-          <div className="text-center py-6">
-            <div className="kicker mx-auto">
-              <span className="kicker-dot"></span>
-              LISOS · Ley de Infracciones y Sanciones
-            </div>
-
-            <h1 className="hero-title font-bold">
-              Calculadora de Sanciones Laborales 2026
-            </h1>
-            <p className="text-xl md:text-2xl font-semibold mt-2 mb-2" style={{ color: 'var(--dark-muted)' }}>
-              ¿Cuánto puede multarte la Inspección?
-            </p>
-
-            <p className="lead mb-8 max-w-2xl mx-auto">
-              Selecciona los incumplimientos y calcula el rango estimado según la LISOS.
-            </p>
-
-            <button
-              onClick={handleScrollToCalculator}
-              className="btn btn-green btn-lg btn-breathing mb-4 text-lg font-semibold mx-auto"
-            >
-              Calcular posibles sanciones →
-            </button>
-
-            <p className="text-sm mb-8" style={{ color: 'var(--dark-muted)' }}>
-              Estimación orientativa en segundos
-            </p>
-
-            {/* Mini Stats */}
-            <div className="hero-stats">
-              <div className="hero-stat">
-                <span className="hero-stat-num">7.500€</span>
-                <span className="hero-stat-label">Sanción máxima por infracción grave</span>
-              </div>
-              <div className="hero-stat">
-                <span className="hero-stat-num">12.000€</span>
-                <span className="hero-stat-label">Condena judicial media por trabajador</span>
-              </div>
-              <div className="hero-stat">
-                <span className="hero-stat-num">20,2M€</span>
-                <span className="hero-stat-label">En multas impuestas solo en 2024</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Calculator */}
-      <div id="calculadora-section" className="container mt-8">
+      <div className="container pt-6">
         <div className="tool-card">
           <SanctionCalculatorTabs
             onResultCalculated={(result: EstimatedSanctions) => {
