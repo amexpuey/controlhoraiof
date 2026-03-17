@@ -52,11 +52,6 @@ export default function ComplianceCheckerPage() {
 
   return (
     <div className="compliance-theme min-h-screen pb-12">
-      <div className="container pt-10 pb-6">
-        <h1 className="text-3xl md:text-4xl font-bold text-center" style={{ color: 'var(--text)' }}>
-          Verificador de Cumplimiento del Registro Horario 2026
-        </h1>
-      </div>
       <HeroSection onStartTest={handleStartTest} />
       
 
