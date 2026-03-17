@@ -22,8 +22,8 @@ interface SanctionPayload {
   itss_sanctions: Array<{ label: string; level: string; min: number; max: number }>
 }
 
-function formatCurrency(n: number): string {
-  return n.toLocaleString('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 })
+function fmt(n: number): string {
+  return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(n)
 }
 
 serve(async (req) => {
@@ -32,12 +32,9 @@ serve(async (req) => {
   }
 
   try {
-    if (!RESEND_API_KEY) {
-      throw new Error('RESEND_API_KEY is not configured')
-    }
+    if (!RESEND_API_KEY) throw new Error('RESEND_API_KEY is not configured')
 
     const data: SanctionPayload = await req.json()
-
     if (!data.email) {
       return new Response(JSON.stringify({ error: 'Email required' }), {
         status: 400,
@@ -45,92 +42,109 @@ serve(async (req) => {
       })
     }
 
-    const fecha = new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' })
+    const fecha = new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid', day: '2-digit', month: 'long', year: 'numeric' })
 
-    // Build infractions rows
-    const infractionsHtml = (data.itss_sanctions || []).map(s => `
+    const infractionsRows = (data.itss_sanctions || []).map(s => `
       <tr>
-        <td style="padding:10px 12px;border-bottom:1px solid #e9ecef;font-size:14px;color:#333;">${s.label}</td>
-        <td style="padding:10px 12px;border-bottom:1px solid #e9ecef;font-size:13px;color:#666;text-transform:capitalize;">${s.level}</td>
-        <td style="padding:10px 12px;border-bottom:1px solid #e9ecef;font-size:14px;color:#333;text-align:right;">${formatCurrency(s.min)} – ${formatCurrency(s.max)}</td>
+        <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0;font-size:13px;color:#333;">${s.label}</td>
+        <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0;font-size:13px;color:#666;text-transform:capitalize;">${s.level}</td>
+        <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0;font-size:13px;color:#333;text-align:right;white-space:nowrap;">${fmt(s.min)} – ${fmt(s.max)}</td>
       </tr>
     `).join('')
 
-    // Email to lead: Sanction report
     const reportHtml = `
-      <div style="font-family:Arial,sans-serif;max-width:640px;margin:0 auto;background:#ffffff;">
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background:#f6f6f6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f6f6f6;">
+    <tr><td align="center" style="padding:40px 16px;">
+      <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="background:#ffffff;border-radius:8px;border:1px solid #e8e8e8;max-width:600px;width:100%;">
+
         <!-- Header -->
-        <div style="background:#0A1628;padding:28px 32px;border-radius:8px 8px 0 0;">
-          <h1 style="margin:0;color:#0fb89f;font-size:20px;letter-spacing:0.5px;">fichajeempresas.es</h1>
-          <p style="margin:6px 0 0;color:#8899aa;font-size:13px;">Informe de estimación de sanciones laborales</p>
-        </div>
+        <tr><td style="padding:28px 32px 20px;border-bottom:1px solid #f0f0f0;">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+              <td>
+                <span style="font-size:18px;font-weight:700;color:#111;">INWOUT</span>
+                <span style="font-size:13px;color:#999;margin-left:8px;">· Control Horario</span>
+              </td>
+            </tr>
+          </table>
+        </td></tr>
 
         <!-- Body -->
-        <div style="padding:32px;border:1px solid #e9ecef;border-top:none;">
-          <p style="color:#444;font-size:15px;line-height:1.6;margin-top:0;">
-            A continuación encontrarás la estimación de sanciones basada en los datos que has introducido. 
-            Este informe es <strong>orientativo</strong> y no constituye asesoramiento legal.
+        <tr><td style="padding:28px 32px;">
+          <p style="margin:0 0 24px;font-size:15px;color:#333;line-height:1.6;">
+            Aquí tienes tu estimación de riesgo basada en los datos introducidos.
           </p>
 
-          <!-- Summary boxes -->
-          <div style="display:flex;gap:12px;margin:24px 0;">
-            <div style="flex:1;background:#FFF7ED;border:1px solid #FED7AA;border-radius:8px;padding:16px;text-align:center;">
-              <p style="margin:0 0 4px;color:#92400E;font-size:11px;text-transform:uppercase;font-weight:bold;letter-spacing:0.5px;">Sanción ITSS</p>
-              <p style="margin:0;color:#0A1628;font-size:18px;font-weight:bold;">${formatCurrency(data.itss_min)} – ${formatCurrency(data.itss_max)}</p>
-              <p style="margin:4px 0 0;color:#92400E;font-size:11px;">${data.work_centers} centro(s) de trabajo</p>
-            </div>
-            <div style="flex:1;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:16px;text-align:center;">
-              <p style="margin:0 0 4px;color:#1E40AF;font-size:11px;text-transform:uppercase;font-weight:bold;letter-spacing:0.5px;">Riesgo Judicial</p>
-              <p style="margin:0;color:#0A1628;font-size:18px;font-weight:bold;">${formatCurrency(data.judicial_min)} – ${formatCurrency(data.judicial_max)}</p>
-              <p style="margin:4px 0 0;color:#1E40AF;font-size:11px;">${data.employees} trabajador(es) · ${data.months} mes(es)</p>
-            </div>
-          </div>
+          <!-- Two cards -->
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom:16px;">
+            <tr>
+              <td width="48%" valign="top" style="padding-right:8px;">
+                <div style="border:1px solid #e8e8e8;border-radius:8px;padding:20px;text-align:center;">
+                  <p style="margin:0 0 4px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#888;font-weight:600;">Sanción ITSS estimada</p>
+                  <p style="margin:0 0 6px;font-size:22px;font-weight:700;color:#111;">${fmt(data.itss_min)} – ${fmt(data.itss_max)}</p>
+                  <p style="margin:0;font-size:12px;color:#999;">Por centro de trabajo (${data.work_centers})</p>
+                </div>
+              </td>
+              <td width="4%"></td>
+              <td width="48%" valign="top" style="padding-left:8px;">
+                <div style="border:1px solid #e8e8e8;border-radius:8px;padding:20px;text-align:center;">
+                  <p style="margin:0 0 4px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#888;font-weight:600;">Riesgo judicial estimado</p>
+                  <p style="margin:0 0 6px;font-size:22px;font-weight:700;color:#111;">${fmt(data.judicial_min)} – ${fmt(data.judicial_max)}</p>
+                  <p style="margin:0;font-size:12px;color:#999;">Por trabajadores afectados (${data.employees})</p>
+                </div>
+              </td>
+            </tr>
+          </table>
 
           <!-- Total -->
-          <div style="background:#0A1628;border-radius:8px;padding:18px 20px;text-align:center;margin-bottom:24px;">
-            <p style="margin:0 0 4px;color:#8899aa;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;">Riesgo total estimado</p>
-            <p style="margin:0;color:#0fb89f;font-size:22px;font-weight:bold;">${formatCurrency(data.total_min)} – ${formatCurrency(data.total_max)}</p>
+          <div style="background:#fafafa;border:1px solid #e8e8e8;border-radius:8px;padding:16px 20px;text-align:center;margin-bottom:28px;">
+            <span style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:#888;font-weight:600;">Riesgo total estimado</span>
+            <p style="margin:6px 0 0;font-size:24px;font-weight:700;color:#111;">${fmt(data.total_min)} – ${fmt(data.total_max)}</p>
           </div>
 
+          ${infractionsRows ? `
           <!-- Infractions table -->
-          ${infractionsHtml ? `
-          <h3 style="color:#0A1628;font-size:15px;margin-bottom:12px;">Infracciones seleccionadas</h3>
-          <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+          <p style="font-size:14px;font-weight:600;color:#111;margin:0 0 12px;">Infracciones seleccionadas</p>
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom:28px;border:1px solid #e8e8e8;border-radius:8px;overflow:hidden;">
             <thead>
-              <tr style="background:#f8f9fa;">
-                <th style="padding:10px 12px;text-align:left;font-size:12px;color:#666;border-bottom:2px solid #e9ecef;">Infracción</th>
-                <th style="padding:10px 12px;text-align:left;font-size:12px;color:#666;border-bottom:2px solid #e9ecef;">Nivel</th>
-                <th style="padding:10px 12px;text-align:right;font-size:12px;color:#666;border-bottom:2px solid #e9ecef;">Rango</th>
+              <tr style="background:#fafafa;">
+                <th style="padding:10px 14px;text-align:left;font-size:11px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;border-bottom:1px solid #e8e8e8;">Infracción</th>
+                <th style="padding:10px 14px;text-align:left;font-size:11px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;border-bottom:1px solid #e8e8e8;">Nivel</th>
+                <th style="padding:10px 14px;text-align:right;font-size:11px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;border-bottom:1px solid #e8e8e8;">Rango</th>
               </tr>
             </thead>
-            <tbody>${infractionsHtml}</tbody>
+            <tbody>${infractionsRows}</tbody>
           </table>
           ` : ''}
 
-          <!-- Legal notes -->
-          <div style="background:#f8f9fa;border-radius:8px;padding:16px;margin-bottom:24px;">
-            <p style="color:#666;font-size:12px;line-height:1.6;margin:0;">
-              <strong>Base legal:</strong> LISOS art. 40 (RD Legislativo 5/2000) · RD 8/2019<br/>
-              <strong>Riesgo judicial:</strong> basado en análisis de 127 sentencias. Media: 12.000€/trabajador.<br/>
-              <strong>Nota:</strong> La sanción real depende del criterio del inspector y las circunstancias. Este cálculo no constituye asesoramiento legal.
-            </p>
-          </div>
+          <!-- Disclaimer -->
+          <p style="font-size:12px;color:#999;line-height:1.5;margin:0 0 28px;padding-top:8px;border-top:1px solid #f0f0f0;">
+            Estimación orientativa basada en LISOS art. 40 (RD Legislativo 5/2000) y RD 8/2019. La sanción real depende del criterio del inspector. No constituye asesoramiento legal.
+          </p>
 
           <!-- CTA -->
-          <div style="background:#f0fdf9;border:1px solid #d1fae5;border-radius:8px;padding:20px;text-align:center;">
-            <h3 style="color:#0A1628;margin-top:0;font-size:16px;">¿Quieres evitar estas sanciones?</h3>
-            <p style="color:#444;font-size:14px;line-height:1.5;margin-bottom:16px;">INWOUT es el sistema de registro horario digital que cumple con el RD 8/2019 y la STS 41/2023.</p>
-            <a href="https://inwoutapp.com/?utm_source=fichajeempresas&utm_medium=email&utm_campaign=calculadora_sanciones" style="display:inline-block;background:#0fb89f;color:#fff;padding:12px 28px;border-radius:6px;text-decoration:none;font-weight:bold;font-size:15px;">Prueba INWOUT gratis →</a>
-          </div>
-        </div>
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+            <tr><td align="center">
+              <a href="https://inwoutapp.com/demo-online?utm_source=calculadora&utm_medium=email&utm_campaign=sanction_report" style="display:inline-block;background:#0fb89f;color:#ffffff;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:600;font-size:15px;">Evitar estas sanciones →</a>
+            </td></tr>
+          </table>
+        </td></tr>
 
         <!-- Footer -->
-        <div style="background:#f8f9fa;padding:20px 32px;text-align:center;border:1px solid #e9ecef;border-top:none;border-radius:0 0 8px 8px;">
-          <p style="color:#999;font-size:12px;margin:0 0 8px;">fichajeempresas.es · Herramientas gratuitas para profesionales de RRHH</p>
-          <p style="color:#bbb;font-size:11px;margin:0;">Generado el ${fecha}</p>
-        </div>
-      </div>
-    `
+        <tr><td style="padding:20px 32px;border-top:1px solid #f0f0f0;text-align:center;">
+          <p style="margin:0;font-size:12px;color:#bbb;">INWOUT · <a href="https://inwoutapp.com" style="color:#999;text-decoration:none;">inwout.com</a></p>
+          <p style="margin:6px 0 0;font-size:11px;color:#ccc;">Generado el ${fecha}</p>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
 
     // 1. Send report to lead
     const reportRes = await fetch('https://api.resend.com/emails', {
@@ -140,9 +154,10 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'FichajeEmpresas.es <noreply@inwout.app>',
+        from: 'INWOUT <noreply@inwout.com>',
+        reply_to: 'hi@inwout.com',
         to: [data.email],
-        subject: '📊 Tu informe de sanciones laborales — FichajeEmpresas.es',
+        subject: 'Tu estimación de sanciones laborales — INWOUT',
         html: reportHtml,
       }),
     })
@@ -154,24 +169,18 @@ serve(async (req) => {
 
     // 2. Internal notification
     const internalHtml = `
-      <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:24px;">
-        <div style="background:#0A1628;color:#fff;padding:20px 24px;border-radius:8px 8px 0 0;">
-          <h2 style="margin:0;font-size:20px;">📊 Nuevo lead — Calculadora de Sanciones</h2>
-        </div>
-        <div style="background:#f8f9fa;padding:24px;border:1px solid #e9ecef;border-top:none;border-radius:0 0 8px 8px;">
-          <table style="width:100%;border-collapse:collapse;">
-            <tr><td style="padding:8px 0;font-weight:bold;color:#555;">Email:</td><td style="padding:8px 0;"><a href="mailto:${data.email}">${data.email}</a></td></tr>
-            <tr><td style="padding:8px 0;font-weight:bold;color:#555;">ITSS:</td><td style="padding:8px 0;">${formatCurrency(data.itss_min)} – ${formatCurrency(data.itss_max)}</td></tr>
-            <tr><td style="padding:8px 0;font-weight:bold;color:#555;">Judicial:</td><td style="padding:8px 0;">${formatCurrency(data.judicial_min)} – ${formatCurrency(data.judicial_max)}</td></tr>
-            <tr><td style="padding:8px 0;font-weight:bold;color:#555;">Total:</td><td style="padding:8px 0;">${formatCurrency(data.total_min)} – ${formatCurrency(data.total_max)}</td></tr>
-            <tr><td style="padding:8px 0;font-weight:bold;color:#555;">Centros:</td><td style="padding:8px 0;">${data.work_centers}</td></tr>
-            <tr><td style="padding:8px 0;font-weight:bold;color:#555;">Empleados:</td><td style="padding:8px 0;">${data.employees}</td></tr>
-            <tr><td style="padding:8px 0;font-weight:bold;color:#555;">Infracciones:</td><td style="padding:8px 0;">${data.infractions?.join(', ') || '-'}</td></tr>
-            <tr><td style="padding:8px 0;font-weight:bold;color:#555;">Fecha:</td><td style="padding:8px 0;">${fecha}</td></tr>
-          </table>
-        </div>
-      </div>
-    `
+      <div style="font-family:-apple-system,sans-serif;max-width:560px;margin:0 auto;padding:24px;">
+        <h2 style="margin:0 0 16px;font-size:16px;color:#111;">📊 Nuevo lead — Calculadora de Sanciones</h2>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;">
+          <tr><td style="padding:6px 0;font-weight:600;color:#666;width:120px;">Email</td><td style="padding:6px 0;"><a href="mailto:${data.email}" style="color:#0fb89f;">${data.email}</a></td></tr>
+          <tr><td style="padding:6px 0;font-weight:600;color:#666;">ITSS</td><td style="padding:6px 0;">${fmt(data.itss_min)} – ${fmt(data.itss_max)}</td></tr>
+          <tr><td style="padding:6px 0;font-weight:600;color:#666;">Judicial</td><td style="padding:6px 0;">${fmt(data.judicial_min)} – ${fmt(data.judicial_max)}</td></tr>
+          <tr><td style="padding:6px 0;font-weight:600;color:#666;">Total</td><td style="padding:6px 0;font-weight:700;">${fmt(data.total_min)} – ${fmt(data.total_max)}</td></tr>
+          <tr><td style="padding:6px 0;font-weight:600;color:#666;">Centros</td><td style="padding:6px 0;">${data.work_centers}</td></tr>
+          <tr><td style="padding:6px 0;font-weight:600;color:#666;">Empleados</td><td style="padding:6px 0;">${data.employees}</td></tr>
+          <tr><td style="padding:6px 0;font-weight:600;color:#666;">Infracciones</td><td style="padding:6px 0;">${data.infractions?.join(', ') || '—'}</td></tr>
+        </table>
+      </div>`
 
     await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -180,7 +189,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'FichajeEmpresas.es <noreply@inwout.app>',
+        from: 'INWOUT <noreply@inwout.com>',
         to: ['hi@inwout.com'],
         subject: `📊 Lead calculadora: ${data.email}`,
         html: internalHtml,
