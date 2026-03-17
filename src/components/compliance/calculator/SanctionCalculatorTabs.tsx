@@ -5,7 +5,11 @@ import { SanctionForm } from "./SanctionForm";
 import { SanctionInfoContent } from "./SanctionInfoContent";
 import { Calculator } from "lucide-react";
 
-export function SanctionCalculatorTabs() {
+interface SanctionCalculatorTabsProps {
+  onResultCalculated?: (min: number, max: number) => void;
+}
+
+export function SanctionCalculatorTabs({ onResultCalculated }: SanctionCalculatorTabsProps = {}) {
   const [activeTab, setActiveTab] = useState("calculator");
   
   return (
@@ -51,7 +55,7 @@ export function SanctionCalculatorTabs() {
         </TabsList>
         
         <TabsContent value="calculator" className="pt-0">
-          <SanctionForm />
+          <SanctionForm onResultCalculated={onResultCalculated} />
         </TabsContent>
         
         <TabsContent value="info" className="pt-0">

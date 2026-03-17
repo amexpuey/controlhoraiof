@@ -1,12 +1,9 @@
-
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import StandaloneComplianceChecker from "@/components/compliance/StandaloneComplianceChecker";
 import { HeroSection } from "@/components/compliance/HeroSection";
-import { HowItWorksSection } from "@/components/compliance/HowItWorksSection";
 import { FinalCTASection } from "@/components/compliance/FinalCTASection";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-
+import { useIframeHeight } from "@/hooks/useIframeHeight";
 
 export default function ComplianceCheckerPage() {
   const [searchParams] = useSearchParams();
@@ -14,10 +11,16 @@ export default function ComplianceCheckerPage() {
   const [showTest, setShowTest] = useState(true);
   const testRef = useRef<HTMLDivElement>(null);
 
+  useIframeHeight();
+
   useEffect(() => {
-    // Always hide global footer on this page
+    // Hide global footer and header on this page
     const footer = document.querySelector('footer');
+    const header = document.querySelector('header');
+    const nav = document.querySelector('nav');
     if (footer) (footer as HTMLElement).style.display = 'none';
+    if (header) (header as HTMLElement).style.display = 'none';
+    if (nav) (nav as HTMLElement).style.display = 'none';
 
     if (isEmbedded) {
       document.body.style.background = "#ffffff";
@@ -28,7 +31,11 @@ export default function ComplianceCheckerPage() {
 
     return () => {
       const footer = document.querySelector('footer');
+      const header = document.querySelector('header');
+      const nav = document.querySelector('nav');
       if (footer) (footer as HTMLElement).style.display = '';
+      if (header) (header as HTMLElement).style.display = '';
+      if (nav) (nav as HTMLElement).style.display = '';
       document.body.style.background = "";
       document.body.style.margin = "";
       document.body.style.padding = "";
@@ -53,7 +60,6 @@ export default function ComplianceCheckerPage() {
   return (
     <div className="compliance-theme min-h-screen pb-12">
       <HeroSection onStartTest={handleStartTest} />
-      
 
       {showTest && (
         <div ref={testRef} className="container">
@@ -61,9 +67,7 @@ export default function ComplianceCheckerPage() {
         </div>
       )}
 
-
       {!showTest && <FinalCTASection onStartTest={handleStartTest} />}
-
     </div>
   );
 }

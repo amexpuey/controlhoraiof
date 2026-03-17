@@ -12,6 +12,7 @@ import TalentGuidePage from "@/pages/TalentGuidePage";
 import TimecardPage from "@/pages/TimecardPage";
 import ShiftPlannerPage from "@/pages/ShiftPlannerPage";
 import VacationCalendarPage from "@/pages/VacationCalendarPage";
+import CalculadoraSancionesPage from "@/pages/CalculadoraSancionesPage";
 import DirectoryPage from "@/pages/DirectoryPage";
 import SolutionPage from "@/pages/SolutionPage";
 import VsComparisonPage from "@/pages/VsComparisonPage";
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
   { path: "/blog/categoria/:category", element: <BlogCategoryPage /> },
   { path: "/compliance-checker", element: <ComplianceCheckerPage /> },
   { path: "/plantillas/verificador-cumplimiento", element: <ComplianceCheckerPage /> },
+  { path: "/calculadora-sanciones", element: <CalculadoraSancionesPage /> },
   { path: "/plantillas", element: <Templates /> },
   { path: "/plantillas/guia-talento", element: <TalentGuidePage /> },
   { path: "/plantillas/registro-horas", element: <TimecardPage /> },

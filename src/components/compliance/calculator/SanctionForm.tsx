@@ -25,7 +25,11 @@ export interface EstimatedSanctions {
   reincidenceApplied: boolean;
 }
 
-export function SanctionForm() {
+interface SanctionFormProps {
+  onResultCalculated?: (min: number, max: number) => void;
+}
+
+export function SanctionForm({ onResultCalculated }: SanctionFormProps) {
   const [estimatedSanctions, setEstimatedSanctions] = useState<EstimatedSanctions | null>(null);
   
   const calculatorForm = useForm<CalculatorFormValues>({
@@ -62,6 +66,8 @@ export function SanctionForm() {
       selectedInfractions: selectedInfractionTypes,
       reincidenceApplied: reincidence
     });
+
+    onResultCalculated?.(Math.round(minEstimate), Math.round(maxEstimate));
   };
 
   return (
@@ -118,7 +124,7 @@ export function SanctionForm() {
           </div>
           
           <p className="text-xs italic text-center" style={{ color: 'var(--muted)' }}>
-            Esta es una estimación orientativa. Te mostramos cómo arreglarlo paso a paso.
+            Sanciones aplicadas por centro de trabajo. Estimación orientativa basada en LISOS art. 40.
           </p>
         </div>
       )}
