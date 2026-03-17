@@ -66,6 +66,8 @@ export function SanctionForm({ onResultCalculated }: SanctionFormProps) {
       selectedInfractions: selectedInfractionTypes,
       reincidenceApplied: reincidence
     });
+
+    onResultCalculated?.(Math.round(minEstimate), Math.round(maxEstimate));
   };
 
   return (
