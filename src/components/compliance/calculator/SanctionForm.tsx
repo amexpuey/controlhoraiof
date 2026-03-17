@@ -1,73 +1,115 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
 import { Calculator } from "lucide-react";
 import { SanctionFormFields } from "./SanctionFormFields";
 import { SanctionResults } from "./SanctionResults";
-import { 
-  sanctionTypes, 
-  getCompanySizeMultiplier, 
-  getDurationMultiplier 
-} from "../complianceData";
+import { sanctionTypes } from "../complianceData";
 
 export interface CalculatorFormValues {
+  workCenters: number;
   employees: number;
-  duration: number;
+  monthsWithoutRecord: number;
   infractions: string[];
   reincidence: boolean;
 }
 
+export interface ITSSSanction {
+  label: string;
+  level: string;
+  minPerCenter: number;
+  maxPerCenter: number;
+  totalMin: number;
+  totalMax: number;
+}
+
 export interface EstimatedSanctions {
-  minEstimate: number;
-  maxEstimate: number;
-  selectedInfractions: typeof sanctionTypes;
+  // Section A: ITSS administrative
+  itssMin: number;
+  itssMax: number;
+  itssSanctions: ITSSSanction[];
+  workCenters: number;
+  // Section B: Judicial risk
+  judicialMin: number;
+  judicialMax: number;
+  employeesAffected: number;
+  monthsWithoutRecord: number;
+  // Combined
+  totalMin: number;
+  totalMax: number;
   reincidenceApplied: boolean;
 }
 
 interface SanctionFormProps {
-  onResultCalculated?: (min: number, max: number) => void;
+  onResultCalculated?: (result: EstimatedSanctions) => void;
 }
+
+const JUDICIAL_AVG_PER_WORKER = 12000; // Based on 127 documented cases
 
 export function SanctionForm({ onResultCalculated }: SanctionFormProps) {
   const [estimatedSanctions, setEstimatedSanctions] = useState<EstimatedSanctions | null>(null);
   
   const calculatorForm = useForm<CalculatorFormValues>({
     defaultValues: {
-      employees: 1,
-      duration: 2,
+      workCenters: 1,
+      employees: 10,
+      monthsWithoutRecord: 6,
       infractions: ["no_registro"],
       reincidence: false
     }
   });
 
   const calculateSanctions = (data: CalculatorFormValues) => {
-    const { employees, duration, infractions, reincidence } = data;
+    const { workCenters, employees, monthsWithoutRecord, infractions, reincidence } = data;
     
-    const companyMultiplier = getCompanySizeMultiplier(employees);
-    const durationMultiplier = getDurationMultiplier(duration);
     const reincidenceMultiplier = reincidence ? 1.5 : 1;
     
     const selectedInfractionTypes = sanctionTypes.filter(type => 
       infractions.includes(type.id)
     );
     
-    const minEstimate = selectedInfractionTypes.reduce((total, infraction) => {
-      return total + (infraction.baseAmount * companyMultiplier * durationMultiplier * reincidenceMultiplier);
-    }, 0);
-    
-    const maxEstimate = selectedInfractionTypes.reduce((total, infraction) => {
-      return total + (infraction.maxAmount * companyMultiplier * durationMultiplier * reincidenceMultiplier);
-    }, 0);
-    
-    setEstimatedSanctions({
-      minEstimate: Math.round(minEstimate),
-      maxEstimate: Math.round(maxEstimate),
-      selectedInfractions: selectedInfractionTypes,
-      reincidenceApplied: reincidence
+    // Section A: ITSS administrative sanctions
+    // Leve/Grave → per work center; Muy grave → per worker affected
+    const itssSanctions: ITSSSanction[] = selectedInfractionTypes.map(infraction => {
+      const isMuyGrave = infraction.level === "muy grave";
+      const multiplier = isMuyGrave ? employees : workCenters;
+      
+      return {
+        label: infraction.label,
+        level: infraction.level,
+        minPerCenter: infraction.baseAmount,
+        maxPerCenter: infraction.maxAmount,
+        totalMin: Math.round(infraction.baseAmount * multiplier * reincidenceMultiplier),
+        totalMax: Math.round(infraction.maxAmount * multiplier * reincidenceMultiplier),
+      };
     });
 
-    onResultCalculated?.(Math.round(minEstimate), Math.round(maxEstimate));
+    const itssMin = itssSanctions.reduce((sum, s) => sum + s.totalMin, 0);
+    const itssMax = itssSanctions.reduce((sum, s) => sum + s.totalMax, 0);
+
+    // Section B: Judicial risk
+    // Average 12.000€ per worker based on 127 documented cases
+    // Scale by months: 6 months = baseline, proportional
+    const monthsFactor = monthsWithoutRecord / 6;
+    const judicialMin = Math.round(employees * JUDICIAL_AVG_PER_WORKER * 0.5 * monthsFactor);
+    const judicialMax = Math.round(employees * JUDICIAL_AVG_PER_WORKER * 1.5 * monthsFactor);
+
+    const result: EstimatedSanctions = {
+      itssMin,
+      itssMax,
+      itssSanctions,
+      workCenters,
+      judicialMin,
+      judicialMax,
+      employeesAffected: employees,
+      monthsWithoutRecord,
+      totalMin: itssMin + judicialMin,
+      totalMax: itssMax + judicialMax,
+      reincidenceApplied: reincidence,
+    };
+    
+    setEstimatedSanctions(result);
+    onResultCalculated?.(result);
   };
 
   return (
@@ -110,23 +152,7 @@ export function SanctionForm({ onResultCalculated }: SanctionFormProps) {
       </div>
       
       {estimatedSanctions && (
-        <div className="glass card-lg mt-6">
-          <h4 className="font-semibold text-xl mb-4" style={{ color: 'var(--text-strong)' }}>
-            Estimación de sanciones:
-          </h4>
-          <div className="text-center mb-4">
-            <div className="text-3xl font-bold mb-2" style={{ color: 'var(--danger)' }}>
-              {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(estimatedSanctions.minEstimate)} - {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(estimatedSanctions.maxEstimate)}
-            </div>
-            <p style={{ color: 'var(--text)' }}>
-              Para {calculatorForm.getValues().employees} {calculatorForm.getValues().employees === 1 ? 'empleado' : 'empleados'} con {calculatorForm.getValues().duration} {calculatorForm.getValues().duration === 1 ? 'mes' : 'meses'} de incumplimiento.
-            </p>
-          </div>
-          
-          <p className="text-xs italic text-center" style={{ color: 'var(--muted)' }}>
-            Sanciones aplicadas por centro de trabajo. Estimación orientativa basada en LISOS art. 40.
-          </p>
-        </div>
+        <SanctionResults estimatedSanctions={estimatedSanctions} />
       )}
     </>
   );

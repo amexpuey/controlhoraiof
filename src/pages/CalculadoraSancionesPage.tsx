@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { SanctionCalculatorTabs } from "@/components/compliance/calculator/SanctionCalculatorTabs";
 import { useIframeHeight } from "@/hooks/useIframeHeight";
-import { EmailGate } from "@/components/compliance/EmailGate";
+import { EstimatedSanctions } from "@/components/compliance/calculator/SanctionForm";
 
 export default function CalculadoraSancionesPage() {
   const [showEmailCapture, setShowEmailCapture] = useState(false);
-  const [sanctionRange, setSanctionRange] = useState("");
+  const [lastResult, setLastResult] = useState<EstimatedSanctions | null>(null);
 
   useIframeHeight();
 
   useEffect(() => {
-    // Hide global footer, header, nav
     const footer = document.querySelector('footer');
     const header = document.querySelector('header');
     const nav = document.querySelector('nav');
@@ -74,7 +73,7 @@ export default function CalculadoraSancionesPage() {
             <div className="hero-stats">
               <div className="hero-stat">
                 <span className="hero-stat-num">7.500€</span>
-                <span className="hero-stat-label">Sanción máxima por infracción</span>
+                <span className="hero-stat-label">Sanción máxima por infracción grave</span>
               </div>
               <div className="hero-stat">
                 <span className="hero-stat-num">12.000€</span>
@@ -93,28 +92,25 @@ export default function CalculadoraSancionesPage() {
       <div id="calculadora-section" className="container mt-8">
         <div className="tool-card">
           <SanctionCalculatorTabs
-            onResultCalculated={(min, max) => {
-              const range = `${min.toLocaleString("es-ES")}€ – ${max.toLocaleString("es-ES")}€`;
-              setSanctionRange(range);
+            onResultCalculated={(result: EstimatedSanctions) => {
+              setLastResult(result);
               setShowEmailCapture(true);
             }}
           />
         </div>
 
         {/* Optional email capture after result */}
-        {showEmailCapture && (
+        {showEmailCapture && lastResult && (
           <div className="mt-8">
             <div className="glass card-lg text-center py-8 px-6">
               <h3 className="text-xl font-bold mb-2" style={{ color: "var(--text)" }}>
-                ¿Quieres recibir este informe?
+                ¿Quieres recibir este informe detallado por email?
               </h3>
               <p className="mb-4 text-sm" style={{ color: "var(--text-secondary)" }}>
-                Te enviamos el detalle de sanciones estimadas a tu email.
+                Te enviamos el detalle de sanciones ITSS + riesgo judicial estimado.
               </p>
               <EmailGateInline
-                source="calculadora"
-                templateSlug="calculadora-sanciones"
-                extraData={{ empresa: sanctionRange }}
+                result={lastResult}
                 onComplete={() => setShowEmailCapture(false)}
               />
             </div>
@@ -125,11 +121,8 @@ export default function CalculadoraSancionesPage() {
   );
 }
 
-// Simplified inline email capture (not full-screen gate)
-function EmailGateInline({ source, templateSlug, extraData, onComplete }: {
-  source: string;
-  templateSlug: string;
-  extraData?: Record<string, string>;
+function EmailGateInline({ result, onComplete }: {
+  result: EstimatedSanctions;
   onComplete: () => void;
 }) {
   const [email, setEmail] = useState("");
@@ -145,9 +138,20 @@ function EmailGateInline({ source, templateSlug, extraData, onComplete }: {
       const { supabase } = await import("@/integrations/supabase/client");
       await supabase.from("plantilla_leads").insert({
         email: email.trim(),
-        plantilla_slug: templateSlug,
-        source,
-        ...extraData,
+        plantilla_slug: "calculadora-sanciones",
+        source: "calculadora",
+        empresa: JSON.stringify({
+          itss_min: result.itssMin,
+          itss_max: result.itssMax,
+          judicial_min: result.judicialMin,
+          judicial_max: result.judicialMax,
+          total_min: result.totalMin,
+          total_max: result.totalMax,
+          work_centers: result.workCenters,
+          employees: result.employeesAffected,
+          months: result.monthsWithoutRecord,
+          infractions: result.itssSanctions.map(s => s.label),
+        }),
       } as any);
       setDone(true);
       setTimeout(onComplete, 2000);
