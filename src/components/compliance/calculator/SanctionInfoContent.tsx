@@ -25,20 +25,24 @@ export function SanctionInfoContent() {
           </div>
           Datos clave de inspecciones
         </h4>
-        <ul className="space-y-3 text-[color:var(--text)] leading-relaxed">
-          <li className="flex items-start gap-2">
-            <span className="text-[#F4B957] font-bold">20,2M€</span>
-            <span>en multas por registro horario en 2024</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-[#F4B957] font-bold">+193%</span>
-            <span>incremento de sanciones desde 2019</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-[#F4B957] font-bold">1.869</span>
-            <span>infracciones de registro horario detectadas en 2024</span>
-          </li>
-        </ul>
+         <ul className="space-y-3 text-[color:var(--text)] leading-relaxed">
+           <li className="flex items-start gap-2">
+             <span className="text-[#F4B957] font-bold">20,2M€</span>
+             <span>en multas por tiempo de trabajo en 2024</span>
+           </li>
+           <li className="flex items-start gap-2">
+             <span className="text-[#F4B957] font-bold">1.869</span>
+             <span>infracciones de registro horario detectadas en 2024</span>
+           </li>
+           <li className="flex items-start gap-2">
+             <span className="text-[#F4B957] font-bold">+193%</span>
+             <span>crecimiento de multas desde 2019</span>
+           </li>
+           <li className="flex items-start gap-2">
+             <span className="text-[#F4B957] font-bold">1.237€</span>
+             <span>multa media por infracción</span>
+           </li>
+         </ul>
       </div>
       
       <Accordion type="single" collapsible className="bg-white/10 backdrop-blur-xl rounded-[var(--radius)] border border-white/30 animate-fade-in [animation-delay:200ms]">
