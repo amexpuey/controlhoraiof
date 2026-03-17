@@ -12,8 +12,9 @@ export function SanctionInfoContent() {
           </div>
           Normativa aplicable
         </h4>
-        <p className="text-[color:var(--text)] mb-4 leading-relaxed px-2">El artículo 34 del Estatuto de los Trabajadores (ET) y el RD 8/2019 establecen la obligación de las empresas de garantizar un registro diario de la jornada laboral desde mayo de 2019.</p>
-        <p className="text-[color:var(--text)] leading-relaxed px-2">Las sanciones se detallan en el Real Decreto Legislativo 5/2000 (LISOS) y se aplican por centro de trabajo afectado.</p>
+         <p className="text-[color:var(--text)] mb-4 leading-relaxed px-2"><strong>RD 8/2019</strong>, vigente desde el 12 de mayo de 2019, establece la obligación de garantizar un registro diario de la jornada laboral para todos los trabajadores.</p>
+         <p className="text-[color:var(--text)] mb-4 leading-relaxed px-2"><strong>LISOS (RD Legislativo 5/2000), art. 40</strong> — define los rangos de sanción aplicables por centro de trabajo.</p>
+         <p className="text-[color:var(--text)] leading-relaxed px-2">Las sanciones se aplican por centro de trabajo afectado, no por trabajador (salvo infracciones muy graves).</p>
       </div>
 
       {/* Key stats */}
@@ -24,20 +25,24 @@ export function SanctionInfoContent() {
           </div>
           Datos clave de inspecciones
         </h4>
-        <ul className="space-y-3 text-[color:var(--text)] leading-relaxed">
-          <li className="flex items-start gap-2">
-            <span className="text-[#F4B957] font-bold">20,2M€</span>
-            <span>en multas por registro horario en 2024</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-[#F4B957] font-bold">+193%</span>
-            <span>incremento de sanciones desde 2019</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-[#F4B957] font-bold">1.869</span>
-            <span>infracciones de registro horario detectadas en 2024</span>
-          </li>
-        </ul>
+         <ul className="space-y-3 text-[color:var(--text)] leading-relaxed">
+           <li className="flex items-start gap-2">
+             <span className="text-[#F4B957] font-bold">20,2M€</span>
+             <span>en multas por tiempo de trabajo en 2024</span>
+           </li>
+           <li className="flex items-start gap-2">
+             <span className="text-[#F4B957] font-bold">1.869</span>
+             <span>infracciones de registro horario detectadas en 2024</span>
+           </li>
+           <li className="flex items-start gap-2">
+             <span className="text-[#F4B957] font-bold">+193%</span>
+             <span>crecimiento de multas desde 2019</span>
+           </li>
+           <li className="flex items-start gap-2">
+             <span className="text-[#F4B957] font-bold">1.237€</span>
+             <span>multa media por infracción</span>
+           </li>
+         </ul>
       </div>
       
       <Accordion type="single" collapsible className="bg-white/10 backdrop-blur-xl rounded-[var(--radius)] border border-white/30 animate-fade-in [animation-delay:200ms]">
@@ -113,20 +118,24 @@ export function SanctionInfoContent() {
           </div>
           Jurisprudencia relevante
         </h4>
-        <ul className="space-y-4 text-[color:var(--text)] leading-relaxed">
-          <li>
-            <span className="font-medium text-[color:var(--text-strong)]">SAN 22/2022 (Ferrovial):</span>
-            <p className="text-sm mt-1 text-[color:var(--muted)]">Los registros en papel y los tiempos estimados no son válidos como registro de jornada.</p>
-          </li>
-          <li>
-            <span className="font-medium text-[color:var(--text-strong)]">STS 41/2023:</span>
-            <p className="text-sm mt-1 text-[color:var(--muted)]">Los sistemas telemáticos con trazabilidad son válidos para el cumplimiento del registro horario.</p>
-          </li>
-          <li>
-            <span className="font-medium text-[color:var(--text-strong)]">TSJ Gipuzkoa 2024 (Lidl):</span>
-            <p className="text-sm mt-1 text-[color:var(--muted)]">Condena de 57.000€ por irregularidades en registro horario.</p>
-          </li>
-        </ul>
+         <ul className="space-y-4 text-[color:var(--text)] leading-relaxed">
+           <li>
+             <span className="font-medium text-[color:var(--text-strong)]">STJUE C-55/18 (Deutsche Bank):</span>
+             <p className="text-sm mt-1 text-[color:var(--muted)]">El sistema de registro debe ser «objetivo, fiable y accesible». Sentencia del Tribunal de Justicia de la UE que fundamenta la obligación del RD 8/2019.</p>
+           </li>
+           <li>
+             <span className="font-medium text-[color:var(--text-strong)]">SAN 22/2022 — Ferrovial (ECLI:ES:AN:2022:477):</span>
+             <p className="text-sm mt-1 text-[color:var(--muted)]">Los registros en papel y los tiempos estimados NO son válidos como registro de jornada.</p>
+           </li>
+           <li>
+             <span className="font-medium text-[color:var(--text-strong)]">STS 41/2023 (ECLI:ES:TS:2023:85):</span>
+             <p className="text-sm mt-1 text-[color:var(--muted)]">La autodeclaración telemática con trazabilidad SÍ es válida para el cumplimiento del registro horario.</p>
+           </li>
+           <li>
+             <span className="font-medium text-[color:var(--text-strong)]">TSJ Gipuzkoa 2024 (Lidl):</span>
+             <p className="text-sm mt-1 text-[color:var(--muted)]">Condena de 57.000€ por irregularidades en registro horario.</p>
+           </li>
+         </ul>
       </div>
       
       <div className="bg-white/10 backdrop-blur-xl p-6 rounded-[var(--radius)] border border-white/30 animate-fade-in [animation-delay:600ms]">
