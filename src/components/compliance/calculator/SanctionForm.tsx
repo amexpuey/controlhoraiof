@@ -44,7 +44,8 @@ interface SanctionFormProps {
   onResultCalculated?: (result: EstimatedSanctions) => void;
 }
 
-const JUDICIAL_AVG_PER_WORKER = 12000; // Based on 127 documented cases
+const JUDICIAL_MIN_PER_WORKER = 6000;
+const JUDICIAL_MAX_PER_WORKER = 18000;
 
 export function SanctionForm({ onResultCalculated }: SanctionFormProps) {
   const [estimatedSanctions, setEstimatedSanctions] = useState<EstimatedSanctions | null>(null);
