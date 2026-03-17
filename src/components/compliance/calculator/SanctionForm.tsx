@@ -88,12 +88,9 @@ export function SanctionForm({ onResultCalculated }: SanctionFormProps) {
     const itssMin = itssSanctions.reduce((sum, s) => sum + s.totalMin, 0);
     const itssMax = itssSanctions.reduce((sum, s) => sum + s.totalMax, 0);
 
-    // Section B: Judicial risk
-    // Average 12.000€ per worker based on 127 documented cases
-    // Scale by months: 6 months = baseline, proportional
-    const monthsFactor = monthsWithoutRecord / 6;
-    const judicialMin = Math.round(employees * JUDICIAL_AVG_PER_WORKER * 0.5 * monthsFactor);
-    const judicialMax = Math.round(employees * JUDICIAL_AVG_PER_WORKER * 1.5 * monthsFactor);
+    // Section B: Judicial risk — fixed per worker, no months factor
+    const judicialMin = Math.round(employees * JUDICIAL_MIN_PER_WORKER);
+    const judicialMax = Math.round(employees * JUDICIAL_MAX_PER_WORKER);
 
     const result: EstimatedSanctions = {
       itssMin,
