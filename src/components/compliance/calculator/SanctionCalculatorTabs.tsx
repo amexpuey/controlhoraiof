@@ -55,7 +55,7 @@ export function SanctionCalculatorTabs({ onResultCalculated }: SanctionCalculato
         </TabsList>
         
         <TabsContent value="calculator" className="pt-0">
-          <SanctionForm />
+          <SanctionForm onResultCalculated={onResultCalculated} />
         </TabsContent>
         
         <TabsContent value="info" className="pt-0">
