@@ -80,6 +80,12 @@ export function StepByStepCalculator({ onResultCalculated }: StepByStepCalculato
   const [reincidence, setReincidence] = useState<boolean | null>(null);
   const [result, setResult] = useState<EstimatedSanctions | null>(null);
 
+  // Email gate state
+  const [emailUnlocked, setEmailUnlocked] = useState(false);
+  const [gateEmail, setGateEmail] = useState("");
+  const [gateLoading, setGateLoading] = useState(false);
+  const [gateError, setGateError] = useState("");
+
   // Total steps for progress: 3 numeric + 9 infractions + 1 reincidence + 1 result
   const totalDots = 3 + infractionQuestions.length + 1 + 1;
 
