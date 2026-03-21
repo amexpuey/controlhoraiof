@@ -36,7 +36,7 @@ export default function DirectoryPage() {
     <div className="min-h-screen" style={{ background: 'var(--white)' }}>
       <SEOHead
         title="Directorio de Software de Control Horario en España 2026 | FichajesEmpresas.es"
-        description="Compara +90 soluciones de control horario y fichaje para empresas en España. Filtros por funcionalidad, precio y valoración."
+        description="Compara +100 soluciones de control horario y fichaje para empresas en España. Filtros por funcionalidad, precio y valoración."
         canonical="https://fichajeempresas.es/directorio"
         jsonLd={jsonLd}
       />
