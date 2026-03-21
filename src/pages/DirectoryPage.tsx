@@ -54,7 +54,7 @@ export default function DirectoryPage() {
             Directorio de <span className="accent">Control Horario</span>
           </h1>
           <p className="lead max-w-2xl mx-auto mb-6">
-            Compara {data?.total || '90+'} soluciones de fichaje y control horario para empresas en España
+            Compara {data?.total || '104'} soluciones de fichaje y control horario para empresas en España
           </p>
           <div className="max-w-2xl mx-auto">
             <div className="relative">

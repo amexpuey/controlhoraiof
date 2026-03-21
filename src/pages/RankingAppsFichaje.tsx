@@ -125,12 +125,7 @@ function RankingCard({ app }: { app: RankedApp }) {
           {d?.logo_url && d.logo_url !== '/placeholder.svg' ? (
             <img src={d.logo_url} alt={app.title} className="w-full h-full object-contain" loading="lazy" />
           ) : (
-            <span
-              className="text-sm font-bold"
-              style={{ color: isInwout ? 'var(--green)' : 'var(--text-muted)' }}
-            >
-              {app.title.charAt(0)}
-            </span>
+            <Clock className="h-5 w-5" style={{ color: isInwout ? 'var(--green)' : 'var(--text-muted)' }} />
           )}
         </div>
 

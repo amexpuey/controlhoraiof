@@ -163,10 +163,10 @@ export function SolutionCard({ solution }: SolutionCardProps) {
       <div className="p-5">
         <div className="flex items-start gap-3 mb-3">
           <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 overflow-hidden" style={{ background: 'var(--surface-alt)' }}>
-            {solution.logo_url ? (
+            {solution.logo_url && solution.logo_url !== '/placeholder.svg' ? (
               <img src={solution.logo_url} alt={solution.title} className="w-full h-full object-contain" loading="lazy" />
             ) : (
-              <span className="text-xs font-bold" style={{ color: 'var(--text-muted)' }}>{solution.title?.charAt(0)}</span>
+              <Clock className="h-5 w-5" style={{ color: 'var(--green)' }} />
             )}
           </div>
           <div className="min-w-0 flex-1">
