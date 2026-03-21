@@ -21,31 +21,46 @@ export interface ITSSSanction {
   maxPerCenter: number;
   totalMin: number;
   totalMax: number;
+  articleRef?: string;
+}
+
+export interface ScenarioResult {
+  label: string;
+  description: string;
+  emoji: string;
+  min: number;
+  max: number;
+  sanctions: ITSSSanction[];
+  legalBasis: string;
+  isPending?: boolean;
 }
 
 export interface EstimatedSanctions {
-  // Section A: ITSS administrative
+  // Scenario A: LISOS vigente
+  scenarioA: ScenarioResult;
+  // Scenario B: Anteproyecto
+  scenarioB: ScenarioResult;
+  // Scenario C: Judicial risk
+  scenarioC: ScenarioResult;
+  // Combined total (A + C as worst case)
+  totalMin: number;
+  totalMax: number;
+  // Context
+  workCenters: number;
+  employeesAffected: number;
+  monthsWithoutRecord: number;
+  reincidenceApplied: boolean;
+  // Legacy compat
   itssMin: number;
   itssMax: number;
   itssSanctions: ITSSSanction[];
-  workCenters: number;
-  // Section B: Judicial risk
   judicialMin: number;
   judicialMax: number;
-  employeesAffected: number;
-  monthsWithoutRecord: number;
-  // Combined
-  totalMin: number;
-  totalMax: number;
-  reincidenceApplied: boolean;
 }
 
 interface SanctionFormProps {
   onResultCalculated?: (result: EstimatedSanctions) => void;
 }
-
-const JUDICIAL_MIN_PER_WORKER = 6000;
-const JUDICIAL_MAX_PER_WORKER = 18000;
 
 export function SanctionForm({ onResultCalculated }: SanctionFormProps) {
   const [estimatedSanctions, setEstimatedSanctions] = useState<EstimatedSanctions | null>(null);
@@ -61,51 +76,7 @@ export function SanctionForm({ onResultCalculated }: SanctionFormProps) {
   });
 
   const calculateSanctions = (data: CalculatorFormValues) => {
-    const { workCenters, employees, monthsWithoutRecord, infractions, reincidence } = data;
-    
-    const reincidenceMultiplier = reincidence ? 1.5 : 1;
-    
-    const selectedInfractionTypes = sanctionTypes.filter(type => 
-      infractions.includes(type.id)
-    );
-    
-    // Section A: ITSS administrative sanctions
-    // Leve/Grave → per work center; Muy grave → per worker affected
-    const itssSanctions: ITSSSanction[] = selectedInfractionTypes.map(infraction => {
-      const isMuyGrave = infraction.level === "muy grave";
-      const multiplier = isMuyGrave ? employees : workCenters;
-      
-      return {
-        label: infraction.label,
-        level: infraction.level,
-        minPerCenter: infraction.baseAmount,
-        maxPerCenter: infraction.maxAmount,
-        totalMin: Math.round(infraction.baseAmount * multiplier * reincidenceMultiplier),
-        totalMax: Math.round(infraction.maxAmount * multiplier * reincidenceMultiplier),
-      };
-    });
-
-    const itssMin = itssSanctions.reduce((sum, s) => sum + s.totalMin, 0);
-    const itssMax = itssSanctions.reduce((sum, s) => sum + s.totalMax, 0);
-
-    // Section B: Judicial risk — fixed per worker, no months factor
-    const judicialMin = Math.round(employees * JUDICIAL_MIN_PER_WORKER);
-    const judicialMax = Math.round(employees * JUDICIAL_MAX_PER_WORKER);
-
-    const result: EstimatedSanctions = {
-      itssMin,
-      itssMax,
-      itssSanctions,
-      workCenters,
-      judicialMin,
-      judicialMax,
-      employeesAffected: employees,
-      monthsWithoutRecord,
-      totalMin: itssMin + judicialMin,
-      totalMax: itssMax + judicialMax,
-      reincidenceApplied: reincidence,
-    };
-    
+    const result = computeAllScenarios(data);
     setEstimatedSanctions(result);
     onResultCalculated?.(result);
   };
@@ -154,4 +125,142 @@ export function SanctionForm({ onResultCalculated }: SanctionFormProps) {
       )}
     </>
   );
+}
+
+// ---- Shared calculation engine ----
+
+/** Art. 39.2 LISOS graduation by company size */
+function getGradeRanges(level: string, employees: number): { min: number; max: number } {
+  if (level === "leve") {
+    if (employees <= 9) return { min: 60, max: 125 };
+    if (employees <= 49) return { min: 126, max: 310 };
+    return { min: 311, max: 625 };
+  }
+  if (level === "grave") {
+    if (employees <= 9) return { min: 751, max: 1500 };
+    if (employees <= 49) return { min: 1501, max: 3750 };
+    return { min: 3751, max: 7500 };
+  }
+  // muy grave
+  if (employees <= 9) return { min: 7501, max: 30000 };
+  if (employees <= 49) return { min: 30001, max: 120005 };
+  return { min: 120006, max: 225018 };
+}
+
+const JUDICIAL_MIN_PER_WORKER = 6000;
+const JUDICIAL_MAX_PER_WORKER = 18000;
+
+// Infractions affected by anteproyecto per-worker rule
+const ANTEPROYECTO_PER_WORKER_IDS = ["no_registro", "registro_incompleto", "no_trazabilidad"];
+const ANTEPROYECTO_MAX_PER_WORKER = 10000;
+
+export function computeAllScenarios(data: {
+  workCenters: number;
+  employees: number;
+  monthsWithoutRecord: number;
+  infractions: string[];
+  reincidence: boolean;
+}): EstimatedSanctions {
+  const { workCenters, employees, monthsWithoutRecord, infractions, reincidence } = data;
+  const reincidenceMultiplier = reincidence ? 1.5 : 1;
+
+  const selectedInfractions = sanctionTypes.filter(t => infractions.includes(t.id));
+
+  // ── SCENARIO A: LISOS Vigent (graduated by Art. 39.2) ──
+  const sanctionsA: ITSSSanction[] = selectedInfractions.map(inf => {
+    const grade = getGradeRanges(inf.level, employees);
+    const multiplier = inf.level === "muy grave" ? employees : workCenters;
+    return {
+      label: inf.label,
+      level: inf.level,
+      minPerCenter: grade.min,
+      maxPerCenter: grade.max,
+      totalMin: Math.round(grade.min * multiplier * reincidenceMultiplier),
+      totalMax: Math.round(grade.max * multiplier * reincidenceMultiplier),
+      articleRef: `Art. 39.2 LISOS — grado ${employees <= 9 ? 'mínimo' : employees <= 49 ? 'medio' : 'máximo'}`,
+    };
+  });
+  const aMin = sanctionsA.reduce((s, x) => s + x.totalMin, 0);
+  const aMax = sanctionsA.reduce((s, x) => s + x.totalMax, 0);
+
+  // ── SCENARIO B: Anteproyecto ──
+  const sanctionsB: ITSSSanction[] = selectedInfractions.map(inf => {
+    const isPerWorker = ANTEPROYECTO_PER_WORKER_IDS.includes(inf.id);
+    if (isPerWorker) {
+      // Anteproyecto: per worker, up to €10,000
+      const baseMin = inf.level === "muy grave" ? 7501 : 751;
+      const baseMax = ANTEPROYECTO_MAX_PER_WORKER;
+      return {
+        label: inf.label,
+        level: "muy grave",
+        minPerCenter: baseMin,
+        maxPerCenter: baseMax,
+        totalMin: Math.round(baseMin * employees * reincidenceMultiplier),
+        totalMax: Math.round(baseMax * employees * reincidenceMultiplier),
+        articleRef: "Anteproyecto — cómputo por trabajador",
+      };
+    }
+    // Same as Scenario A for non-affected infractions
+    const grade = getGradeRanges(inf.level, employees);
+    const multiplier = inf.level === "muy grave" ? employees : workCenters;
+    return {
+      label: inf.label,
+      level: inf.level,
+      minPerCenter: grade.min,
+      maxPerCenter: grade.max,
+      totalMin: Math.round(grade.min * multiplier * reincidenceMultiplier),
+      totalMax: Math.round(grade.max * multiplier * reincidenceMultiplier),
+      articleRef: `Art. 39.2 LISOS`,
+    };
+  });
+  const bMin = sanctionsB.reduce((s, x) => s + x.totalMin, 0);
+  const bMax = sanctionsB.reduce((s, x) => s + x.totalMax, 0);
+
+  // ── SCENARIO C: Judicial Risk ──
+  const cMin = Math.round(employees * JUDICIAL_MIN_PER_WORKER);
+  const cMax = Math.round(employees * JUDICIAL_MAX_PER_WORKER);
+
+  return {
+    scenarioA: {
+      label: "Ley vigente (LISOS)",
+      description: `${selectedInfractions.length} infracción${selectedInfractions.length !== 1 ? 'es' : ''} × ${workCenters} centro${workCenters !== 1 ? 's' : ''} · Art. 39.2: grado ${employees <= 9 ? 'mínimo' : employees <= 49 ? 'medio' : 'máximo'} (${employees <= 9 ? '≤9' : employees <= 49 ? '10-49' : '≥50'} empleados)`,
+      emoji: "📋",
+      min: aMin,
+      max: aMax,
+      sanctions: sanctionsA,
+      legalBasis: "Art. 39.2 y 40 LISOS (RD 5/2000, modificado por RD 8/2019)",
+    },
+    scenarioB: {
+      label: "Si se aprueba el anteproyecto",
+      description: `Cómputo por trabajador para ausencia de registro (${employees} afectados)`,
+      emoji: "⚠️",
+      min: bMin,
+      max: bMax,
+      sanctions: sanctionsB,
+      legalBasis: "Anteproyecto de reforma laboral 2026 — pendiente de aprobación en BOE",
+      isPending: true,
+    },
+    scenarioC: {
+      label: "Si un trabajador te demanda",
+      description: `Horas extra no registradas (${employees} empl.) · ${monthsWithoutRecord} meses sin registro`,
+      emoji: "⚖️",
+      min: cMin,
+      max: cMax,
+      sanctions: [],
+      legalBasis: "Jurisprudencia CENDOJ verificada. Caso real documentado: €67.036 (hostal Madrid, 1 trabajador)",
+    },
+    // Combined worst case: A + C
+    totalMin: aMin + cMin,
+    totalMax: aMax + cMax,
+    workCenters,
+    employeesAffected: employees,
+    monthsWithoutRecord,
+    reincidenceApplied: reincidence,
+    // Legacy compat
+    itssMin: aMin,
+    itssMax: aMax,
+    itssSanctions: sanctionsA,
+    judicialMin: cMin,
+    judicialMax: cMax,
+  };
 }
