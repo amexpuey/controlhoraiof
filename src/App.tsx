@@ -48,6 +48,7 @@ const router = createBrowserRouter([
   { path: "/plantillas/planificador-turnos", element: <ShiftPlannerPage /> },
   { path: "/plantillas/calendario-vacaciones", element: <VacationCalendarPage /> },
   { path: "/plantillas/:slug", element: <TemplateLandingPage /> },
+  { path: "/ranking-apps-fichaje", element: <RankingAppsFichaje /> },
   { path: "/login", element: <Login /> },
   { path: "/admin/companies", element: <ProtectedRoute><AdminCompanies /></ProtectedRoute> },
   { path: "/admin/users", element: <ProtectedRoute><AdminUsers /></ProtectedRoute> },
