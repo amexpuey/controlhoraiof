@@ -1,5 +1,5 @@
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import AdminAppEdit from "@/pages/AdminAppEdit";
 import Index from "@/pages/Index";
 import ComparisonPage from "@/pages/ComparisonPage";
@@ -31,11 +31,11 @@ import { Toaster } from "@/components/ui/toaster";
 const router = createBrowserRouter([
   { path: "/", element: <Index /> },
   { path: "/directorio", element: <DirectoryPage /> },
-  { path: "/dashboard", element: <DirectoryPage /> },
-  { path: "/mejores-apps-control-horario", element: <DirectoryPage /> },
+  { path: "/dashboard", element: <Navigate to="/directorio" replace /> },
+  { path: "/mejores-apps-control-horario", element: <Navigate to="/directorio" replace /> },
   { path: "/directorio/:slug", element: <SolutionPage /> },
   { path: "/comparar/:slugs", element: <VsComparisonPage /> },
-  { path: "/mejores-apps-control-horario/:slug", element: <UserView /> },
+  { path: "/mejores-apps-control-horario/:slug", lazy: () => import("@/pages/RedirectToDirectorio") },
   { path: "/mejores-apps-control-horario/comparar/:ids", element: <ComparisonPage /> },
   { path: "/blog", element: <Blog /> },
   { path: "/blog/:slug", element: <BlogPost /> },
