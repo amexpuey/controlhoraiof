@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { SEOHead } from '@/components/seo/SEOHead';
 import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav';
 import { useRankingApps, type RankedApp } from '@/hooks/useRankingApps';
-import { Star, Check, X, Crown, ExternalLink, MapPin, Shield, ArrowRight, MessageSquare, Loader2 } from 'lucide-react';
+import { Star, Check, X, Crown, ExternalLink, MapPin, Shield, ArrowRight, MessageSquare, Loader2, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Footer } from '@/components/Footer';
 
@@ -125,12 +125,7 @@ function RankingCard({ app }: { app: RankedApp }) {
           {d?.logo_url && d.logo_url !== '/placeholder.svg' ? (
             <img src={d.logo_url} alt={app.title} className="w-full h-full object-contain" loading="lazy" />
           ) : (
-            <span
-              className="text-sm font-bold"
-              style={{ color: isInwout ? 'var(--green)' : 'var(--text-muted)' }}
-            >
-              {app.title.charAt(0)}
-            </span>
+            <Clock className="h-5 w-5" style={{ color: isInwout ? 'var(--green)' : 'var(--text-muted)' }} />
           )}
         </div>
 
@@ -285,7 +280,7 @@ export default function RankingAppsFichaje() {
               Las 10 Mejores Apps de Fichaje Laboral en 2026
             </h1>
             <p className="text-base md:text-lg" style={{ color: 'rgba(255,255,255,.6)' }}>
-              Ranking actualizado · Basado en 96 apps analizadas en el directorio FichajeEmpresas.es
+              Ranking actualizado · Basado en 104 apps analizadas en el directorio FichajeEmpresas.es
             </p>
           </div>
         </div>
