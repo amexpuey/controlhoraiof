@@ -5,7 +5,6 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileMenu } from "./MobileMenu";
-import logoIcon from "@/assets/logofichajes-3.png";
 import logoText from "@/assets/fichajeempresas-text.png";
 
 export function AppHeader() {
