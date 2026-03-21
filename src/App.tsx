@@ -17,6 +17,7 @@ import DirectoryPage from "@/pages/DirectoryPage";
 import SolutionPage from "@/pages/SolutionPage";
 import VsComparisonPage from "@/pages/VsComparisonPage";
 import BlogCategoryPage from "@/pages/BlogCategoryPage";
+import RankingAppsFichaje from "@/pages/RankingAppsFichaje";
 import AdminCompanies from "@/pages/admin/Companies";
 import AdminUsers from "@/pages/admin/Users";
 import AdminLeads from "@/pages/admin/Leads";
