@@ -5984,6 +5984,75 @@ export type Database = {
         }
         Relationships: []
       }
+      onboarding_contacts: {
+        Row: {
+          created_at: string | null
+          day0_sent_at: string | null
+          day1_sent_at: string | null
+          day3_sent_at: string | null
+          day5_sent_at: string | null
+          email: string
+          empresa: string | null
+          estimate_items: Json | null
+          estimate_total: number | null
+          holded_estimate_id: string | null
+          id: string
+          nombre: string | null
+          pipedrive_deal_id: number | null
+          registration_date: string
+          registration_json_path: string | null
+          status: string | null
+          telefono: string | null
+          trabajadores: number | null
+          type: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          day0_sent_at?: string | null
+          day1_sent_at?: string | null
+          day3_sent_at?: string | null
+          day5_sent_at?: string | null
+          email: string
+          empresa?: string | null
+          estimate_items?: Json | null
+          estimate_total?: number | null
+          holded_estimate_id?: string | null
+          id?: string
+          nombre?: string | null
+          pipedrive_deal_id?: number | null
+          registration_date?: string
+          registration_json_path?: string | null
+          status?: string | null
+          telefono?: string | null
+          trabajadores?: number | null
+          type: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          day0_sent_at?: string | null
+          day1_sent_at?: string | null
+          day3_sent_at?: string | null
+          day5_sent_at?: string | null
+          email?: string
+          empresa?: string | null
+          estimate_items?: Json | null
+          estimate_total?: number | null
+          holded_estimate_id?: string | null
+          id?: string
+          nombre?: string | null
+          pipedrive_deal_id?: number | null
+          registration_date?: string
+          registration_json_path?: string | null
+          status?: string | null
+          telefono?: string | null
+          trabajadores?: number | null
+          type?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       outbound_emails: {
         Row: {
           bcc_emails: string[] | null
