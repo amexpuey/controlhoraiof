@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Check, ExternalLink, Crown, Sparkles } from 'lucide-react';
+import { Check, ExternalLink, Crown, Sparkles, Clock } from 'lucide-react';
 import type { Database } from '@/integrations/supabase/types';
 import inwoutLogo from '@/assets/inwout-logo.png';
 import { trackSolutionClick, trackExternalLinkClick } from '@/lib/analytics';
