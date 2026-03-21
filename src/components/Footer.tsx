@@ -5,7 +5,6 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import logoIcon from "@/assets/logofichajes-3.png";
 import logoText from "@/assets/fichajeempresas-text.png";
 
 export function Footer() {
