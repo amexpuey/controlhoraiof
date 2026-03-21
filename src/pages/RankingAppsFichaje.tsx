@@ -285,7 +285,7 @@ export default function RankingAppsFichaje() {
               Las 10 Mejores Apps de Fichaje Laboral en 2026
             </h1>
             <p className="text-base md:text-lg" style={{ color: 'rgba(255,255,255,.6)' }}>
-              Ranking actualizado · Basado en 96 apps analizadas en el directorio FichajeEmpresas.es
+              Ranking actualizado · Basado en 104 apps analizadas en el directorio FichajeEmpresas.es
             </p>
           </div>
         </div>
