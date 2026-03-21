@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { SEOHead } from '@/components/seo/SEOHead';
 import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav';
 import { useRankingApps, type RankedApp } from '@/hooks/useRankingApps';
-import { Star, Check, X, Crown, ExternalLink, MapPin, Shield, ArrowRight, MessageSquare, Loader2 } from 'lucide-react';
+import { Star, Check, X, Crown, ExternalLink, MapPin, Shield, ArrowRight, MessageSquare, Loader2, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Footer } from '@/components/Footer';
 
