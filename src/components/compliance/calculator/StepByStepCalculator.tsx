@@ -4,7 +4,7 @@ import { Building2, Users, CalendarDays, AlertTriangle, ShieldAlert, ArrowRight,
 import { cn } from "@/lib/utils";
 import { sanctionTypes } from "../complianceData";
 import { SanctionResults } from "./SanctionResults";
-import { EstimatedSanctions, ITSSSanction } from "./SanctionForm";
+import { EstimatedSanctions, ITSSSanction, computeAllScenarios } from "./SanctionForm";
 
 interface StepByStepCalculatorProps {
   onResultCalculated?: (result: EstimatedSanctions) => void;
@@ -54,8 +54,7 @@ function getLevelBadge(level: string) {
   );
 }
 
-const JUDICIAL_MIN_PER_WORKER = 6000;
-const JUDICIAL_MAX_PER_WORKER = 18000;
+// Judicial constants moved to SanctionForm.tsx (computeAllScenarios)
 
 // Section definitions
 const sections = [
@@ -153,40 +152,17 @@ export function StepByStepCalculator({ onResultCalculated }: StepByStepCalculato
   };
 
   const calculateAndShowResult = () => {
-    const selectedInfractions = infractionQuestions.filter((q) => infractionAnswers[q.id] === true);
-    const reincidenceMultiplier = reincidence ? 1.5 : 1;
+    const selectedInfractionIds = infractionQuestions
+      .filter((q) => infractionAnswers[q.id] === true)
+      .map((q) => q.id);
 
-    const itssSanctions: ITSSSanction[] = selectedInfractions.map((infraction) => {
-      const isMuyGrave = infraction.level === "muy grave";
-      const multiplier = isMuyGrave ? employees : workCenters;
-      return {
-        label: infraction.label,
-        level: infraction.level,
-        minPerCenter: infraction.baseAmount,
-        maxPerCenter: infraction.maxAmount,
-        totalMin: Math.round(infraction.baseAmount * multiplier * reincidenceMultiplier),
-        totalMax: Math.round(infraction.maxAmount * multiplier * reincidenceMultiplier),
-      };
-    });
-
-    const itssMin = itssSanctions.reduce((s, x) => s + x.totalMin, 0);
-    const itssMax = itssSanctions.reduce((s, x) => s + x.totalMax, 0);
-    const judicialMin = Math.round(employees * JUDICIAL_MIN_PER_WORKER);
-    const judicialMax = Math.round(employees * JUDICIAL_MAX_PER_WORKER);
-
-    const r: EstimatedSanctions = {
-      itssMin,
-      itssMax,
-      itssSanctions,
+    const r = computeAllScenarios({
       workCenters,
-      judicialMin,
-      judicialMax,
-      employeesAffected: employees,
+      employees,
       monthsWithoutRecord,
-      totalMin: itssMin + judicialMin,
-      totalMax: itssMax + judicialMax,
-      reincidenceApplied: !!reincidence,
-    };
+      infractions: selectedInfractionIds,
+      reincidence: !!reincidence,
+    });
 
     transition(() => {
       setResult(r);
