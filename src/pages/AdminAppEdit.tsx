@@ -51,32 +51,9 @@ export default function AdminAppEdit() {
 
   useEffect(() => {
     if (company) {
-      console.log('Loading app data:', company);
-      setFormData({
-        title: company.title || '',
-        url: company.url || '',
-        description: company.description || '',
-        features: company.features || [],
-        type: company.type || 'premium',
-        verified: Boolean(company.verified),
-        votes: Number(company.votes) || 0,
-        is_top_rated: Boolean(company.is_top_rated),
-        img_url: company.img_url || '',
-        logo_url: company.logo_url || '',
-        pricing_starting_price: Number(company.pricing_starting_price) || 0,
-        pricing_billing_period: company.pricing_billing_period || 'mensual',
-        pricing_currency: company.pricing_currency || 'EUR',
-        highlights: company.highlights || [],
-        pricing_description: company.pricing_description,
-        slug: company.slug || '',
-        rating: company.rating || 4.5,
-        free_trial: company.free_trial || 'yes',
-        free_plan: company.free_plan || 'yes',
-        use_case: company.use_case || 'Good for basic time tracking',
-        platforms: company.platforms || ['Web', 'iOS', 'Android'],
-        pricing_billed_annually: false,
-        pricing_per_user: false
-      });
+      // Load ALL fields from the company record
+      const { id, created_at, updated_at, ...rest } = company;
+      setFormData(rest);
     }
   }, [company]);
 
