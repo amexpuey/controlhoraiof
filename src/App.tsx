@@ -52,6 +52,7 @@ const router = createBrowserRouter([
   { path: "/ranking-apps-fichaje", element: <RankingAppsFichaje /> },
   { path: "/login", element: <Login /> },
   { path: "/admin/companies", element: <ProtectedRoute><AdminCompanies /></ProtectedRoute> },
+  { path: "/admin/companies/:id", element: <ProtectedRoute><AdminAppEdit /></ProtectedRoute> },
   { path: "/admin/users", element: <ProtectedRoute><AdminUsers /></ProtectedRoute> },
   { path: "/admin/leads", element: <ProtectedRoute><AdminLeads /></ProtectedRoute> },
   { path: "/admin/articles", element: <ProtectedRoute><AdminArticles /></ProtectedRoute> },

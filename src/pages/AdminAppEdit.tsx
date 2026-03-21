@@ -114,7 +114,7 @@ export default function AdminAppEdit() {
       
       console.log('Update successful:', result);
       toast.success('Changes saved successfully');
-      navigate('/panel/apps');
+      navigate('/admin/companies');
     } catch (error: any) {
       console.error('Error updating app:', error);
       toast.error(`Error saving changes: ${error.message}`);
