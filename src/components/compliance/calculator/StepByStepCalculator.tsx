@@ -4,7 +4,7 @@ import { Building2, Users, CalendarDays, AlertTriangle, ShieldAlert, ArrowRight,
 import { cn } from "@/lib/utils";
 import { sanctionTypes } from "../complianceData";
 import { SanctionResults } from "./SanctionResults";
-import { EstimatedSanctions, ITSSSanction } from "./SanctionForm";
+import { EstimatedSanctions, ITSSSanction, computeAllScenarios } from "./SanctionForm";
 
 interface StepByStepCalculatorProps {
   onResultCalculated?: (result: EstimatedSanctions) => void;
