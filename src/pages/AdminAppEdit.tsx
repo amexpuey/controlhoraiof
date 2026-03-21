@@ -151,7 +151,7 @@ export default function AdminAppEdit() {
                 La aplicación que intentas editar no existe o ha sido eliminada.
               </p>
               <button
-                onClick={() => navigate('/panel/apps')}
+                onClick={() => navigate('/admin/companies')}
                 className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
               >
                 Volver al panel
