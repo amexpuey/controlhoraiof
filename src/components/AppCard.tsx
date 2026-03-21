@@ -20,6 +20,7 @@ interface AppCardProps {
 
 export default function AppCard({ 
   app, 
+  onClick,
   highlightedFeatures = []
 }: AppCardProps) {
   const navigate = useNavigate();
@@ -29,8 +30,12 @@ export default function AppCard({
   const handleCardClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    trackSolutionClick(app.slug || '', app.title);
-    navigate(`/mejores-apps-control-horario/${app.slug}`);
+    if (onClick) {
+      onClick();
+    } else {
+      trackSolutionClick(app.slug || '', app.title);
+      navigate(`/directorio/${app.slug}`);
+    }
   };
 
   const displayDescription = app.use_case || "En revisión";
