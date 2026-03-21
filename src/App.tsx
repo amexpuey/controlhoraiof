@@ -1,5 +1,6 @@
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import AdminAppEdit from "@/pages/AdminAppEdit";
 import Index from "@/pages/Index";
 import ComparisonPage from "@/pages/ComparisonPage";
 import UserView from "@/pages/UserView";
