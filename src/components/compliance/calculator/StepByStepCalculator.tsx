@@ -1,5 +1,6 @@
 
 import { useState, useCallback } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Building2, Users, CalendarDays, AlertTriangle, ShieldAlert, ArrowRight, ArrowLeft, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { sanctionTypes } from "../complianceData";
