@@ -88,16 +88,18 @@ function EmailGateInline({ result, onComplete }: {
         plantilla_slug: "calculadora-sanciones",
         source: "calculadora",
         empresa: JSON.stringify({
-          itss_min: result.itssMin,
-          itss_max: result.itssMax,
-          judicial_min: result.judicialMin,
-          judicial_max: result.judicialMax,
+          scenario_a_min: result.scenarioA.min,
+          scenario_a_max: result.scenarioA.max,
+          scenario_b_min: result.scenarioB.min,
+          scenario_b_max: result.scenarioB.max,
+          scenario_c_min: result.scenarioC.min,
+          scenario_c_max: result.scenarioC.max,
           total_min: result.totalMin,
           total_max: result.totalMax,
           work_centers: result.workCenters,
           employees: result.employeesAffected,
           months: result.monthsWithoutRecord,
-          infractions: result.itssSanctions.map(s => s.label),
+          infractions: result.scenarioA.sanctions.map(s => s.label),
         }),
       } as any, { onConflict: "email,plantilla_slug" });
 
