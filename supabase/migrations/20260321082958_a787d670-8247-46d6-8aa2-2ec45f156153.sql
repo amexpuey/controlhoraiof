@@ -1,0 +1,1 @@
+DELETE FROM companies WHERE id = 'eeaf220e-21b9-4e59-90ee-a1a87fad73ce';
