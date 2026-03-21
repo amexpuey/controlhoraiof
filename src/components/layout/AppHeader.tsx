@@ -14,8 +14,7 @@ export function AppHeader() {
   return (
     <div className="h-16 border-b flex items-center justify-between px-4 md:px-6 shadow-md z-10 relative" style={{ background: "var(--dark)" }}>
       <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-        <img src={logoIcon} alt="FichajeEmpresas.es" className="h-8 w-8" />
-        <img src={logoText} alt="FichajeEmpresas.es" className="h-5 hidden sm:inline" />
+        <img src={logoText} alt="FichajeEmpresas.es" className="h-5" />
       </Link>
       
       {isMobile ? (
