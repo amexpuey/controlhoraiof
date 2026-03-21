@@ -1,5 +1,6 @@
 
 import { useState, useCallback } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Building2, Users, CalendarDays, AlertTriangle, ShieldAlert, ArrowRight, ArrowLeft, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { sanctionTypes } from "../complianceData";
@@ -78,6 +79,12 @@ export function StepByStepCalculator({ onResultCalculated }: StepByStepCalculato
   const [infractionAnswers, setInfractionAnswers] = useState<Record<string, boolean>>({});
   const [reincidence, setReincidence] = useState<boolean | null>(null);
   const [result, setResult] = useState<EstimatedSanctions | null>(null);
+
+  // Email gate state
+  const [emailUnlocked, setEmailUnlocked] = useState(false);
+  const [gateEmail, setGateEmail] = useState("");
+  const [gateLoading, setGateLoading] = useState(false);
+  const [gateError, setGateError] = useState("");
 
   // Total steps for progress: 3 numeric + 9 infractions + 1 reincidence + 1 result
   const totalDots = 3 + infractionQuestions.length + 1 + 1;
@@ -385,9 +392,142 @@ export function StepByStepCalculator({ onResultCalculated }: StepByStepCalculato
           </div>
         )}
 
-        {/* Step 6: Results */}
+        {/* Step 6: Results — gated behind email */}
         {currentStep === 5 && result && (
-          <SanctionResults estimatedSanctions={result} />
+          <div className="relative">
+            {/* Blurred results preview */}
+            {!emailUnlocked && (
+              <>
+                <div className="pointer-events-none select-none" style={{ filter: 'blur(8px)' }}>
+                  <SanctionResults estimatedSanctions={result} />
+                </div>
+                {/* Email gate overlay */}
+                <div className="absolute inset-0 flex items-start justify-center pt-12" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.95) 40%)' }}>
+                  <div
+                    className="rounded-2xl p-6 md:p-8 w-full max-w-md text-center"
+                    style={{
+                      background: 'white',
+                      boxShadow: '0 4px 24px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.06)',
+                      border: '1px solid var(--border)',
+                    }}
+                  >
+                    <div
+                      className="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center"
+                      style={{ background: '#0fb89f15', border: '2px solid #0fb89f30' }}
+                    >
+                      <CheckCircle className="h-7 w-7" style={{ color: '#0fb89f' }} />
+                    </div>
+                    <h3 className="text-xl font-bold mb-1" style={{ color: 'var(--text)' }}>
+                      Tu informe está listo
+                    </h3>
+                    <p className="text-sm mb-6" style={{ color: 'var(--text-secondary)' }}>
+                      Introduce tu email para ver los 3 escenarios de riesgo y recibir el informe completo.
+                    </p>
+                    <form
+                      onSubmit={async (e) => {
+                        e.preventDefault();
+                        if (!gateEmail.includes("@") || gateEmail.length < 5) {
+                          setGateError("Introduce un email válido");
+                          return;
+                        }
+                        setGateLoading(true);
+                        setGateError("");
+                        try {
+                          // Save lead
+                          await supabase.from("plantilla_leads").upsert({
+                            email: gateEmail.trim(),
+                            plantilla_slug: "calculadora-sanciones",
+                            source: "calculadora",
+                            empresa: JSON.stringify({
+                              scenario_a_min: result.scenarioA.min,
+                              scenario_a_max: result.scenarioA.max,
+                              scenario_b_min: result.scenarioB.min,
+                              scenario_b_max: result.scenarioB.max,
+                              scenario_c_min: result.scenarioC.min,
+                              scenario_c_max: result.scenarioC.max,
+                              total_min: result.totalMin,
+                              total_max: result.totalMax,
+                              work_centers: result.workCenters,
+                              employees: result.employeesAffected,
+                              months: result.monthsWithoutRecord,
+                              infractions: result.scenarioA.sanctions.map(s => s.label),
+                            }),
+                          } as any, { onConflict: "email,plantilla_slug" });
+
+                          // Send report email
+                          supabase.functions.invoke('notify-calculator-lead', {
+                            body: {
+                              email: gateEmail.trim(),
+                              scenario_a_min: result.scenarioA.min,
+                              scenario_a_max: result.scenarioA.max,
+                              scenario_b_min: result.scenarioB.min,
+                              scenario_b_max: result.scenarioB.max,
+                              scenario_c_min: result.scenarioC.min,
+                              scenario_c_max: result.scenarioC.max,
+                              total_min: result.totalMin,
+                              total_max: result.totalMax,
+                              work_centers: result.workCenters,
+                              employees: result.employeesAffected,
+                              months: result.monthsWithoutRecord,
+                              infractions: result.scenarioA.sanctions.map(s => s.label),
+                              itss_sanctions: result.scenarioA.sanctions.map(s => ({
+                                label: s.label,
+                                level: s.level,
+                                base_min: s.minPerCenter,
+                                base_max: s.maxPerCenter,
+                              })),
+                            },
+                          });
+
+                          setEmailUnlocked(true);
+                          onResultCalculated?.(result);
+                        } catch {
+                          setGateError("Error al enviar. Inténtalo de nuevo.");
+                        } finally {
+                          setGateLoading(false);
+                        }
+                      }}
+                      className="space-y-3"
+                    >
+                      <input
+                        type="email"
+                        required
+                        placeholder="tu@empresa.com"
+                        value={gateEmail}
+                        onChange={(e) => setGateEmail(e.target.value)}
+                        className="w-full px-4 py-3 rounded-xl border text-sm text-center"
+                        style={{ borderColor: gateError ? '#ef4444' : 'var(--border)', background: 'var(--surface, #f9fafb)' }}
+                      />
+                      {gateError && (
+                        <p className="text-xs" style={{ color: '#ef4444' }}>{gateError}</p>
+                      )}
+                      <button
+                        type="submit"
+                        disabled={gateLoading}
+                        className="w-full px-6 py-3 rounded-xl text-base font-semibold transition-all hover:scale-[1.02]"
+                        style={{
+                          background: '#0fb89f',
+                          color: 'white',
+                          boxShadow: '0 4px 14px rgba(15,184,159,0.3)',
+                          opacity: gateLoading ? 0.7 : 1,
+                        }}
+                      >
+                        {gateLoading ? "Enviando..." : "Ver mi resultado"}
+                      </button>
+                      <p className="text-xs" style={{ color: 'var(--text-muted, #9ca3af)' }}>
+                        Sin spam. Recibirás el informe completo por email.
+                      </p>
+                    </form>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {/* Unlocked results */}
+            {emailUnlocked && (
+              <SanctionResults estimatedSanctions={result} />
+            )}
+          </div>
         )}
       </div>
 
