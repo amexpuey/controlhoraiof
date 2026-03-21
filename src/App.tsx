@@ -1,5 +1,5 @@
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import AdminAppEdit from "@/pages/AdminAppEdit";
 import Index from "@/pages/Index";
 import ComparisonPage from "@/pages/ComparisonPage";
