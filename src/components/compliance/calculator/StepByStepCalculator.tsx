@@ -54,8 +54,7 @@ function getLevelBadge(level: string) {
   );
 }
 
-const JUDICIAL_MIN_PER_WORKER = 6000;
-const JUDICIAL_MAX_PER_WORKER = 18000;
+// Judicial constants moved to SanctionForm.tsx (computeAllScenarios)
 
 // Section definitions
 const sections = [
