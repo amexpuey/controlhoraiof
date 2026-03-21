@@ -6,6 +6,7 @@ import PricingFields from './form/PricingFields';
 import FeaturesFields from './form/FeaturesFields';
 import HighlightsFields from './form/HighlightsFields';
 import StatusFields from './form/StatusFields';
+import SEOFields from './form/SEOFields';
 
 type Company = Database['public']['Tables']['companies']['Row'];
 
@@ -31,11 +32,12 @@ export default function AppFormFields({
   setNewHighlight,
 }: AppFormFieldsProps) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <BasicInfoFields formData={formData} setFormData={setFormData} />
       
       <ImageFields 
         formData={formData}
+        setFormData={setFormData}
         setLogoFile={setLogoFile}
         setBackgroundFile={setBackgroundFile}
       />
@@ -57,6 +59,8 @@ export default function AppFormFields({
       />
       
       <StatusFields formData={formData} setFormData={setFormData} />
+
+      <SEOFields formData={formData} setFormData={setFormData} />
     </div>
   );
 }

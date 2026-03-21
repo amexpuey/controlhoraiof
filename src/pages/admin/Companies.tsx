@@ -27,7 +27,7 @@ export default function AdminCompanies() {
   });
 
   const handleAppClick = (app: any) => {
-    navigate(`/admin/user-view/${app.id}`);
+    navigate(`/admin/companies/${app.id}`);
   };
 
   const filteredCompanies = useMemo(() => {
