@@ -5,7 +5,6 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import logoIcon from "@/assets/logofichajes-3.png";
 import logoText from "@/assets/fichajeempresas-text.png";
 
 export function Footer() {
@@ -46,7 +45,6 @@ export function Footer() {
           {/* Brand */}
           <div className="flex flex-col items-center md:items-start space-y-4">
             <div className="flex items-center gap-3">
-              <img src={logoIcon} alt="FichajeEmpresas.es" className="w-12 h-12" />
               <img src={logoText} alt="FichajeEmpresas.es" className="h-6" />
             </div>
             <p className="text-sm max-w-md" style={{ color: "var(--dark-muted)" }}>
