@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useLayoutEffect, useMemo, useState } from "react";
 import { Plus, Trash2, Copy, FileDown, FileSpreadsheet, AlertTriangle, X } from "lucide-react";
 import { useIframeHeight } from "@/hooks/useIframeHeight";
 import { DAYS, DayInput, computeWeek, fmtDec, fmtEur, fmtHM } from "@/components/tools/hours-calculator/hoursLogic";
@@ -20,7 +20,7 @@ export default function CalculadoraHorasPage() {
   const [price, setPrice] = useState("");
   const [yearSnap, setYearSnap] = useState<YearPdf | null>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const els = ["footer", "header", "nav"].map((s) => document.querySelector(s) as HTMLElement | null);
     els.forEach((e) => e && (e.style.display = "none"));
     document.title = "Calculadora de horas trabajadas | Límites del Estatuto de los Trabajadores";
