@@ -1,42 +1,24 @@
+# Proyección anual en la calculadora de horas
 
+## Objetivo
+Añadir una segunda pestaña, **Proyección anual**, dentro de `/calculadora-horas`, reutilizando exactamente la semana configurada en **Semana** y sin alterar su comportamiento actual.
 
-## Millores del calendari de vacances
+## Implementación
+- Crear un fichero independiente con los festivos oficiales de 2026 incluidos en el documento, organizado por año y comunidad para poder añadir 2027 sin cambiar los cálculos.
+- Añadir las pestañas **Semana** y **Proyección anual**, conservando los datos introducidos al cambiar entre ellas.
+- Incorporar los campos anuales: comunidad, isla de Canarias, Val d'Aran, dos festivos locales, festivos activables, vacaciones, permisos y jornada anual del convenio.
+- Calcular el año día a día según las horas de cada día de la semana, descontando únicamente festivos laborables, vacaciones y permisos.
+- Mostrar horas anuales en ambos formatos, recuentos de días, comparación con el convenio, promedio semanal legal y desglose mensual.
+- Añadir el calendario anual plegable, la fuente oficial del BOE y el aviso orientativo.
+- Exportar un PDF anual con calendario y resumen, y un CSV con una fila por fecha, sin enviar datos fuera del navegador.
+- Mostrar la llamada a la acción específica de la proyección anual.
 
-Després de revisar l'eina, he identificat aquestes millores clau:
+## Comprobaciones
+- Validar el estado vacío y la conversión de vacaciones naturales a laborables.
+- Comprobar festivos autonómicos, festivo insular canario, excepción de Val d'Aran y festivos locales.
+- Verificar totales anuales, meses, comparación con convenio, aviso de más de 40 horas y ambos archivos exportables.
+- Revisar la herramienta completa en móvil y escritorio, sin cambios en la pestaña Semana ni en otras páginas.
 
-### 1. Responsivitat mòbil
-- El layout actual és `grid 280px + 1fr`, no funciona en mòbil
-- Canviar a layout vertical en pantalles petites (sidebar a dalt, calendari a sota)
-- Fer el panel d'empleats col·lapsable en mòbil
-
-### 2. Selecció per rang de dies (drag o shift+click)
-- Ara cal fer clic dia a dia, poc pràctic per posar 2 setmanes de vacances
-- Afegir shift+click: primer clic = inici, shift+clic = final, omple tot el rang (saltant caps de setmana i festius)
-
-### 3. Selector d'any
-- Ara està fixat a 2026 sense opció de canvi
-- Afegir botons +/- per navegar anys i actualitzar festius
-
-### 4. Millores visuals de la graella anual
-- Les cel·les són massa petites (18px) i difícils de clicar
-- Augmentar mida mínima a 22-24px
-- Afegir hover effect per indicar que són clicables
-- Afegir zebra striping per files d'empleats
-
-### 5. Llegenda de festius
-- Afegir una secció plegable que mostri la llista de festius configurats
-- Opció d'afegir/treure festius personalitzats (locals)
-
-### 6. Exportar a PDF/Excel
-- El botó "Imprimir" fa `window.print()` genèric
-- Afegir CSS `@media print` dedicat per millorar el resultat imprès
-- Ocultar controls i sidebar en mode impressió
-
-### Ordre d'implementació
-1. Responsivitat mòbil (layout + col·lapsable)
-2. Shift+click per rang de dies
-3. Selector d'any
-4. Millores visuals graella (mida cel·les, hover, zebra)
-5. Gestió de festius personalitzats
-6. CSS d'impressió
-
+## Detalles técnicos
+- Separar datos, cálculo anual y presentación para que próximos años puedan añadirse sin reescribir la herramienta.
+- Mantener todo el cálculo local en el navegador y reutilizar la lógica semanal actual como fuente de horas por día.
