@@ -148,7 +148,9 @@ export function generateHoursPdf(week: WeekPdf, year: YearPdf | null) {
       return [mn, String(withSched), String(holWork), dec(r.months[mi].minutes)];
     });
     const offMin = gross - r.total;
-    autoTable(doc, { ...table, startY: y, styles: { ...table.styles, fontSize: 7, cellPadding: 0.7 },
+    doc.addPage(); yearPages.add(doc.getNumberOfPages());
+    y = h2(doc, TOP + 2, `Tu año ${year.year}: desglose por meses`);
+    autoTable(doc, { ...table, startY: y, pageBreak: "avoid", rowPageBreak: "avoid", showFoot: "lastPage", styles: { ...table.styles, fontSize: 8.5, cellPadding: 1.5 },
       head: [["Mes", "Días con horario", "Festivos en día laborable", "Horas (antes de vacaciones y permisos)"]],
       body: monthRows.map((x) => x.slice(0, 4) as string[]),
       foot: [["Total", String(monthRows.reduce((a, x) => a + Number(x[1]), 0)), String(r.holidaysOnWork), dec(gross)],
@@ -156,10 +158,10 @@ export function generateHoursPdf(week: WeekPdf, year: YearPdf | null) {
       footStyles: { fillColor: [240, 253, 250], textColor: G, fontStyle: "bold" },
       didDrawPage: () => { yearPages.add(doc.getNumberOfPages()); },
     });
-    y = (doc as any).lastAutoTable.finalY + 2;
-    const hl = [...year.hols].sort((a, b) => a.date.localeCompare(b.date)).map((h) => `${fd(h.date).slice(0, 5)}  ${h.name}${h.kind === "local" ? " (local)" : ""}`);
+    y = (doc as any).lastAutoTable.finalY + 6;
+    const hl = [...year.hols].sort((a, b) => a.date.localeCompare(b.date)).map((h) => `${fd(h.date).slice(0, 5)}  ${h.name}${h.kind === "local" && h.name !== "Festivo local" ? " (local)" : ""}`);
     const third = Math.ceil(hl.length / 3);
-    autoTable(doc, { ...table, theme: "plain", startY: y, styles: { fontSize: 5.8, cellPadding: 0.15, textColor: T, overflow: "ellipsize" },
+    autoTable(doc, { ...table, theme: "plain", startY: y, styles: { fontSize: 7.5, cellPadding: 0.5, textColor: T },
       head: [[{ content: "Festivos aplicados", colSpan: 3 }]], headStyles: { fontStyle: "bold", fontSize: 7, textColor: T },
       body: Array.from({ length: third }, (_, i) => [hl[i] || "", hl[i + third] || "", hl[i + 2 * third] || ""]),
       didDrawPage: () => { yearPages.add(doc.getNumberOfPages()); },

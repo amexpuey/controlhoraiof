@@ -62,7 +62,7 @@ export const computeYear = (year: number, dayMinutes: number[], active: Set<stri
   for (let d = new Date(year, 0, 1); d.getFullYear() === year; d.setDate(d.getDate() + 1)) {
     const key = iso(d), w = wd(d), m = dayMinutes[w] || 0, isHol = active.has(key);
     if (m > 0) workdays++;
-    if (isHol) months[d.getMonth()].holidays++;
+    if (isHol && m > 0) months[d.getMonth()].holidays++;
     let minutes = m, type: DayRow["type"] = m > 0 ? "laborable" : "sin horario";
     if (isHol) { type = "festivo"; if (m > 0) holidaysOnWork++; minutes = 0; }
     months[d.getMonth()].minutes += minutes;

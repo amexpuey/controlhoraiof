@@ -9,7 +9,7 @@ const CTA = "https://app.inwout.com/register/?utm_source=calculadora-horas&utm_m
 const BOE = "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-21667";
 const fmtDate = (d: string) => `${d.slice(8, 10)}/${d.slice(5, 7)}`;
 
-export function AnnualTab({ dayMinutes, onPdf, onChange }: { dayMinutes: number[]; onPdf: () => void; onChange: (s: YearPdf | null) => void }) {
+export function AnnualTab({ dayMinutes, onPdf, onChange, blocked = false }: { dayMinutes: number[]; blocked?: boolean; onPdf: () => void; onChange: (s: YearPdf | null) => void }) {
   const [year, setYear] = useState(YEARS[0]);
   const [region, setRegion] = useState("madrid");
   const [island, setIsland] = useState("");
@@ -26,6 +26,8 @@ export function AnnualTab({ dayMinutes, onPdf, onChange }: { dayMinutes: number[
   const hols = useMemo(() => buildHolidays(year, region, island, aran, locals), [year, region, island, aran, locals]);
   const baseDates = useMemo(() => new Set(buildHolidays(year, region, island, aran, []).filter((h) => !off.has(h.date)).map((h) => h.date)), [year, region, island, aran, off]);
   const dup = locals.map((d) => !!d && baseDates.has(d));
+  const WDN = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
+  const noHours = locals.map((d, i) => { if (!d || dup[i] || !d.startsWith(String(year))) return null; const w = (new Date(d + "T12:00").getDay() + 6) % 7; return dayMinutes[w] > 0 ? null : (w === 6 ? "Cae en domingo" : `Cae en ${WDN[w]}, un día sin horario`); });
   const active = useMemo(() => new Set(hols.filter((h) => !off.has(h.date)).map((h) => h.date)), [hols, off]);
   const wdpw = dayMinutes.filter((m) => m > 0).length;
   const vacLab = vacType === "nat" ? naturalToLab(vac, wdpw) : vac;
@@ -111,10 +113,12 @@ export function AnnualTab({ dayMinutes, onPdf, onChange }: { dayMinutes: number[
           <label className="hc-param">Festivo local 1
             <input type="date" className="hc-in" min={`${year}-01-01`} max={`${year}-12-31`} value={locals[0]} onChange={(e) => setLocals([e.target.value, locals[1]])} />
             {dup[0] && <span className="ya-dup">Este día ya es festivo en tu comunidad. Elige el otro festivo local de tu municipio.</span>}
+            {noHours[0] && <span className="ya-dup">{noHours[0]}: no descuenta horas. Comprueba la fecha en el calendario de tu municipio.</span>}
           </label>
           <label className="hc-param">Festivo local 2
             <input type="date" className="hc-in" min={`${year}-01-01`} max={`${year}-12-31`} value={locals[1]} onChange={(e) => setLocals([locals[0], e.target.value])} />
             {dup[1] && <span className="ya-dup">Este día ya es festivo en tu comunidad. Elige el otro festivo local de tu municipio.</span>}
+            {noHours[1] && <span className="ya-dup">{noHours[1]}: no descuenta horas. Comprueba la fecha en el calendario de tu municipio.</span>}
           </label>
           <p className="ya-help ya-full">Los fija cada ayuntamiento y se publican en el boletín oficial de tu provincia o comunidad.</p>
 
@@ -178,7 +182,7 @@ export function AnnualTab({ dayMinutes, onPdf, onChange }: { dayMinutes: number[
               <details className="ya-hols">
                 <summary>Desglose por meses · Antes de descontar vacaciones y permisos</summary>
                 <table className="ya-tbl">
-                  <thead><tr><th>Mes</th><th>Horas</th><th>Festivos</th></tr></thead>
+                  <thead><tr><th>Mes</th><th>Horas</th><th>Festivos en día laborable</th></tr></thead>
                   <tbody>{r.months.map((m, i) => <tr key={i}><td>{MONTHS[i]}</td><td>{fmtDecBig(m.minutes)}</td><td>{m.holidays}</td></tr>)}</tbody>
                 </table>
               </details>
@@ -193,8 +197,9 @@ export function AnnualTab({ dayMinutes, onPdf, onChange }: { dayMinutes: number[
           <p className="hc-small hc-muted">Festivos {year}: <a href={BOE} target="_top" rel="noopener">Resolución de la Dirección General de Trabajo de 17 de octubre de 2025 (BOE de 28/10/2025)</a></p>
           <div className="hc-bar hc-between">
             <div className="hc-bar">
-              <button type="button" className="hc-btn" disabled={empty || needIsland} onClick={onPdf}><FileDown size={14} /> Descargar PDF</button>
-              <button type="button" className="hc-btn-o" disabled={empty || needIsland} onClick={downloadYearCsv}><FileSpreadsheet size={14} /> Descargar CSV</button>
+              <button type="button" className="hc-btn" disabled={empty || needIsland || blocked} onClick={onPdf}><FileDown size={14} /> Descargar PDF</button>
+              <button type="button" className="hc-btn-o" disabled={empty || needIsland || blocked} onClick={downloadYearCsv}><FileSpreadsheet size={14} /> Descargar CSV</button>
+              {blocked && <span className="hc-small ya-dup">Corrige los tramos que se solapan para descargar.</span>}
             </div>
             <span className="hc-small hc-muted">Los datos no salen de tu navegador.</span>
           </div>
