@@ -49,7 +49,7 @@ export const iso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).p
 /** Monday = 0 ... Sunday = 6 */
 export const wd = (d: Date) => (d.getDay() + 6) % 7;
 
-export interface DayRow { date: string; weekday: number; type: "laborable" | "festivo" | "fin de semana"; minutes: number }
+export interface DayRow { date: string; weekday: number; type: "laborable" | "festivo" | "sin horario"; minutes: number }
 export interface YearResult {
   rows: DayRow[]; workdays: number; holidaysOnWork: number; vacDays: number; permDays: number;
   total: number; weeklyAvg: number; months: { minutes: number; holidays: number }[]; avgDay: number;
@@ -63,7 +63,7 @@ export const computeYear = (year: number, dayMinutes: number[], active: Set<stri
     const key = iso(d), w = wd(d), m = dayMinutes[w] || 0, isHol = active.has(key);
     if (m > 0) workdays++;
     if (isHol) months[d.getMonth()].holidays++;
-    let minutes = m, type: DayRow["type"] = m > 0 ? "laborable" : "fin de semana";
+    let minutes = m, type: DayRow["type"] = m > 0 ? "laborable" : "sin horario";
     if (isHol) { type = "festivo"; if (m > 0) holidaysOnWork++; minutes = 0; }
     months[d.getMonth()].minutes += minutes;
     sum += minutes;
