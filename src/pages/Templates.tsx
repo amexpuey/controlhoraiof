@@ -34,7 +34,7 @@ export default function Templates() {
 
   useEffect(() => {
     const fetchPublished = async () => {
-      const { data } = await supabase
+      const { data } = await (supabase as any)
         .from("site_templates")
         .select("slug, title, description, category, preview_image_url, pdf_url, cta_text, status")
         .eq("status", "published");

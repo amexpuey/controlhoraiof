@@ -27,13 +27,13 @@ export default function TemplateLandingPage() {
   // Fetch PDF url from Supabase
   useEffect(() => {
     if (!slug) return;
-    supabase
+    (supabase as any)
       .from("site_templates")
       .select("pdf_url")
       .eq("slug", slug)
       .eq("status", "published")
       .maybeSingle()
-      .then(({ data }) => {
+      .then(({ data }: any) => {
         if (data?.pdf_url) setPdfUrl(data.pdf_url);
       });
   }, [slug]);
