@@ -52,13 +52,8 @@ export default function CalculadoraHorasPage() {
 
   const printSection = (section: "week" | "year") => {
     document.body.dataset.hcPrint = section;
-    const clearPrintTarget = () => {
-      delete document.body.dataset.hcPrint;
-      window.removeEventListener("afterprint", clearPrintTarget);
-    };
-    window.addEventListener("afterprint", clearPrintTarget);
     window.print();
-    window.setTimeout(clearPrintTarget, 1000);
+    delete document.body.dataset.hcPrint;
   };
 
   return (
