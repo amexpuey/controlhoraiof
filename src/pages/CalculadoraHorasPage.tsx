@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { Plus, Trash2, Copy, FileDown, FileSpreadsheet, AlertTriangle, X } from "lucide-react";
 import { useIframeHeight } from "@/hooks/useIframeHeight";
-import { DAYS, DayInput, computeWeek, fmtDec, fmtEur, fmtHM, segRange } from "@/components/tools/hours-calculator/hoursLogic";
+import { DAYS, DayInput, computeWeek, fmtDec, fmtEur, fmtHM } from "@/components/tools/hours-calculator/hoursLogic";
 import { AnnualTab } from "@/components/tools/hours-calculator/AnnualTab";
+import { YearPdf, generateHoursPdf, downloadCsv, hhmm, num } from "@/components/tools/hours-calculator/pdfExport";
 
 const empty = (): DayInput[] => DAYS.map(() => ({ segments: [{ start: "", end: "" }], pause: 0 }));
 
@@ -17,6 +18,7 @@ export default function CalculadoraHorasPage() {
   const [days, setDays] = useState<DayInput[]>(empty);
   const [agreed, setAgreed] = useState(40);
   const [price, setPrice] = useState("");
+  const [yearSnap, setYearSnap] = useState<YearPdf | null>(null);
 
   useEffect(() => {
     const els = ["footer", "header", "nav"].map((s) => document.querySelector(s) as HTMLElement | null);
@@ -36,25 +38,19 @@ export default function CalculadoraHorasPage() {
 
   const copyMonday = () => setDays((p) => p.map((d, i) => (i > 0 && i < 5 ? structuredClone(p[0]) : d)));
 
-  const downloadCsv = () => {
-    const rows = [["Día", "Entrada 1", "Salida 1", "Entrada 2", "Salida 2", "Pausa (min)", "Total (h min)", "Total (h)"]];
+  const downloadWeekCsv = () => {
+    const rows: (string | number)[][] = [["Día", "Entrada 1", "Salida 1", "Entrada 2", "Salida 2", "Pausa (min)", "Total (hh:mm)", "Total (horas)", "Nocturnas (horas)"]];
     days.forEach((d, i) => {
       const s = d.segments;
-      rows.push([DAYS[i], s[0]?.start || "", s[0]?.end || "", s[1]?.start || "", s[1]?.end || "", String(d.pause || 0), fmtHM(r.days[i].worked), fmtDec(r.days[i].worked)]);
+      rows.push([DAYS[i], s[0]?.start || "", s[0]?.end || "", s[1]?.start || "", s[1]?.end || "", d.pause || 0, hhmm(r.days[i].worked), num(r.days[i].worked), num(r.days[i].night)]);
     });
-    rows.push(["Total semana", "", "", "", "", "", fmtHM(r.total), fmtDec(r.total)]);
-    const csv = "\uFEFF" + rows.map((row) => row.map((c) => `"${c}"`).join(";")).join("\n");
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
-    a.download = "horas-trabajadas.csv";
-    a.click();
+    rows.push(["Total semana", "", "", "", "", "", hhmm(r.total), num(r.total), num(r.night)]);
+    downloadCsv("horas-semana.csv", rows);
   };
 
-  const printSection = (section: "week" | "year") => {
-    document.body.dataset.hcPrint = section;
-    window.print();
-    delete document.body.dataset.hcPrint;
-  };
+  const weekEmpty = r.total === 0;
+  const makePdf = () => generateHoursPdf(
+    { days, res: r, agreed, price: !isNaN(priceNum) && priceNum > 0 ? priceNum : null }, yearSnap);
 
   return (
     <div className="hc-root">
