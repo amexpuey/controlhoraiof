@@ -107,7 +107,7 @@ export function generateHoursPdf(week: WeekPdf, year: YearPdf | null) {
     y = para(doc, y + 1, `${r.workdays} días laborables · ${r.holidaysOnWork} festivos en día laborable · ${nf(r.vacDays, r.vacDays % 1 ? 2 : 0)} días de vacaciones · ${nf(r.permDays, 0)} días de permisos`, 8.5);
 
     // Calendar 4x3
-    const cw = (CW - 9) / 4, cell = cw / 7, ch = cell * 0.78;
+    const cw = (CW - 9) / 4, cell = cw / 7, ch = cell * 0.52;
     const byDate = new Map(r.rows.map((x) => [x.date, x]));
     for (let mi = 0; mi < 12; mi++) {
       const cx = M + (mi % 4) * (cw + 3), cy = y + Math.floor(mi / 4) * (ch * 8 + 3);
@@ -138,11 +138,11 @@ export function generateHoursPdf(week: WeekPdf, year: YearPdf | null) {
     const monthRows = MONTHS.map((mn, mi) => {
       const rows = r.rows.filter((x) => Number(x.date.slice(5, 7)) === mi + 1);
       const withSched = rows.filter((x) => x.type === "laborable").length;
-      const holWork = rows.filter((x) => x.type === "festivo" && byDate.get(x.date) && x.minutes === 0).length;
-      return [mn, String(withSched), String(r.months[mi].holidays), dec(r.months[mi].minutes), holWork];
+      const holWork = rows.filter((x) => x.type === "festivo" && week.res.days[x.weekday].worked > 0).length;
+      return [mn, String(withSched), String(holWork), dec(r.months[mi].minutes)];
     });
     const offMin = gross - r.total;
-    autoTable(doc, { ...table, startY: y, styles: { ...table.styles, fontSize: 7.5, cellPadding: 1 },
+    autoTable(doc, { ...table, startY: y, styles: { ...table.styles, fontSize: 7, cellPadding: 0.7 },
       head: [["Mes", "Días con horario", "Festivos en día laborable", "Horas (antes de vacaciones y permisos)"]],
       body: monthRows.map((x) => x.slice(0, 4) as string[]),
       foot: [["Total", String(monthRows.reduce((a, x) => a + Number(x[1]), 0)), String(r.holidaysOnWork), dec(gross)],
