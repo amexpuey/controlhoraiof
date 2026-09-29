@@ -25,7 +25,7 @@ const boxes = (doc: jsPDF, y: number, items: [string, string, string][]) => {
   const bw = (CW - 8) / 3;
   items.forEach(([label, big, small], i) => {
     const x = M + i * (bw + 4);
-    doc.setDrawColor(...(i === 0 ? G : L)); doc.setFillColor(...(i === 0 ? [240, 253, 250] as const : [255, 255, 255] as const));
+    doc.setDrawColor(...(i === 0 ? G : L)); if (i === 0) doc.setFillColor(240, 253, 250); else doc.setFillColor(255, 255, 255);
     doc.roundedRect(x, y, bw, 22, 2, 2, "FD");
     doc.setFontSize(8); doc.setTextColor(71, 85, 105); doc.setFont("helvetica", "normal"); doc.text(label, x + 3, y + 5);
     doc.setFontSize(13); doc.setFont("helvetica", "bold"); doc.setTextColor(...(i === 0 ? G : T)); doc.text(big, x + 3, y + 12.5);
@@ -38,9 +38,9 @@ const boxes = (doc: jsPDF, y: number, items: [string, string, string][]) => {
 const warnBox = (doc: jsPDF, y: number, text: string, amber = true) => {
   const lines = doc.splitTextToSize(text, CW - 8);
   const h = lines.length * 4 + 4;
-  doc.setDrawColor(...(amber ? [252, 211, 77] as const : L)); doc.setFillColor(...(amber ? [255, 251, 235] as const : [248, 250, 252] as const));
+  if (amber) { doc.setDrawColor(252, 211, 77); doc.setFillColor(255, 251, 235); } else { doc.setDrawColor(...L); doc.setFillColor(248, 250, 252); }
   doc.roundedRect(M, y, CW, h, 1.5, 1.5, "FD");
-  doc.setFontSize(8.5); doc.setTextColor(...(amber ? [146, 64, 14] as const : T)); doc.text(lines, M + 4, y + 5);
+  doc.setFontSize(8.5); if (amber) doc.setTextColor(146, 64, 14); else doc.setTextColor(...T); doc.text(lines, M + 4, y + 5);
   return y + h + 2;
 };
 
@@ -123,7 +123,7 @@ export function generateHoursPdf(week: WeekPdf, year: YearPdf | null) {
         const fill: [number, number, number] = t === "festivo" ? [252, 211, 77] : t === "laborable" ? [209, 250, 229] : [241, 245, 249];
         doc.setFillColor(...fill); doc.rect(x + 0.2, yy, cell - 0.4, ch - 0.3, "F");
         doc.setFont("helvetica", t === "festivo" ? "bold" : "normal");
-        doc.setTextColor(...(t === "festivo" ? [120, 53, 15] as const : t === "laborable" ? T : [148, 163, 184] as const));
+        const tc: [number, number, number] = t === "festivo" ? [120, 53, 15] : t === "laborable" ? T : [148, 163, 184]; doc.setTextColor(...tc);
         doc.text(String(dd), x + cell / 2, yy + ch * 0.72, { align: "center" });
       }
     }
@@ -148,7 +148,7 @@ export function generateHoursPdf(week: WeekPdf, year: YearPdf | null) {
       foot: [["Total", String(monthRows.reduce((a, x) => a + Number(x[1]), 0)), String(r.holidaysOnWork), dec(gross)],
         [{ content: `- vacaciones y permisos (${dec(offMin)}) = horas anuales previstas`, colSpan: 3 }, dec(r.total)]],
       footStyles: { fillColor: [240, 253, 250], textColor: G, fontStyle: "bold" },
-      didAddPage: () => yearPages.add(doc.getNumberOfPages()),
+      didDrawPage: () => yearPages.add(doc.getNumberOfPages()),
     });
     y = (doc as any).lastAutoTable.finalY + 5;
     const hl = year.hols.map((h) => `${fd(h.date)}  ${h.name}`);
@@ -156,7 +156,7 @@ export function generateHoursPdf(week: WeekPdf, year: YearPdf | null) {
     autoTable(doc, { ...table, theme: "plain", startY: y, styles: { fontSize: 7, cellPadding: 0.6, textColor: T },
       head: [[{ content: "Festivos aplicados", colSpan: 2 }]], headStyles: { fontStyle: "bold", fontSize: 8, textColor: T },
       body: Array.from({ length: half }, (_, i) => [hl[i] || "", hl[i + half] || ""]),
-      didAddPage: () => yearPages.add(doc.getNumberOfPages()),
+      didDrawPage: () => yearPages.add(doc.getNumberOfPages()),
     });
   }
 

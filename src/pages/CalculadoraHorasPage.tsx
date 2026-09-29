@@ -28,6 +28,7 @@ export default function CalculadoraHorasPage() {
   }, []);
 
   const r = useMemo(() => computeWeek(days, agreed), [days, agreed]);
+  const dayMinutes = useMemo(() => r.days.map((d) => d.worked), [r]);
   const priceNum = parseFloat(price.replace(",", "."));
 
   const update = (i: number, fn: (d: DayInput) => DayInput) =>
