@@ -124,7 +124,7 @@ export default function CalculadoraHorasPage() {
             <div className="hc-stat"><span>Horas nocturnas (22–06)</span><strong>{fmtHM(r.night)}</strong><em>El plus de nocturnidad lo fija el convenio</em></div>
           </div>
           <p className="hc-note">Ojo: 7,30 h no son 7 h 30 min.</p>
-          <p className="hc-small">Si todas las semanas fueran como esta, harías <strong>{fmtDec(r.annualExtra).replace(" h", "")} horas extra</strong> al año. El límite legal es de 80 horas extra al año (art. 35.2 ET); no cuentan las compensadas con descanso en los 4 meses siguientes.</p>
+          <p className="hc-small">{yearSnap ? (yearSnap.conv ? <>Con tu proyección anual, harías <strong>{fmtDec(Math.max(0, yearSnap.r.total - yearSnap.conv * 60)).replace(" h", "")} horas</strong> por encima de la jornada anual del convenio. </> : null) : <>Si todas las semanas fueran como esta, harías <strong>{fmtDec(r.annualExtra).replace(" h", "")} horas extra</strong> al año. </>}El límite legal es de 80 horas extra al año (art. 35.2 ET); no cuentan las compensadas con descanso en los 4 meses siguientes.</p>
 
           {r.warnings.length > 0 && (
             <ul className="hc-warns">
