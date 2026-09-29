@@ -197,7 +197,6 @@ const CSS = `
 .hc-warns svg{flex-shrink:0;margin-top:1px}
 .hc-cta{margin-top:12px;border:1px solid var(--b);border-radius:12px;padding:12px 14px;display:flex;gap:12px;align-items:center;justify-content:space-between;background:#f8fafc}
 .hc-cta p{margin:0;font-size:13px}
-.hc-print{display:none}
 @media (max-width:640px){
  .hc-days{border:0;display:flex;flex-direction:column;gap:8px}
  .hc-day{grid-template-columns:1fr 1fr;border:1px solid var(--b)!important;border-radius:12px}
@@ -206,18 +205,5 @@ const CSS = `
  .hc-pause{order:4}
  .hc-stats{grid-template-columns:1fr}
  .hc-cta{flex-direction:column;align-items:flex-start}
-}
-@media print{
- body *{visibility:hidden}
- .hc-print,.hc-print *{visibility:visible}
- .hc-print{display:block;position:absolute;inset:0 auto auto 0;width:100%;color:#000;font-family:system-ui,sans-serif}
- .hc-screen{display:none}
- .hc-print h1{font-family:Montserrat,sans-serif;font-size:20px}
- .hc-print table{width:100%;border-collapse:collapse;font-size:12px}
- .hc-print th,.hc-print td{border:1px solid #ccc;padding:6px;text-align:left}
- .hc-print tfoot td{font-weight:700}
- .hc-print p{font-size:11px;margin-top:16px}
-  body[data-hc-print="week"] .hc-print-year{display:none!important}
-  body[data-hc-print="year"] .hc-print-week{display:none!important}
 }
 `;
