@@ -225,5 +225,4 @@ const CSS = `
 .ya-fest{background:#fcd34d;color:#78350f;font-weight:700}
 .hc-btn:disabled,.hc-btn-o:disabled{opacity:.5;cursor:not-allowed}
 @media (max-width:640px){.ya-form{grid-template-columns:1fr 1fr}.ya-hlist{grid-template-columns:1fr}.ya-cal{grid-template-columns:repeat(2,1fr)}}
-@media print{.ya-cal-p{grid-template-columns:repeat(4,1fr)!important;gap:6px}.ya-cal-p .ya-fest{border:1px solid #000}}
 `;

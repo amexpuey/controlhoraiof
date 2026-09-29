@@ -134,8 +134,9 @@ export default function CalculadoraHorasPage() {
 
           <div className="hc-bar hc-between">
             <div className="hc-bar">
-              <button type="button" className="hc-btn" onClick={() => printSection("week")}><FileDown size={14} /> Descargar PDF</button>
-              <button type="button" className="hc-btn-o" onClick={downloadCsv}><FileSpreadsheet size={14} /> Descargar CSV</button>
+              <button type="button" className="hc-btn" disabled={weekEmpty} onClick={makePdf}><FileDown size={14} /> Descargar PDF</button>
+              <button type="button" className="hc-btn-o" disabled={weekEmpty} onClick={downloadWeekCsv}><FileSpreadsheet size={14} /> Descargar CSV</button>
+              {weekEmpty && <span className="hc-small hc-muted">Rellena tu semana para descargar</span>}
             </div>
             <span className="hc-small hc-muted">Los datos no salen de tu navegador.</span>
           </div>
@@ -143,26 +144,7 @@ export default function CalculadoraHorasPage() {
 
       </section>
 
-      <div className="hc-print hc-print-week">
-        <h1>Resumen de horas trabajadas</h1>
-        <table>
-          <thead><tr><th>Día</th><th>Entrada</th><th>Salida</th><th>Pausa</th><th>Total</th></tr></thead>
-          <tbody>
-            {days.map((d, i) => (
-              <tr key={i}>
-                <td>{DAYS[i]}</td>
-                <td>{d.segments.filter((s) => segRange(s)).map((s) => s.start).join(" / ") || "—"}</td>
-                <td>{d.segments.filter((s) => segRange(s)).map((s) => s.end).join(" / ") || "—"}</td>
-                <td>{d.pause ? `${d.pause} min` : "—"}</td>
-                <td>{fmtHM(r.days[i].worked)} ({fmtDec(r.days[i].worked)})</td>
-              </tr>
-            ))}
-          </tbody>
-          <tfoot><tr><td colSpan={4}>Total semanal</td><td>{fmtHM(r.total)} ({fmtDec(r.total)})</td></tr></tfoot>
-        </table>
-        <p>Este cálculo no sustituye el registro de jornada: la ley exige un registro diario, fiable y conservado durante 4 años (art. 34.9 ET).</p>
-      </div>
-      <AnnualTab dayMinutes={r.days.map((d) => d.worked)} onPrint={() => printSection("year")} />
+      <AnnualTab dayMinutes={dayMinutes} onPdf={makePdf} onChange={setYearSnap} />
     </div>
   );
 }
