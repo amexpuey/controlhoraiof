@@ -185,8 +185,8 @@ export function AnnualTab({ dayMinutes, onPdf, onChange }: { dayMinutes: number[
           <p className="hc-small hc-muted">Festivos {year}: <a href={BOE} target="_top" rel="noopener">Resolución de la Dirección General de Trabajo de 17 de octubre de 2025 (BOE de 28/10/2025)</a></p>
           <div className="hc-bar hc-between">
             <div className="hc-bar">
-              <button type="button" className="hc-btn" disabled={empty || needIsland} onClick={onPrint}><FileDown size={14} /> Descargar PDF</button>
-              <button type="button" className="hc-btn-o" disabled={empty || needIsland} onClick={downloadCsv}><FileSpreadsheet size={14} /> Descargar CSV</button>
+              <button type="button" className="hc-btn" disabled={empty || needIsland} onClick={onPdf}><FileDown size={14} /> Descargar PDF</button>
+              <button type="button" className="hc-btn-o" disabled={empty || needIsland} onClick={downloadYearCsv}><FileSpreadsheet size={14} /> Descargar CSV</button>
             </div>
             <span className="hc-small hc-muted">Los datos no salen de tu navegador.</span>
           </div>
@@ -197,19 +197,6 @@ export function AnnualTab({ dayMinutes, onPdf, onChange }: { dayMinutes: number[
           <a className="hc-btn" href={CTA} target="_top" rel="noopener">Empezar gratis</a>
         </aside>
       </section>
-
-      <div className="hc-print hc-print-year">
-        <h1>Proyección anual de horas {year} · {HOLIDAYS[year].regions[region]?.name}</h1>
-        <p>Horas anuales previstas: <strong>{fmtHMBig(r.total)} ({fmtDecBig(r.total)})</strong> · Promedio semanal: {fmtDecBig(r.weeklyAvg)}
-          {hasConv && <> · Convenio {nf(conv)} h: {diff > 0 ? "sobran" : "faltan"} {nf(Math.abs(diff))} h</>}</p>
-        <p>{r.workdays} días laborables · {r.holidaysOnWork} festivos en laborable · {nf(r.vacDays)} vacaciones · {nf(r.permDays)} permisos</p>
-        <Calendar print />
-        <table>
-          <thead><tr><th>Mes</th><th>Horas</th><th>Festivos</th></tr></thead>
-          <tbody>{r.months.map((m, i) => <tr key={i}><td>{MONTHS[i]}</td><td>{fmtDecBig(m.minutes)}</td><td>{m.holidays}</td></tr>)}</tbody>
-        </table>
-        <p>Este cálculo no sustituye el registro de jornada: la ley exige un registro diario, fiable y conservado durante 4 años (art. 34.9 ET).</p>
-      </div>
     </>
   );
 }
