@@ -24,14 +24,26 @@ export interface DayResult {
   worked: number; night: number; firstStart: number | null; lastEnd: number | null; longNoBreak: boolean;
 }
 
-export const computeDay = (d: DayInput): DayResult => {
+/** Subtract covered ranges from [a,b]. */
+const clip = (a: number, b: number, cover: [number, number][]): [number, number][] => {
+  let parts: [number, number][] = [[a, b]];
+  for (const [c, e] of cover) parts = parts.flatMap(([x, y]) => (e <= x || c >= y ? [[x, y]] : [[x, Math.min(y, c)], [Math.max(x, e), y]].filter(([p, q]) => q > p)) as [number, number][]);
+  return parts;
+};
+
+export const computeDay = (d: DayInput, cover: [number, number][] = []): DayResult => {
   let gross = 0, night = 0, first: number | null = null, last: number | null = null, longSeg = false;
+  const seen: [number, number][] = [...cover];
   for (const s of d.segments) {
     const r = segRange(s);
     if (!r) continue;
     const len = r[1] - r[0];
-    gross += len;
-    night += NIGHT.reduce((acc, [c, e]) => acc + overlap(r[0], r[1], c, e), 0);
+    const pieces = clip(r[0], r[1], seen);
+    seen.push(r);
+    for (const [x, y] of pieces) {
+      gross += y - x;
+      night += NIGHT.reduce((acc, [c, e]) => acc + overlap(x, y, c, e), 0);
+    }
     first = first === null ? r[0] : Math.min(first, r[0]);
     last = last === null ? r[1] : Math.max(last, r[1]);
     if (len > 360) longSeg = true;
@@ -47,11 +59,24 @@ export const computeDay = (d: DayInput): DayResult => {
 };
 
 export interface WeekResult {
-  days: DayResult[]; total: number; night: number; extra: number; annualExtra: number; warnings: string[];
+  days: DayResult[]; overlaps: Record<string, string>; total: number; night: number; extra: number; annualExtra: number; warnings: string[];
 }
 
 export const computeWeek = (days: DayInput[], agreedHours: number): WeekResult => {
-  const res = days.map(computeDay);
+  const hhmmOf = (m: number) => { const x = ((m % 1440) + 1440) % 1440; return `${String(Math.floor(x / 60)).padStart(2, "0")}:${String(x % 60).padStart(2, "0")}`; };
+  const overlaps: Record<string, string> = {};
+  const res = days.map((d, i) => {
+    const pi = (i + 6) % 7;
+    const prev = days[pi].segments.map(segRange).filter((r): r is [number, number] => !!r && r[1] > 1440).map((r) => [r[0] - 1440, r[1] - 1440] as [number, number]);
+    d.segments.forEach((s, k) => {
+      const r = segRange(s); if (!r) return;
+      const p = prev.find(([c, e]) => overlap(r[0], r[1], c, e) > 0);
+      if (p) { overlaps[`${i}-${k}`] = `Se solapa con el turno del ${DAYS[pi].toLowerCase()}, que termina a las ${hhmmOf(p[1])}.`; return; }
+      for (let j = 0; j < k; j++) { const q = segRange(d.segments[j]); if (q && overlap(r[0], r[1], q[0], q[1]) > 0) { overlaps[`${i}-${k}`] = `Se solapa con el tramo ${j + 1} del ${DAYS[i].toLowerCase()}.`; return; } }
+      // next-day overflow into the following day's early segments is caught when processing that day
+    });
+    return computeDay(d, prev);
+  });
   const total = res.reduce((a, d) => a + d.worked, 0);
   const night = res.reduce((a, d) => a + d.night, 0);
   const extra = Math.max(0, total - Math.round((agreedHours || 0) * 60));
@@ -64,7 +89,7 @@ export const computeWeek = (days: DayInput[], agreedHours: number): WeekResult =
     if (a.lastEnd !== null && b.firstStart !== null && b.firstStart + 1440 - a.lastEnd < 720) shortRest = true;
   }
   if (shortRest) warnings.push("Menos de 12 horas de descanso entre jornadas (art. 34.3 ET).");
-  if (res.some((d) => d.longNoBreak)) warnings.push("Jornada continuada de más de 6 horas sin un descanso de al menos 15 minutos (art. 34.4 ET).");
+  if (res.some((d) => d.longNoBreak)) warnings.push("Más de 6 horas seguidas sin pausa indicada. La ley exige un descanso de al menos 15 minutos (art. 34.4 ET). Si lo haces y tu convenio lo cuenta como trabajo, no hace falta restarlo aquí.");
   // Art. 37.1: 36 h uninterrupted weekly rest (circular week)
   const iv: [number, number][] = [];
   days.forEach((d, i) => d.segments.forEach((sg) => { const rg = segRange(sg); if (rg) iv.push([i * 1440 + rg[0], i * 1440 + rg[1]]); }));
@@ -75,11 +100,13 @@ export const computeWeek = (days: DayInput[], agreedHours: number): WeekResult =
     maxGap = Math.max(maxGap, iv[0][0] + 10080 - end);
     if (maxGap < 2160) warnings.push("Menos de día y medio de descanso semanal ininterrumpido (art. 37.1 ET). Puede acumularse en periodos de hasta 14 días.");
   }
-  if (res.some((d) => d.night >= 180 && d.worked > 480)) {
+  if (res.some((d) => d.night >= 180 && d.worked > 480))
     warnings.push("Quien trabaja de noche de forma habitual no puede superar 8 horas diarias de promedio en 15 días (art. 36.1 ET).");
-    if (extra > 0) warnings.push("Los trabajadores nocturnos no pueden hacer horas extraordinarias (art. 36.1 ET).");
-  }
-  return { days: res, total, night, extra, annualExtra: extra * 52, warnings };
+  const withSched = res.filter((d) => d.worked > 0);
+  const nightDays = withSched.filter((d) => d.night >= 180).length;
+  if (withSched.length && nightDays > withSched.length / 2 && extra > 0)
+    warnings.push("Los trabajadores nocturnos no pueden hacer horas extraordinarias (art. 36.1 ET).");
+  return { days: res, overlaps, total, night, extra, annualExtra: extra * 52, warnings };
 };
 
 export const fmtHM = (m: number) => `${Math.floor(m / 60)} h ${Math.round(m % 60)} min`;

@@ -50,6 +50,7 @@ export default function CalculadoraHorasPage() {
   };
 
   const weekEmpty = r.total === 0;
+  const hasOverlap = Object.keys(r.overlaps).length > 0;
   const makePdf = () => generateHoursPdf(
     { days, res: r, agreed, price: !isNaN(priceNum) && priceNum > 0 ? priceNum : null }, yearSnap);
 
@@ -72,12 +73,13 @@ export default function CalculadoraHorasPage() {
                 {d.segments.map((s, k) => (
                   <div className="hc-seg" key={k}>
                     <label className="sr-only" htmlFor={`in-${i}-${k}`}>{DAYS[i]} tramo {k + 1} entrada</label>
-                    <input id={`in-${i}-${k}`} type="time" className="hc-in" value={s.start}
+                    <input id={`in-${i}-${k}`} type="time" className={r.overlaps[`${i}-${k}`] ? "hc-in hc-bad" : "hc-in"} value={s.start}
                       onChange={(e) => update(i, (x) => { x.segments[k].start = e.target.value; return x; })} />
                     <span aria-hidden>–</span>
                     <label className="sr-only" htmlFor={`out-${i}-${k}`}>{DAYS[i]} tramo {k + 1} salida</label>
-                    <input id={`out-${i}-${k}`} type="time" className="hc-in" value={s.end}
+                    <input id={`out-${i}-${k}`} type="time" className={r.overlaps[`${i}-${k}`] ? "hc-in hc-bad" : "hc-in"} value={s.end}
                       onChange={(e) => update(i, (x) => { x.segments[k].end = e.target.value; return x; })} />
+                    {r.overlaps[`${i}-${k}`] && <span className="hc-overlap" role="alert">{r.overlaps[`${i}-${k}`]}</span>}
                     {k === 1 && (
                       <button type="button" className="hc-icon" aria-label={`Quitar segundo tramo del ${DAYS[i]}`}
                         onClick={() => update(i, (x) => { x.segments.pop(); return x; })}><X size={14} /></button>
@@ -135,9 +137,9 @@ export default function CalculadoraHorasPage() {
 
           <div className="hc-bar hc-between">
             <div className="hc-bar">
-              <button type="button" className="hc-btn" disabled={weekEmpty} onClick={makePdf}><FileDown size={14} /> Descargar PDF</button>
-              <button type="button" className="hc-btn-o" disabled={weekEmpty} onClick={downloadWeekCsv}><FileSpreadsheet size={14} /> Descargar CSV</button>
-              {weekEmpty && <span className="hc-small hc-muted">Rellena tu semana para descargar</span>}
+              <button type="button" className="hc-btn" disabled={weekEmpty || hasOverlap} onClick={makePdf}><FileDown size={14} /> Descargar PDF</button>
+              <button type="button" className="hc-btn-o" disabled={weekEmpty || hasOverlap} onClick={downloadWeekCsv}><FileSpreadsheet size={14} /> Descargar CSV</button>
+              {weekEmpty ? <span className="hc-small hc-muted">Rellena tu semana para descargar</span> : hasOverlap && <span className="hc-small hc-overlap">Corrige los tramos que se solapan para descargar.</span>}
             </div>
             <span className="hc-small hc-muted">Los datos no salen de tu navegador.</span>
           </div>
@@ -145,7 +147,7 @@ export default function CalculadoraHorasPage() {
 
       </section>
 
-      <AnnualTab dayMinutes={dayMinutes} onPdf={makePdf} onChange={setYearSnap} />
+      <AnnualTab blocked={hasOverlap} dayMinutes={dayMinutes} onPdf={makePdf} onChange={setYearSnap} />
     </div>
   );
 }
@@ -167,7 +169,9 @@ const CSS = `
 .hc-day:first-child{border-top:0}
 .hc-dname{font-weight:600}
 .hc-segs{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
-.hc-seg{display:flex;gap:4px;align-items:center}
+.hc-seg{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.hc-bad{border-color:#dc2626;background:#fef2f2}
+.hc-overlap{color:#b91c1c;font-size:12px;flex-basis:100%}
 .hc-in{border:1px solid var(--b);border-radius:8px;padding:4px 6px;font:inherit;color:var(--t);background:#fff}
 .hc-in:focus{outline:2px solid var(--g);outline-offset:1px}
 .hc-num{width:70px}
