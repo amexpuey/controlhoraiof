@@ -54,9 +54,13 @@ export default function CalculadoraHorasPage() {
   return (
     <div className="hc-root">
       <style>{CSS}</style>
+      <div className="hc-tabs hc-screen" role="tablist">
+        <button type="button" role="tab" aria-selected={tab === "week"} className={tab === "week" ? "on" : ""} onClick={() => setTab("week")}>Semana</button>
+        <button type="button" role="tab" aria-selected={tab === "year"} className={tab === "year" ? "on" : ""} onClick={() => setTab("year")}>Proyección anual</button>
+      </div>
+      {tab === "year" ? <AnnualTab dayMinutes={r.days.map((d) => d.worked)} /> : <>
       <div className="hc-screen">
-        <h1 className="hc-h1">Calculadora de horas trabajadas</h1>
-        <p className="hc-sub">Introduce tu semana y comprueba si superas los límites del Estatuto de los Trabajadores.</p>
+
 
         <div className="hc-bar">
           {TEMPLATES.map((t) => (
