@@ -148,7 +148,7 @@ export function generateHoursPdf(week: WeekPdf, year: YearPdf | null) {
       foot: [["Total", String(monthRows.reduce((a, x) => a + Number(x[1]), 0)), String(r.holidaysOnWork), dec(gross)],
         [{ content: `- vacaciones y permisos (${dec(offMin)}) = horas anuales previstas`, colSpan: 3 }, dec(r.total)]],
       footStyles: { fillColor: [240, 253, 250], textColor: G, fontStyle: "bold" },
-      didDrawPage: () => yearPages.add(doc.getNumberOfPages()),
+      didDrawPage: () => { yearPages.add(doc.getNumberOfPages()); },
     });
     y = (doc as any).lastAutoTable.finalY + 2;
     const hl = year.hols.map((h) => `${fd(h.date)}  ${h.name}`);
@@ -156,7 +156,7 @@ export function generateHoursPdf(week: WeekPdf, year: YearPdf | null) {
     autoTable(doc, { ...table, theme: "plain", startY: y, styles: { fontSize: 6.5, cellPadding: 0.3, textColor: T },
       head: [[{ content: "Festivos aplicados", colSpan: 2 }]], headStyles: { fontStyle: "bold", fontSize: 8, textColor: T },
       body: Array.from({ length: half }, (_, i) => [hl[i] || "", hl[i + half] || ""]),
-      didDrawPage: () => yearPages.add(doc.getNumberOfPages()),
+      didDrawPage: () => { yearPages.add(doc.getNumberOfPages()); },
     });
   }
 
