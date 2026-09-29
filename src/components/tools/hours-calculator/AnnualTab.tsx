@@ -24,6 +24,8 @@ export function AnnualTab({ dayMinutes, onPdf, onChange }: { dayMinutes: number[
   useEffect(() => setOff(new Set()), [region, year]);
 
   const hols = useMemo(() => buildHolidays(year, region, island, aran, locals), [year, region, island, aran, locals]);
+  const baseDates = useMemo(() => new Set(buildHolidays(year, region, island, aran, []).filter((h) => !off.has(h.date)).map((h) => h.date)), [year, region, island, aran, off]);
+  const dup = locals.map((d) => !!d && baseDates.has(d));
   const active = useMemo(() => new Set(hols.filter((h) => !off.has(h.date)).map((h) => h.date)), [hols, off]);
   const wdpw = dayMinutes.filter((m) => m > 0).length;
   const vacLab = vacType === "nat" ? naturalToLab(vac, wdpw) : vac;
@@ -32,6 +34,7 @@ export function AnnualTab({ dayMinutes, onPdf, onChange }: { dayMinutes: number[
   const hasConv = !isNaN(conv) && conv > 0;
   const diff = hasConv ? r.total / 60 - conv : 0;
   const empty = wdpw === 0;
+  const over80 = hasConv && diff > 80;
   const needIsland = region === "canarias" && !island;
   const nf = (n: number) => n.toLocaleString("es-ES", { maximumFractionDigits: 2, useGrouping: "always" as any });
 
@@ -70,7 +73,7 @@ export function AnnualTab({ dayMinutes, onPdf, onChange }: { dayMinutes: number[
               {Array.from({ length: n }).map((_, i) => {
                 const key = `${year}-${String(mi + 1).padStart(2, "0")}-${String(i + 1).padStart(2, "0")}`;
                 const row = r.rows.find((x) => x.date === key);
-                const cls = row?.type === "festivo" ? "ya-fest" : row?.type === "laborable" ? "ya-lab" : "ya-we";
+                const cls = row?.type === "festivo" ? (hols.find((h) => h.date === key)?.kind === "local" ? "ya-fest ya-loc" : "ya-fest") : row?.type === "laborable" ? "ya-lab" : "ya-we";
                 return <span key={key} className={cls}>{i + 1}</span>;
               })}
             </div>
@@ -107,9 +110,11 @@ export function AnnualTab({ dayMinutes, onPdf, onChange }: { dayMinutes: number[
           )}
           <label className="hc-param">Festivo local 1
             <input type="date" className="hc-in" min={`${year}-01-01`} max={`${year}-12-31`} value={locals[0]} onChange={(e) => setLocals([e.target.value, locals[1]])} />
+            {dup[0] && <span className="ya-dup">Este día ya es festivo en tu comunidad. Elige el otro festivo local de tu municipio.</span>}
           </label>
           <label className="hc-param">Festivo local 2
             <input type="date" className="hc-in" min={`${year}-01-01`} max={`${year}-12-31`} value={locals[1]} onChange={(e) => setLocals([locals[0], e.target.value])} />
+            {dup[1] && <span className="ya-dup">Este día ya es festivo en tu comunidad. Elige el otro festivo local de tu municipio.</span>}
           </label>
           <p className="ya-help ya-full">Los fija cada ayuntamiento y se publican en el boletín oficial de tu provincia o comunidad.</p>
 
@@ -132,6 +137,7 @@ export function AnnualTab({ dayMinutes, onPdf, onChange }: { dayMinutes: number[
             {vacType === "nat" && wdpw > 0 && <> <strong>{vac} días naturales ≈ {vacLab} días laborables</strong> (trabajando {wdpw} días por semana).</>}
             {" "}Permisos: matrimonio, nacimiento, fallecimiento de un familiar, mudanza… Estima los que prevés. Muchos convenios fijan un máximo anual, por ejemplo 1.780 h. Búscalo en tu convenio colectivo.
           </p>
+          <p className="ya-help ya-full hc-muted">Sin convenio ni acuerdo, la empresa puede distribuir de forma irregular hasta el 10 % de la jornada anual, avisando con 5 días de antelación (art. 34.2 ET).{hasConv && <> En tu caso, {nf(Math.round(conv * 0.1))} h.</>}</p>
         </div>
 
         <details className="ya-hols">
@@ -154,17 +160,18 @@ export function AnnualTab({ dayMinutes, onPdf, onChange }: { dayMinutes: number[
             <>
               <div className="hc-stats">
                 <div className="hc-stat hc-main"><span>Horas anuales previstas</span><strong>{fmtHMBig(r.total)}</strong><em>{fmtDecBig(r.total)}</em></div>
-                <div className="hc-stat"><span>Promedio semanal (cómputo anual)</span><strong>{fmtHMBig(r.weeklyAvg)}</strong><em>Límite: 40 h (art. 34.1 ET)</em></div>
+                <div className="hc-stat"><span>Promedio semanal (cómputo anual)</span><strong>{fmtHMBig(r.weeklyAvg)}</strong><em>Límite: 40 h (art. 34.1 ET) · Sin contar vacaciones, permisos ni festivos</em></div>
                 <div className="hc-stat"><span>Convenio</span>
                   {hasConv ? (<><strong>{diff > 0 ? "Te sobran" : "Te faltan"} {nf(Math.abs(diff))} h</strong><em>{diff > 0 ? "sobre la jornada del convenio" : "para llegar a la jornada del convenio"}</em></>) : <em>Indica la jornada anual del convenio para comparar</em>}
                 </div>
               </div>
               <p className="hc-small">
-                {r.workdays} días laborables · {r.holidaysOnWork} festivos en día laborable · {nf(r.vacDays)} días de vacaciones · {nf(r.permDays)} días de permisos descontados
+                {r.workdays} días con horario · {r.holidaysOnWork} festivos · {nf(r.vacDays)} días de vacaciones · {nf(r.permDays)} de permisos = <strong>{nf(r.workedDays)} días de trabajo</strong>
               </p>
               {(diff > 0 || r.weeklyAvg > 2400) && (
                 <ul className="hc-warns">
                   {hasConv && diff > 0 && <li><AlertTriangle size={15} aria-hidden /> La previsión supera en {nf(diff)} h la jornada anual del convenio ({nf(conv)} h).</li>}
+                  {over80 && <li><AlertTriangle size={15} aria-hidden /> Más de 80 horas extraordinarias al año (art. 35.2 ET). No cuentan las compensadas con descanso en los 4 meses siguientes.</li>}
                   {r.weeklyAvg > 2400 && <li><AlertTriangle size={15} aria-hidden /> El promedio semanal supera las 40 horas de trabajo efectivo en cómputo anual (art. 34.1 ET).</li>}
                 </ul>
               )}
@@ -178,6 +185,7 @@ export function AnnualTab({ dayMinutes, onPdf, onChange }: { dayMinutes: number[
               <details className="ya-hols">
                 <summary>Ver calendario</summary>
                 <Calendar />
+                <p className="ya-legend"><span className="ya-lab">1</span> Día con horario <span className="ya-fest">1</span> Festivo <span className="ya-fest ya-loc">1</span> Festivo local <span className="ya-we">1</span> Sin horario</p>
               </details>
             </>
           )}
@@ -223,6 +231,9 @@ const CSS = `
 .ya-lab{background:#f0fdfa}
 .ya-we{color:#94a3b8}
 .ya-fest{background:#fcd34d;color:#78350f;font-weight:700}
+.ya-loc{box-shadow:inset 0 0 0 1.5px #b45309}
+.ya-dup{font-size:11px;color:var(--a);margin-top:2px}
+.ya-legend{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:11px;margin:8px 0 0}.ya-legend span{display:inline-block;width:16px;text-align:center;border-radius:3px;font-size:10px}
 .hc-btn:disabled,.hc-btn-o:disabled{opacity:.5;cursor:not-allowed}
 @media (max-width:640px){.ya-form{grid-template-columns:1fr 1fr}.ya-hlist{grid-template-columns:1fr}.ya-cal{grid-template-columns:repeat(2,1fr)}}
 `;
