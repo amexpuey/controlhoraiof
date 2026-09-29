@@ -127,7 +127,7 @@ export function generateHoursPdf(week: WeekPdf, year: YearPdf | null) {
         doc.text(String(dd), x + cell / 2, yy + ch * 0.72, { align: "center" });
       }
     }
-    y += 3 * (ch * 7.6 + 2) + 1;
+    y += 3 * (ch * 7.6 + 2) + 4;
     const legend: [[number, number, number], string][] = [[[209, 250, 229], "Día con horario"], [[252, 211, 77], "Festivo"], [[241, 245, 249], "Fin de semana / sin horario"]];
     let lx = M; doc.setFontSize(7); doc.setFont("helvetica", "normal");
     legend.forEach(([c, t]) => { doc.setFillColor(...c); doc.rect(lx, y - 2.5, 3, 3, "F"); doc.setTextColor(...T); doc.text(t, lx + 4, y); lx += doc.getTextWidth(t) + 10; });
