@@ -19,7 +19,6 @@ export default function CalculadoraHorasPage() {
   const [days, setDays] = useState<DayInput[]>(empty);
   const [agreed, setAgreed] = useState(40);
   const [price, setPrice] = useState("");
-  const [tab, setTab] = useState<"week" | "year">("week");
 
   useEffect(() => {
     const els = ["footer", "header", "nav"].map((s) => document.querySelector(s) as HTMLElement | null);
@@ -53,17 +52,22 @@ export default function CalculadoraHorasPage() {
     a.click();
   };
 
+  const printSection = (section: "week" | "year") => {
+    document.body.dataset.hcPrint = section;
+    const clearPrintTarget = () => {
+      delete document.body.dataset.hcPrint;
+      window.removeEventListener("afterprint", clearPrintTarget);
+    };
+    window.addEventListener("afterprint", clearPrintTarget);
+    window.print();
+    window.setTimeout(clearPrintTarget, 1000);
+  };
+
   return (
     <div className="hc-root">
       <style>{CSS}</style>
-      <div className="hc-tabs hc-screen" role="tablist">
-        <button type="button" role="tab" aria-selected={tab === "week"} className={tab === "week" ? "on" : ""} onClick={() => setTab("week")}>Semana</button>
-        <button type="button" role="tab" aria-selected={tab === "year"} className={tab === "year" ? "on" : ""} onClick={() => setTab("year")}>Proyección anual</button>
-      </div>
-      {tab === "year" ? <AnnualTab dayMinutes={r.days.map((d) => d.worked)} /> : <>
-      <div className="hc-screen">
-
-
+      <section className="hc-screen hc-tool-section" aria-labelledby="week-heading">
+        <h2 id="week-heading" className="hc-section-title"><span>1</span> Tu semana</h2>
         <div className="hc-bar">
           {TEMPLATES.map((t) => (
             <button key={t.label} type="button" className="hc-chip" onClick={() => applyTemplate(t.segs)}>{t.label}</button>
@@ -141,20 +145,16 @@ export default function CalculadoraHorasPage() {
 
           <div className="hc-bar hc-between">
             <div className="hc-bar">
-              <button type="button" className="hc-btn" onClick={() => window.print()}><FileDown size={14} /> Descargar PDF</button>
+              <button type="button" className="hc-btn" onClick={() => printSection("week")}><FileDown size={14} /> Descargar PDF</button>
               <button type="button" className="hc-btn-o" onClick={downloadCsv}><FileSpreadsheet size={14} /> Descargar CSV</button>
             </div>
             <span className="hc-small hc-muted">Los datos no salen de tu navegador.</span>
           </div>
         </section>
 
-        <aside className="hc-cta">
-          <p><strong>Esto, pero automático y cada día:</strong> INWOUT registra la jornada de tu equipo y calcula las horas por ti. Gratis hasta 5 empleados.</p>
-          <a className="hc-btn" href={CTA} target="_top" rel="noopener">Empezar gratis</a>
-        </aside>
-      </div>
+      </section>
 
-      <div className="hc-print">
+      <div className="hc-print hc-print-week">
         <h1>Resumen de horas trabajadas</h1>
         <table>
           <thead><tr><th>Día</th><th>Entrada</th><th>Salida</th><th>Pausa</th><th>Total</th></tr></thead>
@@ -173,17 +173,17 @@ export default function CalculadoraHorasPage() {
         </table>
         <p>Este cálculo no sustituye el registro de jornada: la ley exige un registro diario, fiable y conservado durante 4 años (art. 34.9 ET).</p>
       </div>
-      </>}
+      <AnnualTab dayMinutes={r.days.map((d) => d.worked)} onPrint={() => printSection("year")} />
     </div>
   );
 }
 
 const CSS = `
-.hc-tabs{display:flex;gap:4px;border-bottom:1px solid #e2e8f0;margin-bottom:10px}
-.hc-tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:8px 14px;font:inherit;font-weight:600;color:#475569;cursor:pointer;margin-bottom:-1px}
-.hc-tabs button.on{color:#0b8f7c;border-bottom-color:#0fb89f}
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap');
 .hc-root{--g:#0fb89f;--gd:#0b8f7c;--t:#0a1628;--b:#e2e8f0;--a:#92400e;--ab:#fffbeb;--abd:#fcd34d;background:#fff;color:var(--t);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;max-width:900px;margin:0 auto;padding:16px;font-size:14px}
+.hc-tool-section{display:block}
+.hc-section-title{display:flex;align-items:center;gap:9px;font-family:Montserrat,sans-serif;font-size:20px;margin:0 0 12px}
+.hc-section-title span{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--gd);color:#fff;font-size:14px}
 .hc-h1{font-family:Montserrat,sans-serif;font-weight:700;font-size:22px;margin:0}
 .hc-sub{color:#475569;margin:2px 0 12px}
 .hc-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
@@ -246,5 +246,7 @@ const CSS = `
  .hc-print th,.hc-print td{border:1px solid #ccc;padding:6px;text-align:left}
  .hc-print tfoot td{font-weight:700}
  .hc-print p{font-size:11px;margin-top:16px}
+  body[data-hc-print="week"] .hc-print-year{display:none!important}
+  body[data-hc-print="year"] .hc-print-week{display:none!important}
 }
 `;
