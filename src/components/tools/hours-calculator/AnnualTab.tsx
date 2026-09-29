@@ -8,7 +8,7 @@ const CTA = "https://app.inwout.com/register/?utm_source=calculadora-horas&utm_m
 const BOE = "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-21667";
 const fmtDate = (d: string) => `${d.slice(8, 10)}/${d.slice(5, 7)}`;
 
-export function AnnualTab({ dayMinutes }: { dayMinutes: number[] }) {
+export function AnnualTab({ dayMinutes, onPrint }: { dayMinutes: number[]; onPrint: () => void }) {
   const [year, setYear] = useState(YEARS[0]);
   const [region, setRegion] = useState("madrid");
   const [island, setIsland] = useState("");
@@ -72,7 +72,8 @@ export function AnnualTab({ dayMinutes }: { dayMinutes: number[] }) {
   return (
     <>
       <style>{CSS}</style>
-      <div className="hc-screen">
+      <section className="hc-screen hc-tool-section ya-section" aria-labelledby="year-heading">
+        <h2 id="year-heading" className="hc-section-title"><span>2</span> Tu año</h2>
         <div className="ya-form">
           <label className="hc-param">Año
             <select className="hc-in" value={year} onChange={(e) => setYear(Number(e.target.value))}>{YEARS.map((y) => <option key={y}>{y}</option>)}</select>
@@ -135,7 +136,7 @@ export function AnnualTab({ dayMinutes }: { dayMinutes: number[] }) {
 
         <section className="hc-result" aria-live="polite">
           {empty ? (
-            <p className="ya-empty">Rellena primero tu semana en la pestaña Semana.</p>
+            <p className="ya-empty">Rellena primero tu semana.</p>
           ) : needIsland ? (
             <p className="ya-empty">Elige tu isla para añadir el festivo insular y calcular la proyección.</p>
           ) : (
@@ -157,12 +158,11 @@ export function AnnualTab({ dayMinutes }: { dayMinutes: number[] }) {
                 </ul>
               )}
               <details className="ya-hols">
-                <summary>Desglose por meses</summary>
+                <summary>Desglose por meses · Antes de descontar vacaciones y permisos</summary>
                 <table className="ya-tbl">
                   <thead><tr><th>Mes</th><th>Horas</th><th>Festivos</th></tr></thead>
                   <tbody>{r.months.map((m, i) => <tr key={i}><td>{MONTHS[i]}</td><td>{fmtDecBig(m.minutes)}</td><td>{m.holidays}</td></tr>)}</tbody>
                 </table>
-                <p className="hc-small hc-muted">Horas por mes antes de descontar vacaciones y permisos.</p>
               </details>
               <details className="ya-hols">
                 <summary>Ver calendario</summary>
@@ -174,7 +174,7 @@ export function AnnualTab({ dayMinutes }: { dayMinutes: number[] }) {
           <p className="hc-small hc-muted">Festivos {year}: <a href={BOE} target="_top" rel="noopener">Resolución de la Dirección General de Trabajo de 17 de octubre de 2025 (BOE de 28/10/2025)</a></p>
           <div className="hc-bar hc-between">
             <div className="hc-bar">
-              <button type="button" className="hc-btn" disabled={empty || needIsland} onClick={() => window.print()}><FileDown size={14} /> Descargar PDF</button>
+              <button type="button" className="hc-btn" disabled={empty || needIsland} onClick={onPrint}><FileDown size={14} /> Descargar PDF</button>
               <button type="button" className="hc-btn-o" disabled={empty || needIsland} onClick={downloadCsv}><FileSpreadsheet size={14} /> Descargar CSV</button>
             </div>
             <span className="hc-small hc-muted">Los datos no salen de tu navegador.</span>
@@ -185,9 +185,9 @@ export function AnnualTab({ dayMinutes }: { dayMinutes: number[] }) {
           <p><strong>Esto, pero con el calendario real de tu equipo:</strong> INWOUT gestiona festivos por centro de trabajo, vacaciones y permisos, y calcula las horas cada día. Gratis hasta 5 empleados.</p>
           <a className="hc-btn" href={CTA} target="_top" rel="noopener">Empezar gratis</a>
         </aside>
-      </div>
+      </section>
 
-      <div className="hc-print">
+      <div className="hc-print hc-print-year">
         <h1>Proyección anual de horas {year} · {HOLIDAYS[year].regions[region]?.name}</h1>
         <p>Horas anuales previstas: <strong>{fmtHMBig(r.total)} ({fmtDecBig(r.total)})</strong> · Promedio semanal: {fmtDecBig(r.weeklyAvg)}
           {hasConv && <> · Convenio {nf(conv)} h: {diff > 0 ? "sobran" : "faltan"} {nf(Math.abs(diff))} h</>}</p>
@@ -204,6 +204,7 @@ export function AnnualTab({ dayMinutes }: { dayMinutes: number[] }) {
 }
 
 const CSS = `
+.ya-section{border-top:1px solid var(--b);margin-top:24px;padding-top:20px}
 .ya-form{display:grid;grid-template-columns:repeat(4,1fr);gap:8px 12px;align-items:end;margin-top:10px}
 .ya-form select.hc-in,.ya-form input[type=date]{width:100%}
 .ya-full{grid-column:1/-1}
