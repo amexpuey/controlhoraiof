@@ -184,7 +184,7 @@ export function generateHoursPdf(week: WeekPdf, year: YearPdf | null) {
 }
 
 export const downloadCsv = (name: string, rows: (string | number)[][]) => {
-  const csv = "\uFEFF" + rows.map((row) => row.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(";")).join("\r\n");
+  const csv = "\uFEFF" + rows.map((row) => row.map((c) => /^-?\d+(,\d+)?$/.test(String(c)) ? String(c) : `"${String(c).replace(/"/g, '""')}"`).join(";")).join("\r\n");
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
   a.download = name;
