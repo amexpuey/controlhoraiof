@@ -12,8 +12,6 @@ const TEMPLATES: { label: string; segs: { start: string; end: string }[] }[] = [
   { label: "Turno de noche 22:00–06:00", segs: [{ start: "22:00", end: "06:00" }] },
 ];
 
-const CTA = "https://app.inwout.com/register/?utm_source=calculadora-horas&utm_medium=web&utm_campaign=herramientas";
-
 export default function CalculadoraHorasPage() {
   useIframeHeight();
   const [days, setDays] = useState<DayInput[]>(empty);
