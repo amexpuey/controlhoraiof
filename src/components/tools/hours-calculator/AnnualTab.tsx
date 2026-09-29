@@ -2,13 +2,14 @@ import { useMemo, useState, useEffect } from "react";
 import { AlertTriangle, FileDown, FileSpreadsheet } from "lucide-react";
 import { DAYS } from "./hoursLogic";
 import { ARAN, HOLIDAYS, ISLANDS, YEARS, buildHolidays, computeYear, fmtDecBig, fmtHMBig, naturalToLab } from "./yearLogic";
+import { YearPdf, downloadCsv, num } from "./pdfExport";
 
 const MONTHS = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 const CTA = "https://app.inwout.com/register/?utm_source=calculadora-horas&utm_medium=web&utm_campaign=proyeccion-anual";
 const BOE = "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-21667";
 const fmtDate = (d: string) => `${d.slice(8, 10)}/${d.slice(5, 7)}`;
 
-export function AnnualTab({ dayMinutes, onPrint }: { dayMinutes: number[]; onPrint: () => void }) {
+export function AnnualTab({ dayMinutes, onPdf, onChange }: { dayMinutes: number[]; onPdf: () => void; onChange: (s: YearPdf | null) => void }) {
   const [year, setYear] = useState(YEARS[0]);
   const [region, setRegion] = useState("madrid");
   const [island, setIsland] = useState("");
@@ -36,14 +37,24 @@ export function AnnualTab({ dayMinutes, onPrint }: { dayMinutes: number[]; onPri
 
   const toggle = (d: string) => setOff((p) => { const n = new Set(p); n.has(d) ? n.delete(d) : n.add(d); return n; });
 
-  const downloadCsv = () => {
-    const rows = [["Fecha", "Día de la semana", "Tipo", "Horas"]];
-    r.rows.forEach((x) => rows.push([x.date, DAYS[x.weekday], x.type, (x.minutes / 60).toFixed(2).replace(".", ",")]));
-    const csv = "\uFEFF" + rows.map((row) => row.map((c) => `"${c}"`).join(";")).join("\n");
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
-    a.download = `proyeccion-anual-${year}.csv`;
-    a.click();
+  const snap: YearPdf | null = empty || needIsland ? null : {
+    year, regionName: HOLIDAYS[year].regions[region]?.name || region, island, aran, locals, vac, vacType, vacLab, perm,
+    conv: hasConv ? conv : null, r, hols: hols.filter((h) => active.has(h.date)),
+  };
+  useEffect(() => { onChange(snap); }, [snap?.r, snap?.hols.length, island, aran, vac, vacType, perm, convenio, locals, empty, needIsland]); // eslint-disable-line
+
+  const downloadYearCsv = () => {
+    const names = new Map(hols.filter((h) => active.has(h.date)).map((h) => [h.date, h.name]));
+    const rows: (string | number)[][] = [["Fecha (AAAA-MM-DD)", "Día de la semana", "Tipo", "Festivo", "Horas"]];
+    r.rows.forEach((x) => rows.push([x.date, DAYS[x.weekday], x.type, names.get(x.date) || "", num(x.minutes)]));
+    const gross = r.rows.reduce((a, x) => a + x.minutes, 0);
+    rows.push([], ["Total bruto", "", "", "", num(gross)]);
+    rows.push([`Vacaciones (${String(vacLab).replace(".", ",")} días)`, "", "", "", num(vacLab * r.avgDay)]);
+    rows.push([`Permisos (${perm} días)`, "", "", "", num(perm * r.avgDay)]);
+    rows.push(["Horas anuales previstas", "", "", "", num(r.total)]);
+    rows.push(["Jornada del convenio", "", "", "", hasConv ? String(conv.toFixed(2)).replace(".", ",") : ""]);
+    rows.push(["Diferencia", "", "", "", hasConv ? diff.toFixed(2).replace(".", ",") : ""]);
+    downloadCsv(`horas-ano-${year}.csv`, rows);
   };
 
   const Calendar = ({ print }: { print?: boolean }) => (
@@ -174,8 +185,8 @@ export function AnnualTab({ dayMinutes, onPrint }: { dayMinutes: number[]; onPri
           <p className="hc-small hc-muted">Festivos {year}: <a href={BOE} target="_top" rel="noopener">Resolución de la Dirección General de Trabajo de 17 de octubre de 2025 (BOE de 28/10/2025)</a></p>
           <div className="hc-bar hc-between">
             <div className="hc-bar">
-              <button type="button" className="hc-btn" disabled={empty || needIsland} onClick={onPrint}><FileDown size={14} /> Descargar PDF</button>
-              <button type="button" className="hc-btn-o" disabled={empty || needIsland} onClick={downloadCsv}><FileSpreadsheet size={14} /> Descargar CSV</button>
+              <button type="button" className="hc-btn" disabled={empty || needIsland} onClick={onPdf}><FileDown size={14} /> Descargar PDF</button>
+              <button type="button" className="hc-btn-o" disabled={empty || needIsland} onClick={downloadYearCsv}><FileSpreadsheet size={14} /> Descargar CSV</button>
             </div>
             <span className="hc-small hc-muted">Los datos no salen de tu navegador.</span>
           </div>
@@ -186,19 +197,6 @@ export function AnnualTab({ dayMinutes, onPrint }: { dayMinutes: number[]; onPri
           <a className="hc-btn" href={CTA} target="_top" rel="noopener">Empezar gratis</a>
         </aside>
       </section>
-
-      <div className="hc-print hc-print-year">
-        <h1>Proyección anual de horas {year} · {HOLIDAYS[year].regions[region]?.name}</h1>
-        <p>Horas anuales previstas: <strong>{fmtHMBig(r.total)} ({fmtDecBig(r.total)})</strong> · Promedio semanal: {fmtDecBig(r.weeklyAvg)}
-          {hasConv && <> · Convenio {nf(conv)} h: {diff > 0 ? "sobran" : "faltan"} {nf(Math.abs(diff))} h</>}</p>
-        <p>{r.workdays} días laborables · {r.holidaysOnWork} festivos en laborable · {nf(r.vacDays)} vacaciones · {nf(r.permDays)} permisos</p>
-        <Calendar print />
-        <table>
-          <thead><tr><th>Mes</th><th>Horas</th><th>Festivos</th></tr></thead>
-          <tbody>{r.months.map((m, i) => <tr key={i}><td>{MONTHS[i]}</td><td>{fmtDecBig(m.minutes)}</td><td>{m.holidays}</td></tr>)}</tbody>
-        </table>
-        <p>Este cálculo no sustituye el registro de jornada: la ley exige un registro diario, fiable y conservado durante 4 años (art. 34.9 ET).</p>
-      </div>
     </>
   );
 }
@@ -227,5 +225,4 @@ const CSS = `
 .ya-fest{background:#fcd34d;color:#78350f;font-weight:700}
 .hc-btn:disabled,.hc-btn-o:disabled{opacity:.5;cursor:not-allowed}
 @media (max-width:640px){.ya-form{grid-template-columns:1fr 1fr}.ya-hlist{grid-template-columns:1fr}.ya-cal{grid-template-columns:repeat(2,1fr)}}
-@media print{.ya-cal-p{grid-template-columns:repeat(4,1fr)!important;gap:6px}.ya-cal-p .ya-fest{border:1px solid #000}}
 `;

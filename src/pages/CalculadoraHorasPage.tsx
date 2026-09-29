@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { Plus, Trash2, Copy, FileDown, FileSpreadsheet, AlertTriangle, X } from "lucide-react";
 import { useIframeHeight } from "@/hooks/useIframeHeight";
-import { DAYS, DayInput, computeWeek, fmtDec, fmtEur, fmtHM, segRange } from "@/components/tools/hours-calculator/hoursLogic";
+import { DAYS, DayInput, computeWeek, fmtDec, fmtEur, fmtHM } from "@/components/tools/hours-calculator/hoursLogic";
 import { AnnualTab } from "@/components/tools/hours-calculator/AnnualTab";
+import { YearPdf, generateHoursPdf, downloadCsv, hhmm, num } from "@/components/tools/hours-calculator/pdfExport";
 
 const empty = (): DayInput[] => DAYS.map(() => ({ segments: [{ start: "", end: "" }], pause: 0 }));
 
@@ -17,6 +18,7 @@ export default function CalculadoraHorasPage() {
   const [days, setDays] = useState<DayInput[]>(empty);
   const [agreed, setAgreed] = useState(40);
   const [price, setPrice] = useState("");
+  const [yearSnap, setYearSnap] = useState<YearPdf | null>(null);
 
   useEffect(() => {
     const els = ["footer", "header", "nav"].map((s) => document.querySelector(s) as HTMLElement | null);
@@ -26,6 +28,7 @@ export default function CalculadoraHorasPage() {
   }, []);
 
   const r = useMemo(() => computeWeek(days, agreed), [days, agreed]);
+  const dayMinutes = useMemo(() => r.days.map((d) => d.worked), [r]);
   const priceNum = parseFloat(price.replace(",", "."));
 
   const update = (i: number, fn: (d: DayInput) => DayInput) =>
@@ -36,25 +39,19 @@ export default function CalculadoraHorasPage() {
 
   const copyMonday = () => setDays((p) => p.map((d, i) => (i > 0 && i < 5 ? structuredClone(p[0]) : d)));
 
-  const downloadCsv = () => {
-    const rows = [["Día", "Entrada 1", "Salida 1", "Entrada 2", "Salida 2", "Pausa (min)", "Total (h min)", "Total (h)"]];
+  const downloadWeekCsv = () => {
+    const rows: (string | number)[][] = [["Día", "Entrada 1", "Salida 1", "Entrada 2", "Salida 2", "Pausa (min)", "Total (hh:mm)", "Total (horas)", "Nocturnas (horas)"]];
     days.forEach((d, i) => {
       const s = d.segments;
-      rows.push([DAYS[i], s[0]?.start || "", s[0]?.end || "", s[1]?.start || "", s[1]?.end || "", String(d.pause || 0), fmtHM(r.days[i].worked), fmtDec(r.days[i].worked)]);
+      rows.push([DAYS[i], s[0]?.start || "", s[0]?.end || "", s[1]?.start || "", s[1]?.end || "", d.pause || 0, hhmm(r.days[i].worked), num(r.days[i].worked), num(r.days[i].night)]);
     });
-    rows.push(["Total semana", "", "", "", "", "", fmtHM(r.total), fmtDec(r.total)]);
-    const csv = "\uFEFF" + rows.map((row) => row.map((c) => `"${c}"`).join(";")).join("\n");
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
-    a.download = "horas-trabajadas.csv";
-    a.click();
+    rows.push(["Total semana", "", "", "", "", "", hhmm(r.total), num(r.total), num(r.night)]);
+    downloadCsv("horas-semana.csv", rows);
   };
 
-  const printSection = (section: "week" | "year") => {
-    document.body.dataset.hcPrint = section;
-    window.print();
-    delete document.body.dataset.hcPrint;
-  };
+  const weekEmpty = r.total === 0;
+  const makePdf = () => generateHoursPdf(
+    { days, res: r, agreed, price: !isNaN(priceNum) && priceNum > 0 ? priceNum : null }, yearSnap);
 
   return (
     <div className="hc-root">
@@ -138,8 +135,9 @@ export default function CalculadoraHorasPage() {
 
           <div className="hc-bar hc-between">
             <div className="hc-bar">
-              <button type="button" className="hc-btn" onClick={() => printSection("week")}><FileDown size={14} /> Descargar PDF</button>
-              <button type="button" className="hc-btn-o" onClick={downloadCsv}><FileSpreadsheet size={14} /> Descargar CSV</button>
+              <button type="button" className="hc-btn" disabled={weekEmpty} onClick={makePdf}><FileDown size={14} /> Descargar PDF</button>
+              <button type="button" className="hc-btn-o" disabled={weekEmpty} onClick={downloadWeekCsv}><FileSpreadsheet size={14} /> Descargar CSV</button>
+              {weekEmpty && <span className="hc-small hc-muted">Rellena tu semana para descargar</span>}
             </div>
             <span className="hc-small hc-muted">Los datos no salen de tu navegador.</span>
           </div>
@@ -147,26 +145,7 @@ export default function CalculadoraHorasPage() {
 
       </section>
 
-      <div className="hc-print hc-print-week">
-        <h1>Resumen de horas trabajadas</h1>
-        <table>
-          <thead><tr><th>Día</th><th>Entrada</th><th>Salida</th><th>Pausa</th><th>Total</th></tr></thead>
-          <tbody>
-            {days.map((d, i) => (
-              <tr key={i}>
-                <td>{DAYS[i]}</td>
-                <td>{d.segments.filter((s) => segRange(s)).map((s) => s.start).join(" / ") || "—"}</td>
-                <td>{d.segments.filter((s) => segRange(s)).map((s) => s.end).join(" / ") || "—"}</td>
-                <td>{d.pause ? `${d.pause} min` : "—"}</td>
-                <td>{fmtHM(r.days[i].worked)} ({fmtDec(r.days[i].worked)})</td>
-              </tr>
-            ))}
-          </tbody>
-          <tfoot><tr><td colSpan={4}>Total semanal</td><td>{fmtHM(r.total)} ({fmtDec(r.total)})</td></tr></tfoot>
-        </table>
-        <p>Este cálculo no sustituye el registro de jornada: la ley exige un registro diario, fiable y conservado durante 4 años (art. 34.9 ET).</p>
-      </div>
-      <AnnualTab dayMinutes={r.days.map((d) => d.worked)} onPrint={() => printSection("year")} />
+      <AnnualTab dayMinutes={dayMinutes} onPdf={makePdf} onChange={setYearSnap} />
     </div>
   );
 }
@@ -219,7 +198,6 @@ const CSS = `
 .hc-warns svg{flex-shrink:0;margin-top:1px}
 .hc-cta{margin-top:12px;border:1px solid var(--b);border-radius:12px;padding:12px 14px;display:flex;gap:12px;align-items:center;justify-content:space-between;background:#f8fafc}
 .hc-cta p{margin:0;font-size:13px}
-.hc-print{display:none}
 @media (max-width:640px){
  .hc-days{border:0;display:flex;flex-direction:column;gap:8px}
  .hc-day{grid-template-columns:1fr 1fr;border:1px solid var(--b)!important;border-radius:12px}
@@ -228,18 +206,5 @@ const CSS = `
  .hc-pause{order:4}
  .hc-stats{grid-template-columns:1fr}
  .hc-cta{flex-direction:column;align-items:flex-start}
-}
-@media print{
- body *{visibility:hidden}
- .hc-print,.hc-print *{visibility:visible}
- .hc-print{display:block;position:absolute;inset:0 auto auto 0;width:100%;color:#000;font-family:system-ui,sans-serif}
- .hc-screen{display:none}
- .hc-print h1{font-family:Montserrat,sans-serif;font-size:20px}
- .hc-print table{width:100%;border-collapse:collapse;font-size:12px}
- .hc-print th,.hc-print td{border:1px solid #ccc;padding:6px;text-align:left}
- .hc-print tfoot td{font-weight:700}
- .hc-print p{font-size:11px;margin-top:16px}
-  body[data-hc-print="week"] .hc-print-year{display:none!important}
-  body[data-hc-print="year"] .hc-print-week{display:none!important}
 }
 `;
