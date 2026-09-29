@@ -39,8 +39,8 @@ export const buildHolidays = (year: number, region: string, island: string, aran
     list = list.filter((h) => h.date !== ARAN[year].remove);
     list.push({ date: ARAN[year].add, name: "Festivo de la Val d'Aran", kind: "oficial" });
   }
-  locals.filter((d) => d && d.startsWith(String(year))).forEach((d, k) => {
-    if (!list.some((h) => h.date === d)) list.push({ date: d, name: `Festivo local ${k + 1}`, kind: "local" });
+  locals.filter((d) => d && d.startsWith(String(year))).forEach((d) => {
+    if (!list.some((h) => h.date === d)) list.push({ date: d, name: "Festivo local", kind: "local" });
   });
   return list.sort((a, b) => a.date.localeCompare(b.date));
 };
@@ -52,7 +52,7 @@ export const wd = (d: Date) => (d.getDay() + 6) % 7;
 export interface DayRow { date: string; weekday: number; type: "laborable" | "festivo" | "sin horario"; minutes: number }
 export interface YearResult {
   rows: DayRow[]; workdays: number; holidaysOnWork: number; vacDays: number; permDays: number;
-  total: number; weeklyAvg: number; months: { minutes: number; holidays: number }[]; avgDay: number;
+  total: number; weeklyAvg: number; workedDays: number; months: { minutes: number; holidays: number }[]; avgDay: number;
 }
 
 export const computeYear = (year: number, dayMinutes: number[], active: Set<string>, vacLab: number, perm: number): YearResult => {
@@ -72,8 +72,9 @@ export const computeYear = (year: number, dayMinutes: number[], active: Set<stri
   const wdpw = dayMinutes.filter((m) => m > 0).length;
   const avgDay = wdpw ? dayMinutes.reduce((a, b) => a + b, 0) / wdpw : 0;
   const total = Math.max(0, sum - (vacLab + perm) * avgDay);
-  const daysInYear = rows.length;
-  return { rows, workdays, holidaysOnWork, vacDays: vacLab, permDays: perm, total, weeklyAvg: total / (daysInYear / 7), months, avgDay };
+  const workedDays = Math.max(0, workdays - holidaysOnWork - vacLab - perm);
+  const weeks = wdpw ? workedDays / wdpw : 0;
+  return { rows, workdays, holidaysOnWork, vacDays: vacLab, permDays: perm, total, weeklyAvg: weeks ? total / weeks : 0, workedDays, months, avgDay };
 };
 
 export const naturalToLab = (n: number, wdpw: number) => Math.ceil((n * wdpw) / 7);

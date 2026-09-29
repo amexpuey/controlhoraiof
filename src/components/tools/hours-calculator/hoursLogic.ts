@@ -65,6 +65,20 @@ export const computeWeek = (days: DayInput[], agreedHours: number): WeekResult =
   }
   if (shortRest) warnings.push("Menos de 12 horas de descanso entre jornadas (art. 34.3 ET).");
   if (res.some((d) => d.longNoBreak)) warnings.push("Jornada continuada de más de 6 horas sin un descanso de al menos 15 minutos (art. 34.4 ET).");
+  // Art. 37.1: 36 h uninterrupted weekly rest (circular week)
+  const iv: [number, number][] = [];
+  days.forEach((d, i) => d.segments.forEach((sg) => { const rg = segRange(sg); if (rg) iv.push([i * 1440 + rg[0], i * 1440 + rg[1]]); }));
+  if (iv.length) {
+    iv.sort((a, b) => a[0] - b[0]);
+    let maxGap = 0, end = iv[0][1];
+    for (let k = 1; k < iv.length; k++) { maxGap = Math.max(maxGap, iv[k][0] - end); end = Math.max(end, iv[k][1]); }
+    maxGap = Math.max(maxGap, iv[0][0] + 10080 - end);
+    if (maxGap < 2160) warnings.push("Menos de día y medio de descanso semanal ininterrumpido (art. 37.1 ET). Puede acumularse en periodos de hasta 14 días.");
+  }
+  if (res.some((d) => d.night >= 180 && d.worked > 480)) {
+    warnings.push("Quien trabaja de noche de forma habitual no puede superar 8 horas diarias de promedio en 15 días (art. 36.1 ET).");
+    if (extra > 0) warnings.push("Los trabajadores nocturnos no pueden hacer horas extraordinarias (art. 36.1 ET).");
+  }
   return { days: res, total, night, extra, annualExtra: extra * 52, warnings };
 };
 

@@ -7,7 +7,7 @@ export interface WeekPdf { days: DayInput[]; res: WeekResult; agreed: number; pr
 export interface YearPdf {
   year: number; regionName: string; island: string; aran: boolean; locals: string[];
   vac: number; vacType: "lab" | "nat"; vacLab: number; perm: number; conv: number | null;
-  r: YearResult; hols: { date: string; name: string }[];
+  r: YearResult; hols: { date: string; name: string; kind?: string }[];
 }
 
 const MONTHS = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -85,7 +85,9 @@ export function generateHoursPdf(week: WeekPdf, year: YearPdf | null) {
   doc.setFont("helvetica", "bold"); doc.setFontSize(10); doc.setTextColor(...T); doc.text("Avisos legales", M, y + 2); y += 6;
   if (week.res.warnings.length) week.res.warnings.forEach((w) => { y = warnBox(doc, y, w); });
   else y = warnBox(doc, y, "Sin avisos para esta semana.", false);
-  y = para(doc, y + 3, `Si todas las semanas fueran como esta, harías ${nf(week.res.annualExtra / 60)} horas extra al año. El límite legal es de 80 horas extra al año (art. 35.2 ET); no cuentan las compensadas con descanso en los 4 meses siguientes.`, 8.5);
+  const yDiff = year?.conv ? year.r.total / 60 - year.conv : null;
+  const extraTxt = year ? (yDiff !== null ? `Con tu proyección anual, harías ${nf(Math.max(0, yDiff))} horas por encima de la jornada anual del convenio.` : "") : `Si todas las semanas fueran como esta, harías ${nf(week.res.annualExtra / 60)} horas extra al año.`;
+  y = para(doc, y + 3, `${extraTxt} El límite legal es de 80 horas extra al año (art. 35.2 ET); no cuentan las compensadas con descanso en los 4 meses siguientes.`, 8.5);
 
   // Page 2
   if (year) {
@@ -99,16 +101,18 @@ export function generateHoursPdf(week: WeekPdf, year: YearPdf | null) {
     const diff = year.conv ? r.total / 60 - year.conv : 0;
     y = boxes(doc, y + 1, [
       ["Horas anuales previstas", hm(r.total), dec(r.total)],
-      ["Promedio semanal (cómputo anual)", hm(r.weeklyAvg), "Límite: 40 h (art. 34.1 ET)"],
+      ["Promedio semanal (cómputo anual)", hm(r.weeklyAvg), "Límite 40 h (art. 34.1 ET). Sin contar vacaciones, permisos ni festivos"],
       ["Diferencia con el convenio", year.conv ? `${diff > 0 ? "+" : "-"}${nf(Math.abs(diff))} h` : "-", year.conv ? (diff > 0 ? "Supera la jornada del convenio" : "Por debajo del convenio") : "Convenio no indicado"],
     ]);
     if (year.conv && diff > 0) y = warnBox(doc, y, `La previsión supera en ${nf(diff)} h la jornada anual del convenio (${nf(year.conv, 0)} h).`);
+    if (year.conv && diff > 80) y = warnBox(doc, y, "Más de 80 horas extraordinarias al año (art. 35.2 ET). No cuentan las compensadas con descanso en los 4 meses siguientes.");
     if (r.weeklyAvg > 2400) y = warnBox(doc, y, "El promedio semanal supera las 40 horas de trabajo efectivo en cómputo anual (art. 34.1 ET).");
-    y = para(doc, y + 1, `${r.workdays} días laborables · ${r.holidaysOnWork} festivos en día laborable · ${nf(r.vacDays, r.vacDays % 1 ? 2 : 0)} días de vacaciones · ${nf(r.permDays, 0)} días de permisos`, 8.5);
+    y = para(doc, y + 1, `${r.workdays} días con horario · ${r.holidaysOnWork} festivos · ${nf(r.vacDays, r.vacDays % 1 ? 2 : 0)} días de vacaciones · ${nf(r.permDays, 0)} de permisos = ${nf(r.workedDays, r.workedDays % 1 ? 2 : 0)} días de trabajo`, 8.5);
 
     // Calendar 4x3
     const cw = (CW - 9) / 4, cell = cw / 7, ch = cell * 0.52;
     const byDate = new Map(r.rows.map((x) => [x.date, x]));
+    const localSet = new Set(year.hols.filter((h) => h.kind === "local").map((h) => h.date));
     for (let mi = 0; mi < 12; mi++) {
       const cx = M + (mi % 4) * (cw + 3), cy = y + Math.floor(mi / 4) * (ch * 7.6 + 2);
       doc.setFont("helvetica", "bold"); doc.setFontSize(8); doc.setTextColor(...T); doc.text(MONTHS[mi], cx, cy + 3);
@@ -122,6 +126,7 @@ export function generateHoursPdf(week: WeekPdf, year: YearPdf | null) {
         const t = byDate.get(key)?.type;
         const fill: [number, number, number] = t === "festivo" ? [252, 211, 77] : t === "laborable" ? [209, 250, 229] : [241, 245, 249];
         doc.setFillColor(...fill); doc.rect(x + 0.2, yy, cell - 0.4, ch - 0.3, "F");
+        if (t === "festivo" && localSet.has(key)) { doc.setDrawColor(180, 83, 9); doc.setLineWidth(0.4); doc.rect(x + 0.4, yy + 0.2, cell - 0.8, ch - 0.7, "S"); doc.setLineWidth(0.2); }
         doc.setFont("helvetica", t === "festivo" ? "bold" : "normal");
         const tc: [number, number, number] = t === "festivo" ? [120, 53, 15] : t === "laborable" ? T : [148, 163, 184]; doc.setTextColor(...tc);
         doc.text(String(dd), x + cell / 2, yy + ch * 0.72, { align: "center" });
@@ -130,9 +135,10 @@ export function generateHoursPdf(week: WeekPdf, year: YearPdf | null) {
     y += 3 * (ch * 7.6 + 2) + 4;
     const legend: [[number, number, number], string][] = [[[209, 250, 229], "Día con horario"], [[252, 211, 77], "Festivo"], [[241, 245, 249], "Fin de semana / sin horario"]];
     let lx = M; doc.setFontSize(7); doc.setFont("helvetica", "normal");
-    legend.forEach(([c, t]) => { doc.setFillColor(...c); doc.rect(lx, y - 2.5, 3, 3, "F"); doc.setTextColor(...T); doc.text(t, lx + 4, y); lx += doc.getTextWidth(t) + 10; });
-    doc.setTextColor(100, 116, 139); doc.text("Las vacaciones y los permisos se descuentan del total, sin fecha.", lx, y);
-    y += 5;
+    legend.splice(2, 0, [[252, 211, 77], "Festivo local"]);
+    legend.forEach(([c, t]) => { doc.setFillColor(...c); doc.rect(lx, y - 2.5, 3, 3, "F"); if (t === "Festivo local") { doc.setDrawColor(180, 83, 9); doc.setLineWidth(0.4); doc.rect(lx + 0.2, y - 2.3, 2.6, 2.6, "S"); doc.setLineWidth(0.2); } doc.setTextColor(...T); doc.text(t, lx + 4, y); lx += doc.getTextWidth(t) + 8; });
+    y += 3.5; doc.setTextColor(100, 116, 139); doc.text("Las vacaciones y los permisos se descuentan del total, sin fecha.", M, y);
+    y += 4;
 
     const gross = r.months.reduce((a, m) => a + m.minutes, 0);
     const monthRows = MONTHS.map((mn, mi) => {
@@ -151,11 +157,11 @@ export function generateHoursPdf(week: WeekPdf, year: YearPdf | null) {
       didDrawPage: () => { yearPages.add(doc.getNumberOfPages()); },
     });
     y = (doc as any).lastAutoTable.finalY + 2;
-    const hl = year.hols.map((h) => `${fd(h.date)}  ${h.name}`);
-    const half = Math.ceil(hl.length / 2);
-    autoTable(doc, { ...table, theme: "plain", startY: y, styles: { fontSize: 6.5, cellPadding: 0.3, textColor: T },
-      head: [[{ content: "Festivos aplicados", colSpan: 2 }]], headStyles: { fontStyle: "bold", fontSize: 8, textColor: T },
-      body: Array.from({ length: half }, (_, i) => [hl[i] || "", hl[i + half] || ""]),
+    const hl = [...year.hols].sort((a, b) => a.date.localeCompare(b.date)).map((h) => `${fd(h.date).slice(0, 5)}  ${h.name}${h.kind === "local" ? " (local)" : ""}`);
+    const third = Math.ceil(hl.length / 3);
+    autoTable(doc, { ...table, theme: "plain", startY: y, styles: { fontSize: 5.8, cellPadding: 0.15, textColor: T, overflow: "ellipsize" },
+      head: [[{ content: "Festivos aplicados", colSpan: 3 }]], headStyles: { fontStyle: "bold", fontSize: 7, textColor: T },
+      body: Array.from({ length: third }, (_, i) => [hl[i] || "", hl[i + third] || "", hl[i + 2 * third] || ""]),
       didDrawPage: () => { yearPages.add(doc.getNumberOfPages()); },
     });
   }
