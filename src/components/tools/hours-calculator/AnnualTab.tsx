@@ -32,7 +32,7 @@ export function AnnualTab({ dayMinutes }: { dayMinutes: number[] }) {
   const diff = hasConv ? r.total / 60 - conv : 0;
   const empty = wdpw === 0;
   const needIsland = region === "canarias" && !island;
-  const nf = (n: number) => n.toLocaleString("es-ES", { maximumFractionDigits: 2 });
+  const nf = (n: number) => n.toLocaleString("es-ES", { maximumFractionDigits: 2, useGrouping: "always" as any });
 
   const toggle = (d: string) => setOff((p) => { const n = new Set(p); n.has(d) ? n.delete(d) : n.add(d); return n; });
 
