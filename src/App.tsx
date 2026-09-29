@@ -43,6 +43,7 @@ const router = createBrowserRouter([
   { path: "/compliance-checker", element: <ComplianceCheckerPage /> },
   { path: "/plantillas/verificador-cumplimiento", element: <ComplianceCheckerPage /> },
   { path: "/calculadora-sanciones", element: <CalculadoraSancionesPage /> },
+  { path: "/calculadora-horas", lazy: async () => ({ Component: (await import("@/pages/CalculadoraHorasPage")).default }) },
   { path: "/plantillas", element: <Templates /> },
   { path: "/plantillas/guia-talento", element: <TalentGuidePage /> },
   { path: "/plantillas/registro-horas", element: <TimecardPage /> },
