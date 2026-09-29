@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Plus, Trash2, Copy, FileDown, FileSpreadsheet, AlertTriangle, X } from "lucide-react";
 import { useIframeHeight } from "@/hooks/useIframeHeight";
 import { DAYS, DayInput, computeWeek, fmtDec, fmtEur, fmtHM, segRange } from "@/components/tools/hours-calculator/hoursLogic";
+import { AnnualTab } from "@/components/tools/hours-calculator/AnnualTab";
 
 const empty = (): DayInput[] => DAYS.map(() => ({ segments: [{ start: "", end: "" }], pause: 0 }));
 
@@ -18,6 +19,7 @@ export default function CalculadoraHorasPage() {
   const [days, setDays] = useState<DayInput[]>(empty);
   const [agreed, setAgreed] = useState(40);
   const [price, setPrice] = useState("");
+  const [tab, setTab] = useState<"week" | "year">("week");
 
   useEffect(() => {
     const els = ["footer", "header", "nav"].map((s) => document.querySelector(s) as HTMLElement | null);
@@ -54,9 +56,13 @@ export default function CalculadoraHorasPage() {
   return (
     <div className="hc-root">
       <style>{CSS}</style>
+      <div className="hc-tabs hc-screen" role="tablist">
+        <button type="button" role="tab" aria-selected={tab === "week"} className={tab === "week" ? "on" : ""} onClick={() => setTab("week")}>Semana</button>
+        <button type="button" role="tab" aria-selected={tab === "year"} className={tab === "year" ? "on" : ""} onClick={() => setTab("year")}>Proyección anual</button>
+      </div>
+      {tab === "year" ? <AnnualTab dayMinutes={r.days.map((d) => d.worked)} /> : <>
       <div className="hc-screen">
-        <h1 className="hc-h1">Calculadora de horas trabajadas</h1>
-        <p className="hc-sub">Introduce tu semana y comprueba si superas los límites del Estatuto de los Trabajadores.</p>
+
 
         <div className="hc-bar">
           {TEMPLATES.map((t) => (
@@ -167,11 +173,15 @@ export default function CalculadoraHorasPage() {
         </table>
         <p>Este cálculo no sustituye el registro de jornada: la ley exige un registro diario, fiable y conservado durante 4 años (art. 34.9 ET).</p>
       </div>
+      </>}
     </div>
   );
 }
 
 const CSS = `
+.hc-tabs{display:flex;gap:4px;border-bottom:1px solid #e2e8f0;margin-bottom:10px}
+.hc-tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:8px 14px;font:inherit;font-weight:600;color:#475569;cursor:pointer;margin-bottom:-1px}
+.hc-tabs button.on{color:#0b8f7c;border-bottom-color:#0fb89f}
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap');
 .hc-root{--g:#0fb89f;--gd:#0b8f7c;--t:#0a1628;--b:#e2e8f0;--a:#92400e;--ab:#fffbeb;--abd:#fcd34d;background:#fff;color:var(--t);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;max-width:900px;margin:0 auto;padding:16px;font-size:14px}
 .hc-h1{font-family:Montserrat,sans-serif;font-weight:700;font-size:22px;margin:0}

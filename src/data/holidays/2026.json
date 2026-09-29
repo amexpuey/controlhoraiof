@@ -1,0 +1,1019 @@
+{
+ "year": 2026,
+ "source": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-21667",
+ "national": [
+  "2026-01-01",
+  "2026-01-06",
+  "2026-04-03",
+  "2026-05-01",
+  "2026-08-15",
+  "2026-10-12",
+  "2026-12-08",
+  "2026-12-25"
+ ],
+ "regions": {
+  "andalucia": {
+   "name": "Andalucía",
+   "holidays": [
+    {
+     "date": "2026-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2026-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2026-02-28",
+     "name": "Día de Andalucía"
+    },
+    {
+     "date": "2026-04-02",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2026-04-03",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2026-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2026-08-15",
+     "name": "Asunción de la Virgen"
+    },
+    {
+     "date": "2026-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2026-11-02",
+     "name": "Día siguiente a Todos los Santos"
+    },
+    {
+     "date": "2026-12-07",
+     "name": "Lunes siguiente al Día de la Constitución Española"
+    },
+    {
+     "date": "2026-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2026-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "aragon": {
+   "name": "Aragón",
+   "holidays": [
+    {
+     "date": "2026-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2026-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2026-04-02",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2026-04-03",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2026-04-23",
+     "name": "San Jorge / Día de Aragón"
+    },
+    {
+     "date": "2026-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2026-08-15",
+     "name": "Asunción de la Virgen"
+    },
+    {
+     "date": "2026-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2026-11-02",
+     "name": "Día siguiente a Todos los Santos"
+    },
+    {
+     "date": "2026-12-07",
+     "name": "Lunes siguiente al Día de la Constitución Española"
+    },
+    {
+     "date": "2026-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2026-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "asturias": {
+   "name": "Asturias",
+   "holidays": [
+    {
+     "date": "2026-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2026-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2026-04-02",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2026-04-03",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2026-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2026-08-15",
+     "name": "Asunción de la Virgen"
+    },
+    {
+     "date": "2026-09-08",
+     "name": "Día de Asturias"
+    },
+    {
+     "date": "2026-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2026-11-02",
+     "name": "Día siguiente a Todos los Santos"
+    },
+    {
+     "date": "2026-12-07",
+     "name": "Lunes siguiente al Día de la Constitución Española"
+    },
+    {
+     "date": "2026-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2026-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "baleares": {
+   "name": "Illes Balears",
+   "holidays": [
+    {
+     "date": "2026-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2026-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2026-03-02",
+     "name": "Lunes siguiente al Día de les Illes Balears"
+    },
+    {
+     "date": "2026-04-02",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2026-04-03",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2026-04-06",
+     "name": "Lunes de Pascua"
+    },
+    {
+     "date": "2026-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2026-08-15",
+     "name": "Asunción de la Virgen"
+    },
+    {
+     "date": "2026-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2026-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2026-12-25",
+     "name": "Natividad del Señor"
+    },
+    {
+     "date": "2026-12-26",
+     "name": "San Esteban"
+    }
+   ]
+  },
+  "canarias": {
+   "name": "Canarias",
+   "holidays": [
+    {
+     "date": "2026-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2026-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2026-04-02",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2026-04-03",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2026-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2026-05-30",
+     "name": "Día de Canarias"
+    },
+    {
+     "date": "2026-08-15",
+     "name": "Asunción de la Virgen"
+    },
+    {
+     "date": "2026-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2026-11-02",
+     "name": "Día siguiente a Todos los Santos"
+    },
+    {
+     "date": "2026-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2026-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "cantabria": {
+   "name": "Cantabria",
+   "holidays": [
+    {
+     "date": "2026-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2026-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2026-04-02",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2026-04-03",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2026-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2026-07-28",
+     "name": "Día de las Instituciones de Cantabria"
+    },
+    {
+     "date": "2026-08-15",
+     "name": "Asunción de la Virgen"
+    },
+    {
+     "date": "2026-09-15",
+     "name": "La Bien Aparecida"
+    },
+    {
+     "date": "2026-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2026-12-07",
+     "name": "Lunes siguiente al Día de la Constitución Española"
+    },
+    {
+     "date": "2026-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2026-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "castilla-la-mancha": {
+   "name": "Castilla-La Mancha",
+   "holidays": [
+    {
+     "date": "2026-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2026-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2026-04-02",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2026-04-03",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2026-04-06",
+     "name": "Lunes de Pascua"
+    },
+    {
+     "date": "2026-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2026-06-04",
+     "name": "Corpus Christi"
+    },
+    {
+     "date": "2026-08-15",
+     "name": "Asunción de la Virgen"
+    },
+    {
+     "date": "2026-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2026-11-02",
+     "name": "Día siguiente a Todos los Santos"
+    },
+    {
+     "date": "2026-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2026-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "castilla-y-leon": {
+   "name": "Castilla y León",
+   "holidays": [
+    {
+     "date": "2026-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2026-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2026-04-02",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2026-04-03",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2026-04-23",
+     "name": "Fiesta de Castilla y León"
+    },
+    {
+     "date": "2026-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2026-08-15",
+     "name": "Asunción de la Virgen"
+    },
+    {
+     "date": "2026-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2026-11-02",
+     "name": "Día siguiente a Todos los Santos"
+    },
+    {
+     "date": "2026-12-07",
+     "name": "Lunes siguiente al Día de la Constitución Española"
+    },
+    {
+     "date": "2026-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2026-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "cataluna": {
+   "name": "Cataluña",
+   "holidays": [
+    {
+     "date": "2026-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2026-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2026-04-03",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2026-04-06",
+     "name": "Lunes de Pascua"
+    },
+    {
+     "date": "2026-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2026-06-24",
+     "name": "San Juan"
+    },
+    {
+     "date": "2026-08-15",
+     "name": "Asunción de la Virgen"
+    },
+    {
+     "date": "2026-09-11",
+     "name": "Fiesta Nacional de Cataluña"
+    },
+    {
+     "date": "2026-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2026-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2026-12-25",
+     "name": "Natividad del Señor"
+    },
+    {
+     "date": "2026-12-26",
+     "name": "San Esteban"
+    }
+   ]
+  },
+  "comunidad-valenciana": {
+   "name": "Comunitat Valenciana",
+   "holidays": [
+    {
+     "date": "2026-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2026-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2026-03-19",
+     "name": "San José"
+    },
+    {
+     "date": "2026-04-03",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2026-04-06",
+     "name": "Lunes de Pascua"
+    },
+    {
+     "date": "2026-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2026-06-24",
+     "name": "San Juan"
+    },
+    {
+     "date": "2026-08-15",
+     "name": "Asunción de la Virgen"
+    },
+    {
+     "date": "2026-10-09",
+     "name": "Día de la Comunitat Valenciana"
+    },
+    {
+     "date": "2026-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2026-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2026-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "extremadura": {
+   "name": "Extremadura",
+   "holidays": [
+    {
+     "date": "2026-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2026-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2026-04-02",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2026-04-03",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2026-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2026-08-15",
+     "name": "Asunción de la Virgen"
+    },
+    {
+     "date": "2026-09-08",
+     "name": "Día de Extremadura"
+    },
+    {
+     "date": "2026-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2026-11-02",
+     "name": "Día siguiente a Todos los Santos"
+    },
+    {
+     "date": "2026-12-07",
+     "name": "Lunes siguiente al Día de la Constitución Española"
+    },
+    {
+     "date": "2026-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2026-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "galicia": {
+   "name": "Galicia",
+   "holidays": [
+    {
+     "date": "2026-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2026-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2026-03-19",
+     "name": "San José"
+    },
+    {
+     "date": "2026-04-02",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2026-04-03",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2026-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2026-06-24",
+     "name": "San Juan"
+    },
+    {
+     "date": "2026-07-25",
+     "name": "Día Nacional de Galicia"
+    },
+    {
+     "date": "2026-08-15",
+     "name": "Asunción de la Virgen"
+    },
+    {
+     "date": "2026-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2026-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2026-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "madrid": {
+   "name": "Comunidad de Madrid",
+   "holidays": [
+    {
+     "date": "2026-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2026-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2026-04-02",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2026-04-03",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2026-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2026-05-02",
+     "name": "Fiesta de la Comunidad de Madrid"
+    },
+    {
+     "date": "2026-08-15",
+     "name": "Asunción de la Virgen"
+    },
+    {
+     "date": "2026-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2026-11-02",
+     "name": "Día siguiente a Todos los Santos"
+    },
+    {
+     "date": "2026-12-07",
+     "name": "Lunes siguiente al Día de la Constitución Española"
+    },
+    {
+     "date": "2026-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2026-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "murcia": {
+   "name": "Región de Murcia",
+   "holidays": [
+    {
+     "date": "2026-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2026-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2026-03-19",
+     "name": "San José"
+    },
+    {
+     "date": "2026-04-02",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2026-04-03",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2026-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2026-06-09",
+     "name": "Día de la Región de Murcia"
+    },
+    {
+     "date": "2026-08-15",
+     "name": "Asunción de la Virgen"
+    },
+    {
+     "date": "2026-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2026-12-07",
+     "name": "Lunes siguiente al Día de la Constitución Española"
+    },
+    {
+     "date": "2026-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2026-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "navarra": {
+   "name": "Comunidad Foral de Navarra",
+   "holidays": [
+    {
+     "date": "2026-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2026-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2026-03-19",
+     "name": "San José"
+    },
+    {
+     "date": "2026-04-02",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2026-04-03",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2026-04-06",
+     "name": "Lunes de Pascua"
+    },
+    {
+     "date": "2026-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2026-08-15",
+     "name": "Asunción de la Virgen"
+    },
+    {
+     "date": "2026-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2026-11-02",
+     "name": "Día siguiente a Todos los Santos"
+    },
+    {
+     "date": "2026-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2026-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "pais-vasco": {
+   "name": "País Vasco",
+   "holidays": [
+    {
+     "date": "2026-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2026-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2026-03-19",
+     "name": "San José"
+    },
+    {
+     "date": "2026-04-02",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2026-04-03",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2026-04-06",
+     "name": "Lunes de Pascua"
+    },
+    {
+     "date": "2026-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2026-07-25",
+     "name": "Santiago Apóstol"
+    },
+    {
+     "date": "2026-08-15",
+     "name": "Asunción de la Virgen"
+    },
+    {
+     "date": "2026-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2026-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2026-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "la-rioja": {
+   "name": "La Rioja",
+   "holidays": [
+    {
+     "date": "2026-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2026-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2026-04-02",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2026-04-03",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2026-04-06",
+     "name": "Lunes de Pascua"
+    },
+    {
+     "date": "2026-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2026-06-09",
+     "name": "Día de la Rioja"
+    },
+    {
+     "date": "2026-08-15",
+     "name": "Asunción de la Virgen"
+    },
+    {
+     "date": "2026-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2026-12-07",
+     "name": "Lunes siguiente al Día de la Constitución Española"
+    },
+    {
+     "date": "2026-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2026-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "ceuta": {
+   "name": "Ciudad de Ceuta",
+   "holidays": [
+    {
+     "date": "2026-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2026-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2026-04-02",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2026-04-03",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2026-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2026-05-27",
+     "name": "Fiesta Sacrificio-Eidul Adha"
+    },
+    {
+     "date": "2026-08-05",
+     "name": "Nuestra Señora de África"
+    },
+    {
+     "date": "2026-08-15",
+     "name": "Asunción de la Virgen"
+    },
+    {
+     "date": "2026-09-02",
+     "name": "Día de Ceuta"
+    },
+    {
+     "date": "2026-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2026-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2026-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "melilla": {
+   "name": "Ciudad de Melilla",
+   "holidays": [
+    {
+     "date": "2026-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2026-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2026-03-20",
+     "name": "Fiesta del Eid Fitr"
+    },
+    {
+     "date": "2026-04-02",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2026-04-03",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2026-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2026-05-27",
+     "name": "Fiesta Sacrificio-Aid al Adha"
+    },
+    {
+     "date": "2026-08-15",
+     "name": "Asunción de la Virgen"
+    },
+    {
+     "date": "2026-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2026-12-07",
+     "name": "Lunes siguiente al Día de la Constitución Española"
+    },
+    {
+     "date": "2026-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2026-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  }
+ }
+}
