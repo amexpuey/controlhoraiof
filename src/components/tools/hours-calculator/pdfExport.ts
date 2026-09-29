@@ -110,7 +110,7 @@ export function generateHoursPdf(week: WeekPdf, year: YearPdf | null) {
     const cw = (CW - 9) / 4, cell = cw / 7, ch = cell * 0.52;
     const byDate = new Map(r.rows.map((x) => [x.date, x]));
     for (let mi = 0; mi < 12; mi++) {
-      const cx = M + (mi % 4) * (cw + 3), cy = y + Math.floor(mi / 4) * (ch * 8 + 3);
+      const cx = M + (mi % 4) * (cw + 3), cy = y + Math.floor(mi / 4) * (ch * 7.6 + 2);
       doc.setFont("helvetica", "bold"); doc.setFontSize(8); doc.setTextColor(...T); doc.text(MONTHS[mi], cx, cy + 3);
       doc.setFontSize(6); doc.setTextColor(100, 116, 139);
       ["L", "M", "X", "J", "V", "S", "D"].forEach((d, i) => doc.text(d, cx + i * cell + cell / 2, cy + 3 + ch, { align: "center" }));
@@ -127,7 +127,7 @@ export function generateHoursPdf(week: WeekPdf, year: YearPdf | null) {
         doc.text(String(dd), x + cell / 2, yy + ch * 0.72, { align: "center" });
       }
     }
-    y += 3 * (ch * 8 + 3) + 1;
+    y += 3 * (ch * 7.6 + 2) + 1;
     const legend: [[number, number, number], string][] = [[[209, 250, 229], "Día con horario"], [[252, 211, 77], "Festivo"], [[241, 245, 249], "Fin de semana / sin horario"]];
     let lx = M; doc.setFontSize(7); doc.setFont("helvetica", "normal");
     legend.forEach(([c, t]) => { doc.setFillColor(...c); doc.rect(lx, y - 2.5, 3, 3, "F"); doc.setTextColor(...T); doc.text(t, lx + 4, y); lx += doc.getTextWidth(t) + 10; });
@@ -150,10 +150,10 @@ export function generateHoursPdf(week: WeekPdf, year: YearPdf | null) {
       footStyles: { fillColor: [240, 253, 250], textColor: G, fontStyle: "bold" },
       didDrawPage: () => yearPages.add(doc.getNumberOfPages()),
     });
-    y = (doc as any).lastAutoTable.finalY + 5;
+    y = (doc as any).lastAutoTable.finalY + 2;
     const hl = year.hols.map((h) => `${fd(h.date)}  ${h.name}`);
     const half = Math.ceil(hl.length / 2);
-    autoTable(doc, { ...table, theme: "plain", startY: y, styles: { fontSize: 7, cellPadding: 0.6, textColor: T },
+    autoTable(doc, { ...table, theme: "plain", startY: y, styles: { fontSize: 6.5, cellPadding: 0.3, textColor: T },
       head: [[{ content: "Festivos aplicados", colSpan: 2 }]], headStyles: { fontStyle: "bold", fontSize: 8, textColor: T },
       body: Array.from({ length: half }, (_, i) => [hl[i] || "", hl[i + half] || ""]),
       didDrawPage: () => yearPages.add(doc.getNumberOfPages()),
