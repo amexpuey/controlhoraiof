@@ -9,5 +9,5 @@
 - [x] Keep separate weekly and annual PDF/CSV downloads and verify annual exports
 - [x] Verify /calculadora-sanciones and /compliance-checker still work
 - [x] Make embedded tool height shrink and grow with real content
-- [ ] Verify annual calendar height messages and 320 px content fit
+- [x] Verify annual calendar height messages and 320 px content fit
 - [ ] Publish (user action)
