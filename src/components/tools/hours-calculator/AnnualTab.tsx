@@ -6,7 +6,6 @@ import { YearPdf, downloadCsv, num } from "./pdfExport";
 
 const MONTHS = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 const CTA = "https://app.inwout.com/register/?utm_source=calculadora-horas&utm_medium=web&utm_campaign=proyeccion-anual";
-const BOE = "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-21667";
 const fmtDate = (d: string) => `${d.slice(8, 10)}/${d.slice(5, 7)}`;
 
 export function AnnualTab({ dayMinutes, onPdf, onChange, blocked = false }: { dayMinutes: number[]; blocked?: boolean; onPdf: () => void; onChange: (s: YearPdf | null) => void }) {
