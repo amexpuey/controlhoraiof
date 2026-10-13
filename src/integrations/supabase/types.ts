@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "12.2.3 (519615d)"
+    PostgrestVersion: "12.2.3"
   }
   public: {
     Tables: {
@@ -158,45 +158,69 @@ export type Database = {
         Row: {
           attendee_email: string
           attendee_name: string | null
+          attribution: Json | null
+          booked_at: string
+          channel: string
           company_name: string | null
           conversation_id: string | null
           created_at: string | null
           end_time: string
           event_id: string
           id: string
+          landing_url: string | null
+          language: string | null
           meet_link: string | null
           num_employees: number | null
           observations: string | null
+          page_context: string | null
+          pipedrive_notified_at: string | null
+          referrer: string | null
           start_time: string
           status: string | null
         }
         Insert: {
           attendee_email: string
           attendee_name?: string | null
+          attribution?: Json | null
+          booked_at?: string
+          channel?: string
           company_name?: string | null
           conversation_id?: string | null
           created_at?: string | null
           end_time: string
           event_id: string
           id?: string
+          landing_url?: string | null
+          language?: string | null
           meet_link?: string | null
           num_employees?: number | null
           observations?: string | null
+          page_context?: string | null
+          pipedrive_notified_at?: string | null
+          referrer?: string | null
           start_time: string
           status?: string | null
         }
         Update: {
           attendee_email?: string
           attendee_name?: string | null
+          attribution?: Json | null
+          booked_at?: string
+          channel?: string
           company_name?: string | null
           conversation_id?: string | null
           created_at?: string | null
           end_time?: string
           event_id?: string
           id?: string
+          landing_url?: string | null
+          language?: string | null
           meet_link?: string | null
           num_employees?: number | null
           observations?: string | null
+          page_context?: string | null
+          pipedrive_notified_at?: string | null
+          referrer?: string | null
           start_time?: string
           status?: string | null
         }

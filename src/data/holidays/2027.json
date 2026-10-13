@@ -1,0 +1,1020 @@
+{
+ "year": 2027,
+ "source": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-21254",
+ "national": [
+  "2027-01-01",
+  "2027-01-06",
+  "2027-03-26",
+  "2027-05-01",
+  "2027-10-12",
+  "2027-11-01",
+  "2027-12-06",
+  "2027-12-08",
+  "2027-12-25"
+ ],
+ "regions": {
+  "andalucia": {
+   "name": "Andalucía",
+   "holidays": [
+    {
+     "date": "2027-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2027-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2027-03-01",
+     "name": "Día de Andalucía"
+    },
+    {
+     "date": "2027-03-25",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2027-03-26",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2027-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2027-08-16",
+     "name": "Lunes siguiente a la Asunción de la Virgen"
+    },
+    {
+     "date": "2027-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2027-11-01",
+     "name": "Todos los Santos"
+    },
+    {
+     "date": "2027-12-06",
+     "name": "Día de la Constitución Española"
+    },
+    {
+     "date": "2027-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2027-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "aragon": {
+   "name": "Aragón",
+   "holidays": [
+    {
+     "date": "2027-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2027-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2027-03-25",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2027-03-26",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2027-04-23",
+     "name": "San Jorge / Día de Aragón"
+    },
+    {
+     "date": "2027-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2027-08-16",
+     "name": "Lunes siguiente a la Asunción de la Virgen"
+    },
+    {
+     "date": "2027-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2027-11-01",
+     "name": "Todos los Santos"
+    },
+    {
+     "date": "2027-12-06",
+     "name": "Día de la Constitución Española"
+    },
+    {
+     "date": "2027-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2027-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "asturias": {
+   "name": "Asturias",
+   "holidays": [
+    {
+     "date": "2027-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2027-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2027-03-25",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2027-03-26",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2027-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2027-08-16",
+     "name": "Lunes siguiente a la Asunción de la Virgen"
+    },
+    {
+     "date": "2027-09-08",
+     "name": "Día de Asturias"
+    },
+    {
+     "date": "2027-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2027-11-01",
+     "name": "Todos los Santos"
+    },
+    {
+     "date": "2027-12-06",
+     "name": "Día de la Constitución Española"
+    },
+    {
+     "date": "2027-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2027-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "baleares": {
+   "name": "Illes Balears",
+   "holidays": [
+    {
+     "date": "2027-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2027-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2027-03-01",
+     "name": "Día de les Illes Balears"
+    },
+    {
+     "date": "2027-03-25",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2027-03-26",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2027-03-29",
+     "name": "Lunes de Pascua"
+    },
+    {
+     "date": "2027-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2027-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2027-11-01",
+     "name": "Todos los Santos"
+    },
+    {
+     "date": "2027-12-06",
+     "name": "Día de la Constitución Española"
+    },
+    {
+     "date": "2027-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2027-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "canarias": {
+   "name": "Canarias",
+   "holidays": [
+    {
+     "date": "2027-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2027-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2027-03-25",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2027-03-26",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2027-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2027-08-16",
+     "name": "Lunes siguiente a la Asunción de la Virgen"
+    },
+    {
+     "date": "2027-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2027-11-01",
+     "name": "Todos los Santos"
+    },
+    {
+     "date": "2027-12-06",
+     "name": "Día de la Constitución Española"
+    },
+    {
+     "date": "2027-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2027-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "cantabria": {
+   "name": "Cantabria",
+   "holidays": [
+    {
+     "date": "2027-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2027-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2027-03-25",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2027-03-26",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2027-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2027-07-28",
+     "name": "Día de las Instituciones de Cantabria"
+    },
+    {
+     "date": "2027-09-15",
+     "name": "La Bien Aparecida"
+    },
+    {
+     "date": "2027-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2027-11-01",
+     "name": "Todos los Santos"
+    },
+    {
+     "date": "2027-12-06",
+     "name": "Día de la Constitución Española"
+    },
+    {
+     "date": "2027-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2027-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "castilla-la-mancha": {
+   "name": "Castilla-La Mancha",
+   "holidays": [
+    {
+     "date": "2027-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2027-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2027-03-25",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2027-03-26",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2027-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2027-05-27",
+     "name": "Corpus Christi"
+    },
+    {
+     "date": "2027-05-31",
+     "name": "Día de Castilla-La Mancha"
+    },
+    {
+     "date": "2027-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2027-11-01",
+     "name": "Todos los Santos"
+    },
+    {
+     "date": "2027-12-06",
+     "name": "Día de la Constitución Española"
+    },
+    {
+     "date": "2027-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2027-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "castilla-y-leon": {
+   "name": "Castilla y León",
+   "holidays": [
+    {
+     "date": "2027-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2027-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2027-03-25",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2027-03-26",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2027-04-23",
+     "name": "Fiesta de Castilla y León"
+    },
+    {
+     "date": "2027-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2027-08-16",
+     "name": "Lunes siguiente a la Asunción de la Virgen"
+    },
+    {
+     "date": "2027-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2027-11-01",
+     "name": "Todos los Santos"
+    },
+    {
+     "date": "2027-12-06",
+     "name": "Día de la Constitución Española"
+    },
+    {
+     "date": "2027-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2027-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "cataluna": {
+   "name": "Cataluña",
+   "holidays": [
+    {
+     "date": "2027-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2027-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2027-03-26",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2027-03-29",
+     "name": "Lunes de Pascua"
+    },
+    {
+     "date": "2027-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2027-06-24",
+     "name": "San Juan"
+    },
+    {
+     "date": "2027-09-11",
+     "name": "Fiesta Nacional de Cataluña"
+    },
+    {
+     "date": "2027-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2027-11-01",
+     "name": "Todos los Santos"
+    },
+    {
+     "date": "2027-12-06",
+     "name": "Día de la Constitución Española"
+    },
+    {
+     "date": "2027-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2027-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "comunidad-valenciana": {
+   "name": "Comunitat Valenciana",
+   "holidays": [
+    {
+     "date": "2027-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2027-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2027-03-19",
+     "name": "San José"
+    },
+    {
+     "date": "2027-03-26",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2027-03-29",
+     "name": "Lunes de Pascua"
+    },
+    {
+     "date": "2027-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2027-10-09",
+     "name": "Día de la Comunitat Valenciana"
+    },
+    {
+     "date": "2027-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2027-11-01",
+     "name": "Todos los Santos"
+    },
+    {
+     "date": "2027-12-06",
+     "name": "Día de la Constitución Española"
+    },
+    {
+     "date": "2027-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2027-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "extremadura": {
+   "name": "Extremadura",
+   "holidays": [
+    {
+     "date": "2027-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2027-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2027-03-25",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2027-03-26",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2027-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2027-09-08",
+     "name": "Día de Extremadura"
+    },
+    {
+     "date": "2027-10-11",
+     "name": "Sustitución del 15 de agosto"
+    },
+    {
+     "date": "2027-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2027-11-01",
+     "name": "Todos los Santos"
+    },
+    {
+     "date": "2027-12-06",
+     "name": "Día de la Constitución Española"
+    },
+    {
+     "date": "2027-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2027-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "galicia": {
+   "name": "Galicia",
+   "holidays": [
+    {
+     "date": "2027-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2027-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2027-03-19",
+     "name": "San José"
+    },
+    {
+     "date": "2027-03-25",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2027-03-26",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2027-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2027-05-17",
+     "name": "Día de las Letras Gallegas"
+    },
+    {
+     "date": "2027-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2027-11-01",
+     "name": "Todos los Santos"
+    },
+    {
+     "date": "2027-12-06",
+     "name": "Día de la Constitución Española"
+    },
+    {
+     "date": "2027-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2027-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "madrid": {
+   "name": "Comunidad de Madrid",
+   "holidays": [
+    {
+     "date": "2027-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2027-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2027-03-19",
+     "name": "San José"
+    },
+    {
+     "date": "2027-03-25",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2027-03-26",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2027-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2027-08-16",
+     "name": "Lunes siguiente a la Asunción de la Virgen"
+    },
+    {
+     "date": "2027-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2027-11-01",
+     "name": "Todos los Santos"
+    },
+    {
+     "date": "2027-12-06",
+     "name": "Día de la Constitución Española"
+    },
+    {
+     "date": "2027-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2027-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "murcia": {
+   "name": "Región de Murcia",
+   "holidays": [
+    {
+     "date": "2027-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2027-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2027-03-19",
+     "name": "San José"
+    },
+    {
+     "date": "2027-03-25",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2027-03-26",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2027-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2027-06-09",
+     "name": "Día de la Región de Murcia"
+    },
+    {
+     "date": "2027-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2027-11-01",
+     "name": "Todos los Santos"
+    },
+    {
+     "date": "2027-12-06",
+     "name": "Día de la Constitución Española"
+    },
+    {
+     "date": "2027-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2027-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "navarra": {
+   "name": "Comunidad Foral de Navarra",
+   "holidays": [
+    {
+     "date": "2027-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2027-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2027-03-19",
+     "name": "San José"
+    },
+    {
+     "date": "2027-03-25",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2027-03-26",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2027-03-29",
+     "name": "Lunes de Pascua"
+    },
+    {
+     "date": "2027-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2027-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2027-11-01",
+     "name": "Todos los Santos"
+    },
+    {
+     "date": "2027-12-06",
+     "name": "Día de la Constitución Española"
+    },
+    {
+     "date": "2027-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2027-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "pais-vasco": {
+   "name": "País Vasco",
+   "holidays": [
+    {
+     "date": "2027-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2027-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2027-03-25",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2027-03-26",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2027-03-29",
+     "name": "Lunes de Pascua"
+    },
+    {
+     "date": "2027-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2027-10-07",
+     "name": "Aniversario del primer Gobierno de Euskadi"
+    },
+    {
+     "date": "2027-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2027-11-01",
+     "name": "Todos los Santos"
+    },
+    {
+     "date": "2027-12-06",
+     "name": "Día de la Constitución Española"
+    },
+    {
+     "date": "2027-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2027-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "la-rioja": {
+   "name": "La Rioja",
+   "holidays": [
+    {
+     "date": "2027-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2027-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2027-03-25",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2027-03-26",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2027-03-29",
+     "name": "Lunes de Pascua"
+    },
+    {
+     "date": "2027-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2027-06-09",
+     "name": "Día de La Rioja"
+    },
+    {
+     "date": "2027-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2027-11-01",
+     "name": "Todos los Santos"
+    },
+    {
+     "date": "2027-12-06",
+     "name": "Día de la Constitución Española"
+    },
+    {
+     "date": "2027-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2027-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "ceuta": {
+   "name": "Ciudad de Ceuta",
+   "holidays": [
+    {
+     "date": "2027-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2027-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2027-03-25",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2027-03-26",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2027-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2027-05-17",
+     "name": "Eidul Adha (Fiesta del Sacrificio)"
+    },
+    {
+     "date": "2027-08-05",
+     "name": "Nuestra Señora de África"
+    },
+    {
+     "date": "2027-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2027-11-01",
+     "name": "Todos los Santos"
+    },
+    {
+     "date": "2027-12-06",
+     "name": "Día de la Constitución Española"
+    },
+    {
+     "date": "2027-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2027-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  },
+  "melilla": {
+   "name": "Ciudad de Melilla",
+   "holidays": [
+    {
+     "date": "2027-01-01",
+     "name": "Año Nuevo"
+    },
+    {
+     "date": "2027-01-06",
+     "name": "Epifanía del Señor"
+    },
+    {
+     "date": "2027-03-10",
+     "name": "Eid Fitr"
+    },
+    {
+     "date": "2027-03-25",
+     "name": "Jueves Santo"
+    },
+    {
+     "date": "2027-03-26",
+     "name": "Viernes Santo"
+    },
+    {
+     "date": "2027-05-01",
+     "name": "Fiesta del Trabajo"
+    },
+    {
+     "date": "2027-05-17",
+     "name": "Aid Al Adha (Fiesta del Sacrificio)"
+    },
+    {
+     "date": "2027-10-12",
+     "name": "Fiesta Nacional de España"
+    },
+    {
+     "date": "2027-11-01",
+     "name": "Todos los Santos"
+    },
+    {
+     "date": "2027-12-06",
+     "name": "Día de la Constitución Española"
+    },
+    {
+     "date": "2027-12-08",
+     "name": "Inmaculada Concepción"
+    },
+    {
+     "date": "2027-12-25",
+     "name": "Natividad del Señor"
+    }
+   ]
+  }
+ }
+}
