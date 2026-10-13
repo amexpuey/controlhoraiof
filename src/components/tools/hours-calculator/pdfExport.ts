@@ -1,7 +1,7 @@
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import { DAYS, DayInput, WeekResult, fmtEur, segRange } from "./hoursLogic";
-import { YearResult } from "./yearLogic";
+import { CITATIONS, YearResult } from "./yearLogic";
 
 export interface WeekPdf { days: DayInput[]; res: WeekResult; agreed: number; price: number | null }
 export interface YearPdf {
@@ -183,7 +183,7 @@ export function generateHoursPdf(week: WeekPdf, year: YearPdf | null) {
     doc.setFont("helvetica", "normal"); doc.setFontSize(6.5); doc.setTextColor(100, 116, 139);
     const legal = doc.splitTextToSize("Orientativo. El calendario laboral de tu empresa y tu convenio pueden fijar otros festivos, vacaciones o jornada. Este cálculo no sustituye el registro de jornada: la ley exige un registro diario, fiable y conservado durante 4 años (art. 34.9 ET).", CW);
     doc.text(legal, M, fy); fy += legal.length * 2.8;
-    if (yearPages.has(p) && year) { doc.text(`Festivos ${year.year}: BOE-A-2025-21667.`, M, fy); fy += 2.8; }
+    if (yearPages.has(p) && year) { doc.text(`Festivos ${year.year}: ${CITATIONS[year.year]?.id}.`, M, fy); fy += 2.8; }
     doc.text("Calculado con la calculadora de horas de INWOUT · inwout.com/calculadora-horas-trabajadas", M, fy);
     doc.text(`${p} / ${total}`, W - M, fy, { align: "right" });
   }

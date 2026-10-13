@@ -1,4 +1,5 @@
 import h2026 from "@/data/holidays/2026.json";
+import h2027 from "@/data/holidays/2027.json";
 
 export interface HolidayData {
   year: number;
@@ -8,8 +9,14 @@ export interface HolidayData {
 }
 
 /** Add future years here (e.g. 2027) without touching the logic. */
-export const HOLIDAYS: Record<number, HolidayData> = { 2026: h2026 as HolidayData };
+export const HOLIDAYS: Record<number, HolidayData> = { 2026: h2026 as HolidayData, 2027: h2027 as HolidayData };
 export const YEARS = Object.keys(HOLIDAYS).map(Number);
+
+export const CURRENT_YEAR = YEARS.includes(new Date().getFullYear()) ? new Date().getFullYear() : YEARS[0];
+export const CITATIONS: Record<number, { id: string; text: string }> = {
+  2026: { id: "BOE-A-2025-21667", text: "Resolución de la Dirección General de Trabajo de 17 de octubre de 2025 (BOE de 28/10/2025)" },
+  2027: { id: "BOE-A-2026-21254", text: "Resolución de la Dirección General de Trabajo de 8 de octubre de 2026 (BOE de 13/10/2026)" },
+};
 
 export const ISLANDS: Record<number, { name: string; date: string }[]> = {
   2026: [
@@ -21,8 +28,17 @@ export const ISLANDS: Record<number, { name: string; date: string }[]> = {
     { name: "Lanzarote y La Graciosa", date: "2026-09-15" },
     { name: "Tenerife", date: "2026-02-02" },
   ],
+  2027: [
+    { name: "El Hierro", date: "2027-09-24" },
+    { name: "Fuerteventura", date: "2027-09-17" },
+    { name: "Gran Canaria", date: "2027-09-08" },
+    { name: "La Gomera", date: "2027-10-04" },
+    { name: "La Palma", date: "2027-08-05" },
+    { name: "Lanzarote y La Graciosa", date: "2027-09-15" },
+    { name: "Tenerife", date: "2027-02-02" },
+  ],
 };
-export const ARAN: Record<number, { remove: string; add: string }> = { 2026: { remove: "2026-12-26", add: "2026-06-17" } };
+export const ARAN: Record<number, { remove: string; add: string }> = { 2026: { remove: "2026-12-26", add: "2026-06-17" }, 2027: { remove: "2027-03-29", add: "2027-06-17" } };
 
 export interface Hol { date: string; name: string; kind: "oficial" | "insular" | "local" }
 

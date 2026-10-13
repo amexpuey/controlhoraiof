@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import { AlertTriangle, FileDown, FileSpreadsheet } from "lucide-react";
 import { DAYS } from "./hoursLogic";
-import { ARAN, HOLIDAYS, ISLANDS, YEARS, buildHolidays, computeYear, fmtDecBig, fmtHMBig, naturalToLab } from "./yearLogic";
+import { CITATIONS, CURRENT_YEAR, ARAN, HOLIDAYS, ISLANDS, YEARS, buildHolidays, computeYear, fmtDecBig, fmtHMBig, naturalToLab } from "./yearLogic";
 import { YearPdf, downloadCsv, num } from "./pdfExport";
 
 const MONTHS = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -10,7 +10,7 @@ const BOE = "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-21667";
 const fmtDate = (d: string) => `${d.slice(8, 10)}/${d.slice(5, 7)}`;
 
 export function AnnualTab({ dayMinutes, onPdf, onChange, blocked = false }: { dayMinutes: number[]; blocked?: boolean; onPdf: () => void; onChange: (s: YearPdf | null) => void }) {
-  const [year, setYear] = useState(YEARS[0]);
+  const [year, setYear] = useState(CURRENT_YEAR);
   const [region, setRegion] = useState("madrid");
   const [island, setIsland] = useState("");
   const [aran, setAran] = useState(false);
@@ -194,7 +194,7 @@ export function AnnualTab({ dayMinutes, onPdf, onChange, blocked = false }: { da
             </>
           )}
           <p className="hc-small hc-muted">Orientativo. El calendario laboral de tu empresa y tu convenio pueden fijar otros festivos, vacaciones o jornada.</p>
-          <p className="hc-small hc-muted">Festivos {year}: <a href={BOE} target="_top" rel="noopener">Resolución de la Dirección General de Trabajo de 17 de octubre de 2025 (BOE de 28/10/2025)</a></p>
+          <p className="hc-small hc-muted">Festivos {year}: <a href={HOLIDAYS[year].source} target="_top" rel="noopener">{CITATIONS[year].text}</a></p>
           <div className="hc-bar hc-between">
             <div className="hc-bar">
               <button type="button" className="hc-btn" disabled={empty || needIsland || blocked} onClick={onPdf}><FileDown size={14} /> Descargar PDF</button>
