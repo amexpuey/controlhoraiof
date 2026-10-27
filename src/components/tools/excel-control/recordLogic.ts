@@ -58,7 +58,7 @@ export function validateRecords(people: PersonRecords[]) {
         let start = timeMinutes(a), end = timeMinutes(b);
         if (start === null || end === null) { fail("Hora no válida. Usa HH:MM (por ejemplo, 09:00)."); continue; }
         if (start === end) { fail("La entrada y la salida no pueden ser iguales."); continue; }
-        if (anchor !== undefined && start < anchor) start += 1440;
+        if (anchor !== undefined && start < anchor && pairs.some((x) => !x.pause && x.end > 1440)) start += 1440;
         if (end <= start % 1440) end += 1440;
         if (start >= 1440 && end < 1440) end += 1440;
         if (k < 2 && anchor === undefined) anchor = start;
