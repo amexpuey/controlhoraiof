@@ -10,4 +10,7 @@
 - [x] Verify /calculadora-sanciones and /compliance-checker still work
 - [x] Make embedded tool height shrink and grow with real content
 - [x] Verify annual calendar height messages and 320 px content fit
+- [ ] Crear asistente /excel-control-horario y hojas vacías con referencia prevista
+- [ ] Validar y convertir registros reales a Excel INWOUT, con pruebas de reglas
+- [ ] Verificar descargas, flujo completo y ancho de 320 px
 - [ ] Publish (user action)
