@@ -1,4 +1,5 @@
 import ExcelJS from "exceljs";
+import JSZip from "jszip";
 import { Person, Schedule, WEEKDAYS, MONTHS, PersonRecords, validateRecords, timeMinutes } from "./recordLogic";
 
 const HEADERS = ["Fecha", "Día", "Previsto", "Entrada real", "Salida real", "Entrada real 2", "Salida real 2", "Pausa inicio", "Pausa fin", "Observaciones"];
@@ -71,7 +72,18 @@ const value = (cell: ExcelJS.Cell): unknown => {
   return v;
 };
 export async function readRegister(data: ArrayBuffer) {
-  const book = new ExcelJS.Workbook(); await book.xlsx.load(data);
+  // Office editors use different comment paths; comments are not record data.
+  const archive = await JSZip.loadAsync(data);
+  for (const path of Object.keys(archive.files).filter((p) => /^xl\/worksheets\/_rels\/.*\.rels$/.test(p))) {
+    const entry = archive.file(path);
+    if (!entry) continue;
+    const xml = new DOMParser().parseFromString(await entry.async("string"), "application/xml");
+    for (const rel of Array.from(xml.getElementsByTagName("Relationship"))) {
+      if (/\/(comments|vmlDrawing)$/.test(rel.getAttribute("Type") || "")) rel.remove();
+    }
+    archive.file(path, new XMLSerializer().serializeToString(xml));
+  }
+  const book = new ExcelJS.Workbook(); await book.xlsx.load(await archive.generateAsync({ type: "arraybuffer" }));
   const people: PersonRecords[] = [];
   for (const sheet of book.worksheets) {
     if (sheet.name === "Cómo conservarlo") continue;
