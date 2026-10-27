@@ -44,7 +44,8 @@ export function createRegister(input: { people: Person[]; schedule: Schedule; co
         row.getCell(c).dataValidation = { type: "decimal", operator: "between", formulae: [0, 0.99999999], allowBlank: true, showErrorMessage: true, errorTitle: "Hora no válida", error: "Escribe una hora, por ejemplo 09:00." };
       }
       const r = row.number;
-      row.getCell(11).value = { formula: `IF(COUNT(D${r}:E${r})=2,MOD(E${r}-D${r},1),0)+IF(COUNT(F${r}:G${r})=2,MOD(G${r}-F${r},1),0)-IF(AND(COUNT(H${r}:I${r})=2,OR(COUNT(D${r}:E${r})=2,COUNT(F${r}:G${r})=2)),MOD(I${r}-H${r},1),0)`, result: 0 };
+      const span = (a: string, b: string) => `IF(AND(${a}${r}<>"",${b}${r}<>""),IFERROR(MOD(VALUE(${b}${r})-VALUE(${a}${r}),1),0),0)`;
+      row.getCell(11).value = { formula: `${span("D", "E")}+${span("F", "G")}-IF(OR(AND(D${r}<>"",E${r}<>""),AND(F${r}<>"",G${r}<>"")),${span("H", "I")},0)`, result: 0 };
       if (working) {
         const duration = (a: string, b: string) => ((timeMinutes(b) ?? 0) - (timeMinutes(a) ?? 0) + 1440) % 1440;
         plannedMinutes += duration(s.start, s.end) + (s.split ? duration(s.start2, s.end2) : 0) - (s.pause ? duration(s.pauseStart, s.pauseEnd) : 0);
