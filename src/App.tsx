@@ -44,6 +44,7 @@ const router = createBrowserRouter([
   { path: "/plantillas/verificador-cumplimiento", element: <ComplianceCheckerPage /> },
   { path: "/calculadora-sanciones", element: <CalculadoraSancionesPage /> },
   { path: "/calculadora-horas", lazy: async () => ({ Component: (await import("@/pages/CalculadoraHorasPage")).default }) },
+  { path: "/excel-control-horario", lazy: async () => ({ Component: (await import("@/pages/ExcelControlHorarioPage")).default }) },
   { path: "/plantillas", element: <Templates /> },
   { path: "/plantillas/guia-talento", element: <TalentGuidePage /> },
   { path: "/plantillas/registro-horas", element: <TimecardPage /> },
