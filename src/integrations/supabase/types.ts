@@ -164,8 +164,8 @@ export type Database = {
           company_name: string | null
           conversation_id: string | null
           created_at: string | null
-          end_time: string
-          event_id: string
+          end_time: string | null
+          event_id: string | null
           id: string
           landing_url: string | null
           language: string | null
@@ -175,7 +175,8 @@ export type Database = {
           page_context: string | null
           pipedrive_notified_at: string | null
           referrer: string | null
-          start_time: string
+          request_type: string
+          start_time: string | null
           status: string | null
         }
         Insert: {
@@ -187,8 +188,8 @@ export type Database = {
           company_name?: string | null
           conversation_id?: string | null
           created_at?: string | null
-          end_time: string
-          event_id: string
+          end_time?: string | null
+          event_id?: string | null
           id?: string
           landing_url?: string | null
           language?: string | null
@@ -198,7 +199,8 @@ export type Database = {
           page_context?: string | null
           pipedrive_notified_at?: string | null
           referrer?: string | null
-          start_time: string
+          request_type?: string
+          start_time?: string | null
           status?: string | null
         }
         Update: {
@@ -210,8 +212,8 @@ export type Database = {
           company_name?: string | null
           conversation_id?: string | null
           created_at?: string | null
-          end_time?: string
-          event_id?: string
+          end_time?: string | null
+          event_id?: string | null
           id?: string
           landing_url?: string | null
           language?: string | null
@@ -221,7 +223,8 @@ export type Database = {
           page_context?: string | null
           pipedrive_notified_at?: string | null
           referrer?: string | null
-          start_time?: string
+          request_type?: string
+          start_time?: string | null
           status?: string | null
         }
         Relationships: [
@@ -244,6 +247,8 @@ export type Database = {
           created_at: string
           embedding: string | null
           id: string
+          pii_reasons: string[] | null
+          pii_status: string | null
           priority: number
           review_status: Database["public"]["Enums"]["kb_review_status"]
           source: string
@@ -264,6 +269,8 @@ export type Database = {
           created_at?: string
           embedding?: string | null
           id?: string
+          pii_reasons?: string[] | null
+          pii_status?: string | null
           priority?: number
           review_status?: Database["public"]["Enums"]["kb_review_status"]
           source: string
@@ -284,6 +291,8 @@ export type Database = {
           created_at?: string
           embedding?: string | null
           id?: string
+          pii_reasons?: string[] | null
+          pii_status?: string | null
           priority?: number
           review_status?: Database["public"]["Enums"]["kb_review_status"]
           source?: string
@@ -297,8 +306,36 @@ export type Database = {
         }
         Relationships: []
       }
+      alba_knowledge_history: {
+        Row: {
+          changed_by: string | null
+          created_at: string
+          entity_id: string
+          entity_table: string
+          id: string
+          original_row: Json
+        }
+        Insert: {
+          changed_by?: string | null
+          created_at?: string
+          entity_id: string
+          entity_table: string
+          id?: string
+          original_row: Json
+        }
+        Update: {
+          changed_by?: string | null
+          created_at?: string
+          entity_id?: string
+          entity_table?: string
+          id?: string
+          original_row?: Json
+        }
+        Relationships: []
+      }
       alba_messages: {
         Row: {
+          answer_meta: Json | null
           content: string
           conversation_id: string | null
           created_at: string | null
@@ -310,6 +347,7 @@ export type Database = {
           tokens_used: number | null
         }
         Insert: {
+          answer_meta?: Json | null
           content: string
           conversation_id?: string | null
           created_at?: string | null
@@ -321,6 +359,7 @@ export type Database = {
           tokens_used?: number | null
         }
         Update: {
+          answer_meta?: Json | null
           content?: string
           conversation_id?: string | null
           created_at?: string | null
@@ -2396,6 +2435,56 @@ export type Database = {
         }
         Relationships: []
       }
+      kb_batch_members: {
+        Row: {
+          added_at: string
+          batch_no: number
+          chunk_id: string
+          source: string
+        }
+        Insert: {
+          added_at?: string
+          batch_no: number
+          chunk_id: string
+          source: string
+        }
+        Update: {
+          added_at?: string
+          batch_no?: number
+          chunk_id?: string
+          source?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "kb_batch_members_chunk_id_fkey"
+            columns: ["chunk_id"]
+            isOneToOne: false
+            referencedRelation: "alba_kb_chunks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      kb_pii_names: {
+        Row: {
+          first_word: string
+          n_words: number
+          name_norm: string
+          origin: string
+        }
+        Insert: {
+          first_word: string
+          n_words: number
+          name_norm: string
+          origin: string
+        }
+        Update: {
+          first_word?: string
+          n_words?: number
+          name_norm?: string
+          origin?: string
+        }
+        Relationships: []
+      }
       knowledge: {
         Row: {
           approved_at: string | null
@@ -2405,6 +2494,8 @@ export type Database = {
           content: string
           created_at: string
           id: string
+          pii_reasons: string[] | null
+          pii_status: string | null
           review_status: Database["public"]["Enums"]["kb_review_status"]
           source_url: string | null
           tags: string[] | null
@@ -2421,6 +2512,8 @@ export type Database = {
           content: string
           created_at?: string
           id?: string
+          pii_reasons?: string[] | null
+          pii_status?: string | null
           review_status?: Database["public"]["Enums"]["kb_review_status"]
           source_url?: string | null
           tags?: string[] | null
@@ -2437,6 +2530,8 @@ export type Database = {
           content?: string
           created_at?: string
           id?: string
+          pii_reasons?: string[] | null
+          pii_status?: string | null
           review_status?: Database["public"]["Enums"]["kb_review_status"]
           source_url?: string | null
           tags?: string[] | null
@@ -4979,6 +5074,7 @@ export type Database = {
         Returns: string
       }
       is_staff: { Args: { _uid?: string }; Returns: boolean }
+      kb_approve_batch: { Args: { p_sources: string[] }; Returns: Json }
       kb_approve_knowledge: {
         Args: {
           p_expected_content_hash: string
@@ -4993,6 +5089,8 @@ export type Database = {
           content: string
           created_at: string
           id: string
+          pii_reasons: string[] | null
+          pii_status: string | null
           review_status: Database["public"]["Enums"]["kb_review_status"]
           source_url: string | null
           tags: string[] | null
@@ -5008,12 +5106,33 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      kb_approve_lot: {
+        Args: { p_batch: number; p_expected_digest: string }
+        Returns: Json
+      }
+      kb_batch_preview: { Args: never; Returns: Json }
+      kb_common_words: { Args: never; Returns: string[] }
       kb_content_fingerprint: { Args: { txt: string }; Returns: string }
       kb_current_approver: { Args: never; Returns: string }
+      kb_first_batch_chunk: {
+        Args: { p_source: string; p_source_id: string }
+        Returns: boolean
+      }
+      kb_first_batch_internal: { Args: { p_url: string }; Returns: boolean }
+      kb_is_approver: { Args: never; Returns: boolean }
+      kb_lot_expected: { Args: { p_batch: number }; Returns: Json }
+      kb_lot_preview: { Args: { p_batch: number }; Returns: Json }
+      kb_norm: { Args: { t: string }; Returns: string }
+      kb_normalize_public_text: {
+        Args: { p_source: string; p_text: string }
+        Returns: string
+      }
       kb_parent_text: {
         Args: { p_content: string; p_title: string }
         Returns: string
       }
+      kb_pii_scan: { Args: { txt: string }; Returns: string[] }
+      kb_refresh_pii_names: { Args: never; Returns: number }
       kb_revoke_knowledge: {
         Args: { p_id: string }
         Returns: {
@@ -5024,6 +5143,8 @@ export type Database = {
           content: string
           created_at: string
           id: string
+          pii_reasons: string[] | null
+          pii_status: string | null
           review_status: Database["public"]["Enums"]["kb_review_status"]
           source_url: string | null
           tags: string[] | null
@@ -5039,6 +5160,8 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      kb_strip_greetings: { Args: { t: string }; Returns: string }
+      kb_ticket_pii_scan: { Args: { txt: string }; Returns: string[] }
       log_security_event: {
         Args: {
           p_action: string
@@ -5191,6 +5314,16 @@ export type Database = {
           sent: number
         }[]
       }
+      mission_control_scope_campaigns: {
+        Args: { p_scope: string }
+        Returns: {
+          created_at: string
+          id: string
+          is_sending: boolean
+          name: string
+          status: string
+        }[]
+      }
       openai_embedding:
         | { Args: { input: string; model: string }; Returns: string }
         | {
@@ -5333,7 +5466,12 @@ export type Database = {
         | "marketing"
         | "construction"
         | "venture_capital"
-      kb_review_status: "pending" | "approved" | "rejected" | "stale"
+      kb_review_status:
+        | "pending"
+        | "approved"
+        | "rejected"
+        | "stale"
+        | "superseded"
       kb_visibility: "public" | "internal" | "restricted"
       partner_type_enum:
         | "media_partnership"
@@ -5524,7 +5662,13 @@ export const Constants = {
         "construction",
         "venture_capital",
       ],
-      kb_review_status: ["pending", "approved", "rejected", "stale"],
+      kb_review_status: [
+        "pending",
+        "approved",
+        "rejected",
+        "stale",
+        "superseded",
+      ],
       kb_visibility: ["public", "internal", "restricted"],
       partner_type_enum: [
         "media_partnership",
