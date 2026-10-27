@@ -1,3 +1,4 @@
+/// <reference types="bun" />
 import { describe, expect, test } from "bun:test";
 import { initialSchedule, peopleError, scheduleError, validateRecords } from "./recordLogic";
 const convert = (times: unknown[], date = "2026-10-19") => validateRecords([{ name: "Ana", email: "ana@example.com", days: [{ date, working: true, times }] }]);

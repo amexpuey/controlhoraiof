@@ -83,6 +83,7 @@ export async function readRegister(data: ArrayBuffer) {
     }
     archive.file(path, new XMLSerializer().serializeToString(xml));
   }
+  for (const path of Object.keys(archive.files).filter((p) => /\/comments[^/]*\.xml$/.test(p) || /\/comments\/.*\.xml$/.test(p))) archive.remove(path);
   const book = new ExcelJS.Workbook(); await book.xlsx.load(await archive.generateAsync({ type: "arraybuffer" }));
   const people: PersonRecords[] = [];
   for (const sheet of book.worksheets) {
