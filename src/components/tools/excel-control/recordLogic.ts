@@ -65,7 +65,7 @@ export function validateRecords(people: PersonRecords[]) {
         pairs.push({ start, end, pause: k === 2 });
       }
       const work = pairs.filter((x) => !x.pause), pause = pairs.find((x) => x.pause);
-      if (!work.length) fail("La pausa necesita un tramo trabajado con entrada y salida reales.");
+      if (!work.length && (!blank(day.times[4]) || !blank(day.times[5]))) fail("La pausa necesita un tramo trabajado con entrada y salida reales.");
       if (work.length === 2 && work[0].start < work[1].end && work[1].start < work[0].end) fail("Los tramos trabajados se solapan.");
       if (pause && !work.some((x) => pause.start >= x.start && pause.end <= x.end)) fail("La pausa está fuera de los tramos trabajados.");
       const minutes = work.reduce((sum, x) => sum + x.end - x.start, 0) - (pause ? pause.end - pause.start : 0);
