@@ -5,8 +5,7 @@ export function useSolutions(filters?: {
   category?: string;
   search?: string;
   isFree?: boolean;
-  isTopRated?: boolean;
-  sortBy?: 'rank' | 'title' | 'rating';
+  sortBy?: 'rank' | 'title';
   page?: number;
   perPage?: number;
 }) {
@@ -27,20 +26,10 @@ export function useSolutions(filters?: {
       if (filters?.isFree) {
         query = query.eq('is_free', true);
       }
-      if (filters?.isTopRated) {
-        query = query.eq('is_top_rated', true);
-      }
-
-      // Sort: promoted first, then by chosen sort
-      switch (filters?.sortBy) {
-        case 'title':
-          query = query.order('is_promoted', { ascending: false }).order('title', { ascending: true });
-          break;
-        case 'rating':
-          query = query.order('is_promoted', { ascending: false }).order('rating', { ascending: false, nullsFirst: false });
-          break;
-        default:
-          query = query.order('is_promoted', { ascending: false }).order('rank', { ascending: true });
+      if (filters?.sortBy === 'title') {
+        query = query.order('title', { ascending: true });
+      } else {
+        query = query.order('rank', { ascending: true });
       }
 
       const from = (page - 1) * perPage;
