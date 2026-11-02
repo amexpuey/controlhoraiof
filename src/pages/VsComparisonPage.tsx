@@ -114,10 +114,10 @@ export default function VsComparisonPage() {
                     <tr key={key} className="border-b border-border/50">
                       <td className="py-3 pr-4">{getFeatureLabel(key)}</td>
                       <td className="text-center py-3 px-4">
-                        {s1[key] === true ? <Check className="h-5 w-5 text-green-600 mx-auto" /> : s1[key] === false ? <X className="h-5 w-5 text-muted-foreground/30 mx-auto" /> : <span className="text-xs text-muted-foreground">Sin dato</span>}
+                        {s1[key] === true ? <Check className="h-5 w-5 text-green-600 mx-auto" /> : s1[key] === false && isOwnProduct(sol1.slug) ? <X className="h-5 w-5 text-muted-foreground/30 mx-auto" /> : <span className="text-xs text-muted-foreground">Sin dato</span>}
                       </td>
                       <td className="text-center py-3 px-4">
-                        {s2[key] === true ? <Check className="h-5 w-5 text-green-600 mx-auto" /> : s2[key] === false ? <X className="h-5 w-5 text-muted-foreground/30 mx-auto" /> : <span className="text-xs text-muted-foreground">Sin dato</span>}
+                        {s2[key] === true ? <Check className="h-5 w-5 text-green-600 mx-auto" /> : s2[key] === false && isOwnProduct(sol2.slug) ? <X className="h-5 w-5 text-muted-foreground/30 mx-auto" /> : <span className="text-xs text-muted-foreground">Sin dato</span>}
                       </td>
                     </tr>
                   ))}

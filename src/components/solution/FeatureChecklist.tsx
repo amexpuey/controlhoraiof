@@ -33,9 +33,11 @@ export const featureKeys = Object.keys(featureLabels);
 interface FeatureChecklistProps {
   company: Record<string, unknown>;
   className?: string;
+  /** Only for our own product: third-party missing data is not proof of absence. */
+  showMissing?: boolean;
 }
 
-export function FeatureChecklist({ company, className = '' }: FeatureChecklistProps) {
+export function FeatureChecklist({ company, className = '', showMissing = false }: FeatureChecklistProps) {
   const features: Feature[] = featureKeys.map(key => ({
     key,
     label: featureLabels[key],
@@ -43,7 +45,7 @@ export function FeatureChecklist({ company, className = '' }: FeatureChecklistPr
   }));
 
   const activeFeatures = features.filter(f => f.value);
-  const inactiveFeatures = features.filter(f => !f.value);
+  const inactiveFeatures = showMissing ? features.filter(f => !f.value) : [];
 
   return (
     <div className={`space-y-1 ${className}`}>

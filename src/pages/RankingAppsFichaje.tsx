@@ -143,10 +143,12 @@ function RankingCard({ app }: { app: RankedApp }) {
           </p>
 
           {/* Specs row */}
+          {!app.isDraft && (
           <div className="flex flex-wrap gap-1.5 mb-3">
             <SpecBadge ok={hasFree} label={hasFree ? 'Plan gratis' : 'Sin plan gratis'} />
-            <SpecBadge ok={hasGeofence} label={hasGeofence ? 'Geovallado' : 'Sin geovallado'} />
-            <SpecBadge ok={hasCompliance} label={hasCompliance ? 'RD 8/2019' : 'Sin compliance'} />
+            {isInwout && hasGeofence && <SpecBadge ok label="Geovallado" />}
+            {!isInwout && hasGeofence && <SpecBadge ok label="Geovallado" />}
+            {isInwout && hasCompliance && <SpecBadge ok label="RD 8/2019" />}
             {price !== null && (
               <span
                 className="inline-flex items-center text-xs px-2 py-1 rounded-md font-medium"
@@ -159,6 +161,7 @@ function RankingCard({ app }: { app: RankedApp }) {
               </span>
             )}
           </div>
+          )}
 
           {/* CTAs */}
           <div className="flex items-center gap-3 flex-wrap">

@@ -1,4 +1,5 @@
 import { Check, X, Monitor } from "lucide-react";
+import { isOwnProduct } from "@/components/OwnProductBadge";
 import type { Database } from "@/integrations/supabase/types";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
@@ -7,9 +8,9 @@ interface ComparisonTableProps {
   apps: Company[];
 }
 
-const Availability = ({ value }: { value: string | null }) => {
+const Availability = ({ value, own }: { value: string | null; own: boolean }) => {
   if (value === 'yes') return (<div className="flex items-center"><Check className="w-5 h-5 text-green-500" /><span className="ml-2 text-sm">Disponible</span></div>);
-  if (value === 'no') return (<div className="flex items-center"><X className="w-5 h-5 text-red-500" /><span className="ml-2 text-sm">No disponible</span></div>);
+  if (value === 'no' && own) return (<div className="flex items-center"><X className="w-5 h-5 text-red-500" /><span className="ml-2 text-sm">No disponible</span></div>);
   return <span className="text-sm text-gray-500">Sin dato</span>;
 };
 
@@ -55,7 +56,7 @@ export default function ComparisonTable({ apps }: ComparisonTableProps) {
             <td className="py-3 px-4 text-sm font-medium text-gray-900 text-left">Periodo de Prueba</td>
             {apps.map((app) => (
               <td key={app.id} className="py-3 px-4">
-                <Availability value={app.free_trial} />
+                <Availability value={app.free_trial} own={isOwnProduct(app.slug)} />
               </td>
             ))}
           </tr>
@@ -63,7 +64,7 @@ export default function ComparisonTable({ apps }: ComparisonTableProps) {
             <td className="py-3 px-4 text-sm font-medium text-gray-900 text-left">Plan Gratuito</td>
             {apps.map((app) => (
               <td key={app.id} className="py-3 px-4">
-                <Availability value={app.free_plan} />
+                <Availability value={app.free_plan} own={isOwnProduct(app.slug)} />
               </td>
             ))}
           </tr>
