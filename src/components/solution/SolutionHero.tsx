@@ -1,4 +1,5 @@
 import { Badge } from '@/components/ui/badge';
+import { OwnProductBadge, isOwnProduct } from '@/components/OwnProductBadge';
 
 interface SolutionHeroProps {
   solution: any;
@@ -17,10 +18,8 @@ export function SolutionHero({ solution }: SolutionHeroProps) {
       <div>
         <h1 className="text-2xl md:text-3xl font-bold text-foreground">{solution.title}</h1>
         <div className="flex flex-wrap items-center gap-2 mt-2">
-          {solution.verified && <Badge variant="outline">Verificada</Badge>}
-          {solution.is_top_rated && <Badge variant="secondary">Top Rated</Badge>}
+          {isOwnProduct(solution.slug) && <OwnProductBadge />}
           {solution.is_free && <Badge className="bg-green-100 text-green-800 border-green-200">Gratis</Badge>}
-          {solution.is_promoted && <Badge>⭐ Recomendada</Badge>}
         </div>
       </div>
     </div>
