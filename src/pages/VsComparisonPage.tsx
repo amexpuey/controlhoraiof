@@ -8,7 +8,6 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check, X, ExternalLink } from 'lucide-react';
-import { Footer } from '@/components/Footer';
 import { OwnProductBadge, isOwnProduct } from '@/components/OwnProductBadge';
 
 export default function VsComparisonPage() {
@@ -159,7 +158,6 @@ export default function VsComparisonPage() {
           </Button>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
