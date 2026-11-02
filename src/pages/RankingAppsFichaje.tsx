@@ -176,7 +176,7 @@ function RankingCard({ app }: { app: RankedApp }) {
                 </Link>
               </Button>
               {isInwout && (
-                <Button variant="ghost" size="sm" asChild className="text-white/50 hover:text-white hover:bg-white/10">
+                <Button variant="ghost" size="sm" asChild >
                   <a href="https://inwout.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5">
                     Prueba gratis
                     <ExternalLink className="h-3.5 w-3.5" />
