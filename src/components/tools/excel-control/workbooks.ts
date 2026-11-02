@@ -108,14 +108,14 @@ export async function readRegister(data: ArrayBuffer) {
 export function createImport(result: ReturnType<typeof validateRecords>) {
   if (result.errors.length) throw new Error("Corrige los errores antes de descargar.");
   const book = new ExcelJS.Workbook(), sheet = book.addWorksheet("Fichajes");
-  sheet.addRow(["Email", "Entrada", "Salida", "Pausa"]);
-  result.rows.forEach((r) => { const row = sheet.addRow([r.email, r.start, r.end, r.pause || null]); row.eachCell((c) => { c.numFmt = "@"; }); });
-  [38, 25, 25, 12].forEach((w, i) => { sheet.getColumn(i + 1).width = w; }); styleSheet(sheet, 1);
+  sheet.addRow(["Email", "Entrada", "Salida"]);
+  result.rows.forEach((r) => { const row = sheet.addRow([r.email, r.start, r.end]); row.eachCell((c) => { c.numFmt = "@"; }); });
+  [38, 25, 25].forEach((w, i) => { sheet.getColumn(i + 1).width = w; }); styleSheet(sheet, 1);
   const summary = book.addWorksheet("Resumen"); summary.addRow(["Persona", "Email", "Días con registro", "Días sin registrar", "Horas registradas"]);
   result.summaries.forEach((s) => {
     const end = sheet.rowCount;
     const name = sheet.name;
-    summary.addRow([s.name, s.email, s.registered, s.missing.length, { formula: `SUMPRODUCT(('${name}'!A2:A${Math.max(2, end)}=B${summary.rowCount + 1})*(IFERROR(VALUE('${name}'!C2:C${Math.max(2, end)}),0)-IFERROR(VALUE('${name}'!B2:B${Math.max(2, end)}),0))*IF('${name}'!D2:D${Math.max(2, end)}="TRUE",-1,1))*24`, result: s.minutes / 60 }]);
+    summary.addRow([s.name, s.email, s.registered, s.missing.length, { formula: `SUMPRODUCT(('${name}'!A2:A${Math.max(2, end)}=B${summary.rowCount + 1})*(IFERROR(VALUE('${name}'!C2:C${Math.max(2, end)}),0)-IFERROR(VALUE('${name}'!B2:B${Math.max(2, end)}),0)))*24`, result: s.minutes / 60 }]);
   });
   summary.addRow([]); summary.addRow(["Días laborables sin registrar", "Email", "Fecha"]);
   result.summaries.forEach((s) => s.missing.forEach((date) => summary.addRow([s.name, s.email, date])));

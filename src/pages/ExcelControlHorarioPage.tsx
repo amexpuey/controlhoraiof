@@ -97,7 +97,7 @@ export default function ExcelControlHorarioPage() {
             {missing > 0 && <div className="ec-notice"><AlertTriangle size={17} /><span>Hay {missing} días laborables sin registrar. No se generarán fichajes para esos días.</span></div>}
             {missing > 0 && <details><summary>Días laborables sin registrar</summary><div className="ec-scroll"><table className="ec-table"><thead><tr><th>Persona</th><th>Día</th><th>Estado</th></tr></thead><tbody>{result.summaries.flatMap((s) => s.missing.map((date) => <tr key={`${s.email}-${date}`}><td>{s.name}</td><td>{date}</td><td>Sin registrar</td></tr>))}</tbody></table></div></details>}
           </>}
-          <ul className="ec-list"><li>La persona tiene que existir en INWOUT antes de importar.</li><li>No importes dos veces el mismo mes: el importador no detecta duplicados.</li><li>Revisa el resumen: solo se han convertido los días con horas reales.</li><li>Al importar, borra la fila de cabecera con la ×.</li></ul>
+          <ul className="ec-list"><li>La persona tiene que existir en INWOUT antes de importar.</li><li>No importes dos veces el mismo mes: el importador no detecta duplicados.</li><li>Revisa el resumen: solo se han convertido los días con horas reales.</li><li>Al importar, borra la fila de cabecera con la × y asigna las 3 columnas: Email, Entrada y Salida.</li></ul>
           <Button className="ec-primary" disabled={busy || Boolean(result.errors.length) || !result.rows.length} onClick={downloadImport}><Download size={16} />Descargar Excel para INWOUT</Button>
           {!result.errors.length && !result.rows.length && <p className="ec-muted">No hay horas reales para convertir.</p>}
         </>}
