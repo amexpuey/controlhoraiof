@@ -5,7 +5,7 @@ export type Person = { id: string; name: string; email: string; schedule?: Sched
 export type RealDay = { date: string; working: boolean; times: unknown[] };
 export type PersonRecords = { name: string; email: string; days: RealDay[] };
 export type Issue = { person: string; date: string; message: string };
-export type ImportRow = { email: string; start: string; end: string };
+export type ImportRow = { email: string; start: string; end: string; pause?: true };
 export type Summary = { name: string; email: string; registered: number; missing: string[]; minutes: number };
 export const initialSchedule = (): Schedule => ({ days: [true, true, true, true, true, false, false], start: "09:00", end: "17:00", split: false, start2: "15:00", end2: "18:00", pause: false, pauseStart: "", pauseEnd: "" });
 export function peopleError(people: Person[]): string {
@@ -75,8 +75,8 @@ export function validateRecords(people: PersonRecords[]) {
       const base = Date.parse(`${day.date}T00:00:00Z`) / 60000;
       work.forEach((x) => all.push({ start: base + x.start, end: base + x.end, date: day.date }));
       for (const x of work) {
-        const pieces = pause && pause.start >= x.start && pause.end <= x.end ? [[x.start, pause.start], [pause.end, x.end]] : [[x.start, x.end]];
-        pieces.filter(([a, b]) => b > a).forEach(([a, b]) => rows.push({ email: summary.email, start: stamp(day.date, a), end: stamp(day.date, b) }));
+        const pieces: [number, number, boolean][] = pause && pause.start >= x.start && pause.end <= x.end ? [[x.start, pause.start, false], [pause.start, pause.end, true], [pause.end, x.end, false]] : [[x.start, x.end, false]];
+        pieces.filter(([a, b]) => b > a).forEach(([a, b, isPause]) => rows.push({ email: summary.email, start: stamp(day.date, a), end: stamp(day.date, b), ...(isPause ? { pause: true as const } : {}) }));
       }
     }
     all.sort((a, b) => a.start - b.start);
