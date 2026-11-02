@@ -111,7 +111,7 @@ export function createImport(result: ReturnType<typeof validateRecords>) {
   sheet.addRow(["Email", "Entrada", "Salida", "Pausa"]);
   result.rows.forEach((r) => { const row = sheet.addRow(r.pause ? [r.email, r.start, r.end, true] : [r.email, r.start, r.end]); [1, 2, 3].forEach((i) => { row.getCell(i).numFmt = "@"; }); });
   [38, 25, 25, 10].forEach((w, i) => { sheet.getColumn(i + 1).width = w; }); styleSheet(sheet, 1);
-  const summary = book.addWorksheet("Resumen"); summary.addRow(["Persona", "Email", "Días con registro", "Días sin registrar", "Horas registradas"]);
+  const summary = book.addWorksheet("Resumen"); summary.addRow(["Persona", "Email", "Días con registro", "Días sin registrar", "Horas sin pausas"]);
   result.summaries.forEach((s) => {
     const end = sheet.rowCount;
     const name = sheet.name;
