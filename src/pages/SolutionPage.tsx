@@ -49,11 +49,11 @@ export default function SolutionPage() {
     url: solution.url,
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
-    offers: {
+    ...(isOwnProduct(solution.slug) && Number(solution.pricing_starting_price) > 0 ? { offers: {
       '@type': 'Offer',
-      price: solution.pricing_starting_price || '0',
+      price: solution.pricing_starting_price,
       priceCurrency: solution.pricing_currency || 'EUR',
-    },
+    } } : {}),
   };
 
   const sol = solution as Record<string, unknown>;
@@ -132,7 +132,7 @@ export default function SolutionPage() {
                 <CardTitle>Precios</CardTitle>
               </CardHeader>
               <CardContent>
-                {solution.pricing_starting_price && Number(solution.pricing_starting_price) > 0 ? (
+                {isOwn && solution.pricing_starting_price && Number(solution.pricing_starting_price) > 0 ? (
                   <div>
                     <span className="text-2xl font-bold text-foreground">
                       {solution.pricing_starting_price}€

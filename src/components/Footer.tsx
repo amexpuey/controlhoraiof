@@ -48,7 +48,7 @@ export function Footer() {
               <img src={logoText} alt="FichajeEmpresas.es" className="h-6" />
             </div>
             <p className="text-sm max-w-md" style={{ color: "var(--dark-muted)" }}>
-              Encuentra tu app de registro horario de forma fácil y rápida. El directorio más completo para empresas de todos los tamaños.
+              Encuentra tu app de registro horario de forma fácil y rápida.
             </p>
           </div>
 

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SEOHead } from '@/components/seo/SEOHead';
 import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav';
@@ -6,31 +5,6 @@ import { useRankingApps, type RankedApp } from '@/hooks/useRankingApps';
 import { Check, X, ExternalLink, ArrowRight, MessageSquare, Loader2, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { OwnProductBadge, isOwnProduct } from '@/components/OwnProductBadge';
-
-type FilterKey = 'all' | 'free' | 'geofence' | 'compliance' | 'cheap';
-
-const FILTERS: { key: FilterKey; label: string }[] = [
-  { key: 'all', label: 'Todos' },
-  { key: 'free', label: 'Con plan gratuito' },
-  { key: 'geofence', label: 'Con geovallado' },
-  { key: 'compliance', label: 'Compliance España' },
-  { key: 'cheap', label: 'Precio < 3€' },
-];
-
-function filterApps(apps: RankedApp[], filter: FilterKey): RankedApp[] {
-  if (filter === 'all') return apps;
-  return apps.filter(app => {
-    const d = app.dbData;
-    if (!d) return false;
-    switch (filter) {
-      case 'free': return d.free_plan === 'yes' || d.is_free;
-      case 'geofence': return d.has_geofence;
-      case 'compliance': return d.has_time_tracking;
-      case 'cheap': return (d.price_per_user_month ?? d.pricing_starting_price ?? 999) < 3;
-      default: return true;
-    }
-  });
-}
 
 function SpecBadge({ ok, label }: { ok: boolean | null | undefined; label: string }) {
   return (
@@ -145,10 +119,10 @@ function RankingCard({ app }: { app: RankedApp }) {
           {/* Specs row */}
           {!app.isDraft && (
           <div className="flex flex-wrap gap-1.5 mb-3">
-            {hasFree ? <SpecBadge ok label="Plan gratis" /> : isInwout && <SpecBadge ok={false} label="Sin plan gratis" />}
+            {isInwout && (hasFree ? <SpecBadge ok label="Plan gratis" /> : <SpecBadge ok={false} label="Sin plan gratis" />)}
             {hasGeofence && <SpecBadge ok label="Geovallado" />}
             {isInwout && hasCompliance && <SpecBadge ok label="RD 8/2019" />}
-            {price !== null && (
+            {isInwout && price !== null && (
               <span
                 className="inline-flex items-center text-xs px-2 py-1 rounded-md font-medium"
                 style={{
@@ -194,14 +168,12 @@ function RankingCard({ app }: { app: RankedApp }) {
 
 export default function RankingAppsFichaje() {
   const { data: apps, isLoading } = useRankingApps();
-  const [filter, setFilter] = useState<FilterKey>('all');
-
-  const filtered = apps ? filterApps(apps, filter) : [];
+  const filtered = apps || [];
 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'Las 10 Mejores Apps de Fichaje Laboral 2026',
+    name: '10 software de control horario comparados',
     description: 'Lista de apps de fichaje para empresas españolas, ordenada por INWOUT, que aparece en ella.',
     numberOfItems: 10,
     itemListElement: (apps || []).map(app => ({
@@ -215,7 +187,7 @@ export default function RankingAppsFichaje() {
   return (
     <>
       <SEOHead
-        title="Las 10 Mejores Apps de Fichaje Laboral 2026 | FichajeEmpresas.es"
+        title="10 software de control horario comparados | FichajeEmpresas.es"
         description="Lista de apps de fichaje para empresas españolas, ordenada por INWOUT, que aparece en ella. Comparativa de precios, funcionalidades y cumplimiento del RD 8/2019."
         canonical="https://fichajeempresas.es/ranking-apps-fichaje"
         jsonLd={jsonLd}
@@ -233,11 +205,11 @@ export default function RankingAppsFichaje() {
             <BreadcrumbNav
               items={[
                 { label: 'Inicio', href: '/' },
-                { label: 'Ranking Apps Fichaje', href: '/ranking-apps-fichaje' },
+                { label: '10 software de control horario comparados', href: '/ranking-apps-fichaje' },
               ]}
             />
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 mt-4 leading-tight">
-              Las 10 Mejores Apps de Fichaje Laboral en 2026
+              10 software de control horario comparados
             </h1>
             <p className="text-base md:text-lg" style={{ color: 'rgba(255,255,255,.6)' }}>
               Selección de apps del directorio FichajeEmpresas.es
@@ -250,24 +222,6 @@ export default function RankingAppsFichaje() {
 
         {/* Content */}
         <div className="max-w-4xl mx-auto px-4 py-8 md:py-12">
-          {/* Filters */}
-          <div className="flex flex-wrap gap-2 mb-8">
-            {FILTERS.map(f => (
-              <button
-                key={f.key}
-                onClick={() => setFilter(f.key)}
-                className="text-sm font-medium px-4 py-2 rounded-full transition-all"
-                style={{
-                  background: filter === f.key ? 'var(--green)' : 'var(--white)',
-                  color: filter === f.key ? 'white' : 'var(--text-secondary)',
-                  border: filter === f.key ? '1px solid var(--green)' : '1px solid var(--border)',
-                }}
-              >
-                {f.label}
-              </button>
-            ))}
-          </div>
-
           {/* Ranking list */}
           {isLoading ? (
             <div className="flex items-center justify-center py-20">

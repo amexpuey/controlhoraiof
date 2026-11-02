@@ -67,7 +67,7 @@ export function SolutionCard({ solution }: SolutionCardProps) {
             </Link>
             <div className="flex items-center gap-2 mt-0.5">
               {isInwout && <OwnProductBadge />}
-              {solution.is_free && (
+              {isInwout && solution.is_free && (
                 <span className="text-[10px] px-1.5 py-0 rounded-full font-medium" style={{ background: 'var(--green-bg)', color: 'var(--green-dark)' }}>Gratis</span>
               )}
             </div>

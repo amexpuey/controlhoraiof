@@ -84,7 +84,7 @@ export default function VsComparisonPage() {
                 <h2 className="font-bold text-foreground">{sol.title}</h2>
                 <div className="flex justify-center gap-1 mt-1">
                   {isOwnProduct(sol.slug) && <OwnProductBadge />}
-                  {sol.is_free && <Badge variant="secondary">Gratis</Badge>}
+                  {isOwnProduct(sol.slug) && sol.is_free && <Badge variant="secondary">Gratis</Badge>}
                 </div>
                 <p className="text-xs text-muted-foreground mt-2">
                   {(featureKeys.filter(k => (sol as Record<string, unknown>)[k])).length} funcionalidades
