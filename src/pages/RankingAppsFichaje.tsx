@@ -146,8 +146,7 @@ function RankingCard({ app }: { app: RankedApp }) {
           {!app.isDraft && (
           <div className="flex flex-wrap gap-1.5 mb-3">
             <SpecBadge ok={hasFree} label={hasFree ? 'Plan gratis' : 'Sin plan gratis'} />
-            {isInwout && hasGeofence && <SpecBadge ok label="Geovallado" />}
-            {!isInwout && hasGeofence && <SpecBadge ok label="Geovallado" />}
+            {hasGeofence && <SpecBadge ok label="Geovallado" />}
             {isInwout && hasCompliance && <SpecBadge ok label="RD 8/2019" />}
             {price !== null && (
               <span
