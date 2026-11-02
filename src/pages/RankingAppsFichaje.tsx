@@ -119,7 +119,7 @@ function RankingCard({ app }: { app: RankedApp }) {
           {/* Specs row */}
           {!app.isDraft && (
           <div className="flex flex-wrap gap-1.5 mb-3">
-            {hasFree ? <SpecBadge ok label="Plan gratis" /> : isInwout && <SpecBadge ok={false} label="Sin plan gratis" />}
+            {isInwout && (hasFree ? <SpecBadge ok label="Plan gratis" /> : <SpecBadge ok={false} label="Sin plan gratis" />)}
             {hasGeofence && <SpecBadge ok label="Geovallado" />}
             {isInwout && hasCompliance && <SpecBadge ok label="RD 8/2019" />}
             {isInwout && price !== null && (

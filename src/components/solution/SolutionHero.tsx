@@ -19,7 +19,7 @@ export function SolutionHero({ solution }: SolutionHeroProps) {
         <h1 className="text-2xl md:text-3xl font-bold text-foreground">{solution.title}</h1>
         <div className="flex flex-wrap items-center gap-2 mt-2">
           {isOwnProduct(solution.slug) && <OwnProductBadge />}
-          {solution.is_free && <Badge className="bg-green-100 text-green-800 border-green-200">Gratis</Badge>}
+          {isOwnProduct(solution.slug) && solution.is_free && <Badge className="bg-green-100 text-green-800 border-green-200">Gratis</Badge>}
         </div>
       </div>
     </div>
