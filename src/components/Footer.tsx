@@ -75,6 +75,9 @@ export function Footer() {
           <div className="flex flex-col items-center md:items-start space-y-4">
             <h3 className="font-semibold text-lg" style={{ color: "var(--dark-text)" }}>Legal</h3>
             <nav className="flex flex-col space-y-2">
+              <a href="/aviso-legal" className="flex items-center transition-colors text-sm hover:opacity-80" style={{ color: "var(--dark-muted)" }}>
+                <ExternalLink className="h-4 w-4 mr-2" /> Aviso legal
+              </a>
               <a href="/terminos" className="flex items-center transition-colors text-sm hover:opacity-80" style={{ color: "var(--dark-muted)" }}>
                 <ExternalLink className="h-4 w-4 mr-2" /> Términos y Condiciones
               </a>

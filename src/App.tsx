@@ -24,41 +24,49 @@ import AdminUsers from "@/pages/admin/Users";
 import AdminLeads from "@/pages/admin/Leads";
 import AdminArticles from "@/pages/admin/Articles";
 import Login from "@/pages/Login";
+import AvisoLegal from "@/pages/AvisoLegal";
+import { PublicLayout } from "@/components/layout/PublicLayout";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
 
 const router = createBrowserRouter([
-  { path: "/", element: <Index /> },
-  { path: "/directorio", element: <DirectoryPage /> },
-  { path: "/dashboard", element: <Navigate to="/directorio" replace /> },
-  { path: "/mejores-apps-control-horario", element: <Navigate to="/directorio" replace /> },
-  { path: "/directorio/:slug", element: <SolutionPage /> },
-  { path: "/comparar/:slugs", element: <VsComparisonPage /> },
-  { path: "/mejores-apps-control-horario/:slug", lazy: () => import("@/pages/RedirectToDirectorio") },
-  { path: "/mejores-apps-control-horario/comparar/:ids", element: <ComparisonPage /> },
-  { path: "/blog", element: <Blog /> },
-  { path: "/blog/:slug", element: <BlogPost /> },
-  { path: "/blog/categoria/:category", element: <BlogCategoryPage /> },
-  { path: "/compliance-checker", element: <ComplianceCheckerPage /> },
-  { path: "/plantillas/verificador-cumplimiento", element: <ComplianceCheckerPage /> },
-  { path: "/calculadora-sanciones", element: <CalculadoraSancionesPage /> },
-  { path: "/calculadora-horas", lazy: async () => ({ Component: (await import("@/pages/CalculadoraHorasPage")).default }) },
-  { path: "/excel-control-horario", lazy: async () => ({ Component: (await import("@/pages/ExcelControlHorarioPage")).default }) },
-  { path: "/plantillas", element: <Templates /> },
-  { path: "/plantillas/guia-talento", element: <TalentGuidePage /> },
-  { path: "/plantillas/registro-horas", element: <TimecardPage /> },
-  { path: "/plantillas/planificador-turnos", element: <ShiftPlannerPage /> },
-  { path: "/plantillas/calendario-vacaciones", element: <VacationCalendarPage /> },
-  { path: "/plantillas/:slug", element: <TemplateLandingPage /> },
-  { path: "/ranking-apps-fichaje", element: <RankingAppsFichaje /> },
-  { path: "/login", element: <Login /> },
-  { path: "/admin/companies", element: <ProtectedRoute><AdminCompanies /></ProtectedRoute> },
-  { path: "/admin/companies/:id", element: <ProtectedRoute><AdminAppEdit /></ProtectedRoute> },
-  { path: "/admin/users", element: <ProtectedRoute><AdminUsers /></ProtectedRoute> },
-  { path: "/admin/leads", element: <ProtectedRoute><AdminLeads /></ProtectedRoute> },
-  { path: "/admin/articles", element: <ProtectedRoute><AdminArticles /></ProtectedRoute> },
-  { path: "*", element: <DirectoryPage /> },
+  {
+    element: <PublicLayout />,
+    children: [
+      { path: "/", element: <Index /> },
+      { path: "/directorio", element: <DirectoryPage /> },
+      { path: "/dashboard", element: <Navigate to="/directorio" replace /> },
+      { path: "/mejores-apps-control-horario", element: <Navigate to="/directorio" replace /> },
+      { path: "/directorio/:slug", element: <SolutionPage /> },
+      { path: "/comparar/:slugs", element: <VsComparisonPage /> },
+      { path: "/mejores-apps-control-horario/:slug", lazy: () => import("@/pages/RedirectToDirectorio") },
+      { path: "/mejores-apps-control-horario/comparar/:ids", element: <ComparisonPage /> },
+      { path: "/blog", element: <Blog /> },
+      { path: "/blog/:slug", element: <BlogPost /> },
+      { path: "/blog/categoria/:category", element: <BlogCategoryPage /> },
+      { path: "/compliance-checker", element: <ComplianceCheckerPage /> },
+      { path: "/plantillas/verificador-cumplimiento", element: <ComplianceCheckerPage /> },
+      { path: "/calculadora-sanciones", element: <CalculadoraSancionesPage /> },
+      { path: "/calculadora-horas", lazy: async () => ({ Component: (await import("@/pages/CalculadoraHorasPage")).default }) },
+      { path: "/excel-control-horario", lazy: async () => ({ Component: (await import("@/pages/ExcelControlHorarioPage")).default }) },
+      { path: "/plantillas", element: <Templates /> },
+      { path: "/plantillas/guia-talento", element: <TalentGuidePage /> },
+      { path: "/plantillas/registro-horas", element: <TimecardPage /> },
+      { path: "/plantillas/planificador-turnos", element: <ShiftPlannerPage /> },
+      { path: "/plantillas/calendario-vacaciones", element: <VacationCalendarPage /> },
+      { path: "/plantillas/:slug", element: <TemplateLandingPage /> },
+      { path: "/ranking-apps-fichaje", element: <RankingAppsFichaje /> },
+      { path: "/aviso-legal", element: <AvisoLegal /> },
+      { path: "/login", element: <Login /> },
+      { path: "/admin/companies", element: <ProtectedRoute><AdminCompanies /></ProtectedRoute> },
+      { path: "/admin/companies/:id", element: <ProtectedRoute><AdminAppEdit /></ProtectedRoute> },
+      { path: "/admin/users", element: <ProtectedRoute><AdminUsers /></ProtectedRoute> },
+      { path: "/admin/leads", element: <ProtectedRoute><AdminLeads /></ProtectedRoute> },
+      { path: "/admin/articles", element: <ProtectedRoute><AdminArticles /></ProtectedRoute> },
+      { path: "*", element: <DirectoryPage /> },
+    ],
+  },
 ]);
 
 function App() {

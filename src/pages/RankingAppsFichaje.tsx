@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import { SEOHead } from '@/components/seo/SEOHead';
 import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav';
 import { useRankingApps, type RankedApp } from '@/hooks/useRankingApps';
-import { Star, Check, X, Crown, ExternalLink, MapPin, Shield, ArrowRight, MessageSquare, Loader2, Clock } from 'lucide-react';
+import { Check, X, ExternalLink, ArrowRight, MessageSquare, Loader2, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Footer } from '@/components/Footer';
+import { OwnProductBadge, isOwnProduct } from '@/components/OwnProductBadge';
 
 type FilterKey = 'all' | 'free' | 'geofence' | 'compliance' | 'cheap';
 
@@ -32,24 +33,6 @@ function filterApps(apps: RankedApp[], filter: FilterKey): RankedApp[] {
   });
 }
 
-function StarRating({ rating }: { rating: number }) {
-  return (
-    <div className="flex items-center gap-0.5">
-      {[1, 2, 3, 4, 5].map(i => (
-        <Star
-          key={i}
-          className="h-4 w-4"
-          fill={i <= Math.round(rating) ? 'var(--yellow)' : 'none'}
-          stroke={i <= Math.round(rating) ? 'var(--yellow)' : 'var(--border)'}
-        />
-      ))}
-      <span className="ml-1.5 text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
-        {rating.toFixed(1)}
-      </span>
-    </div>
-  );
-}
-
 function SpecBadge({ ok, label }: { ok: boolean | null | undefined; label: string }) {
   return (
     <span
@@ -67,9 +50,9 @@ function SpecBadge({ ok, label }: { ok: boolean | null | undefined; label: strin
 
 function RankingCard({ app }: { app: RankedApp }) {
   const d = app.dbData;
-  const isInwout = app.featured;
+  const isInwout = isOwnProduct(app.slug);
+  const highlight = false;
   const description = d?.description || 'En revisión';
-  const rating = d?.rating ?? 4;
   const price = d?.price_per_user_month ?? d?.pricing_starting_price ?? null;
   const hasFree = d?.free_plan === 'yes' || d?.is_free;
   const hasGeofence = d?.has_geofence;
@@ -79,25 +62,25 @@ function RankingCard({ app }: { app: RankedApp }) {
     <div
       className="relative overflow-hidden rounded-[var(--radius)] transition-all duration-200"
       style={{
-        background: isInwout
+        background: highlight
           ? 'linear-gradient(135deg, #0A1628 0%, #0D2847 100%)'
           : 'var(--white)',
-        border: isInwout
+        border: highlight
           ? '2px solid var(--green)'
           : '1px solid var(--border)',
-        boxShadow: isInwout
+        boxShadow: highlight
           ? '0 0 30px -8px rgba(15,184,159,.2)'
           : undefined,
       }}
       onMouseEnter={e => {
         (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)';
-        (e.currentTarget as HTMLElement).style.boxShadow = isInwout
+        (e.currentTarget as HTMLElement).style.boxShadow = highlight
           ? '0 0 40px -8px rgba(15,184,159,.3)'
           : '0 8px 24px -6px rgba(0,0,0,.08)';
       }}
       onMouseLeave={e => {
         (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
-        (e.currentTarget as HTMLElement).style.boxShadow = isInwout
+        (e.currentTarget as HTMLElement).style.boxShadow = highlight
           ? '0 0 30px -8px rgba(15,184,159,.2)'
           : 'none';
       }}
@@ -107,8 +90,8 @@ function RankingCard({ app }: { app: RankedApp }) {
         <div
           className="flex items-center justify-center shrink-0 w-12 h-12 rounded-xl font-bold text-lg"
           style={{
-            background: isInwout ? 'var(--green)' : 'var(--surface-alt)',
-            color: isInwout ? 'white' : 'var(--text)',
+            background: highlight ? 'var(--green)' : 'var(--surface-alt)',
+            color: highlight ? 'white' : 'var(--text)',
           }}
         >
           #{app.position}
@@ -118,14 +101,14 @@ function RankingCard({ app }: { app: RankedApp }) {
         <div
           className="w-12 h-12 rounded-xl overflow-hidden shrink-0 flex items-center justify-center"
           style={{
-            background: isInwout ? 'rgba(255,255,255,.1)' : 'var(--surface-alt)',
-            border: isInwout ? '1px solid rgba(255,255,255,.15)' : '1px solid var(--border)',
+            background: highlight ? 'rgba(255,255,255,.1)' : 'var(--surface-alt)',
+            border: highlight ? '1px solid rgba(255,255,255,.15)' : '1px solid var(--border)',
           }}
         >
           {d?.logo_url && d.logo_url !== '/placeholder.svg' ? (
             <img src={d.logo_url} alt={app.title} className="w-full h-full object-contain" loading="lazy" />
           ) : (
-            <Clock className="h-5 w-5" style={{ color: isInwout ? 'var(--green)' : 'var(--text-muted)' }} />
+            <Clock className="h-5 w-5" style={{ color: highlight ? 'var(--green)' : 'var(--text-muted)' }} />
           )}
         </div>
 
@@ -134,23 +117,11 @@ function RankingCard({ app }: { app: RankedApp }) {
           <div className="flex items-center gap-2 flex-wrap mb-1">
             <h3
               className="text-base md:text-lg font-bold"
-              style={{ color: isInwout ? 'white' : 'var(--text)' }}
+              style={{ color: highlight ? 'white' : 'var(--text)' }}
             >
               {app.title}
             </h3>
-            {isInwout && (
-              <span
-                className="inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wider"
-                style={{
-                  background: 'linear-gradient(135deg, var(--green), var(--green-dark))',
-                  color: 'white',
-                  boxShadow: '0 2px 8px rgba(15,184,159,.3)',
-                }}
-              >
-                <Crown className="h-3 w-3" />
-                Editor's Choice
-              </span>
-            )}
+            {isInwout && <OwnProductBadge />}
             {app.isDraft && (
               <span
                 className="text-[10px] font-medium px-2 py-0.5 rounded-full"
@@ -167,7 +138,7 @@ function RankingCard({ app }: { app: RankedApp }) {
 
           <p
             className="text-sm line-clamp-2 mb-3"
-            style={{ color: isInwout ? 'rgba(255,255,255,.6)' : 'var(--text-secondary)' }}
+            style={{ color: highlight ? 'rgba(255,255,255,.6)' : 'var(--text-secondary)' }}
           >
             {description}
           </p>
@@ -181,8 +152,8 @@ function RankingCard({ app }: { app: RankedApp }) {
               <span
                 className="inline-flex items-center text-xs px-2 py-1 rounded-md font-medium"
                 style={{
-                  background: isInwout ? 'rgba(15,184,159,.15)' : 'var(--surface-alt)',
-                  color: isInwout ? 'var(--green-light)' : 'var(--text-secondary)',
+                  background: highlight ? 'rgba(15,184,159,.15)' : 'var(--surface-alt)',
+                  color: highlight ? 'var(--green-light)' : 'var(--text-secondary)',
                 }}
               >
                 {price === 0 ? 'Gratis' : `${price}€/usuario`}
@@ -190,15 +161,14 @@ function RankingCard({ app }: { app: RankedApp }) {
             )}
           </div>
 
-          {/* Rating + CTAs */}
+          {/* CTAs */}
           <div className="flex items-center gap-3 flex-wrap">
-            <StarRating rating={rating} />
             <div className="flex items-center gap-2 ml-auto">
               <Button
-                variant={isInwout ? 'default' : 'outline'}
+                variant={highlight ? 'default' : 'outline'}
                 size="sm"
                 asChild
-                className={isInwout ? 'bg-[var(--green)] hover:bg-[var(--green-dark)] text-white font-semibold shadow-lg shadow-[rgba(15,184,159,.25)]' : ''}
+                className={highlight ? 'bg-[var(--green)] hover:bg-[var(--green-dark)] text-white font-semibold shadow-lg shadow-[rgba(15,184,159,.25)]' : ''}
               >
                 <Link to={`/directorio/${app.slug}`} className="flex items-center gap-1.5">
                   Ver ficha completa
@@ -206,7 +176,7 @@ function RankingCard({ app }: { app: RankedApp }) {
                 </Link>
               </Button>
               {isInwout && (
-                <Button variant="ghost" size="sm" asChild className="text-white/50 hover:text-white hover:bg-white/10">
+                <Button variant="ghost" size="sm" asChild >
                   <a href="https://inwout.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5">
                     Prueba gratis
                     <ExternalLink className="h-3.5 w-3.5" />
@@ -231,7 +201,7 @@ export default function RankingAppsFichaje() {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: 'Las 10 Mejores Apps de Fichaje Laboral 2026',
-    description: 'Ranking actualizado de las mejores apps de fichaje para empresas españolas.',
+    description: 'Lista de apps de fichaje para empresas españolas, ordenada por INWOUT, que aparece en ella.',
     numberOfItems: 10,
     itemListElement: (apps || []).map(app => ({
       '@type': 'ListItem',
@@ -245,7 +215,7 @@ export default function RankingAppsFichaje() {
     <>
       <SEOHead
         title="Las 10 Mejores Apps de Fichaje Laboral 2026 | FichajeEmpresas.es"
-        description="Ranking actualizado de las mejores apps de fichaje para empresas españolas. Comparativa de precios, funcionalidades y cumplimiento del RD 8/2019."
+        description="Lista de apps de fichaje para empresas españolas, ordenada por INWOUT, que aparece en ella. Comparativa de precios, funcionalidades y cumplimiento del RD 8/2019."
         canonical="https://fichajeempresas.es/ranking-apps-fichaje"
         jsonLd={jsonLd}
       />
@@ -265,22 +235,14 @@ export default function RankingAppsFichaje() {
                 { label: 'Ranking Apps Fichaje', href: '/ranking-apps-fichaje' },
               ]}
             />
-            <span
-              className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full mb-4 mt-4"
-              style={{
-                background: 'rgba(15,184,159,.15)',
-                color: 'var(--green)',
-                border: '1px solid rgba(15,184,159,.2)',
-              }}
-            >
-              <Shield className="h-3.5 w-3.5" />
-              Actualizado marzo 2026
-            </span>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 mt-4 leading-tight">
               Las 10 Mejores Apps de Fichaje Laboral en 2026
             </h1>
             <p className="text-base md:text-lg" style={{ color: 'rgba(255,255,255,.6)' }}>
-              Ranking actualizado · Basado en 104 apps analizadas en el directorio FichajeEmpresas.es
+              Selección de apps del directorio FichajeEmpresas.es
+            </p>
+            <p className="text-sm mt-3 font-medium" style={{ color: 'rgba(255,255,255,.85)' }}>
+              El orden lo decide INWOUT, que aparece en esta lista.
             </p>
           </div>
         </div>

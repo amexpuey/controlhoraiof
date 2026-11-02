@@ -10,15 +10,13 @@ import { AppHeader } from '@/components/layout/AppHeader';
 
 export default function DirectoryPage() {
   const [search, setSearch] = useState('');
-  const [sortBy, setSortBy] = useState<'rank' | 'title' | 'rating'>('rank');
+  const [sortBy, setSortBy] = useState<'rank' | 'title'>('rank');
   const [page, setPage] = useState(1);
   const [showFree, setShowFree] = useState(false);
-  const [showTopRated, setShowTopRated] = useState(false);
 
   const { data, isLoading } = useSolutions({
     search: search || undefined,
     isFree: showFree || undefined,
-    isTopRated: showTopRated || undefined,
     sortBy,
     page,
     perPage: 24,
@@ -28,7 +26,7 @@ export default function DirectoryPage() {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: 'Directorio de Software de Control Horario en España',
-    description: 'Compara las mejores soluciones de control horario y fichaje para empresas en España.',
+    description: 'Compara soluciones de control horario y fichaje para empresas en España.',
     url: 'https://fichajeempresas.es/directorio',
   };
 
@@ -36,7 +34,7 @@ export default function DirectoryPage() {
     <div className="min-h-screen" style={{ background: 'var(--white)' }}>
       <SEOHead
         title="Directorio de Software de Control Horario en España 2026 | FichajesEmpresas.es"
-        description="Compara +100 soluciones de control horario y fichaje para empresas en España. Filtros por funcionalidad, precio y valoración."
+        description="Compara +100 soluciones de control horario y fichaje para empresas en España. Filtros por funcionalidad y precio."
         canonical="https://fichajeempresas.es/directorio"
         jsonLd={jsonLd}
       />
@@ -54,7 +52,7 @@ export default function DirectoryPage() {
             Directorio de <span className="accent">Control Horario</span>
           </h1>
           <p className="lead max-w-2xl mx-auto mb-6">
-            Compara {data?.total || '104'} soluciones de fichaje y control horario para empresas en España
+            Compara {data?.total ? `${data.total} ` : ''}soluciones de fichaje y control horario para empresas en España
           </p>
           <div className="max-w-2xl mx-auto">
             <div className="relative">
@@ -89,7 +87,6 @@ export default function DirectoryPage() {
           >
             <option value="rank">Relevancia</option>
             <option value="title">Nombre A-Z</option>
-            <option value="rating">Valoración</option>
           </select>
 
           <div className="flex gap-2">
@@ -99,13 +96,6 @@ export default function DirectoryPage() {
               style={showFree ? { background: 'var(--green-bg)', borderColor: 'var(--green)', color: 'var(--green-dark)' } : {}}
             >
               Gratis
-            </button>
-            <button
-              className="chip"
-              onClick={() => { setShowTopRated(!showTopRated); setPage(1); }}
-              style={showTopRated ? { background: 'var(--green-bg)', borderColor: 'var(--green)', color: 'var(--green-dark)' } : {}}
-            >
-              Mejor valoradas
             </button>
           </div>
         </div>

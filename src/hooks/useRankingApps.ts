@@ -41,7 +41,6 @@ async function ensureAppsExist(existingSlugs: Set<string>) {
       description: 'En revisión',
       type: 'draft',
       rank: 100 + app.position,
-      rating: 4,
       img_url: '/placeholder.svg',
       logo_url: '/placeholder.svg',
       pricing_starting_price: 0,

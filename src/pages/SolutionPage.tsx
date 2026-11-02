@@ -8,7 +8,8 @@ import { SolutionCard } from '@/components/directory/SolutionCard';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ExternalLink, Globe, MessageSquare } from 'lucide-react';
+import { ExternalLink, Globe } from 'lucide-react';
+import { OwnProductBadge, isOwnProduct } from '@/components/OwnProductBadge';
 
 import { SolutionHero } from '@/components/solution/SolutionHero';
 import { SolutionSocialLinks } from '@/components/solution/SolutionSocialLinks';
@@ -17,6 +18,9 @@ export default function SolutionPage() {
   const { slug } = useParams<{ slug: string }>();
   const { data: solution, isLoading, error } = useSolution(slug || '');
   const { data: related } = useRelatedSolutions(slug || '');
+  const isOwn = isOwnProduct(slug);
+  const { data: inwout } = useSolution(isOwn ? '' : 'inwout');
+  const cell = (v: unknown) => (v === true ? '✅' : v === false ? '❌' : 'Sin dato');
 
   if (isLoading) {
     return (
@@ -63,8 +67,8 @@ export default function SolutionPage() {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title={`${solution.title} - Opiniones, Precios y Alternativas 2026 | FichajesEmpresas.es`}
-        description={`Análisis completo de ${solution.title}: funcionalidades, precios, opiniones y alternativas. Compara con INWOUT y otras soluciones de control horario.`}
+        title={`${solution.title} - Precios, funcionalidades y alternativas | FichajesEmpresas.es`}
+        description={`Análisis completo de ${solution.title}: funcionalidades, precios y alternativas. Compara con INWOUT y otras soluciones de control horario.`}
         canonical={`https://fichajeempresas.es/directorio/${slug}`}
         jsonLd={jsonLd}
       />
@@ -99,26 +103,9 @@ export default function SolutionPage() {
               <SolutionSocialLinks social={social} />
             )}
 
-            {solution.is_promoted ? (
-              <div className="space-y-4 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                <p>
-                  INWOUT es una plataforma española de control horario y gestión de ausencias diseñada específicamente para cumplir con el Registro Horario Electrónico Obligatorio del <strong style={{ color: 'var(--text)' }}>RD 8/2019</strong>. Fundada en Barcelona, opera en la nube con app móvil nativa para iOS y Android.
-                </p>
-                <p>
-                  <strong style={{ color: 'var(--text)' }}>Puntos fuertes verificados:</strong> geofencing automático para fichar sin interacción, gestión completa de vacaciones y permisos con flujos de aprobación, e integraciones con dispositivos biométricos de terceros. Los registros se conservan con trazabilidad inmutable, requisito explícito de los criterios técnicos <strong style={{ color: 'var(--text)' }}>ITSS 101/2019</strong>.
-                </p>
-                <p>
-                  <strong style={{ color: 'var(--text)' }}>Para quién es:</strong> empresas de 5 a 500 trabajadores que necesitan compliance inmediato sin implementación compleja. Especialmente adecuado para pymes con trabajadores móviles o distribuidos.
-                </p>
-                <p className="text-sm font-medium" style={{ color: 'var(--green-dark)', background: 'var(--green-bg)', padding: '12px 16px', borderRadius: 'var(--radius-xs)', border: '1px solid var(--green-light)' }}>
-                  Prueba gratuita disponible hasta 5 empleados sin límite de tiempo.
-                </p>
-              </div>
-            ) : (
-              <p className="text-muted-foreground leading-relaxed">
-                {solution.long_description || solution.description}
-              </p>
-            )}
+            <p className="text-muted-foreground leading-relaxed">
+              {solution.long_description || solution.description}
+            </p>
 
             {solution.url && (
               <Button variant="outline" asChild>
@@ -160,23 +147,8 @@ export default function SolutionPage() {
               </CardContent>
             </Card>
 
-            {/* Reviews placeholder */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <MessageSquare className="h-5 w-5" />
-                  Opiniones de usuarios
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground text-sm">
-                  Aún no hay opiniones de {solution.title}. ¿Has usado esta herramienta?
-                </p>
-              </CardContent>
-            </Card>
-
             {/* Quick comparison vs INWOUT */}
-            {!solution.is_promoted && (
+            {!isOwn && inwout && (
               <Card>
                 <CardHeader>
                   <CardTitle>Comparativa rápida: {solution.title} vs INWOUT</CardTitle>
@@ -188,15 +160,15 @@ export default function SolutionPage() {
                         <tr className="border-b">
                           <th className="text-left py-2 pr-4 text-muted-foreground font-medium">Funcionalidad</th>
                           <th className="text-center py-2 px-4 font-medium">{solution.title}</th>
-                          <th className="text-center py-2 px-4 font-medium text-primary">INWOUT</th>
+                          <th className="text-center py-2 px-4 font-medium">INWOUT <OwnProductBadge /></th>
                         </tr>
                       </thead>
                       <tbody>
                         {featureKeys.slice(0, 10).map(key => (
                           <tr key={key} className="border-b border-border/50">
                             <td className="py-2 pr-4 text-muted-foreground">{key.replace('has_', '').replace(/_/g, ' ')}</td>
-                            <td className="text-center py-2 px-4">{sol[key] ? '✅' : '❌'}</td>
-                            <td className="text-center py-2 px-4">✅</td>
+                            <td className="text-center py-2 px-4">{cell(sol[key])}</td>
+                            <td className="text-center py-2 px-4">{cell((inwout as Record<string, unknown>)[key])}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -219,7 +191,7 @@ export default function SolutionPage() {
             <InwoutCTA variant="sidebar" />
 
             {/* Compare links */}
-            {!solution.is_promoted && (
+            {!isOwn && (
               <Card>
                 <CardHeader>
                   <CardTitle className="text-sm">Comparar con</CardTitle>
