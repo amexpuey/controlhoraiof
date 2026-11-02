@@ -26,4 +26,9 @@ describe("Registro real e importación", () => {
   test("Email válido obligatorio", () => { expect(peopleError([{ id: "1", name: "Ana", email: "" }])).toContain("válido"); });
   test("Email único sin distinguir mayúsculas", () => { expect(peopleError([{ id: "1", name: "Ana", email: "ana@example.com" }, { id: "2", name: "Otra", email: " ANA@example.com " }])).toContain("repetirse"); });
   test("La referencia requiere tramos completos", () => { expect(scheduleError({ ...initialSchedule(), split: true, start2: "" })).toContain("segundo tramo"); });
+  test("Dos pausas en un tramo generan 5 filas y 7 h 15 m netas", () => { const r = convert(["09:00", "17:00", "", "", "10:00", "10:15", "14:00", "14:30"]); expect(r.errors).toEqual([]); expect(seg(r)).toEqual(["09:00-10:00", "10:00-10:15P", "10:15-14:00", "14:00-14:30P", "14:30-17:00"]); expect(r.rows.filter((x) => x.pause).every((x) => x.pause === true)).toBe(true); expect(r.summaries[0].minutes).toBe(435); expect(hrs(r)).toBe(435); });
+  test("Dos pausas en jornada partida, una en cada tramo", () => { const r = convert(["09:00", "14:00", "15:00", "19:00", "11:00", "11:15", "17:00", "17:15"]); expect(seg(r)).toEqual(["09:00-11:00", "11:00-11:15P", "11:15-14:00", "15:00-17:00", "17:00-17:15P", "17:15-19:00"]); expect(hrs(r)).toBe(510); });
+  test("Pausas solapadas bloquean", () => { const r = convert(["09:00", "17:00", "", "", "10:00", "11:00", "10:30", "11:30"]); expect(r.errors.some((e) => e.message.includes("pausas se solapan"))).toBe(true); expect(r.rows).toEqual([]); });
+  test("Segunda pausa fuera de tramo bloquea", () => { const r = convert(["09:00", "17:00", "", "", "10:00", "10:15", "18:00", "18:15"]); expect(r.errors.some((e) => e.message.includes("pausa 2 está fuera"))).toBe(true); });
+  test("Segunda pausa incompleta bloquea", () => { expect(convert(["09:00", "17:00", "", "", "", "", "14:00", ""]).errors.some((e) => e.message.includes("pausa 2"))).toBe(true); });
 });
