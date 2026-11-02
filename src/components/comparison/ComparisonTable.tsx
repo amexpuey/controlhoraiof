@@ -1,6 +1,5 @@
-import { Star, Check, X, Monitor } from "lucide-react";
+import { Check, X, Monitor } from "lucide-react";
 import type { Database } from "@/integrations/supabase/types";
-import VoteButton from "@/components/VoteButton";
 
 type Company = Database["public"]["Tables"]["companies"]["Row"];
 
@@ -8,26 +7,10 @@ interface ComparisonTableProps {
   apps: Company[];
 }
 
-const StarRating = ({ rating }: { rating: number }) => {
-  return (
-    <div className="flex flex-col items-center gap-1">
-      <div className="flex items-center">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <Star
-            key={star}
-            className={`w-4 h-4 ${
-              star <= Math.floor(rating)
-                ? "text-yellow-400 fill-yellow-400"
-                : star <= rating
-                ? "text-yellow-400 fill-yellow-400 opacity-50"
-                : "text-gray-300"
-            }`}
-          />
-        ))}
-      </div>
-      <span className="text-lg font-medium text-gray-900">{rating}</span>
-    </div>
-  );
+const Availability = ({ value }: { value: string | null }) => {
+  if (value === 'yes') return (<div className="flex items-center"><Check className="w-5 h-5 text-green-500" /><span className="ml-2 text-sm">Disponible</span></div>);
+  if (value === 'no') return (<div className="flex items-center"><X className="w-5 h-5 text-red-500" /><span className="ml-2 text-sm">No disponible</span></div>);
+  return <span className="text-sm text-gray-500">Sin dato</span>;
 };
 
 const PlatformList = ({ platforms }: { platforms: string[] }) => {
@@ -69,33 +52,10 @@ export default function ComparisonTable({ apps }: ComparisonTableProps) {
         </thead>
         <tbody className="divide-y divide-gray-100">
           <tr>
-            <td className="py-3 px-4 text-sm font-medium text-gray-900 text-left">Valoraciones</td>
-            {apps.map((app) => (
-              <td key={app.id} className="py-3 px-4">
-                <div className="flex flex-col items-start gap-2">
-                  <StarRating rating={app.rating || 4.5} />
-                  <div className="flex items-center gap-1">
-                    <span className="text-sm text-gray-600">{app.votes || 0} votos</span>
-                    <VoteButton companyId={app.id} votes={app.votes} />
-                  </div>
-                </div>
-              </td>
-            ))}
-          </tr>
-          <tr>
             <td className="py-3 px-4 text-sm font-medium text-gray-900 text-left">Periodo de Prueba</td>
             {apps.map((app) => (
               <td key={app.id} className="py-3 px-4">
-                <div className="flex items-center">
-                  {app.title === 'INWOUT' || app.free_trial === 'yes' ? (
-                    <Check className="w-5 h-5 text-green-500" />
-                  ) : (
-                    <X className="w-5 h-5 text-red-500" />
-                  )}
-                  <span className="ml-2 text-sm">
-                    {app.title === 'INWOUT' || app.free_trial === 'yes' ? 'Disponible' : 'No disponible'}
-                  </span>
-                </div>
+                <Availability value={app.free_trial} />
               </td>
             ))}
           </tr>
@@ -103,16 +63,7 @@ export default function ComparisonTable({ apps }: ComparisonTableProps) {
             <td className="py-3 px-4 text-sm font-medium text-gray-900 text-left">Plan Gratuito</td>
             {apps.map((app) => (
               <td key={app.id} className="py-3 px-4">
-                <div className="flex items-center">
-                  {app.title === 'INWOUT' || app.free_plan === 'yes' ? (
-                    <Check className="w-5 h-5 text-green-500" />
-                  ) : (
-                    <X className="w-5 h-5 text-red-500" />
-                  )}
-                  <span className="ml-2 text-sm">
-                    {app.title === 'INWOUT' || app.free_plan === 'yes' ? 'Disponible' : 'No disponible'}
-                  </span>
-                </div>
+                <Availability value={app.free_plan} />
               </td>
             ))}
           </tr>
@@ -120,7 +71,7 @@ export default function ComparisonTable({ apps }: ComparisonTableProps) {
             <td className="py-3 px-4 text-sm font-medium text-gray-900 text-left">Disponible en</td>
             {apps.map((app) => (
               <td key={app.id} className="py-3 px-4">
-                <PlatformList platforms={app.platforms || ['Web', 'iOS', 'Android']} />
+                {app.platforms?.length ? <PlatformList platforms={app.platforms} /> : <span className="text-sm text-gray-500">Sin dato</span>}
               </td>
             ))}
           </tr>
