@@ -20,7 +20,7 @@ export default function SolutionPage() {
   const { data: related } = useRelatedSolutions(slug || '');
   const isOwn = isOwnProduct(slug);
   const { data: inwout } = useSolution(isOwn ? '' : 'inwout');
-  const cell = (v: unknown) => (v === true ? '✅' : v === false ? '❌' : 'Sin dato');
+  const cell = (v: unknown, own = false) => (v === true ? '✅' : own && v === false ? '❌' : 'Sin dato');
 
   if (isLoading) {
     return (
@@ -122,7 +122,7 @@ export default function SolutionPage() {
                 <CardTitle>Funcionalidades</CardTitle>
               </CardHeader>
               <CardContent>
-                <FeatureChecklist company={sol} />
+                <FeatureChecklist company={sol} showMissing={isOwn} />
               </CardContent>
             </Card>
 
@@ -167,8 +167,8 @@ export default function SolutionPage() {
                         {featureKeys.slice(0, 10).map(key => (
                           <tr key={key} className="border-b border-border/50">
                             <td className="py-2 pr-4 text-muted-foreground">{key.replace('has_', '').replace(/_/g, ' ')}</td>
-                            <td className="text-center py-2 px-4">{cell(sol[key])}</td>
-                            <td className="text-center py-2 px-4">{cell((inwout as Record<string, unknown>)[key])}</td>
+                            <td className="text-center py-2 px-4">{cell(sol[key], isOwn)}</td>
+                            <td className="text-center py-2 px-4">{cell((inwout as Record<string, unknown>)[key], true)}</td>
                           </tr>
                         ))}
                       </tbody>
