@@ -51,10 +51,10 @@ export function validateRecords(people: PersonRecords[]) {
       const before = errors.length;
       const pairs: { start: number; end: number; pause: boolean }[] = [];
       let anchor: number | undefined;
-      for (let k = 0; k < 3; k++) {
+      for (let k = 0; k < 4; k++) {
         const a = day.times[k * 2], b = day.times[k * 2 + 1];
         if (blank(a) && blank(b)) continue;
-        if (blank(a) || blank(b)) { fail(k === 2 ? "Completa el inicio y el fin de la pausa." : `Completa la entrada y la salida del tramo ${k + 1}.`); continue; }
+        if (blank(a) || blank(b)) { fail(k === 2 ? "Completa el inicio y el fin de la pausa." : k === 3 ? "Completa el inicio y el fin de la pausa 2." : `Completa la entrada y la salida del tramo ${k + 1}.`); continue; }
         let start = timeMinutes(a), end = timeMinutes(b);
         if (start === null || end === null) { fail("Hora no válida. Usa HH:MM (por ejemplo, 09:00)."); continue; }
         if (start === end) { fail("La entrada y la salida no pueden ser iguales."); continue; }
@@ -62,20 +62,25 @@ export function validateRecords(people: PersonRecords[]) {
         if (end <= start % 1440) end += 1440;
         if (start >= 1440 && end < 1440) end += 1440;
         if (k < 2 && anchor === undefined) anchor = start;
-        pairs.push({ start, end, pause: k === 2 });
+        pairs.push({ start, end, pause: k >= 2 });
       }
-      const work = pairs.filter((x) => !x.pause), pause = pairs.find((x) => x.pause);
-      if (!work.length && (!blank(day.times[4]) || !blank(day.times[5]))) fail("La pausa necesita un tramo trabajado con entrada y salida reales.");
+      const work = pairs.filter((x) => !x.pause), pauses = pairs.filter((x) => x.pause);
+      if (!work.length && day.times.slice(4, 8).some((v) => !blank(v))) fail("La pausa necesita un tramo trabajado con entrada y salida reales.");
       if (work.length === 2 && work[0].start < work[1].end && work[1].start < work[0].end) fail("Los tramos trabajados se solapan.");
-      if (pause && !work.some((x) => pause.start >= x.start && pause.end <= x.end)) fail("La pausa está fuera de los tramos trabajados.");
-      const minutes = work.reduce((sum, x) => sum + x.end - x.start, 0) - (pause ? pause.end - pause.start : 0);
+      if (work.length) pauses.forEach((pause, i) => { if (!work.some((x) => pause.start >= x.start && pause.end <= x.end)) fail(i && pauses.length === 2 ? "La pausa 2 está fuera de los tramos trabajados." : "La pausa está fuera de los tramos trabajados."); });
+      if (pauses.length === 2 && pauses[0].start < pauses[1].end && pauses[1].start < pauses[0].end) fail("Las pausas se solapan.");
+      const minutes = work.reduce((sum, x) => sum + x.end - x.start, 0) - pauses.reduce((sum, x) => sum + x.end - x.start, 0);
       if (minutes > 720) fail("Más de 12 horas trabajadas en un día. Revisa las horas reales.");
       if (errors.length !== before) continue;
       summary.registered++; summary.minutes += minutes;
       const base = Date.parse(`${day.date}T00:00:00Z`) / 60000;
       work.forEach((x) => all.push({ start: base + x.start, end: base + x.end, date: day.date }));
       for (const x of work) {
-        const pieces: [number, number, boolean][] = pause && pause.start >= x.start && pause.end <= x.end ? [[x.start, pause.start, false], [pause.start, pause.end, true], [pause.end, x.end, false]] : [[x.start, x.end, false]];
+        const inside = pauses.filter((q) => q.start >= x.start && q.end <= x.end).sort((a, b) => a.start - b.start);
+        const pieces: [number, number, boolean][] = [];
+        let cursor = x.start;
+        for (const q of inside) { pieces.push([cursor, q.start, false], [q.start, q.end, true]); cursor = q.end; }
+        pieces.push([cursor, x.end, false]);
         pieces.filter(([a, b]) => b > a).forEach(([a, b, isPause]) => rows.push({ email: summary.email, start: stamp(day.date, a), end: stamp(day.date, b), ...(isPause ? { pause: true as const } : {}) }));
       }
     }
@@ -87,7 +92,7 @@ export function validateRecords(people: PersonRecords[]) {
 }
 export function scheduleError(s: Schedule) {
   if (!s.days.some(Boolean)) return "Selecciona al menos un día laborable.";
-  const r = validateRecords([{ name: "Horario", email: "referencia@example.com", days: [{ date: "2026-01-01", working: true, times: [s.start, s.end, s.split ? s.start2 : "", s.split ? s.end2 : "", s.pause ? s.pauseStart : "", s.pause ? s.pauseEnd : ""] }] }]);
+  const r = validateRecords([{ name: "Horario", email: "referencia@example.com", days: [{ date: "2026-01-01", working: true, times: [s.start, s.end, s.split ? s.start2 : "", s.split ? s.end2 : "", s.pause ? s.pauseStart : "", s.pause ? s.pauseEnd : "", "", ""] }] }]);
   if (!s.start || !s.end) return "Completa la entrada y la salida previstas.";
   if (s.split && (!s.start2 || !s.end2)) return "Completa el segundo tramo previsto.";
   if (s.pause && (!s.pauseStart || !s.pauseEnd)) return "Completa la pausa prevista.";
