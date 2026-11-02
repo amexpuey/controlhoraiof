@@ -5,7 +5,6 @@ import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav';
 import { useRankingApps, type RankedApp } from '@/hooks/useRankingApps';
 import { Check, X, ExternalLink, ArrowRight, MessageSquare, Loader2, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Footer } from '@/components/Footer';
 import { OwnProductBadge, isOwnProduct } from '@/components/OwnProductBadge';
 
 type FilterKey = 'all' | 'free' | 'geofence' | 'compliance' | 'cheap';
@@ -313,7 +312,6 @@ export default function RankingAppsFichaje() {
           </div>
         </div>
 
-        <Footer />
       </div>
     </>
   );
