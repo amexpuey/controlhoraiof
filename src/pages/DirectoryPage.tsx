@@ -12,7 +12,7 @@ export default function DirectoryPage() {
   const [search, setSearch] = useState('');
   const [sortBy, setSortBy] = useState<'rank' | 'title'>('rank');
   const [page, setPage] = useState(1);
-  const [showFree, setShowFree] = useState(false);
+  const showFree = false;
 
   const { data, isLoading } = useSolutions({
     search: search || undefined,
@@ -89,15 +89,6 @@ export default function DirectoryPage() {
             <option value="title">Nombre A-Z</option>
           </select>
 
-          <div className="flex gap-2">
-            <button
-              className="chip"
-              onClick={() => { setShowFree(!showFree); setPage(1); }}
-              style={showFree ? { background: 'var(--green-bg)', borderColor: 'var(--green)', color: 'var(--green-dark)' } : {}}
-            >
-              Gratis
-            </button>
-          </div>
         </div>
 
         {/* Grid */}
