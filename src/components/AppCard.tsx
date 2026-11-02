@@ -1,5 +1,4 @@
 import { Check } from "lucide-react";
-import VoteButton from "./VoteButton";
 import { Card } from "@/components/ui/card";
 import type { Database } from "@/integrations/supabase/types";
 import { useNavigate } from "react-router-dom";
@@ -70,7 +69,6 @@ export default function AppCard({
             platforms={app.platforms}
             url={app.url}
           />
-          <VoteButton companyId={app.id} votes={app.votes} />
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2">

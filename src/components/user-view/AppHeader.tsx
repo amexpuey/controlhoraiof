@@ -39,11 +39,6 @@ export function AppHeader({ company }: AppHeaderProps) {
             <div className="text-white">
               <h1 className="text-4xl font-bold mb-2">{company.title}</h1>
               <div className="flex items-center gap-2">
-                {company.verified && (
-                  <span className="bg-blue-500/80 backdrop-blur px-3 py-1 rounded-full text-sm font-medium">
-                    Verificado
-                  </span>
-                )}
                 <span className="bg-purple-500/80 backdrop-blur px-3 py-1 rounded-full text-sm font-medium capitalize">
                   {company.type}
                 </span>

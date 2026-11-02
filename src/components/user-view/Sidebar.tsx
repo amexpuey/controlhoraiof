@@ -52,11 +52,6 @@ export function Sidebar({ company }: SidebarProps) {
       </Card>
 
       <Card className="p-6 space-y-4">
-        <div className="flex items-center gap-3 text-gray-600">
-          <Users className="w-5 h-5" />
-          <span>{company.votes} usuarios han votado</span>
-        </div>
-        
         {company.use_case && (
           <div className="pt-2 border-t border-gray-200">
             <p className="text-sm text-gray-600">{company.use_case}</p>
