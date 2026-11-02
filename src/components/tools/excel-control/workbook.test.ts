@@ -15,4 +15,5 @@ test("El Excel descargado tiene Pausa como booleano real y el resumen no suma pa
   expect(s.getRow(3).getCell(2).value).toBe("2026-10-19 13:00:00");
   const f = book.getWorksheet("Resumen")!.getRow(2).getCell(5).value as { formula: string; result: number };
   expect(f.formula).toContain("D2:D6<>TRUE"); expect(f.result).toBe(15.5);
+  expect(book.getWorksheet("Resumen")!.getRow(1).getCell(5).value).toBe("Horas sin pausas");
 });
